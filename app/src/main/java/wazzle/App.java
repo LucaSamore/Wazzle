@@ -4,6 +4,7 @@
 package wazzle;
 
 import javafx.application.Application;
+import org.jgrapht.*;
 
 public class App {
     public String getGreeting() {

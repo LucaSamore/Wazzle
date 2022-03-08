@@ -76,7 +76,8 @@ dependencies {
     implementation("com.google.guava:guava:30.1.1-jre")
     
     // https://mvnrepository.com/artifact/org.jgrapht/jgrapht
-	implementation("org.jgrapht:jgrapht:1.5.1")
+	implementation("org.jgrapht:jgrapht-core:1.5.1")
+	implementation("org.jgrapht:jgrapht-ext:1.5.1")
 
     // Use JUnit test framework.
     testImplementation("junit:junit:4.13.2")
