@@ -40,7 +40,7 @@ allprojects {
         ruleSetConfig = resources.text.fromFile("${project.rootProject.projectDir}/config/pmd/pmd.xml")
         isIgnoreFailures = true
     }
-    
+
     checkstyle {
         isIgnoreFailures = true
     }
@@ -52,7 +52,7 @@ buildscript {
       url = uri("https://plugins.gradle.org/m2/")
     }
   }
-  
+
   dependencies {
     classpath("com.github.spotbugs.snom:spotbugs-gradle-plugin:5.0.6")
   }
@@ -72,12 +72,15 @@ val supportedPlatforms = listOf("linux", "mac", "win") // All required for OOP
 val javaFxVersion = 15
 
 dependencies {
-	// This dependency is used by the application.
+	  // This dependency is used by the application.
     implementation("com.google.guava:guava:30.1.1-jre")
-    
+
     // https://mvnrepository.com/artifact/org.jgrapht/jgrapht
-	implementation("org.jgrapht:jgrapht-core:1.5.1")
-	implementation("org.jgrapht:jgrapht-ext:1.5.1")
+	  implementation("org.jgrapht:jgrapht-core:1.5.1")
+	  implementation("org.jgrapht:jgrapht-ext:1.5.1")
+
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+	  implementation("com.google.code.gson:gson:2.9.0")
 
     // Use JUnit test framework.
     testImplementation("junit:junit:4.13.2")
