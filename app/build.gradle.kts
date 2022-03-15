@@ -29,6 +29,7 @@ java {
 allprojects {
     apply(plugin = "checkstyle")
     apply(plugin = "pmd")
+    apply(plugin = "com.github.spotbugs")
 
     tasks.withType<Test> {
         ignoreFailures = true
@@ -46,20 +47,6 @@ allprojects {
     }
 }
 
-buildscript {
-  repositories {
-    maven {
-      url = uri("https://plugins.gradle.org/m2/")
-    }
-  }
-
-  dependencies {
-    classpath("com.github.spotbugs.snom:spotbugs-gradle-plugin:5.0.6")
-  }
-}
-
-apply(plugin = "com.github.spotbugs")
-
 val javaFXModules = listOf(
     "base",
     "controls",
@@ -75,16 +62,12 @@ dependencies {
 	  // This dependency is used by the application.
     implementation("com.google.guava:guava:30.1.1-jre")
 
-    // https://mvnrepository.com/artifact/org.jgrapht/jgrapht
-	  implementation("org.jgrapht:jgrapht-core:1.5.1")
-	  implementation("org.jgrapht:jgrapht-ext:1.5.1")
-
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
 	  implementation("com.google.code.gson:gson:2.9.0")
 
     // Use JUnit test framework.
     testImplementation("junit:junit:4.13.2")
-    
+
     // JavaFX: comment out if you do not need them
     for (platform in supportedPlatforms) {
         for (module in javaFXModules) {
