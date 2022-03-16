@@ -1,4 +1,4 @@
-package wazzle;
+package wazzle.model;
 
 import static org.junit.Assert.*;
 

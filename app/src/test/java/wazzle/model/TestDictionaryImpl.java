@@ -1,7 +1,7 @@
 /**
  * 
  */
-package wazzle;
+package wazzle.model;
 
 import static org.junit.Assert.*;
 
@@ -14,6 +14,9 @@ import java.io.IOException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import wazzle.Dictionary;
+import wazzle.DictionaryImpl;
 
 /**
  * @author A. Barbanti
