@@ -41,6 +41,6 @@ public class TestDictionaryImpl {
     public void testOpeningA_NOT_ExitingFile() throws IOException {
         Dictionary dict = new DictionaryImpl("notExistingFile");
 //        assertThrows(null, null);
-//       assertThrows(DictionaryImpl, NullPointerException.class);
+//       assertThrows(NoSuchFileException.class, );
     }
 }
