@@ -9,7 +9,7 @@ import java.util.Map;
  * @author A. Barbanti
  *
  */
-public interface WeightToPercentageAdapter {
+public interface ScoreAdapter {
 
 	Map<Character, Double> getWeightedAlphabet();
 
