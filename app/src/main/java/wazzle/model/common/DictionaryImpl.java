@@ -9,7 +9,6 @@ package wazzle.model.common;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -19,7 +18,7 @@ public class DictionaryImpl implements Dictionary {
 	private Set<String> listOfWords;
 
 	public DictionaryImpl(String fileName) throws IOException {
-		setDictionary(fileName);
+		setListOfWords(fileName);
 	}
 
 	/**
@@ -31,10 +30,11 @@ public class DictionaryImpl implements Dictionary {
 	 * @param fileName The name or the relative path of the file you are trying to
 	 *                 open. All the words in the file must be separated with a
 	 *                 end-of-line character.
+	 *                 
 	 * @debug this method will be removed TODO
 	 */
 
-	private void setDictionary(String fileName) throws IOException {
+	private void setListOfWords(String fileName) throws IOException {
 		try (Stream<String> words = Files.lines(Paths.get(fileName))) {
 			this.listOfWords = words.collect(Collectors.toSet());
 
@@ -42,12 +42,24 @@ public class DictionaryImpl implements Dictionary {
 	}
 
 	/**
-	 * @return the Set containing all the words collected.
+	 * @return An Object of class Dictionary.
 	 */
 
 	@Override
-	public Set<String> getListOfWords() {
-		return Collections.unmodifiableSet(listOfWords);
+	public DictionaryImpl getDictionary() {
+		return this;
+		
 	}
+	
+	/**
+	 * @return The Set containing all the words collected.
+	 */
+	
+	public Set<String> getListOfWords() {
+		return this.listOfWords;
+		
+	}
+
+
 
 }

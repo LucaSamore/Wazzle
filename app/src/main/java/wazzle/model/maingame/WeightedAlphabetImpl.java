@@ -1,32 +1,20 @@
-/*
- * 
-  	This Class calculates the relative frequency of each letter present in the initial Map storing it in a new Map.
-  
- 	@param frequencyLetterMap	A Map (Character,Double) which stores the letter as keys and it's relative number of occurrences.
- 	
-  	@param totalLetters			A Long number with the sum of all values in the map passed as first parameter.
-  
- * */
+/**
+ *
+ *	This Class keeps a Map storing all the frequencies of each letter present in the initial data-set.
+ */
 
 package wazzle.model.maingame;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class WeightedAlphabetImpl implements WeightedAlphabet {
 
 	private Map<Character, Double> weightedLetterMap;
-	private Frequency freq;
-
-	public WeightedAlphabetImpl() {
-
-		
-		this.weightedLetterMap = new HashMap<>();
-		this.freq = new FrequencyImpl();
-		this.setWeightedLetterMap();
+	public WeightedAlphabetImpl(Map<Character, Double> weightedLetterMap) {
+		this.weightedLetterMap = weightedLetterMap;
 	}
 
-	/*
+	/**
 	 * This method returns the field weightedLetterMap.
 	 * 
 	 * @return 	weightedLetterMap 	A Map holding all the letter present in the input
@@ -38,16 +26,6 @@ public class WeightedAlphabetImpl implements WeightedAlphabet {
 	@Override
 	public Map<Character, Double> getWeightedAlphabet() {
 		return weightedLetterMap;
-	}
-
-	/*
-	 * This method calculates the relative value of all letters present in the given
-	 * map compared to the total number of letters present.
-	 * 
-	 */
-
-	private void setWeightedLetterMap() {
-		this.weightedLetterMap = freq.getMappedWeightedAlphabet();
 	}
 
 }
