@@ -10,19 +10,30 @@
 
 package wazzle.model.maingame;
 
+import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import wazzle.model.common.Dictionary;
+import wazzle.model.common.DictionaryImpl;
+
 public class FrequencyImpl implements Frequency {
 
 	private Map<Character, Double> frequencyMap;
-	private Double numberOfLetters;
-
-	public FrequencyImpl(Set<String> words) {
-		this.setFrequency(words);
+	private Dictionary dict;
+	public FrequencyImpl() {
+		try {
+			this.frequencyMap = new HashMap<>();
+			this.dict = new DictionaryImpl(".\\src\\test\\res\\testDictionary.txt");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.setFrequency(dict.getListOfWords());
 	}
 
 	/**
@@ -33,29 +44,29 @@ public class FrequencyImpl implements Frequency {
 	 * letters (Relative Frequency).
 	 *
 	 * @param words A Set of String containing all the Words found in the
-	 * dictionary.
+	 *              dictionary.
 	 *
 	 * 
 	 */
 
 	private void setFrequency(Set<String> words) {
 
+		Double numberOfLetters;
+
 		this.frequencyMap = words.stream().flatMap(k -> k.chars().mapToObj(v -> (char) v))
 				.collect(Collectors.groupingBy(Function.identity(), Collectors.reducing(0D, e -> 1D, Double::sum)));
 
-		this.numberOfLetters = frequencyMap.values().stream().mapToDouble(Double::doubleValue).sum();
+		numberOfLetters = frequencyMap.values().stream().mapToDouble(Double::doubleValue).sum();
 
-		this.frequencyMap.entrySet().forEach((e) -> {
-			e.setValue(e.getValue() / numberOfLetters);
-		});
+		this.frequencyMap.entrySet().forEach(e -> e.setValue(e.getValue() / numberOfLetters));
 
 	}
 
 	/**
 	 * This method returns
 	 * 
-	 * @return frequencyMap An unmodifiable Map with the letters present in the given set as keys and
-	 * 						the relative number of occurrences as values.
+	 * @return frequencyMap An unmodifiable Map with the letters present in the
+	 *         given set as keys and the relative number of occurrences as values.
 	 * 
 	 */
 	public Map<Character, Double> getMappedWeightedAlphabet() {

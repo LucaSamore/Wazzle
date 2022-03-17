@@ -10,8 +10,8 @@ public class ScoreAdapterImpl implements ScoreAdapter {
 
 	private Frequency wa;
 
-	public ScoreAdapterImpl(Map<Character, Double> frequencyMap, Set<String> words) {
-		wa = new FrequencyImpl(words);
+	public ScoreAdapterImpl(Set<String> words) {
+		wa = new FrequencyImpl();
 	}
 
 	@Override
