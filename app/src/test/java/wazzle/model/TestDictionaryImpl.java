@@ -17,13 +17,13 @@ public class TestDictionaryImpl {
 
 
 	@Test
-	public void testOpeningAnExitingFile() throws IOException {
+	public void testOpeningAnExitingFile() throws Exception {
 		
 		Set<String> testSet = new HashSet<>();
 		testSet.add("AAAAA");		
 		testSet.add("BBBB");		
 		testSet.add("CCC");		
-		testSet.add("DD");		
+		testSet.add("DD");
 		testSet.add("E");		
 		testSet.add("(");	
 		
@@ -32,7 +32,8 @@ public class TestDictionaryImpl {
 	};
 
     @Test(expected = NoSuchFileException.class)
-    public void testOpeningA_NOT_ExitingFile() throws IOException {
+    public void testOpeningA_NOT_ExitingFile() throws Exception {
         Dictionary dict = new DictionaryImpl("notExistingFile");
+        System.out.println(dict.getWords());
     }
 }

@@ -12,6 +12,7 @@
 
 package wazzle.model.maingame;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -26,6 +27,7 @@ public final class FrequencyImpl implements Frequency {
 
 		this.dataset = dataset;
 	}
+
 
 	/**
 	 * 
@@ -57,6 +59,8 @@ public final class FrequencyImpl implements Frequency {
 
 		frequencyMap.entrySet().forEach(e -> e.setValue(e.getValue() / numberOfLetters));
 		
-		return new WeightedAlphabetImpl(frequencyMap);
+		frequencyMap = Collections.unmodifiableMap(frequencyMap);
+		
+		return new WeightedAlphabetImpl(Collections.unmodifiableMap(frequencyMap));
 	}
 }

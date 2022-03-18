@@ -35,7 +35,7 @@ public class TestWeightedAlphabet {
 	};
 
 	@Test
-	public void test() throws IOException {
+	public void test() throws Exception {
 
 		Dictionary dict = new DictionaryImpl(".\\src\\test\\res\\testDictionary.txt");
 		Frequency freq = new FrequencyImpl(dict);

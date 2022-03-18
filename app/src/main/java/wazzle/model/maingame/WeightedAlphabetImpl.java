@@ -6,6 +6,7 @@
 package wazzle.model.maingame;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -15,7 +16,8 @@ public class WeightedAlphabetImpl implements WeightedAlphabet {
 	
 	public WeightedAlphabetImpl(Map<Character, Double> weightedLetterMap) {
 		Objects.requireNonNull(weightedLetterMap);
-		this.weightedLetterMap = weightedLetterMap;
+		
+		this.weightedLetterMap = new HashMap<>(weightedLetterMap);
 	}
 
 	/**

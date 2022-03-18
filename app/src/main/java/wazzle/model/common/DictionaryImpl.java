@@ -8,8 +8,11 @@ package wazzle.model.common;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -18,8 +21,10 @@ public class DictionaryImpl implements Dictionary {
 
 	private Set<String> words;
 
-	public DictionaryImpl(String fileName) throws IOException {
+	public DictionaryImpl(String fileName) throws Exception {
+		this.words = new HashSet<>();
 		setListOfWords(fileName);
+		
 	}
 
 	/**
@@ -32,17 +37,26 @@ public class DictionaryImpl implements Dictionary {
 	 *                 open. All the words in the file must be separated with a
 	 *                 end-of-line character.
 	 * 
+	 * @throws IOException 
+	 * 
 	 * @debug this method will be removed TODO
+	 * 
+	 * TODO TODO  TODO TODO  TODO TODO  TODO TODO  TODO TODO  TODO TODO  TODO TODO  TODO TODO  TODO TODO  
+	 * 									!!TOGLI TUTTE LE EXCEPTION!!
+	 * TODO TODO  TODO TODO  TODO TODO  TODO TODO  TODO TODO  TODO TODO  TODO TODO  TODO TODO  TODO TODO  
 	 */
 
-	private void setListOfWords(String fileName) {
-		try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
+	private void setListOfWords(String fileName) throws Exception {
+		try  {
+			Stream<String> stream = Files.lines(Paths.get(fileName));
 			this.words = stream.collect(Collectors.toSet());
+			stream.close();
+
 		}
-		catch(IOException e){
-			System.err.println("File non trovato");
-			e.printStackTrace();
+		catch (NoSuchFileException e) {
+			throw e;
 		}
+
 	}
 
 

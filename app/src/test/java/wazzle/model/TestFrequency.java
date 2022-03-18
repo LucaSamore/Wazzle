@@ -19,14 +19,11 @@ public class TestFrequency {
 	private Map<Character, Double> expectedTestMap = new HashMap<Character, Double>();
 	private Dictionary dict;
 
-	public TestFrequency() {
+	public TestFrequency() throws Exception {
 		
-			try {
+			
 				this.dict = new DictionaryImpl(".\\src\\test\\res\\testDictionary.txt");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 
 	}
 
