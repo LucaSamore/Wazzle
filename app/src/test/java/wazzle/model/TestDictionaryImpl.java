@@ -8,20 +8,12 @@ import static org.junit.Assert.*;
 import java.nio.file.NoSuchFileException;
 import java.util.HashSet;
 import java.util.Set;
-import java.io.File;  // Import the File class
 import java.io.IOException;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
 import wazzle.Dictionary;
 import wazzle.DictionaryImpl;
 
-/**
- * @author A. Barbanti
- *
- */
 public class TestDictionaryImpl {
 
 
@@ -43,7 +35,5 @@ public class TestDictionaryImpl {
     @Test(expected = NoSuchFileException.class)
     public void testOpeningA_NOT_ExitingFile() throws IOException {
         Dictionary dict = new DictionaryImpl("notExistingFile");
-//        assertThrows(null, null);
-//       assertThrows(NoSuchFileException.class, );
     }
 }

@@ -19,15 +19,13 @@ import wazzle.model.maingame.FrequencyImpl;
 import wazzle.model.maingame.WeightedAlphabet;
 import wazzle.model.maingame.WeightedAlphabetImpl;
 
-/**
- * @author A. Barbanti
- *
- */
-public class TestWeightedAlphabet {
-	Map<Character, Double> expectedTestMap = new HashMap<Character, Double>();
 
+public class TestWeightedAlphabet {
+	Map<Character, Double> expectedTestMap;
+	
 	@Before
 	public void buildExpectedMap() {
+		this.expectedTestMap = new HashMap<Character, Double>();
 		expectedTestMap.put('A', 0.3125);
 		expectedTestMap.put('B', 0.25);
 		expectedTestMap.put('C', 0.1875);
@@ -40,8 +38,8 @@ public class TestWeightedAlphabet {
 	public void test() throws IOException {
 
 		Dictionary dict = new DictionaryImpl(".\\src\\test\\res\\testDictionary.txt");
-		Frequency freq = new FrequencyImpl(dict.getListOfWords());
-		WeightedAlphabet wa = new WeightedAlphabetImpl(freq.getFrequency(), freq.getTotalLetters());
+		Frequency freq = new FrequencyImpl(dict);
+		WeightedAlphabet wa = new WeightedAlphabetImpl(freq.computeFrequency().getWeightedAlphabet());
 		assertEquals(expectedTestMap, wa.getWeightedAlphabet());
 
 	}
