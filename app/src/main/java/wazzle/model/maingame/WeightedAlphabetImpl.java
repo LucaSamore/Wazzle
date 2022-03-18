@@ -5,12 +5,16 @@
 
 package wazzle.model.maingame;
 
+import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 
 public class WeightedAlphabetImpl implements WeightedAlphabet {
 
 	private Map<Character, Double> weightedLetterMap;
+	
 	public WeightedAlphabetImpl(Map<Character, Double> weightedLetterMap) {
+		Objects.requireNonNull(weightedLetterMap);
 		this.weightedLetterMap = weightedLetterMap;
 	}
 
@@ -25,7 +29,7 @@ public class WeightedAlphabetImpl implements WeightedAlphabet {
 
 	@Override
 	public Map<Character, Double> getWeightedAlphabet() {
-		return weightedLetterMap;
+		return Collections.unmodifiableMap(weightedLetterMap);
 	}
 
 }

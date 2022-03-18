@@ -9,13 +9,14 @@ package wazzle.model.common;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class DictionaryImpl implements Dictionary {
 
-	private Set<String> listOfWords;
+	private Set<String> words;
 
 	public DictionaryImpl(String fileName) throws IOException {
 		setListOfWords(fileName);
@@ -30,36 +31,28 @@ public class DictionaryImpl implements Dictionary {
 	 * @param fileName The name or the relative path of the file you are trying to
 	 *                 open. All the words in the file must be separated with a
 	 *                 end-of-line character.
-	 *                 
+	 * 
 	 * @debug this method will be removed TODO
 	 */
 
-	private void setListOfWords(String fileName) throws IOException {
-		try (Stream<String> words = Files.lines(Paths.get(fileName))) {
-			this.listOfWords = words.collect(Collectors.toSet());
-
+	private void setListOfWords(String fileName) {
+		try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
+			this.words = stream.collect(Collectors.toSet());
+		}
+		catch(IOException e){
+			System.err.println("File non trovato");
+			e.printStackTrace();
 		}
 	}
 
-	/**
-	 * @return An Object of class Dictionary.
-	 */
 
-	@Override
-	public DictionaryImpl getDictionary() {
-		return this;
-		
-	}
-	
+
 	/**
 	 * @return The Set containing all the words collected.
 	 */
-	
-	public Set<String> getListOfWords() {
-		return this.listOfWords;
-		
+
+	public Set<String> getWords() {
+		return Collections.unmodifiableSet(this.words);
 	}
-
-
 
 }
