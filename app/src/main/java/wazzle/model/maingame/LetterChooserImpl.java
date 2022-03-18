@@ -14,35 +14,32 @@ import javafx.util.Pair;
 
 public class LetterChooserImpl implements LetterChooser {
 	
-	private EnumMap<Range, WeightedLetters> classifiedLetters;
+	private EnumMap<Range, WeightedAlphabet> classifiedLetters;
 	private Pair<Integer, Integer> gridShape;
 	private static final double CONSTANCE_ROUND = 0.5;
-	private Function<Map<Character, Double>, List<Pair<Character, Double>>> f = (m) -> m.entrySet().stream()
+	private Function<Map<Character, Double>, Set<Pair<Character, Double>>> f = (m) -> m.entrySet().stream()
 																									.map(x -> new Pair<>(x.getKey(), x.getValue()))
-																									.collect(Collectors.toList());
+																									.collect(Collectors.toSet());
 	
-	public LetterChooserImpl (EnumMap<Range, WeightedLetters> classifiedLetters, Pair<Integer, Integer> gridShape) {
+	public LetterChooserImpl (EnumMap<Range, WeightedAlphabet> classifiedLetters, Pair<Integer, Integer> gridShape) {
 		this.classifiedLetters = classifiedLetters;
 		this.gridShape = gridShape;
 	}
 	
 
 	public EnumMap<Range, List<Pair<Character, Double>>> choose() {
-		
-		EnumMap<Range, List<Pair<Character, Double>>> result;
-//		Stream.of(Range.values())
-//			  .forEach(r -> this.extractLettersFromRange(this.getTotalLetterFromRange(r), 
-//					  this.classifiedLetters.get(r).getWeightedletters()));
-//		result.entrySet().stream()
-		
+		EnumMap<Range, List<Pair<Character, Double>>> result = new EnumMap<>(Range.class);
+		Stream.of(Range.values())
+			  .forEach(r -> result.put(r, this.extractLettersFromRange(this.getTotalLetterFromRange(r), 
+					  f.apply(this.classifiedLetters.get(r).getWeightedAlphabet()))));
+		return result;
 	}
 		
 	private int getTotalLetterFromRange(Range range) {
-		double allotmentIndex = (this.gridShape.getKey()*this.gridShape.getValue())/
+		double allotmentIndex = ((double) this.gridShape.getKey()*this.gridShape.getValue())/(double)
 				Stream.of(Range.values())
 					  .map(Range::getWeight)
 					  .reduce(0, (x, y) -> x + y);
-		
 		return (int) ((double) allotmentIndex*range.getWeight() + CONSTANCE_ROUND);
 	}
 	
