@@ -11,8 +11,7 @@ import java.util.Set;
 import java.io.IOException;
 
 import org.junit.Test;
-import wazzle.Dictionary;
-import wazzle.DictionaryImpl;
+import wazzle.model.common.*;
 
 public class TestDictionaryImpl {
 
@@ -29,7 +28,7 @@ public class TestDictionaryImpl {
 		testSet.add("(");	
 		
 		Dictionary dict = new DictionaryImpl(".\\src\\test\\res\\testDictionary.txt");
-		assertEquals(testSet, dict.getListOfWords());
+		assertEquals(testSet, dict.getWords());
 	};
 
     @Test(expected = NoSuchFileException.class)
