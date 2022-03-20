@@ -27,20 +27,28 @@ final class JsonHandler extends FileHandler{
 			case APPEND:
 				this.append();
 				break;
+				
+			case CLEAR:
+				this.clear();
+				break;
 		}
 		super.setNextHandler(Optional.empty());
 		super.handleNext(operation);
 	}
 	
-	private void serialize() {
+	private void serialize() throws IOException {
 		
 	}
 	
-	private void deserialize(){
+	private void deserialize() throws IOException {
 
 	}
 	
-	private void append() {
+	private void append() throws IOException {
+		
+	}
+	
+	private void clear() throws IOException {
 		
 	}
 

@@ -10,11 +10,15 @@ public interface FileOperation<T extends Serializable> {
 	enum Operation {
 		READ,
 		WRITE,
-		APPEND
+		APPEND,
+		CLEAR
 	}
 
 	List<T> getItems();
+	
 	Operation getOperation();
+	
 	String getFileName();
+	
 	String getPath();
 }

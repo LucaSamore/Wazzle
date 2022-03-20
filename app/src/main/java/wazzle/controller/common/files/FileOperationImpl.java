@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public final class FileOperationImpl<T extends Serializable> implements FileOperation<T> {
 	
@@ -11,14 +12,15 @@ public final class FileOperationImpl<T extends Serializable> implements FileOper
 
 	private final Operation operation;
 	private final String fileName;
-	private final List<T> items;
 	private final String separator = System.getProperty("file.separator");
 	private final String directory = "src" + this.separator + 
 			"main" + this.separator + 
 			"res" + this.separator + 
 			"files";
 	
-	public FileOperationImpl(final String fileName, final Operation operation, final List<T> items) {
+	private Optional<List<T>> items;
+	
+	public FileOperationImpl(final String fileName, final Operation operation, final Optional<List<T>> items) {
 		this.fileName = fileName;
 		this.operation = operation;
 		this.items = items;
@@ -26,7 +28,7 @@ public final class FileOperationImpl<T extends Serializable> implements FileOper
 	
 	@Override
 	public List<T> getItems() {
-		return Collections.unmodifiableList(this.items);
+		return this.items.orElseGet(() -> Collections.emptyList());
 	}
 
 	@Override

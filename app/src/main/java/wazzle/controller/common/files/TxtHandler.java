@@ -25,20 +25,29 @@ final class TxtHandler extends FileHandler{
 			case APPEND:
 				this.append();
 				break;
+				
+			case CLEAR:
+				this.clear();
+				break;
 		}
 		super.setNextHandler(Optional.empty());
 		super.handleNext(operation);
 	}
 	
-	private void read() {
+	private void read() throws IOException {
 		
 	}
 	
-	private void write(){
+	private void write() throws IOException {
 
 	}
 	
-	private void append() {
+	private void append() throws IOException {
 		
 	}
+	
+	private void clear() throws IOException {
+		
+	}
+	
 }

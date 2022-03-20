@@ -32,8 +32,4 @@ public class ConcreteFileHandler extends FileHandler {
 		
 		super.handleNext(operation);
 	}
-	
-	public void clearFile(final String fileName) {
-		
-	}
 }
