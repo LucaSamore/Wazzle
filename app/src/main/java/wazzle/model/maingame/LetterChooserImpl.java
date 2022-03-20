@@ -22,8 +22,8 @@ public class LetterChooserImpl implements LetterChooser {
 																									.collect(Collectors.toSet());
 	
 	public LetterChooserImpl (EnumMap<Range, WeightedAlphabet> classifiedLetters, Pair<Integer, Integer> gridShape) {
-		this.classifiedLetters = classifiedLetters;
-		this.gridShape = gridShape;
+		this.classifiedLetters = new EnumMap<>(classifiedLetters);
+		this.gridShape = new Pair<Integer, Integer>(gridShape.getKey(), gridShape.getValue());
 	}
 	
 
