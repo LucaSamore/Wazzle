@@ -52,19 +52,19 @@ public class TestFileHandler {
 	private FileOperation<String> readOperation1 = new FileOperationImpl<>(
 			EMPTY_FILE, 
 			Operation.READ, 
-			Optional.of(new ArrayList<String>())
+			Optional.empty()
 	);
 	
 	private FileOperation<String> readOperation2 = new FileOperationImpl<>(
 			TEST_FILE, 
 			Operation.READ, 
-			Optional.of(new ArrayList<String>())
+			Optional.empty()
 	);
 	
 	private FileOperation<String> readOperation3 = new FileOperationImpl<>(
 			"I do not exist.txt", 
 			Operation.READ, 
-			Optional.of(new ArrayList<String>())
+			Optional.empty()
 	);
 	
 	private FileOperation<String> writeOperation = new FileOperationImpl<>(
@@ -121,12 +121,13 @@ public class TestFileHandler {
 	public void testTextFile() {
 		try {
 			this.handler.handle(readOperation1);
-			assertEquals(Collections.emptyList(), this.readOperation1.getItems()); // read an empty .txt file
-			System.out.println(this.readOperation2.getItems());
+			assertEquals(Collections.emptyList(), this.handler.getItemsFromFile()); // read an empty .txt file
+			System.out.println(this.handler.getItemsFromFile());
 			
 			this.handler.handle(readOperation2);
-			assertFalse(this.readOperation2.getItems().size() == 0); // read a .txt file with some lines
-			System.out.println(this.readOperation2.getItems());
+			System.out.println(this.handler.getItemsFromFile().size());
+			assertTrue(this.handler.getItemsFromFile().size() > 0); // read a .txt file with some lines
+			System.out.println(this.handler.getItemsFromFile());
 			
 			this.handler.handle(writeOperation);
 			assertTrue(Files.size(Path.of(EMPTY_FILE)) > 0); // write some lines to the empty .txt file
