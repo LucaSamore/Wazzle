@@ -5,6 +5,6 @@ import java.util.Set;
 
 public interface AlphabetClassifier {
 	
-	public EnumMap<Range, WeightedLetters> classify();
+	public EnumMap<Range, WeightedAlphabet> classify();
 
 }
