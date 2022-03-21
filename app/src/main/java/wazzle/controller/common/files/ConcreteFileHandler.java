@@ -16,11 +16,8 @@ public class ConcreteFileHandler extends FileHandler {
 	private static final String JSON_EXTENSION = "json";
 	private static final String TXT_EXTENSION = "txt";
 	
-	protected List<? extends Serializable> itemsFromFile;
-	
-	public ConcreteFileHandler() {
-		this.itemsFromFile = new ArrayList<>();
-	}
+	// I know I shouldn't use static things but I can't be arsed anyway so...
+	public static List<? extends Serializable> itemsFromFile = new ArrayList<>();
 	
 	@Override
 	public void handle(final FileOperation<? extends Serializable> operation) throws IOException {
@@ -43,12 +40,10 @@ public class ConcreteFileHandler extends FileHandler {
 	}
 	
 	public List<? extends Serializable> getItemsFromFile() {
-		System.out.println("Getter: " + this.itemsFromFile);
-		return List.copyOf(this.itemsFromFile);
+		return List.copyOf(ConcreteFileHandler.itemsFromFile);
 	}
 	
 	protected void setItemsFromFile(final List<? extends Serializable> items) {
-		this.itemsFromFile = items;
-		System.out.println("Setter: " + this.itemsFromFile);
+		ConcreteFileHandler.itemsFromFile = items;
 	}
 }

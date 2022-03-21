@@ -25,11 +25,10 @@ final class TxtHandler extends ConcreteFileHandler{
 		switch(operation.getOperation()) {
 			case READ:
 				super.setItemsFromFile(this.readAsString(operation.getPath()));
-				System.out.println("Handler: " + super.getItemsFromFile());
 				break;
 			
 			case WRITE:
-				this.writeAsString(operation.getPath(), operation.getItems(), true);
+				this.writeAsString(operation.getPath(), operation.getItems(), false);
 				break;
 				
 			case APPEND:
@@ -52,7 +51,7 @@ final class TxtHandler extends ConcreteFileHandler{
 	private void writeAsString(final String path, final List<? extends Serializable> toBeWritten, boolean append) throws IOException {
 		// This method should be able to serialize any (serializable) object, but for the sake of this project we're gonna use it to write simple strings only
 		// Object serialization should be demanded to JsonHandler
-		// Object serialization/deserialization to .txt file may be implemented in the future :)
+		// Object serialization/deserialization to .txt file may will be implemented in the future :)
 		
 		@SuppressWarnings("unchecked")
 		List<String> items = (List<String>)(List<?>) toBeWritten;
