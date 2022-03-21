@@ -31,9 +31,6 @@ public class TestAlphabetClassifierImpl {
 				Map.of(Range.HIGH_FREQUENCY, new WeightedAlphabetImpl(Map.of('A', 29.60, 'L', 21.00)), 
 						Range.MEDIUM_FREQUENCY, new WeightedAlphabetImpl(Map.of('E', 19.40, 'D', 18.50)), 
 						Range.LOW_FREQUENCY, new WeightedAlphabetImpl(Map.of('F', 11.50))));
-		//testEnumMap.forEach((k,v) -> System.out.println(k.name() + v.getWeightedAlphabet()));
-		//classifier.classify().forEach((k,v) -> System.out.println(k.name() + v.getWeightedAlphabet()));
-		
 		assertTrue(testEnumMap.equals(classifier.classify()));
 	}
 
