@@ -20,6 +20,29 @@ public class WeightedAlphabetImpl implements WeightedAlphabet {
 		this.weightedLetterMap = new HashMap<>(weightedLetterMap);
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(weightedLetterMap);
+	}	
+	
+
+	@Override
+	public String toString() {
+		return "WeightedAlphabetImpl [weightedLetterMap=" + weightedLetterMap + "]";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		WeightedAlphabetImpl other = (WeightedAlphabetImpl) obj;
+		return Objects.equals(weightedLetterMap, other.weightedLetterMap);
+	}
+
 	/**
 	 * This method returns the field weightedLetterMap.
 	 * 
