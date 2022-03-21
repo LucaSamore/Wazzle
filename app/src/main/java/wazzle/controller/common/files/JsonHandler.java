@@ -18,7 +18,7 @@ import com.google.gson.JsonNull;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-final class JsonHandler extends FileHandler{
+final class JsonHandler extends ConcreteFileHandler{
 	
 	//TODO: Add javadoc
 	
@@ -45,8 +45,8 @@ final class JsonHandler extends FileHandler{
 				this.clear(operation.getPath());
 				break;
 		}
-		super.setNextHandler(Optional.empty());
-		super.handleNext(operation);
+		this.setNextHandler(Optional.empty());
+		this.handleNext(operation);
 	}
 	
 	private void serialize(String path, List<?> toBeWritten) throws IOException {
