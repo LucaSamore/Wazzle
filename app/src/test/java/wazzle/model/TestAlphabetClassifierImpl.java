@@ -24,13 +24,17 @@ public class TestAlphabetClassifierImpl {
 		WeightedAlphabet weightedAlphabet = new WeightedAlphabetImpl(Map.of('A', 29.60,
 				'F', 11.5, 
 				'E', 19.40, 
-				'C', 21.0, 
+				'L', 21.0, 
 				'D', 18.5));
 		AlphabetClassifier classifier = new AlphabetClassifierImpl(weightedAlphabet);
-		assertEquals(classifier.classify(), new EnumMap<Range, WeightedAlphabet>(
-				Map.of(Range.HIGH_FREQUENCY, new WeightedAlphabetImpl(Map.of('A', 29.60, 'E', 19.40)), 
-						Range.MEDIUM_FREQUENCY, new WeightedAlphabetImpl(Map.of('C', 21.00)), 
-						Range.LOW_FREQUENCY, new WeightedAlphabetImpl(Map.of('D', 18.50, 'F', 11.50)))));
+		EnumMap <Range, WeightedAlphabet> testEnumMap = new EnumMap<Range, WeightedAlphabet>(
+				Map.of(Range.HIGH_FREQUENCY, new WeightedAlphabetImpl(Map.of('A', 29.60, 'L', 21.00)), 
+						Range.MEDIUM_FREQUENCY, new WeightedAlphabetImpl(Map.of('E', 19.40, 'D', 18.50)), 
+						Range.LOW_FREQUENCY, new WeightedAlphabetImpl(Map.of('F', 11.50))));
+		//testEnumMap.forEach((k,v) -> System.out.println(k.name() + v.getWeightedAlphabet()));
+		//classifier.classify().forEach((k,v) -> System.out.println(k.name() + v.getWeightedAlphabet()));
+		
+		assertTrue(testEnumMap.equals(classifier.classify()));
 	}
 
 }
