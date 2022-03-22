@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -22,7 +23,9 @@ final class JsonHandler extends ConcreteFileHandler{
 	
 	//TODO: Add javadoc
 	
-	private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+	private final Gson gson = new GsonBuilder().setPrettyPrinting()
+											   .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
+											   .create();
 
 	@Override
 	public void handle(FileOperation<? extends Serializable> operation) throws IOException {
@@ -49,17 +52,11 @@ final class JsonHandler extends ConcreteFileHandler{
 		this.handleNext(operation);
 	}
 	
-	private void serialize(String path, List<?> toBeWritten) throws IOException {
-		
-		toBeWritten.forEach(i -> {
-			try {
-				this.gson.toJson(i, new FileWriter(path));
-			} catch (JsonIOException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		});
+	private void serialize(String path, List<? extends Serializable> toBeWritten) throws IOException {	
+		var writer = new FileWriter(path);
+		this.gson.toJson(toBeWritten, writer);
+		writer.flush();
+		writer.close();
 	}
 	
 	private List<? extends Serializable> deserialize(final String path) throws IOException {

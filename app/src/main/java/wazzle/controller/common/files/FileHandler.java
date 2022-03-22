@@ -11,6 +11,7 @@ import java.util.Optional;
 public abstract class FileHandler {
 	
 	//TODO: Add javadoc
+	
 	protected Optional<FileHandler> next;
 	
 	public abstract void handle(final FileOperation<? extends Serializable> operation) throws IOException;
