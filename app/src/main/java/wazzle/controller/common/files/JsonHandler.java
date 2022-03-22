@@ -7,17 +7,14 @@ import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonNull;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 
 final class JsonHandler extends ConcreteFileHandler{
 	
@@ -59,8 +56,11 @@ final class JsonHandler extends ConcreteFileHandler{
 		writer.close();
 	}
 	
-	private List<? extends Serializable> deserialize(final String path) throws IOException {
-		return null;
+	@SuppressWarnings("serial")
+	private List<?> deserialize(final String path) throws IOException {
+		List<?> items = this.gson.fromJson(Files.newBufferedReader(Path.of(path)), new TypeToken<List<?>>() {}.getType());
+		System.out.println(items);
+		return items;
 	}
 	
 	private void append() throws IOException {

@@ -30,19 +30,23 @@ public class TestFileHandler {
 		
 		private static final long serialVersionUID = 1L;
 
-		@SuppressWarnings("unused")
 		private String name;
-		
-		@SuppressWarnings("unused")
 		private int quantity;
-		
-		@SuppressWarnings("unused")
-		private LocalDateTime date;
+		//private LocalDateTime date;
 		
 		public Fruit(final String name, final int quantity) {
 			this.name = name;
 			this.quantity = quantity;
-			this.date = LocalDateTime.now();
+			//this.date = LocalDateTime.now();
+		}
+		
+		public String getName() {
+			return this.name;
+		}
+		
+		@Override
+		public String toString() {
+			return this.name + " " + this.quantity + " ";
 		}
 	}
 	
@@ -86,11 +90,11 @@ public class TestFileHandler {
 			Optional.empty()
 	);
 	
-//	private FileOperation<TestFileHandler.Fruit> readJsonOperation1 = new FileOperationImpl<>(
-//			JSON_TEST_FILE, 
-//			Operation.READ,
-//			Optional.of(new ArrayList<>())
-//	);
+	private FileOperation<TestFileHandler.Fruit> readJsonOperation1 = new FileOperationImpl<>(
+			JSON_TEST_FILE, 
+			Operation.READ,
+			Optional.of(new ArrayList<>())
+	);
 	
 	private FileOperation<TestFileHandler.Fruit> readJsonOperation2 = new FileOperationImpl<>(
 			"I am a ghost.json", 
@@ -118,55 +122,60 @@ public class TestFileHandler {
 	
 	private ConcreteFileHandler handler = new ConcreteFileHandler();
 
-	@Test
-	public void testTextFile() {
-		try {
-			this.handler.handle(readOperation1);
-			assertEquals(Collections.emptyList(), this.handler.getItemsFromFile()); // read an empty .txt file
-			
-			this.handler.handle(readOperation2);
-			assertTrue(this.handler.getItemsFromFile().size() > 0); // read a .txt file with some lines
-			
-			this.handler.handle(writeOperation);
-			assertTrue(Files.size(Path.of(writeOperation.getPath())) > 0); // write some lines to the empty .txt file
-			
-			this.handler.handle(clearOperation);
-			assertTrue(Files.size(Path.of(clearOperation.getPath())) == 0); // clear the empty.txt file previously written
-			
-			long oldSize = Files.size(Path.of(appendOperation.getPath()));
-			this.handler.handle(appendOperation);
-			assertTrue(Files.size(Path.of(appendOperation.getPath())) > oldSize); // add a few lines to a non-empty .txt file (size must change)
-			
-			this.handler.handle(readOperation3);
-			assertThrows(IOException.class, () -> this.handler.handle(readOperation3)); // try to read a file that does not exist
-			
-		} catch (IOException e) {
-			System.err.println("Exception thrown successfully");
-		}
-	}
+//	@Test
+//	public void testTextFile() {
+//		try {
+//			this.handler.handle(readOperation1);
+//			assertEquals(Collections.emptyList(), this.handler.getItemsFromFile()); // read an empty .txt file
+//			
+//			this.handler.handle(readOperation2);
+//			assertTrue(this.handler.getItemsFromFile().size() > 0); // read a .txt file with some lines
+//			
+//			this.handler.handle(writeOperation);
+//			assertTrue(Files.size(Path.of(writeOperation.getPath())) > 0); // write some lines to the empty .txt file
+//			
+//			this.handler.handle(clearOperation);
+//			assertTrue(Files.size(Path.of(clearOperation.getPath())) == 0); // clear the empty.txt file previously written
+//			
+//			long oldSize = Files.size(Path.of(appendOperation.getPath()));
+//			this.handler.handle(appendOperation);
+//			assertTrue(Files.size(Path.of(appendOperation.getPath())) > oldSize); // add a few lines to a non-empty .txt file (size must change)
+//			
+//			this.handler.handle(readOperation3);
+//			assertThrows(IOException.class, () -> this.handler.handle(readOperation3)); // try to read a file that does not exist
+//			
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//			//System.err.println("Exception thrown successfully");
+//		}
+//	}
 	
 	@Test
 	public void testJsonFile() {
 		try {
+			
+			//System.out.println(fruit1 + System.lineSeparator() + fruit2 + System.lineSeparator() + fruit3);
+			
 			this.handler.handle(writeJsonOperation);
 			assertFalse(Files.size(Path.of(writeJsonOperation.getPath())) == 0); // serialize some dumb objects
 			
-//			this.handler.handle(readJsonOperation1);
-//			assertTrue(readJsonOperation1.getItems().size() > 0); // deserialize previous objects
-//			System.out.println(this.readJsonOperation1.getItems());
-//			
+			this.handler.handle(readJsonOperation1);
+			assertTrue(this.handler.getItemsFromFile().size() > 0); // deserialize previous objects
+			System.out.println(this.handler.getItemsFromFile().getClass());
+			
 //			long oldSize = Files.size(Path.of(JSON_TEST_FILE));
 //			this.handler.handle(appendJsonOperation); // append a new dumb object
 //			assertTrue(Files.size(Path.of(TEST_FILE)) > oldSize);
 //			
-			this.handler.handle(clearJsonOperation); // clear json file (size must be zero)
-			assertTrue(Files.size(Path.of(JSON_TEST_FILE)) == 0);
+//			this.handler.handle(clearJsonOperation); // clear json file (size must be zero)
+//			assertTrue(Files.size(Path.of(JSON_TEST_FILE)) == 0);
 			
-			this.handler.handle(readJsonOperation2);
-			assertThrows(IOException.class, () -> this.handler.handle(readJsonOperation2)); // try to deserialize a json file that does not exist
+//			this.handler.handle(readJsonOperation2);
+//			assertThrows(IOException.class, () -> this.handler.handle(readJsonOperation2)); // try to deserialize a json file that does not exist
 			
 		} catch (IOException e) {
-			System.err.println("Exception thrown successfully");
+			e.printStackTrace();
+			//System.err.println("Exception thrown successfully");
 		}
 	}
 

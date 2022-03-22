@@ -2,7 +2,10 @@ package wazzle.controller.common.files;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.Type;
+
 import com.google.common.io.Files;
+import com.google.common.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +20,7 @@ public class ConcreteFileHandler extends FileHandler {
 	private static final String TXT_EXTENSION = "txt";
 	
 	// I know I shouldn't use static things but I can't be arsed anyway so...
-	public static List<? extends Serializable> itemsFromFile = new ArrayList<>();
+	private static List<?> itemsFromFile = new ArrayList<>();
 	
 	@Override
 	public void handle(final FileOperation<? extends Serializable> operation) throws IOException {
@@ -39,11 +42,11 @@ public class ConcreteFileHandler extends FileHandler {
 		this.handleNext(operation);
 	}
 	
-	public List<? extends Serializable> getItemsFromFile() {
+	public List<?> getItemsFromFile() {
 		return List.copyOf(ConcreteFileHandler.itemsFromFile);
 	}
 	
-	protected void setItemsFromFile(final List<? extends Serializable> items) {
+	protected void setItemsFromFile(final List<?> items) {
 		ConcreteFileHandler.itemsFromFile = items;
 	}
 }
