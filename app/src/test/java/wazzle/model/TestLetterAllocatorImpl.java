@@ -41,7 +41,8 @@ public class TestLetterAllocatorImpl {
 		
 		LetterAllocator letterAllocator = new LetterAllocatorImpl(choosenLetters);
 		Set<Letter> allocatedLetters = letterAllocator.alloc();
-		
+		allocatedLetters.forEach(l -> System.out.println(l.toString()));
+		assertTrue(false);
 //		List<Pair<Character, Double>> allocatedLettersTotal = new LinkedList<>();
 //		allocatedLetters.forEach(v -> allocatedLettersTotal.add(new Pair<Character, Double>(v.getContent(), v.getPosition())));
 //		List<Pair<Character, Double>> choosenLettersTotal = new LinkedList<>();
@@ -52,7 +53,6 @@ public class TestLetterAllocatorImpl {
 //				new LetterImpl('I', new Pair<>(1,0)), new LetterImpl('I', new Pair<>(1,1)), new LetterImpl('I', new Pair<>(1,2)), new LetterImpl('I', new Pair<>(1,3)), 
 //				new LetterImpl('I', new Pair<>(2,0)), new LetterImpl('I', new Pair<>(2,1)), new LetterImpl('I', new Pair<>(2,2)), new LetterImpl('I', new Pair<>(2,3)),
 //				new LetterImpl('I', new Pair<>(3,0)), new LetterImpl('I', new Pair<>(3,1)), new LetterImpl('I', new Pair<>(3,2)), new LetterImpl('I', new Pair<>(3,3)));
-		fail("Not yet implemented");
 	}
 
 }
