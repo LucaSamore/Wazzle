@@ -7,7 +7,7 @@ public class LetterImpl implements Letter {
 	private char content;
 	private Pair<Integer, Integer> position;
 	
-	public LetterImpl(char content, Pair<Integer, Integer> position) {
+	public LetterImpl (Pair<Integer, Integer> position, char content) {
 		this.content = content;
 		this.position = new Pair<>(position.getKey(), position.getValue());
 	}
