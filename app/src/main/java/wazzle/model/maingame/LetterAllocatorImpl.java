@@ -1,171 +1,200 @@
 package wazzle.model.maingame;
 
 import java.util.ArrayList;
+
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import javafx.util.Pair;
 
-public class LetterAllocatorImpl implements LetterAllocator {
+public final class LetterAllocatorImpl implements LetterAllocator {
 	
 	private EnumMap<Range, List<Pair<Character, Double>>> choosenLetters;
 	private int gridSize;
 	private int shape;
-	private List<Pair<Character, Double>> value;
+	private static final Random RANDOM = new Random();
 	
 	
-	public LetterAllocatorImpl(EnumMap<Range, List<Pair<Character, Double>>> choosenLetters) {
+	public LetterAllocatorImpl(final EnumMap<Range, List<Pair<Character, Double>>> choosenLetters) {
+		Objects.requireNonNull(choosenLetters);
 		this.choosenLetters = new EnumMap<Range, List<Pair<Character, Double>>>(choosenLetters);
-		this.gridSize = this.choosenLetters.values().stream()
-				  .map(l -> l.size())
-				  .reduce(0, (x, y) -> x + y);
-		this.shape = (int) Math.sqrt(this.gridSize);
+		this.gridSize = this.getGridSize();
+		this.shape = this.getShape();
+	}
+	
+	private int getGridSize() {
+		return this.choosenLetters.values().stream()
+		  .map(l -> l.size())
+		  .reduce(0, (x, y) -> x + y);
+	}
+	
+	private int getShape() {
+		return (int) Math.sqrt(this.gridSize);
 	}
 	
 	@Override
 	public Set<Letter> alloc() {
-		//Map<Pair<Character, Pair<Integer, Integer>>, Range> allocatedLetters;
-		Set<Letter> allocatedLetters;
 		Set<Pair<Integer, Integer>> grid = new HashSet<>();
-		IntStream.range(-1, this.shape-1).boxed()
-		.forEach(i -> IntStream.range(-1, this.shape-1).boxed()
-				.forEach(j -> grid.add(new Pair<>(i+1, j+1))));
-		List<Character> toAllocLetters = new ArrayList<>();
-		this.choosenLetters.values().stream().forEach(c -> toAllocLetters.addAll(c.stream().map(l -> l.getKey()).collect(Collectors.toList())));
-		//estraggo casualmente le lettere
-		Set<Letter> extractedLetters = this.extractLetters(toAllocLetters, grid);
-		System.out.println(extractedLetters.toString());
-		System.out.println(grid.toString());
-		allocatedLetters = extractedLetters;
-//		while (this.checkGrid(extractedLetters) == allocatedLetters) {
-//			allocatedLetters = this.checkGrid(extractedLetters);
-//		}
+		
+		//Fill grid with position from 0,0 to gridShape-1,gridShape-1
+		IntStream.range(-1, this.shape-1)
+				 .boxed()
+				 .forEach(i -> IntStream.range(-1, this.shape-1)
+								   		.boxed()
+								   		.forEach(j -> grid.add(new Pair<>(i+1, j+1))));
+		
+		List<Pair<Character, Double>> toAllocLetters = new ArrayList<>();
+		Set<Letter> allocatedLetters;
+		
+		do {
+			toAllocLetters.clear();
+			//Insert choosenLetters EnumMap<Range, List<Pair<Character, Double>>> 
+			//Into a List<Pair<Character. Double>> toAllocLetters
+			this.choosenLetters.values()
+							   .stream()
+							   .forEach(c -> toAllocLetters.addAll(c));
+			
+			//Extract random letter - taken toAllocLetter and placed in a grid
+			allocatedLetters = this.extractLetters(toAllocLetters, grid);
+			//Check grid until it have a correct structure
+		} while (!this.checkGrid(allocatedLetters));
+		
+		
 		return allocatedLetters;
 	}
 	
-	//determina come deve essere conformata una riga/colonna - ossia con un numero di lettere per range compreso tra .. a ...
+	//For debug only
+	public boolean checkGridForTests (final Set<Letter> alreadyAllocated){
+		return this.checkGrid(alreadyAllocated);
+	}
+	
+	//Compute how many letter of every Range have to stay in a row/column 
+	//The number of letter for range is defined by a range Pair<Integer, Integer> - minimum and maximum number of letter for range
 	private EnumMap<Range, Pair<Integer, Integer>> getNumberOfLetterForShape() {
-		EnumMap<Range, Pair<Integer, Integer>> rangeForRange = new EnumMap<Range, Pair<Integer, Integer>>(Range.class);
+		final EnumMap<Range, Pair<Integer, Integer>> rangeForRange = new EnumMap<>(Range.class);
 		this.choosenLetters.entrySet().forEach(e -> {
+			int numberOfLettersForRange = getChoosenLetterListSize(e.getKey());
+			
 			rangeForRange.put(e.getKey(), new Pair<>(
-					getChoosenLetterListSize(e.getKey())/this.shape - 1 < 0 ? 0 : getChoosenLetterListSize(e.getKey())/this.shape - 1, 
-							getChoosenLetterListSize(e.getKey())/this.shape + 1));
+					numberOfLettersForRange / this.shape - 1 < 0 
+					? 0
+					: numberOfLettersForRange / this.shape - 1, 
+					numberOfLettersForRange / this.shape + 1));
 		});
+		System.out.println(rangeForRange);
 		return rangeForRange;
 	}
 	
-	private int getChoosenLetterListSize(Range r) {
+	//Returns the size of the list of Character contained in a Range
+	private int getChoosenLetterListSize(final Range r) {
 		return this.choosenLetters.get(r).size();
 	}
 	
-	//riempie la griglia casualmente con le lettere
-	private Set<Letter> extractLetters(List<Character> toAllocLetters, Set<Pair<Integer, Integer>> grid) {
+	//Extract random letter for every position of the grid
+	private Set<Letter> extractLetters(List<Pair<Character, Double>> toAllocLetters, Set<Pair<Integer, Integer>> grid) {
 		Set<Letter> allocatedLetters = new HashSet<>();
-		Random random = new Random();
-		Set<Integer> alreadyExtractedIndex = new HashSet<>();
-		System.out.println(grid.size());
+		int extraction = 0;
 		for(var p: grid) {
-			System.out.println("size:" + toAllocLetters.size());
-			do {
-				extraction = random.nextInt(toAllocLetters.size()-1);
+			//The last 2 letter aren't taken casually, to avoid bugs
+			if (toAllocLetters.size() > 1) {
+				extraction = RANDOM.nextInt(toAllocLetters.size()-1);
+				allocatedLetters.add(new LetterImpl(p, toAllocLetters.get(extraction).getKey(), toAllocLetters.get(extraction).getValue()));
+				toAllocLetters.remove(extraction);
 			}
-			while (alreadyExtractedIndex.contains(extraction));
-			alreadyExtractedIndex.add(extraction);
-			System.out.println(extraction);
-			toAllocLetters.remove(extraction);
-			allocatedLetters.add(new LetterImpl(p, toAllocLetters.get(extraction)));
-			System.out.println(allocatedLetters.toString());
-			System.out.println("final size" + allocatedLetters.size());
+			else {
+				allocatedLetters.add(new LetterImpl(p, toAllocLetters.get(0).getKey(), toAllocLetters.get(0).getValue()));
+				toAllocLetters.remove(0);
+			}	
 		}
+		
 		return allocatedLetters;
 	}
 	
-	private Set<Letter> getRow(Set<Letter> alreadyAllocated, int row) {
-		return alreadyAllocated.stream().filter(l -> l.getPosition().getKey() == row).collect(Collectors.toSet());
+	//Returns the letter allocated in the given row
+	private Set<Letter> getRow(final Set<Letter> alreadyAllocated, final int row) {
+		System.out.println("row " + row + alreadyAllocated.stream().filter(l -> l.getPosition().getKey() == row).collect(Collectors.toSet()));
+		return alreadyAllocated.stream()
+							   .filter(l -> l.getPosition().getKey() == row)
+							   .collect(Collectors.toSet());
 	}
 	
-	
-	private Set<Letter> getColumn(Set<Letter> alreadyAllocated, int column) {
-		return alreadyAllocated.stream().filter(l -> l.getPosition().getValue() == column).collect(Collectors.toSet());
+	//Returns the letter allocated in the given column
+	private Set<Letter> getColumn(final Set<Letter> alreadyAllocated, final int column) {
+		System.out.println("column " + column + alreadyAllocated.stream().filter(l -> l.getPosition().getValue() == column).collect(Collectors.toSet()));
+		return alreadyAllocated.stream()
+							   .filter(l -> l.getPosition().getValue() == column)
+							   .collect(Collectors.toSet());
 	}
 	
-	//mi restituisce un range data una lettera
-	private Range getLetterRange(Character c) {
-		return this.choosenLetters.entrySet().stream().filter(e -> e.getValue().stream().collect(Collectors.toMap(Pair::getKey, Pair::getValue)).keySet().contains(c)).findFirst().get().getKey();
+	//Returns the Range which the given Character belongs to
+	private Optional<Range> getLetterRange(Character c) {
+		Optional<Range> r = Optional.empty();
+		for (var e: this.choosenLetters.entrySet()) {
+			Optional<Pair<Character, Double>> pair = e.getValue().stream().filter(p -> p.getKey().equals(c)).findFirst();
+			if (!pair.equals(Optional.empty())) {
+				r = Optional.of(e.getKey());
+				return r;
+			}
+		}
+//		//TODO: TO BE REFACTORED 
+		return r;
 	}
+		
 	
-	//mi dice quante lettere ci sono per ogni range
-	private EnumMap<Range, Integer> getAttendency(Set<Letter> letters) {
-		EnumMap<Range, Integer> attendency = new EnumMap<>(Range.class);
-		letters.stream().forEach(l -> attendency.put(this.getLetterRange(l.getContent()), attendency.getOrDefault(this.getLetterRange(l.getContent()), 0) + 1));
+	//Returns an EnumMap<Range, Integer> which contains the number of letters for every range 
+	//contained in the given Set<Letter>
+	private EnumMap<Range, Integer> getAttendency(final Set<Letter> letters) {
+		final EnumMap<Range, Integer> attendency = new EnumMap<>(Range.class);
+		letters.forEach(l -> attendency.put(this.getLetterRange(l.getContent()).get(), 
+				attendency.containsKey(this.getLetterRange(l.getContent()).get())
+				? attendency.get(this.getLetterRange(l.getContent()).get()) + 1
+				: 1));
+		
+		System.out.println(attendency);
 		return attendency;
 	}
-	
-	//mi dice quali sono i set che hanno delle lettere in più
-	private Optional<Set<Range>> getRangeOver(EnumMap<Range, Integer> attendency, EnumMap<Range, Pair<Integer, Integer>> rangeForRange) {
-		Map<Range, Integer> badRanges = attendency.entrySet().stream().filter(e -> e.getValue() < rangeForRange.get(e.getKey()).getKey() && e.getValue() > rangeForRange.get(e.getKey()).getValue()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-		return badRanges.size() == 0 ? Optional.empty() : Optional.of(badRanges.keySet());
-	}
 	 
-	//mi dice quante lettere ci sono in più per range
-	private int howManyLetterMoreForRange(Set<Letter> letters, Range r) {
-		return this.getAttendency(letters).get(r) - this.getNumberOfLetterForShape().get(r).getValue();
+	//Returns the letter which have to be replaced because of those exceed the maximum threshold of letter for range in a row/column
+	private boolean isTheLetterSetCorrect(final Set<Letter> letters) {
+		final EnumMap<Range, Integer> attendency = this.getAttendency(letters);
+		final EnumMap<Range, Pair<Integer, Integer>> rangeForRange = this.getNumberOfLetterForShape();
+		
+		boolean result = true;
+		
+		for(var e: attendency.entrySet()) {
+			result = Optional.of(e.getValue())
+							 .filter(i -> i < rangeForRange.get(e.getKey()).getKey() || 
+									 	  i > rangeForRange.get(e.getKey()).getValue())
+							 .isPresent() ? false : result;		
+		}
+		return result;
 	}
-	
-	//
-	private Map<Letter, Range> getLettersToReplace(Set<Letter> letters) {
-		Map<Letter, Range> toReplace = new HashMap<>();
-		for (var l: letters) {
-			if (this.getRangeOver(this.getAttendency(letters), this.getNumberOfLetterForShape()).get().contains(this.getLetterRange(l.getContent()))) {
-				this.getRangeOver(this.getAttendency(letters), this.getNumberOfLetterForShape()).get().forEach(r -> toReplace.put(l, r));
-			}
-		}	
-		return toReplace;
-	}
-	
-	private Set<Letter> replaceLetter(Map<Letter, Range> toReplace, Set<Letter> alreadyAllocated) {
-//		toReplace.forEach((k1, v1) -> 
-//			toReplace.forEach((k2, v2) -> 
-//			v1 == this.getLetterRange(k2.getContent()) || v2 == this.getLetterRange(k1.getContent()) 
-//			? this.switchLetter(k1, k2, alreadyAllocated) : null));
-		for (var e1: toReplace.entrySet()) {
-			for (var e2: toReplace.entrySet()) {
-				if (e1.getValue() == this.getLetterRange(e2.getKey().getContent()) || 
-						e2.getValue() == this.getLetterRange(e1.getKey().getContent())) {
-					alreadyAllocated = this.switchLetter(e1.getKey(), e2.getKey(), alreadyAllocated);
-					toReplace.remove(e1.getKey());
-					toReplace.remove(e2.getKey());
-				}
-			}
-		}	
-		return alreadyAllocated;
-	}
-	
-	private Set<Letter> switchLetter(Letter l1, Letter l2, Set<Letter> alreadyAllocated) {
-		alreadyAllocated.removeAll(Set.of(l1, l2));
-		alreadyAllocated.add(new LetterImpl(l1.getPosition(), l2.getContent()));
-		alreadyAllocated.add(new LetterImpl(l2.getPosition(), l1.getContent()));
-		return alreadyAllocated;
-	}
-	
-	private Set<Letter> checkGrid(Set<Letter> alreadyAllocated) {
-		Map<Letter, Range> toReplace = new HashMap<>();
-		IntStream.range(0, this.shape).forEach(i -> toReplace.putAll(this.getLettersToReplace(this.getRow(alreadyAllocated, i))));
-		IntStream.range(0, this.shape).forEach(j -> toReplace.putAll(this.getLettersToReplace(this.getColumn(alreadyAllocated, j))));
-		return this.replaceLetter(toReplace, alreadyAllocated);
-	}
-	
-	
 
+	//Returns the updated set of letter
+	//After checking for every rows and columns if there are letters in a wrong position
+	//and if there are any of them, it change their position
+	private boolean checkGrid(final Set<Letter> alreadyAllocated) {
+		boolean checkRows = true;
+		
+		for (int i=0; i<this.shape; i++) {
+			checkRows = this.isTheLetterSetCorrect(this.getRow(alreadyAllocated, i)) ? checkRows : false;
+			System.out.println("risultato del check row: " + this.isTheLetterSetCorrect(this.getRow(alreadyAllocated, i)) + System.lineSeparator());
+		}
+		System.out.println("FINALE RIGHE: " + checkRows);
+		boolean checkColumns = true;
+		
+		for (int j=0; j<this.shape; j++) {
+			checkColumns = this.isTheLetterSetCorrect(this.getColumn(alreadyAllocated, j)) ? checkColumns : false;
+			System.out.println("risultato del check columns: " + this.isTheLetterSetCorrect(this.getColumn(alreadyAllocated, j)) + System.lineSeparator());
+		}
+		System.out.println("FINALE COLONNE: " + checkColumns);
+		return checkRows && checkColumns;
+	}
 }
