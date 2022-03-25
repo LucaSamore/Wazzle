@@ -12,16 +12,16 @@ import java.util.stream.Stream;
 
 import javafx.util.Pair;
 
-public class LetterChooserImpl implements LetterChooser {
+public final class LetterChooserImpl implements LetterChooser {
 	
 	private EnumMap<Range, WeightedAlphabet> classifiedLetters;
 	private Pair<Integer, Integer> gridShape;
 	private static final double CONSTANCE_ROUND = 0.5;
-	private Function<Map<Character, Double>, Set<Pair<Character, Double>>> f = (m) -> m.entrySet().stream()
+	private final Function<Map<Character, Double>, Set<Pair<Character, Double>>> f = (m) -> m.entrySet().stream()
 																									.map(x -> new Pair<>(x.getKey(), x.getValue()))
 																									.collect(Collectors.toSet());
 	
-	public LetterChooserImpl (EnumMap<Range, WeightedAlphabet> classifiedLetters, Pair<Integer, Integer> gridShape) {
+	public LetterChooserImpl (final EnumMap<Range, WeightedAlphabet> classifiedLetters, final Pair<Integer, Integer> gridShape) {
 		this.classifiedLetters = new EnumMap<>(classifiedLetters);
 		this.gridShape = new Pair<Integer, Integer>(gridShape.getKey(), gridShape.getValue());
 	}
@@ -35,7 +35,7 @@ public class LetterChooserImpl implements LetterChooser {
 		return result;
 	}
 		
-	private int getTotalLetterFromRange(Range range) {
+	private int getTotalLetterFromRange(final Range range) {
 		double allotmentIndex = ((double) this.gridShape.getKey()*this.gridShape.getValue())/(double)
 				Stream.of(Range.values())
 					  .map(Range::getWeight)
@@ -43,8 +43,8 @@ public class LetterChooserImpl implements LetterChooser {
 		return (int) ((double) allotmentIndex*range.getWeight() + CONSTANCE_ROUND);
 	}
 	
-	private List<Pair<Character, Double>> extractLettersFromRange (int numberOfExtraction, Set<Pair<Character, Double>> pool) {
-		Random random = new Random();
+	private List<Pair<Character, Double>> extractLettersFromRange (final int numberOfExtraction, final Set<Pair<Character, Double>> pool) {
+		var random = new Random();
 		var listPool = pool.stream().collect(Collectors.toList());
 		return IntStream.range(0, numberOfExtraction)
 				 .boxed()
