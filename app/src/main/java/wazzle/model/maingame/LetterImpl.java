@@ -6,23 +6,29 @@ public class LetterImpl implements Letter {
 	
 	private char content;
 	private Pair<Integer, Integer> position;
+	private double score;
 	
-	public LetterImpl (Pair<Integer, Integer> position, char content) {
+	public LetterImpl (final Pair<Integer, Integer> position, final char content, final double score) {
 		this.content = content;
 		this.position = new Pair<>(position.getKey(), position.getValue());
-	}
-
-	public Character getContent() {
-		return this.content;
+		this.score = score;
 	}
 
 	public Pair<Integer, Integer> getPosition() {
 		return this.position;
 	}
+	
+	public Character getContent() {
+		return this.content;
+	}
+
+	public double getScore() {
+		return score;
+	}
 
 	@Override
 	public String toString() {
-		return "LetterImpl [content=" + content + ", position=" + position + "]";
+		return "LetterImpl [content=" + content + ", position=" + position + ", score=" + score + "]";
 	}
 
 	@Override
@@ -31,6 +37,9 @@ public class LetterImpl implements Letter {
 		int result = 1;
 		result = prime * result + content;
 		result = prime * result + ((position == null) ? 0 : position.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(score);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
 
@@ -49,6 +58,8 @@ public class LetterImpl implements Letter {
 			if (other.position != null)
 				return false;
 		} else if (!position.equals(other.position))
+			return false;
+		if (Double.doubleToLongBits(score) != Double.doubleToLongBits(other.score))
 			return false;
 		return true;
 	}
