@@ -95,7 +95,7 @@ public class TestLetterAllocatorImpl {
 		List<Character> startingLetters16 = new ArrayList<>();
 		choosenLetters16.values().stream().forEach(c -> startingLetters16.addAll(c.stream().map(l -> l.getKey()).collect(Collectors.toList())));
 		LetterAllocator letterAllocator16 = new LetterAllocatorImpl(choosenLetters16);
-		Set<Letter> allocatedLetters16 = letterAllocator16.alloc();
+		Set<Letter> allocatedLetters16 = letterAllocator16.allocate();
 		List<Character> finalLetters16 = new ArrayList<>();
 		allocatedLetters16.forEach(l -> finalLetters16.add(l.getContent()));
 		System.out.println("NON LO SO");
@@ -123,7 +123,7 @@ public class TestLetterAllocatorImpl {
 		List<Character> startingLetters25 = new ArrayList<>();
 		choosenLetters25.values().stream().forEach(c -> startingLetters25.addAll(c.stream().map(l -> l.getKey()).collect(Collectors.toList())));
 		LetterAllocator letterAllocator25 = new LetterAllocatorImpl(choosenLetters25);
-		Set<Letter> allocatedLetters25 = letterAllocator25.alloc();
+		Set<Letter> allocatedLetters25 = letterAllocator25.allocate();
 		List<Character> finalLetters25 = new ArrayList<>();
 		allocatedLetters25.forEach(l -> finalLetters25.add(l.getContent()));
 		System.out.println("CIAOOO");
