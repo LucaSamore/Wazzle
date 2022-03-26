@@ -2,10 +2,6 @@ package wazzle.controller.common.files;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 public abstract class FileHandler {
@@ -21,6 +17,8 @@ public abstract class FileHandler {
 	}
 	
 	protected void handleNext(final FileOperation<? extends Serializable> operation) throws IOException {
+		System.out.println("IsPresent? " + this.next.isPresent());
+		
 		if(!this.next.isPresent()) {
 			return;
 		}

@@ -19,7 +19,7 @@ import wazzle.controller.common.files.FileOperation;
 import wazzle.controller.common.files.FileOperation.Operation;
 import wazzle.controller.common.files.FileOperationImpl;
 
-public class TestFileHandler {
+public final class TestFileHandler {
 	
 	private static final String TEST_FILE = "test.txt";
 	private static final String EMPTY_FILE = "empty.txt";
@@ -120,7 +120,7 @@ public class TestFileHandler {
 			Optional.empty()
 	);
 	
-	private ConcreteFileHandler handler = new ConcreteFileHandler();
+	private ConcreteFileHandler<TestFileHandler.Fruit> handler = new ConcreteFileHandler<>();
 
 //	@Test
 //	public void testTextFile() {
@@ -156,12 +156,19 @@ public class TestFileHandler {
 			
 			//System.out.println(fruit1 + System.lineSeparator() + fruit2 + System.lineSeparator() + fruit3);
 			
-			this.handler.handle(writeJsonOperation);
-			assertFalse(Files.size(Path.of(writeJsonOperation.getPath())) == 0); // serialize some dumb objects
-			
+//			this.handler.handle(writeJsonOperation);
+//			assertFalse(Files.size(Path.of(writeJsonOperation.getPath())) == 0); // serialize some dumb objects
+
 			this.handler.handle(readJsonOperation1);
-			assertTrue(this.handler.getItemsFromFile().size() > 0); // deserialize previous objects
-			System.out.println(this.handler.getItemsFromFile().getClass());
+			
+			System.out.println(this.handler.getItemsFromFile() + System.lineSeparator() + System.lineSeparator());
+			
+			for (var i: Thread.currentThread().getStackTrace()) {
+				System.out.println(i);
+			}
+
+			//assertTrue(this.handler.getItemsFromFile().size() > 0); // deserialize previous objects
+			//System.out.println(this.handler.getItemsFromFile().getClass());
 			
 //			long oldSize = Files.size(Path.of(JSON_TEST_FILE));
 //			this.handler.handle(appendJsonOperation); // append a new dumb object

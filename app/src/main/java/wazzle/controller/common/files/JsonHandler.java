@@ -11,20 +11,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-final class JsonHandler extends ConcreteFileHandler{
+final class JsonHandler<E> extends ConcreteFileHandler<E>{
 	
 	//TODO: Add javadoc
 	
-	private final Gson gson = new GsonBuilder().setPrettyPrinting()
-											   .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
-											   .create();
+	private final Gson gson = new GsonBuilder()
+			.setPrettyPrinting()
+			.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
+			.create();
 
-	@Override
 	public void handle(FileOperation<? extends Serializable> operation) throws IOException {
 		Objects.requireNonNull(operation);
 		
@@ -38,38 +40,39 @@ final class JsonHandler extends ConcreteFileHandler{
 				break;
 				
 			case APPEND:
-				this.append();
+				this.append(operation.getPath(), operation.getItems());
 				break;
 				
 			case CLEAR:
 				this.clear(operation.getPath());
 				break;
 		}
+		//return false;
 		this.setNextHandler(Optional.empty());
 		this.handleNext(operation);
+		//return this.next.get().handle(operation);
 	}
 	
 	private void serialize(String path, List<? extends Serializable> toBeWritten) throws IOException {	
-		var writer = new FileWriter(path);
+		final var writer = new FileWriter(path);
 		this.gson.toJson(toBeWritten, writer);
 		writer.flush();
 		writer.close();
 	}
 	
 	@SuppressWarnings("serial")
-	private List<?> deserialize(final String path) throws IOException {
-		List<?> items = this.gson.fromJson(Files.newBufferedReader(Path.of(path)), new TypeToken<List<?>>() {}.getType());
-		System.out.println(items);
+	private List<E> deserialize(final String path) throws IOException {
+		final List<E> items = this.gson.fromJson(Files.newBufferedReader(Path.of(path)), new TypeToken<List<E>>() {}.getType());
+		System.out.println("Deserializer: " + items);
 		return items;
 	}
 	
-	private void append() throws IOException {
-		
+	@SuppressWarnings("unchecked")
+	private void append(final String path, final List<? extends Serializable> toBeAppended) throws IOException {
+		this.serialize(
+				path,
+				(List<? extends Serializable>) Stream.concat(this.deserialize(path).stream(), toBeAppended.stream())
+					  								 .collect(Collectors.toList())
+		);
 	}
-	
-	private void clear(final String path) throws IOException {
-		Files.delete(Path.of(path));
-		Files.createFile(Path.of(path));
-	}
-
 }

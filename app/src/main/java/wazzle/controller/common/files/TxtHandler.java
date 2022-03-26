@@ -2,6 +2,7 @@ package wazzle.controller.common.files;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,7 +11,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-final class TxtHandler extends ConcreteFileHandler{
+import com.google.common.reflect.TypeToken;
+
+final class TxtHandler<E> extends ConcreteFileHandler<E>{
 	
 	//TODO: Add javadoc
 	
@@ -40,14 +43,18 @@ final class TxtHandler extends ConcreteFileHandler{
 		this.handleNext(operation);
 	}
 	
-	private List<String> readAsString(final String path) throws IOException {
-		return Files.readAllLines(Path.of(path), StandardCharsets.UTF_8);
+	@SuppressWarnings("unchecked")
+	private List<E> readAsString(final String path) throws IOException {
+		// This method should be able to deserialize any (serializable) object, but for the sake of this project we're gonna use it to read simple strings only
+		// Object deserialization should be demanded to JsonHandler
+		// Object deserialization to .txt file may will be implemented in the future :)
+		return (List<E>)(List<?>)Files.readAllLines(Path.of(path), StandardCharsets.UTF_8);
 	}
 	
 	private void writeAsString(final String path, final List<? extends Serializable> toBeWritten, boolean append) throws IOException {
 		// This method should be able to serialize any (serializable) object, but for the sake of this project we're gonna use it to write simple strings only
 		// Object serialization should be demanded to JsonHandler
-		// Object serialization/deserialization to .txt file may will be implemented in the future :)
+		// Object serialization to .txt file may will be implemented in the future :)
 		
 		@SuppressWarnings("unchecked")
 		List<String> items = (List<String>)(List<?>) toBeWritten;
@@ -62,10 +69,4 @@ final class TxtHandler extends ConcreteFileHandler{
 			}
 		});
 	}
-	
-	private void clear(final String path) throws IOException {
-		Files.delete(Path.of(path));
-		Files.createFile(Path.of(path));
-	}
-	
 }
