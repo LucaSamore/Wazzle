@@ -8,20 +8,36 @@ public class LetterImpl implements Letter {
 	private Pair<Integer, Integer> position;
 	private double score;
 	
+	/**
+	 * Construct a new Letter. 
+	 * 
+	 * @param position The position of the Letter.
+	 * @param content The content of the Letter.
+	 * @param score	The score of the Letter.
+	 */
 	public LetterImpl (final Pair<Integer, Integer> position, final char content, final double score) {
 		this.content = content;
 		this.position = new Pair<>(position.getKey(), position.getValue());
 		this.score = score;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public Pair<Integer, Integer> getPosition() {
 		return this.position;
 	}
 	
-	public Character getContent() {
+	/**
+	 * {@inheritDoc}
+	 */
+	public char getContent() {
 		return this.content;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public double getScore() {
 		return score;
 	}
