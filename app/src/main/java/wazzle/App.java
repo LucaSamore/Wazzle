@@ -7,7 +7,7 @@ import javafx.application.Application;
 
 public class App {
     public String getGreeting() {
-        return "YEAH YOU MADE IT BOI";
+        return "Hello World! It's a test :)";
     }
 
     public static void main(String[] args) {
