@@ -18,34 +18,20 @@ public final class AlphabetClassifierImpl implements AlphabetClassifier {
 	private final Function<EnumMap<Range, Map<Character, Double>>, Map<Range, WeightedAlphabet>> f = m -> m.entrySet()
 	   .stream()
 	   .collect(Collectors.toMap(Map.Entry::getKey, e -> new WeightedAlphabetImpl(e.getValue())));
-	private final Mediator mediator;
 	
 	/**
 	 * Construct a new AlphabetClassifier.
 	 * 
 	 * @param weightedAlphabet The WeightedAlphabet which have to be classified.
-	 * @param mediator The Mediator which handles the grid creation.
 	 */
-	public AlphabetClassifierImpl (final WeightedAlphabet weightedAlphabet, final Mediator mediator) {
+	public AlphabetClassifierImpl (final WeightedAlphabet weightedAlphabet) {
 		this.weightedAlphabet = new WeightedAlphabetImpl(weightedAlphabet.getWeightedAlphabet());
-		this.mediator = mediator;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public void classify() {
-		EnumMap <Range, Map<Character, Double>> classifiedLetters = new EnumMap<>(Range.class);
-		Arrays.asList(Range.values()).stream().collect(Collectors.toSet()).forEach(r -> classifiedLetters.put(r, new HashMap<>()));
-		List<Entry<Character, Double>> sortedWeightedAlphabet = this.sortWeightedAlphabethByValue(this.weightedAlphabet.getWeightedAlphabet().entrySet().stream().collect(Collectors.toList()));
-		sortedWeightedAlphabet.stream().forEach(e -> classifiedLetters.get(this.chooseRange(classifiedLetters)).put(e.getKey(), e.getValue()));
-		this.mediator.notifyFromClassifier(new EnumMap<>(f.apply(classifiedLetters)));
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public EnumMap<Range, WeightedAlphabet> classifyForTests() {
+	public EnumMap<Range, WeightedAlphabet> classify() {
 		EnumMap <Range, Map<Character, Double>> classifiedLetters = new EnumMap<>(Range.class);
 		Arrays.asList(Range.values()).stream().collect(Collectors.toSet()).forEach(r -> classifiedLetters.put(r, new HashMap<>()));
 		List<Entry<Character, Double>> sortedWeightedAlphabet = this.sortWeightedAlphabethByValue(this.weightedAlphabet.getWeightedAlphabet().entrySet().stream().collect(Collectors.toList()));
