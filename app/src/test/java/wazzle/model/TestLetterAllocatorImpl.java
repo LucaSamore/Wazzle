@@ -25,8 +25,6 @@ public class TestLetterAllocatorImpl {
 	
 	@Test
 	public void testGridChecker() {
-		System.out.println("TEST CORRETTO 4x4");
-		System.out.println("GRIGLIA 4x4");
 		EnumMap<Range, List<Pair<Character, Double>>> choosenLetters16 = new EnumMap<Range, List<Pair<Character, Double>>> 
 				(Map.of(Range.HIGH_FREQUENCY, List.of(new Pair<>('A', 10.5), new Pair<>('E', 8.9), 
 						new Pair<>('I', 10.0), new Pair<>('O', 9.0), 
@@ -37,7 +35,7 @@ public class TestLetterAllocatorImpl {
 						new Pair<>('S', 8.4)), 
 				Range.LOW_FREQUENCY, List.of(new Pair<>('N', 3.0), new Pair<>('X', 0.5), 
 						new Pair<>('Z', 1.0))));
-		LetterAllocator letterAllocator16 = new LetterAllocatorImpl(choosenLetters16);
+		LetterAllocator letterAllocator16 = new LetterAllocatorImpl(choosenLetters16, null);
 		Set<Letter> allocatedLettersCorrectly = new HashSet<>(Set.of(
 				new LetterImpl(new Pair<>(0,0), 'A', 2),
 				new LetterImpl(new Pair<>(0,1), 'E', 2),
@@ -57,7 +55,6 @@ public class TestLetterAllocatorImpl {
 				new LetterImpl(new Pair<>(3,3), 'A', 2)));
 		assertTrue(letterAllocator16.checkGridForTests(allocatedLettersCorrectly));
 		
-		System.out.println("TEST ERRATO 4x4");
 		Set<Letter> allocatedLettersWrongly = new HashSet<>(Set.of(
 				new LetterImpl(new Pair<>(0,0), 'A', 2),
 				new LetterImpl(new Pair<>(0,1), 'E', 2),
@@ -81,7 +78,6 @@ public class TestLetterAllocatorImpl {
 
 	@Test
 	public void testAllocator4x4() {
-		System.out.println("GRIGLIA 4x4");
 		EnumMap<Range, List<Pair<Character, Double>>> choosenLetters16 = new EnumMap<Range, List<Pair<Character, Double>>> 
 				(Map.of(Range.HIGH_FREQUENCY, List.of(new Pair<>('A', 10.5), new Pair<>('E', 8.9), 
 						new Pair<>('I', 10.0), new Pair<>('O', 9.0), 
@@ -94,18 +90,16 @@ public class TestLetterAllocatorImpl {
 						new Pair<>('Z', 1.0))));
 		List<Character> startingLetters16 = new ArrayList<>();
 		choosenLetters16.values().stream().forEach(c -> startingLetters16.addAll(c.stream().map(l -> l.getKey()).collect(Collectors.toList())));
-		LetterAllocator letterAllocator16 = new LetterAllocatorImpl(choosenLetters16);
-		Set<Letter> allocatedLetters16 = letterAllocator16.allocate();
+		LetterAllocator letterAllocator16 = new LetterAllocatorImpl(choosenLetters16, null);
+		Set<Letter> allocatedLetters16 = letterAllocator16.allocateForTests();
 		List<Character> finalLetters16 = new ArrayList<>();
 		allocatedLetters16.forEach(l -> finalLetters16.add(l.getContent()));
-		System.out.println("NON LO SO");
 		assertTrue(startingLetters16.containsAll(finalLetters16));
 	}
 	
 	@Test
 	public void testAllocator5x5() {
 		
-		System.out.println("GRIGLIA 5x5");
 		EnumMap<Range, List<Pair<Character, Double>>> choosenLetters25 = new EnumMap<Range, List<Pair<Character, Double>>> 
 		(Map.of(Range.HIGH_FREQUENCY, List.of(new Pair<>('A', 10.5), new Pair<>('E', 8.9), 
 				new Pair<>('I', 10.0), new Pair<>('O', 9.0), 
@@ -122,11 +116,10 @@ public class TestLetterAllocatorImpl {
 				new Pair<>('Z', 1.0), new Pair<>('M', 2.9))));
 		List<Character> startingLetters25 = new ArrayList<>();
 		choosenLetters25.values().stream().forEach(c -> startingLetters25.addAll(c.stream().map(l -> l.getKey()).collect(Collectors.toList())));
-		LetterAllocator letterAllocator25 = new LetterAllocatorImpl(choosenLetters25);
-		Set<Letter> allocatedLetters25 = letterAllocator25.allocate();
+		LetterAllocator letterAllocator25 = new LetterAllocatorImpl(choosenLetters25, null);
+		Set<Letter> allocatedLetters25 = letterAllocator25.allocateForTests();
 		List<Character> finalLetters25 = new ArrayList<>();
 		allocatedLetters25.forEach(l -> finalLetters25.add(l.getContent()));
-		System.out.println("CIAOOO");
 		assertTrue(startingLetters25.containsAll(finalLetters25));
 		assertTrue(letterAllocator25.checkGridForTests(allocatedLetters25));
 	

@@ -2,11 +2,8 @@ package wazzle.model;
 
 import static org.junit.Assert.*;
 
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.function.Function;
 
 import org.junit.Test;
 
@@ -26,12 +23,12 @@ public class TestAlphabetClassifierImpl {
 				'E', 19.40, 
 				'L', 21.0, 
 				'D', 18.5));
-		AlphabetClassifier classifier = new AlphabetClassifierImpl(weightedAlphabet);
+		AlphabetClassifier classifier = new AlphabetClassifierImpl(weightedAlphabet, null);
 		EnumMap <Range, WeightedAlphabet> testEnumMap = new EnumMap<Range, WeightedAlphabet>(
 				Map.of(Range.HIGH_FREQUENCY, new WeightedAlphabetImpl(Map.of('A', 29.60, 'L', 21.00)), 
 						Range.MEDIUM_FREQUENCY, new WeightedAlphabetImpl(Map.of('E', 19.40, 'D', 18.50)), 
 						Range.LOW_FREQUENCY, new WeightedAlphabetImpl(Map.of('F', 11.50))));
-		assertTrue(testEnumMap.equals(classifier.classify()));
+		assertTrue(testEnumMap.equals(classifier.classifyForTests()));
 	}
 
 }

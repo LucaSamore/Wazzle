@@ -16,27 +16,64 @@ import javafx.util.Pair;
 
 public final class LetterAllocatorImpl implements LetterAllocator {
 	
+	/**
+	 * The randomizer.
+	 */
+	private static final Random RANDOM = new Random();
 	private EnumMap<Range, List<Pair<Character, Double>>> choosenLetters;
 	private int gridSize;
 	private int shape;
-	private static final Random RANDOM = new Random();
+	private final Mediator mediator;
 	
 	/**
 	 * Construct a new LetterAllocator.
 	 * 
 	 * @param chosenLetters The List of Character with their score ad Double which have to be allocated.
+	 * @param mediator The mediator which handles the grid creation.
 	 */
-	public LetterAllocatorImpl(final EnumMap<Range, List<Pair<Character, Double>>> chosenLetters) {
+	public LetterAllocatorImpl(final EnumMap<Range, List<Pair<Character, Double>>> chosenLetters, final Mediator mediator) {
 		Objects.requireNonNull(chosenLetters);
 		this.choosenLetters = new EnumMap<Range, List<Pair<Character, Double>>>(chosenLetters);
 		this.gridSize = this.getGridSize();
 		this.shape = this.getShape();
+		this.mediator = mediator;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public Set<Letter> allocate() {
+	public void allocate() {
+		Set<Pair<Integer, Integer>> grid = new HashSet<>();
+		//Fill grid with position from 0,0 to gridShape-1,gridShape-1
+		IntStream.range(-1, this.shape-1)
+				 .boxed()
+				 .forEach(i -> IntStream.range(-1, this.shape-1)
+								   		.boxed()
+								   		.forEach(j -> grid.add(new Pair<>(i+1, j+1))));
+		
+		List<Pair<Character, Double>> toAllocLetters = new ArrayList<>();
+		Set<Letter> allocatedLetters;
+		do {
+			toAllocLetters.clear();
+			//Insert choosenLetters EnumMap<Range, List<Pair<Character, Double>>> 
+			//Into a List<Pair<Character. Double>> toAllocLetters
+			this.choosenLetters.values()
+							   .stream()
+							   .forEach(c -> toAllocLetters.addAll(c));
+			
+			//Extract random letter - taken toAllocLetter and placed in a grid
+			allocatedLetters = this.extractLetters(toAllocLetters, grid);
+			//Check grid until it have a correct structure
+		} while (!this.checkGrid(allocatedLetters));
+		this.mediator.notifyFromAllocator(allocatedLetters);
+	}
+	
+	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public Set<Letter> allocateForTests() {
 		Set<Pair<Integer, Integer>> grid = new HashSet<>();
 		//Fill grid with position from 0,0 to gridShape-1,gridShape-1
 		IntStream.range(-1, this.shape-1)

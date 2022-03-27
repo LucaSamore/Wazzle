@@ -2,13 +2,9 @@ package wazzle.model;
 
 import static org.junit.Assert.*;
 
-
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Test;
 
@@ -29,11 +25,8 @@ public class TestLetterChooser {
 				Range.HIGH_FREQUENCY, new WeightedAlphabetImpl (Map.of('A', 21.0,'E', 20.0)), 
 				Range.MEDIUM_FREQUENCY, new WeightedAlphabetImpl (Map.of('C', 15.0, 'T', 11.0, 'R', 10.0)), 
 				Range.LOW_FREQUENCY, new WeightedAlphabetImpl (Map.of('L', 9.0, 'M', 8.0, 'P', 6.0))));
-		LetterChooser letterChooser = new LetterChooserImpl(classifiedLetters, new Pair<>(4, 4));
-//		Pair <Integer, Integer> gridShape = new Pair<>(4,4);
-//		Set<Range> ranges = Stream.of(Range.values()).collect(Collectors.toSet());
-//		int totalWeight = ranges.stream().map(Range::getWeight).reduce(0, (x, y) -> x + y);
-		EnumMap<Range, List<Pair<Character, Double>>> choosenLetters = letterChooser.choose();
+		LetterChooser letterChooser = new LetterChooserImpl(classifiedLetters, new Pair<>(4, 4), null);
+		EnumMap<Range, List<Pair<Character, Double>>> choosenLetters = letterChooser.chooseForTests();
 		assertEquals((choosenLetters.get(Range.HIGH_FREQUENCY)).size(), 8);
 		assertEquals((choosenLetters.get(Range.MEDIUM_FREQUENCY)).size(), 5);
 		assertEquals((choosenLetters.get(Range.LOW_FREQUENCY)).size(), 3);
