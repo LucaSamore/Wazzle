@@ -37,16 +37,8 @@ public final class Mediator {
 	}
 
 	public Optional<Set<Letter>> computeLetters() {
-		//this.notifyFromClassifier(this.classifiedLetters);
 		this.chooser.choose();
 		return this.letters;
-	}
-
-	/*
-	 * TODO: remember to remove this method
-	*/
-	public void notifyFromClassifier(final EnumMap<Range,WeightedAlphabet> classifiedLetters) {
-		this.chooser.choose();
 	}
 
 	public void notifyFromChooser(final EnumMap<Range,List<Pair<Character,Double>>> chosenLetters) {
@@ -73,26 +65,25 @@ public final class Mediator {
 		chosenLetters.entrySet().forEach(e -> chosenLettersList.addAll(e.getValue()));
 		
 		//Filter scored letters for chosen letters
-		List<Pair<Character, Double>> chosenScoredLetters = this.scoreConverter.convert()
-																			   .getWeightedAlphabet()
-																			   .entrySet()
-																			   .stream()
-																			   .filter(e -> chosenLettersList.stream()
-																											 .map(p -> p.getKey()).collect(Collectors.toList())
-																											  					  .contains(e.getKey()))
-																			   .map(e -> new Pair<>(e.getKey(), e.getValue()))
-																			   .collect(Collectors.toList());
+		List<Pair<Character, Double>> chosenScoredLetters = this.scoreConverter
+				.convert()
+				.getWeightedAlphabet()
+				.entrySet()
+				.stream()
+				.filter(e -> chosenLettersList.stream()
+						.map(p -> p.getKey()).collect(Collectors.toList()).contains(e.getKey()))
+				.map(e -> new Pair<>(e.getKey(), e.getValue()))
+				.collect(Collectors.toList());
 		
 		EnumMap<Range, List<Pair<Character, Double>>> chosenScoredLettersMap = new EnumMap<>(Range.class);
 		
-		chosenLetters.entrySet()
-					 .forEach(e -> chosenScoredLettersMap.put(e.getKey(), 
-							  chosenScoredLetters.stream()
-							  					 .filter(p1 -> e.getValue().stream()
-							  							 				   .map(p2 -> p2.getKey())
-							  							 				   .collect(Collectors.toList())
-							  							 				   .contains(p1.getKey()))
-							  					 .collect(Collectors.toList())));
+		chosenLetters.entrySet().forEach(e -> chosenScoredLettersMap.put(e.getKey(), chosenScoredLetters.stream()
+				.filter(p1 -> e.getValue().stream()
+						.map(p2 -> p2.getKey())
+						.collect(Collectors.toList())
+						.contains(p1.getKey()))
+				.collect(Collectors.toList())));
+		
 		return chosenScoredLettersMap;
 	}
 }
