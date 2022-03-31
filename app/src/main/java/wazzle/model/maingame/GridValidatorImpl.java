@@ -1,5 +1,6 @@
 package wazzle.model.maingame;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -13,6 +14,8 @@ public final class GridValidatorImpl implements GridValidator{
 	private final Filters filters = (word, letters) -> Filters.checkLetters(word, letters) && Filters.checkPath(word, letters);
 	
 	public GridValidatorImpl(final Dictionary dataset, final Difficulty difficulty) {
+		Objects.requireNonNull(dataset);
+		Objects.requireNonNull(difficulty);
 		this.dataset = dataset;
 		this.difficulty = difficulty;
 	}

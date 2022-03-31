@@ -9,6 +9,8 @@ public class GridImpl implements Grid {
 	private final Set<String> wordsCanBeFound;
 	
 	public GridImpl(final Set<Letter> letters, final Set<String> wordsCanBeFound) {
+		Objects.requireNonNull(letters);
+		Objects.requireNonNull(wordsCanBeFound);
 		this.letters = letters;
 		this.wordsCanBeFound = wordsCanBeFound;
 	}

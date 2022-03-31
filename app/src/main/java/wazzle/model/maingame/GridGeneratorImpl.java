@@ -1,6 +1,7 @@
 package wazzle.model.maingame;
 
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -15,6 +16,9 @@ public final class GridGeneratorImpl implements GridGenerator {
 	private final GridValidator validator;
 	
 	public GridGeneratorImpl(final Dictionary dataset, final Pair<Integer,Integer> gridShape, final Difficulty difficulty) {
+		Objects.requireNonNull(dataset);
+		Objects.requireNonNull(gridShape);
+		Objects.requireNonNull(difficulty);
 		this.validator = new GridValidatorImpl(dataset, difficulty);
 		this.mediator = new Mediator(dataset, gridShape);
 	}
