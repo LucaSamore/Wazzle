@@ -23,19 +23,18 @@ public final class GridGeneratorImpl implements GridGenerator {
 	public Grid generate() {
 		Optional<Pair<Set<Letter>,Set<String>>> newGrid = Optional.empty();
 		
-		while(newGrid.isEmpty()) {
+		while (newGrid.isEmpty()) {
 			newGrid = this.tryGenerate(() -> this.mediator.computeLetters(), words -> words.isPresent() && !words.get().isEmpty());
 		}
 		
 		return new GridImpl(newGrid.get().getKey(), newGrid.get().getValue());
 	}
 	
-	private Optional<Pair<Set<Letter>,Set<String>>> tryGenerate(final Supplier<Optional<Set<Letter>>> getComputedLetters, 
-																final Predicate<Optional<Set<String>>> wordsAreValid) {
+	private Optional<Pair<Set<Letter>,Set<String>>> tryGenerate(final Supplier<Optional<Set<Letter>>> getComputedLetters, final Predicate<Optional<Set<String>>> wordsAreValid) {
 		final var letters = getComputedLetters.get();
 		final var validationResult = this.validator.validate(letters.isPresent() ? letters.get() : Collections.emptySet());
 		
-		if(wordsAreValid.test(validationResult)) {
+		if (wordsAreValid.test(validationResult)) {
 			return Optional.of(new Pair<>(letters.get(), validationResult.get()));
 		}
 		

@@ -10,31 +10,27 @@ public final class GridValidatorImpl implements GridValidator{
 
 	private final Dictionary dataset;
 	private final Difficulty difficulty;
-	private final Filters filters = (word, letters) -> Filters.checkLetters(word, letters) && 
-													   Filters.checkPath(word, letters);
+	private final Filters filters = (word, letters) -> Filters.checkLetters(word, letters) && Filters.checkPath(word, letters);
 	
 	public GridValidatorImpl(final Dictionary dataset, final Difficulty difficulty) {
 		this.dataset = dataset;
 		this.difficulty = difficulty;
 	}
-	
-	
-	public Dictionary getDataset() {
-		return this.dataset;
-	}
-
-
-	public Difficulty getDifficulty() {
-		return this.difficulty;
-	}
-
 
 	@Override
-	public Optional<Set<String>> validate(Set<Letter> letters) {
+	public Optional<Set<String>> validate(final Set<Letter> letters) {
 		return this.rangify(this.dataset.getWords()
 				.stream()
 				.filter(w -> this.filters.applyAll(w, letters))
 				.collect(Collectors.toSet()));
+	}
+	
+	@Override
+	public Set<String> validateForTest(final Set<Letter> letters) {
+		return this.dataset.getWords()
+				.stream()
+				.filter(w -> this.filters.applyAll(w, letters))
+				.collect(Collectors.toSet());
 	}
 	
 	//TODO: implement this method

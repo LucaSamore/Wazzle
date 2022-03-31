@@ -2,11 +2,9 @@ package wazzle.model.maingame;
 
 public enum Difficulty {
 	
-	// silly values for now
-	
-	EASY(200,250),
-	MEDIUM(100,199),
-	HARD(50,99);
+	EASY(250,300),
+	MEDIUM(151,250),
+	HARD(100,150);
 	
 	private int lowerBound;
 	private int upperBound;

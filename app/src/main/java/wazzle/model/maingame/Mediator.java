@@ -42,7 +42,7 @@ public final class Mediator {
 	}
 
 	public void notifyFromChooser(final EnumMap<Range,List<Pair<Character,Double>>> chosenLetters) {
-		this.allocator = new LetterAllocatorImpl(this.unify(chosenLetters), this);
+		this.allocator = new LetterAllocatorImpl(chosenLetters, this); // TODO: Remember to call unify here!
 		this.allocator.allocate();
 	}
 
