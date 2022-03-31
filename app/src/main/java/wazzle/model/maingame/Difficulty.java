@@ -2,9 +2,9 @@ package wazzle.model.maingame;
 
 public enum Difficulty {
 	
-	EASY(250,300),
-	MEDIUM(151,250),
-	HARD(100,150);
+	// silly but not so silly values for now --> we need a formula :)
+	EASY(201,350),
+	HARD(75,200);
 	
 	private int lowerBound;
 	private int upperBound;

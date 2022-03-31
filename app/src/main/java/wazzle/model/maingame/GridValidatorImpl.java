@@ -19,7 +19,7 @@ public final class GridValidatorImpl implements GridValidator{
 
 	@Override
 	public Optional<Set<String>> validate(final Set<Letter> letters) {
-		return this.rangify(this.dataset.getWords()
+		return this.inDifficultyRange(this.dataset.getWords()
 				.stream()
 				.filter(w -> this.filters.applyAll(w, letters))
 				.collect(Collectors.toSet()));
@@ -33,9 +33,9 @@ public final class GridValidatorImpl implements GridValidator{
 				.collect(Collectors.toSet());
 	}
 	
-	//TODO: implement this method
-	private Optional<Set<String>> rangify(final Set<String> words){
-		return Optional.empty();
+	private Optional<Set<String>> inDifficultyRange(final Set<String> words) {
+		return Optional.of(words).filter(w -> words.size() >= this.difficulty.getLowerBound() && 
+				words.size() <= this.difficulty.getUpperBound());
 	}
 
 }
