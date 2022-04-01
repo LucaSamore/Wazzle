@@ -8,6 +8,11 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * 
+ * BonusStrategies implements all the strategies that the bonuses have to apply when their are used.
+ *
+ */
 public interface BonusStrategies {
 	
 	static BinaryOperator<Double> scoreBonus() {
