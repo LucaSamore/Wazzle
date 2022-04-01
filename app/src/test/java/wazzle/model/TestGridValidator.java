@@ -20,28 +20,34 @@ public class TestGridValidator {
 	
 	//The purpose of this test is to see the set of words (and how many of them) I can build with a certain number (gridShape) of generated letters
 	
+	private static final int ITERATIONS = 50;
+	
 	@Test
 	public void testValidationOutput() {
 		try {
 			final Dictionary dataset = new DictionaryImpl(".\\src\\test\\res\\datasetNuovo.txt");
-			final Mediator mediator = new Mediator(dataset, new Pair<>(4,4));
-			final GridValidator validator = new GridValidatorImpl(dataset, Difficulty.EASY);
+			final Mediator mediator = new Mediator(dataset, new Pair<>(6,6));
+			final GridValidator validator = new GridValidatorImpl(dataset, Difficulty.EASY4X4);
 			
-			for(int i = 0; i < 1; i++) {
+			int average = 0;
+			
+			for(int i = 0; i < ITERATIONS; i++) {
 				final var letters = mediator.computeLetters();
 				System.out.println("Generated Letters: ");
 				letters.get().forEach(System.out::println);
 				
 				final var words = validator.validateForTest(letters.get());
 				System.out.println();
+				average += words.size();
 				System.out.println(String.format("Words can be found [%d]: ", words.size()));
 				words.forEach(System.out::println);
 				System.out.println();
-			}	
+			}
+			
+			System.out.println("Average: " + average/ITERATIONS);
 		
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
 }

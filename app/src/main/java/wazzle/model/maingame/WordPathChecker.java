@@ -7,10 +7,10 @@ import javafx.util.Pair;
 
 public class WordPathChecker {
 	
-	static Map<Pair<Integer, Integer>, Boolean> visited;
+	static Map<Pair<Integer, Integer>, Boolean> visited = new HashMap<>();
 	
 	public boolean exist(final Map<Pair<Integer, Integer>, Character> board, final String word) {
-		visited = new HashMap<>();
+		visited.clear();
         for (int i = 0; i < Math.sqrt(board.size()); i++) {
             for (int j = 0; j < Math.sqrt(board.size()); j++) {
                 if ((word.charAt(0) == board.get(new Pair<>(i, j))) && this.search(board, word, i, j, 0)) {

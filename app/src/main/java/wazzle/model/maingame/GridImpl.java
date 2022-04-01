@@ -1,5 +1,6 @@
 package wazzle.model.maingame;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -11,16 +12,16 @@ public class GridImpl implements Grid {
 	public GridImpl(final Set<Letter> letters, final Set<String> wordsCanBeFound) {
 		Objects.requireNonNull(letters);
 		Objects.requireNonNull(wordsCanBeFound);
-		this.letters = letters;
-		this.wordsCanBeFound = wordsCanBeFound;
+		this.letters = new HashSet<>(letters);
+		this.wordsCanBeFound = new HashSet<>(wordsCanBeFound);
 	}
 	
 	public Set<Letter> getLetters() {
-		return this.letters;
+		return Set.copyOf(this.letters);
 	}
 
 	public Set<String> getWordsCanBeFound() {
-		return this.wordsCanBeFound;
+		return Set.copyOf(this.wordsCanBeFound);
 	}
 	
 	@Override

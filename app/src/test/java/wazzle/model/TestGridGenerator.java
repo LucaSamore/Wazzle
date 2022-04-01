@@ -22,10 +22,9 @@ public class TestGridGenerator {
 	public void testGeneratorEasy() {
 		try {
 			final Dictionary dataset = new DictionaryImpl(".\\src\\test\\res\\datasetNuovo.txt");
-			final GridGenerator generatorEasy = new GridGeneratorImpl(dataset, new Pair<Integer,Integer>(4,4), Difficulty.EASY);
+			final GridGenerator generatorEasy = new GridGeneratorImpl(dataset, new Pair<Integer,Integer>(6,6), Difficulty.EASY6X6);
 			
 			var grid = generatorEasy.generate();
-			
 			System.out.println(grid);
 		
 		} catch(Exception e) {
@@ -37,7 +36,7 @@ public class TestGridGenerator {
 	public void testGeneratorHard() {		
 		try {
 			final Dictionary dataset = new DictionaryImpl(".\\src\\test\\res\\datasetNuovo.txt");
-			final GridGenerator generatorHard = new GridGeneratorImpl(dataset, new Pair<Integer,Integer>(4,4), Difficulty.HARD);
+			final GridGenerator generatorHard = new GridGeneratorImpl(dataset, new Pair<Integer,Integer>(6,6), Difficulty.HARD6X6);
 			
 			var grid = generatorHard.generate();
 			
