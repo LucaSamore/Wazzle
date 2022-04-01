@@ -24,7 +24,7 @@ public class TestGridValidator {
 	public void testValidationOutput() {
 		try {
 			final Dictionary dataset = new DictionaryImpl(".\\src\\test\\res\\datasetNuovo.txt");
-			final Mediator mediator = new Mediator(dataset, new Pair<>(2,2));
+			final Mediator mediator = new Mediator(dataset, new Pair<>(4,4));
 			final GridValidator validator = new GridValidatorImpl(dataset, Difficulty.EASY);
 			
 			for(int i = 0; i < 1; i++) {

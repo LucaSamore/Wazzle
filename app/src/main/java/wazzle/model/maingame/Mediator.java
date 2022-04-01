@@ -1,8 +1,10 @@
 package wazzle.model.maingame;
 
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -30,6 +32,8 @@ public final class Mediator {
 	private Optional<Set<Letter>> letters;
 
 	public Mediator(final Dictionary dataset, final Pair<Integer,Integer> gridShape) {
+		Objects.requireNonNull(dataset);
+		Objects.requireNonNull(gridShape);
 		this.gridShape = gridShape;
 		this.classifiedLetters = new EnumMap<>(Range.class);
 		this.letters = Optional.empty();
@@ -42,7 +46,7 @@ public final class Mediator {
 	}
 
 	public void notifyFromChooser(final EnumMap<Range,List<Pair<Character,Double>>> chosenLetters) {
-		this.allocator = new LetterAllocatorImpl(chosenLetters, this); // TODO: Remember to call unify here!
+		this.allocator = new LetterAllocatorImpl(this.unify(chosenLetters), this); // TODO: Remember to call unify here!
 		this.allocator.allocate();
 	}
 
@@ -59,21 +63,25 @@ public final class Mediator {
 		this.chooser = new LetterChooserImpl(classifiedLetters, this.gridShape, this);
 	}
 
+	//TODO: fix this method
 	private EnumMap<Range, List<Pair<Character, Double>>> unify(final EnumMap<Range,List<Pair<Character,Double>>> chosenLetters) {
 		List<Pair<Character, Double>> chosenLettersList = new LinkedList<>();
 		
 		chosenLetters.entrySet().forEach(e -> chosenLettersList.addAll(e.getValue()));
 		
 		//Filter scored letters for chosen letters
-		List<Pair<Character, Double>> chosenScoredLetters = this.scoreConverter
-				.convert()
-				.getWeightedAlphabet()
-				.entrySet()
-				.stream()
-				.filter(e -> chosenLettersList.stream()
-						.map(p -> p.getKey()).collect(Collectors.toList()).contains(e.getKey()))
-				.map(e -> new Pair<>(e.getKey(), e.getValue()))
-				.collect(Collectors.toList());
+		List<Pair<Character, Double>> chosenScoredLetters = 
+                chosenLettersList.stream()
+                                  .map(p -> new Pair<>(p.getKey(),
+                                                       this.scoreConverter.convert().getWeightedAlphabet()
+				                                                                    .entrySet()
+				                                                                    .stream()
+				                                                                    .filter(e -> e.getKey() == p.getKey())
+				                                                                    .findAny()
+				                                                                    .get()
+				                                                                    .getValue()))
+                                  .collect(Collectors.toList());
+		
 		
 		EnumMap<Range, List<Pair<Character, Double>>> chosenScoredLettersMap = new EnumMap<>(Range.class);
 		
