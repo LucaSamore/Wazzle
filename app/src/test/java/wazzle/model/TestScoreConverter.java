@@ -12,10 +12,12 @@ import wazzle.model.maingame.ScoreConverterImpl;
 import wazzle.model.maingame.WeightedAlphabet;
 import wazzle.model.maingame.WeightedAlphabetImpl;
 
-public class TestScoreAdapter {
+public class TestScoreConverter {
+	
+	private static final double ERROR = 0.1;
 
 	@Test
-	public void testScoreAdapter() {
+	public void testScoreConverter() {
 		WeightedAlphabet weightedAlphabet = new WeightedAlphabetImpl(Map.of('A', 29.60,
 				'F', 11.5, 
 				'E', 19.40, 
@@ -23,8 +25,9 @@ public class TestScoreAdapter {
 				'D', 18.5));
 		ScoreConverter scoreMapper = new ScoreConverterImpl(weightedAlphabet);
 		Map<Character, Double> scoredAlphabet = new HashMap<>(scoreMapper.convert().getWeightedAlphabet());
-		assertTrue(scoredAlphabet.get('A').equals((double) 5.0));
-		assertTrue(scoredAlphabet.get('F').equals((double) 0.0));
-		assertTrue(scoredAlphabet.get('L') > scoredAlphabet.get('D'));
+		assertEquals(weightedAlphabet.getWeightedAlphabet().size(), scoredAlphabet.size());
+		assertTrue(scoredAlphabet.get('A') >= 1.0 - ERROR && scoredAlphabet.get('A') <= 1.0 + ERROR);
+		assertTrue(scoredAlphabet.get('F') >= 7.0 - ERROR && scoredAlphabet.get('F') <= 7.0 + ERROR);
+		assertTrue(scoredAlphabet.get('L') < scoredAlphabet.get('D'));
 	}
 }
