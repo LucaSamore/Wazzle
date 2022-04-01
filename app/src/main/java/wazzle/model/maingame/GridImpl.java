@@ -16,12 +16,21 @@ public class GridImpl implements Grid {
 		this.wordsCanBeFound = new HashSet<>(wordsCanBeFound);
 	}
 	
+	@Override
 	public Set<Letter> getLetters() {
 		return Set.copyOf(this.letters);
 	}
 
+	@Override
 	public Set<String> getWordsCanBeFound() {
 		return Set.copyOf(this.wordsCanBeFound);
+	}
+	
+	@Override
+	public Double getTotalScore() {
+		return this.letters.stream()
+				.map(Letter::getScore)
+				.reduce(0.0, (x,y) -> x + y);
 	}
 	
 	@Override
