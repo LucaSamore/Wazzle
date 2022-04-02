@@ -67,6 +67,7 @@ public class BonusManagerImpl implements BonusManager {
 	 * {@inheritDoc}
 	 */
 	public double applyScoreBonus(final double currentScore, final double gridTotalScore) {
+		this.updateScoreBonusQuantity(b -> b - 1);
 		return this.scoreBonus.apply(currentScore, gridTotalScore);
 	}
 	
@@ -74,6 +75,7 @@ public class BonusManagerImpl implements BonusManager {
 	 * {@inheritDoc}
 	 */
 	public Set<String> applyWordBonus(final Set<String> toFoundWords) {
+		this.updateWordBonusQuantity(b -> b - 1);
 		return this.wordBonus.apply(toFoundWords);
 	}
 	
@@ -81,6 +83,7 @@ public class BonusManagerImpl implements BonusManager {
 	 * {@inheritDoc}
 	 */
 	public long applyTimeBonus(final long currentTime) {
+		this.updateTimeBonusQuantity(b -> b - 1);
 		return this.timeBonus.apply(currentTime);
 	}
 
