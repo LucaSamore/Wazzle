@@ -5,9 +5,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
+
+import java.util.Optional;
 
 import wazzle.model.common.BonusManager;
 
@@ -22,6 +23,7 @@ public class MainGameImpl implements MainGame {
 	private final BonusManager bonusManager;
 	private int failedAttempts;
 	private long duration;
+	private double currentScore;
 	
 	public MainGameImpl(final Grid grid, final long duration, final BonusManager bonusManager) {
 		this.grid = grid;
@@ -30,15 +32,39 @@ public class MainGameImpl implements MainGame {
 		this.dateTime = LocalDateTime.now();
 		this.bonusManager = bonusManager;
 		this.failedAttempts = 0;
+		this.currentScore = 0;
 	}
 	
-	//TODO: implement this method
+	// return true if word is in grid.getWordsCanBeFound() AND word is not in this.wordsFound yet --> this.updateFailedAttempts(f -> f = 0)
+	// performs the add operation as well
+	// false otherwise --> this.updateFailedAttempts(f -> f + 1)
+	
 	@Override
 	public boolean attempt(final String word) {
-		// return true if word is in grid.getWordsCanBeFound() AND word is not in this.wordsFound yet --> this.updateFailedAttempts(f -> f = 0)
-		// performs the add operation as well
-		// false otherwise --> this.updateFailedAttempts(f -> f + 1)
-		throw new UnsupportedOperationException();
+		Optional.of(word)
+				.filter(w -> this.grid.getWordsCanBeFound().contains(word) && !this.alreadyFound(word))
+				.ifPresent(w -> {
+					this.updateFailedAttempts(f -> f = 0);
+					this.addWordFound(w);
+				});
+		
+		this.updateFailedAttempts(f -> f + 1);
+		return false;	
+	}
+	
+	@Override
+	public void useScoreBonus() {
+		this.currentScore = this.bonusManager.applyScoreBonus(currentScore, this.grid.getTotalScore());
+	}
+	
+	@Override
+	public Set<String> useWordBonus() {
+		return this.bonusManager.applyWordBonus(this.wordsToBeFound());
+	}
+
+	@Override
+	public long useTimeBonus(final long currentTime) {
+		return this.bonusManager.applyTimeBonus(currentTime);
 	}
 	
 	@Override
@@ -53,7 +79,7 @@ public class MainGameImpl implements MainGame {
 	
 	@Override
 	public Set<Letter> getLettersInGrid() {
-		return Set.copyOf(this.getLettersInGrid());
+		return Set.copyOf(this.grid.getLetters());
 	}
 	
 	@Override
@@ -71,6 +97,11 @@ public class MainGameImpl implements MainGame {
 		return this.failedAttempts;
 	}
 	
+	@Override
+	public double getCurrentScore() {
+		return this.currentScore;
+	}
+	
 	public long getDuration() {
 		return this.duration;
 	}
@@ -79,9 +110,9 @@ public class MainGameImpl implements MainGame {
 		return this.dateTime;
 	}
 	
-	private boolean addWordFound(final String word) {
+	private void addWordFound(final String word) {
 		this.wordsFound.add(word);
-		return this.areWeDone();
+		//return this.areWeDone();
 	}
 	
 	private boolean alreadyFound(final String word) {
@@ -101,7 +132,7 @@ public class MainGameImpl implements MainGame {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(dateTime, duration, failedAttempts, grid, wordsFound);
+		return Objects.hash(currentScore, dateTime, duration, failedAttempts, wordsFound);
 	}
 
 	@Override
@@ -113,11 +144,11 @@ public class MainGameImpl implements MainGame {
 		if (getClass() != obj.getClass())
 			return false;
 		MainGameImpl other = (MainGameImpl) obj;
-		return Objects.equals(dateTime, other.dateTime) && duration == other.duration
-				&& failedAttempts == other.failedAttempts && Objects.equals(grid, other.grid)
-				&& Objects.equals(wordsFound, other.wordsFound);
+		return Double.doubleToLongBits(currentScore) == Double.doubleToLongBits(other.currentScore)
+				&& Objects.equals(dateTime, other.dateTime) && duration == other.duration
+				&& failedAttempts == other.failedAttempts && Objects.equals(wordsFound, other.wordsFound);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Wazzle MainGame info: " + System.lineSeparator() +
