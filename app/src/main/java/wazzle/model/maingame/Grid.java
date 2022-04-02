@@ -7,5 +7,5 @@ public interface Grid {
 	
 	Set<String> getWordsCanBeFound();
 	
-	Double getTotalScore();
+	double getTotalScore();
 }

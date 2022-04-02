@@ -9,6 +9,8 @@ import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
+import wazzle.model.common.BonusManager;
+
 public class MainGameImpl implements MainGame {
 	
 	//TODO: Add bonus handling
@@ -17,15 +19,16 @@ public class MainGameImpl implements MainGame {
 	private final Grid grid;
 	private final Set<String> wordsFound;
 	private final LocalDateTime dateTime;
+	private final BonusManager bonusManager;
 	private int failedAttempts;
 	private long duration;
-	//private Bonus bonus;
 	
-	public MainGameImpl(final Grid grid, final long duration) {
+	public MainGameImpl(final Grid grid, final long duration, final BonusManager bonusManager) {
 		this.grid = grid;
 		this.duration = duration;
 		this.wordsFound = new HashSet<>();
 		this.dateTime = LocalDateTime.now();
+		this.bonusManager = bonusManager;
 		this.failedAttempts = 0;
 	}
 	
