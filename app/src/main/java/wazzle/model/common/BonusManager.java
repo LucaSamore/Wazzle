@@ -27,25 +27,49 @@ public interface BonusManager {
 	void updateTimeBonusQuantity(UnaryOperator<Integer> operation);
 	
 	/**
+	 * Gives the quantity of ScoreBonus.
+	 * 
+	 * @return int which represent the quantity of ScoreBonus.
+	 */
+	int getScoreBonusQuantity();
+	
+	/**
+	 * Gives the quantity of WordBonus.
+	 * 
+	 * @return int which represent the quantity of WordBonus.
+	 */
+	int getWordBonusQuantity();
+	
+	/**
+	 * Gives the quantity of TimeBonus.
+	 * 
+	 * @return int which represent the quantity of TimeBonus.
+	 */
+	int getTimeBonusQuantity();
+
+	/**
 	 * Apply the implications of the ScoreBonus.
 	 * 
 	 * @param currentScore the current score obtained by the user.
 	 * @param gridTotalScore the sum of all letter scores in the grid.
+	 * @return double which represents the updated score.
 	 */
-	void applyScoreBonus(final double currentScore, final double gridTotalScore);
+	double applyScoreBonus(final double currentScore, final double gridTotalScore);
 	
 	/**
 	 * Apply the implications of the WordBonus.
 	 * 
 	 * @param toFoundWords the words that the user haven't already found.
+	 * @return Set<String> the extracted words that will be suggested to the user.
 	 */
-	void applyWordBonus(final Set<String> toFoundWords);
+	Set<String> applyWordBonus(final Set<String> toFoundWords);
 	
 	/**
 	 * Apply the implications of the TimeBonus.
 	 * 
 	 * @param currentTime the current time remaining to the user to found other words.
+	 * @return long which represent the incremented time.
 	 */
-	void applyTimeBonus(final long currentTime);
+	long applyTimeBonus(final long currentTime);
 
 }

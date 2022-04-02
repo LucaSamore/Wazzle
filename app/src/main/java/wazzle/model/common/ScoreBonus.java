@@ -19,7 +19,8 @@ public class ScoreBonus extends AbstractBonus {
 	 * Apply the implications of the ScoreBonus.
 	 * 
 	 * @param currentScore the current score obtained by the user.
-	 * @return long which represent the incremented time.
+	 * @param gridTotalScore the sum of all letter scores in the grid.
+	 * @return long which represent the updated score.
 	 */
 	public double apply(final double currentScore, final double gridTotalScore) {
 		return this.applier.apply(currentScore, gridTotalScore);

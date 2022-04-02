@@ -19,8 +19,8 @@ public class WordBonus extends AbstractBonus {
 	/**
 	 * Apply the implications of the WordBonus.
 	 * 
-	 * @param toFoundWords the words that the user haven't already found.
-	 * @return Set<String>> the extracted words that will be suggested to the user.
+	 * @param toFoundWords the words that the user hasn't already found.
+	 * @return Set<String> the extracted words that will be suggested to the user.
 	 */
 	public Set<String> apply(final Set<String> toFoundWords) {
 		return this.applier.apply(toFoundWords);

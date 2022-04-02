@@ -45,22 +45,43 @@ public class BonusManagerImpl implements BonusManager {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void applyScoreBonus(final double currentScore, final double gridTotalScore) {
-		this.scoreBonus.apply(currentScore, gridTotalScore);
+	public int getScoreBonusQuantity() {
+		return this.scoreBonus.getQuantity();
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public void applyWordBonus(final Set<String> toFoundWords) {
-		this.wordBonus.apply(toFoundWords);
+	public int getWordBonusQuantity() {
+		return this.wordBonus.getQuantity();
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	public void applyTimeBonus(final long currentTime) {
-		this.timeBonus.apply(currentTime);
+	public int getTimeBonusQuantity() {
+		return this.timeBonus.getQuantity();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public double applyScoreBonus(final double currentScore, final double gridTotalScore) {
+		return this.scoreBonus.apply(currentScore, gridTotalScore);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public Set<String> applyWordBonus(final Set<String> toFoundWords) {
+		return this.wordBonus.apply(toFoundWords);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public long applyTimeBonus(final long currentTime) {
+		return this.timeBonus.apply(currentTime);
 	}
 
 }
