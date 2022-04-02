@@ -52,15 +52,11 @@ public class GridImpl implements Grid {
 
 	@Override
 	public String toString() {
-		return "Here's a lovely grid <3 " + 
-				System.lineSeparator() + 
-				"Letters inside the grid: " +
-				System.lineSeparator() +
-				this.letters + 
-				System.lineSeparator() + System.lineSeparator() +
+		return "Here's a lo<3ly grid " + System.lineSeparator() + 
+				"Letters inside the grid: " + System.lineSeparator() +
+				this.letters + System.lineSeparator() + System.lineSeparator() +
 				String.format("Words you can find inside this grid [%d]: ", this.wordsCanBeFound.size()) +
 				System.lineSeparator() +
-				this.wordsCanBeFound + 
-				System.lineSeparator();
+				this.wordsCanBeFound + System.lineSeparator();
 	}
 }

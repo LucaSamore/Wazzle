@@ -1,9 +1,11 @@
 package wazzle.model.maingame;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
@@ -30,6 +32,9 @@ public class MainGameImpl implements MainGame {
 	//TODO: implement this method
 	@Override
 	public boolean attempt(final String word) {
+		// return true if word is in grid.getWordsCanBeFound() AND word is not in this.wordsFound yet --> this.updateFailedAttempts(f -> f = 0)
+		// performs the add operation as well
+		// false otherwise --> this.updateFailedAttempts(f -> f + 1)
 		throw new UnsupportedOperationException();
 	}
 	
@@ -112,7 +117,11 @@ public class MainGameImpl implements MainGame {
 	
 	@Override
 	public String toString() {
-		return "MainGameImpl [grid=" + grid + ", wordsFound=" + wordsFound + ", dateTime=" + dateTime
-				+ ", failedAttempts=" + failedAttempts + ", duration=" + duration + "]";
+		return "Wazzle MainGame info: " + System.lineSeparator() +
+				"Grid: " + System.lineSeparator() + this.grid.toString() + System.lineSeparator() +
+				"wordsFound: " + this.wordsFound + System.lineSeparator() +
+				"dateTime: " + this.dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + System.lineSeparator() +
+				"failedAttempts: " + this.failedAttempts + System.lineSeparator() +
+				"duration: " + this.duration + System.lineSeparator();
 	}
 }

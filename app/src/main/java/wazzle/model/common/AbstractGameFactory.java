@@ -6,6 +6,5 @@ import wazzle.model.maingame.Grid;
 import wazzle.model.maingame.MainGame;
 
 public interface AbstractGameFactory {
-	MainGame createMainGame(final Dictionary dataset, final Pair<Integer,Integer> gridShape, final Grid grid, 
-			final long duration, final Difficulty difficulty);
+	MainGame createMainGame(final Dictionary dataset, final Pair<Integer,Integer> gridShape, final Difficulty difficulty);
 }

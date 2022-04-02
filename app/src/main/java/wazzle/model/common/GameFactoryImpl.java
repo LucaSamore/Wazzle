@@ -10,11 +10,8 @@ import wazzle.model.maingame.MainGameImpl;
 public class GameFactoryImpl implements AbstractGameFactory {
 	
 	@Override
-	public MainGame createMainGame(final Dictionary dataset, final Pair<Integer, Integer> gridShape, final Grid grid, 
-			final long duration, final Difficulty difficulty) {
-
+	public MainGame createMainGame(final Dictionary dataset, final Pair<Integer, Integer> gridShape, final Difficulty difficulty) {
 		var gridGenerator = new GridGeneratorImpl(dataset, gridShape, difficulty);
 		return new MainGameImpl(gridGenerator.generate(), difficulty.getTime());
 	}
-
 }
