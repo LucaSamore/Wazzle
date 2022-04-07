@@ -20,10 +20,8 @@ public class TestFrequency {
 	private Dictionary dict;
 
 	public TestFrequency() throws Exception {
-		
-			
-				this.dict = new DictionaryImpl(".\\src\\test\\res\\testDictionary.txt");
-			
+
+		this.dict = new DictionaryImpl(DatasetReader.readDataset("testDictionary.txt"));
 
 	}
 
