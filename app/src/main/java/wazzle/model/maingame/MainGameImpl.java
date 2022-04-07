@@ -13,9 +13,6 @@ import java.util.Optional;
 import wazzle.model.common.BonusManager;
 
 public class MainGameImpl implements MainGame {
-	
-	//TODO: Add bonus handling
-	
 	private static final int ATTEMPTS_BEFORE_HELP = 5;
 	private final Grid grid;
 	private final Set<String> wordsFound;
@@ -38,6 +35,8 @@ public class MainGameImpl implements MainGame {
 	// return true if word is in grid.getWordsCanBeFound() AND word is not in this.wordsFound yet --> this.updateFailedAttempts(f -> f = 0)
 	// performs the add operation as well
 	// false otherwise --> this.updateFailedAttempts(f -> f + 1)
+	
+	//TODO: Fix this method
 	
 	@Override
 	public boolean attempt(final String word) {

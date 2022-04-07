@@ -13,6 +13,6 @@ public class GameFactoryImpl implements AbstractGameFactory {
 	public MainGame createMainGame(final Dictionary dataset, final Pair<Integer, Integer> gridShape, final Difficulty difficulty,
 			final BonusManager bonusManager) {
 		var gridGenerator = new GridGeneratorImpl(dataset, gridShape, difficulty);
-		return new MainGameImpl(gridGenerator.generate(), difficulty.getTime(), bonusManager);
+		return new MainGameImpl(gridGenerator.generate(), difficulty.getTimeInMilliseconds(), bonusManager);
 	}
 }
