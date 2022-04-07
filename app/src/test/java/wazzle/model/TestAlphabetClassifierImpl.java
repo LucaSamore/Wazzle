@@ -3,7 +3,6 @@ package wazzle.model;
 import static org.junit.Assert.*;
 
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
