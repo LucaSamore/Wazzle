@@ -124,4 +124,37 @@ public class TestLetterAllocatorImpl {
 		assertTrue(letterAllocator25.checkGridForTests(allocatedLetters25));
 	
 	}
+	
+	@Test
+	public void testAllocator6x6() {
+		EnumMap<Range, List<Pair<Character, Double>>> choosenLetters36 = new EnumMap<Range, List<Pair<Character, Double>>> 
+		(Map.of(Range.HIGH_FREQUENCY, List.of(new Pair<>('A', 10.5), new Pair<>('E', 8.9), 
+				new Pair<>('I', 10.0), new Pair<>('O', 9.0), 
+				new Pair<>('A', 10.5), new Pair<>('E', 8.9), 
+				new Pair<>('I', 10.0), new Pair<>('O', 9.0), 
+				new Pair<>('E', 8.9), new Pair<>('A', 10.5),
+				new Pair<>('E', 8.9), new Pair<>('I', 10.0),
+				new Pair<>('U', 8.8), new Pair<>('I', 10.0),
+				new Pair<>('I', 10.0), new Pair<>('O', 9.0), 
+				new Pair<>('E', 8.9), new Pair<>('A', 10.5)),
+		Range.MEDIUM_FREQUENCY, List.of(new Pair<>('C', 8.5), new Pair<>('T', 8.8), 
+				new Pair<>('R', 8.2), new Pair<>('R', 7.0), 
+				new Pair<>('S', 8.4), new Pair<>('L', 6.0),
+				new Pair<>('C', 8.5), new Pair<>('T', 8.8),
+				new Pair<>('S', 8.4), new Pair<>('L', 6.0),
+				new Pair<>('C', 8.5), new Pair<>('T', 8.8)),
+		Range.LOW_FREQUENCY, List.of(new Pair<>('N', 3.0), 
+				new Pair<>('X', 0.5), new Pair<>('Z', 1.0), 
+				new Pair<>('M', 2.9), new Pair<>('M', 2.9), 
+				new Pair<>('N', 3.0))));
+		List<Character> startingLetters36 = new ArrayList<>();
+		choosenLetters36.values().stream().forEach(c -> startingLetters36.addAll(c.stream().map(l -> l.getKey()).collect(Collectors.toList())));
+		LetterAllocator letterAllocator36 = new LetterAllocatorImpl(choosenLetters36, null);
+		Set<Letter> allocatedLetters36 = letterAllocator36.allocateForTests();
+		List<Character> finalLetters36 = new ArrayList<>();
+		allocatedLetters36.forEach(l -> finalLetters36.add(l.getContent()));
+		assertTrue(startingLetters36.containsAll(finalLetters36));
+		assertTrue(letterAllocator36.checkGridForTests(allocatedLetters36));
+	
+	}
 }
