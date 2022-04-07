@@ -5,11 +5,7 @@ import java.util.Set;
 public interface MainGame {
 	boolean attempt(final String word);
 	
-	void useScoreBonus();
-	
-	Set<String> useWordBonus();
-
-	long useTimeBonus(final long currentTime);
+	Set<String> wordsToBeFound();
 	
 	boolean needHelp();
 	

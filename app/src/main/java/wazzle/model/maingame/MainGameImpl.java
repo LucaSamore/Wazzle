@@ -17,17 +17,15 @@ public class MainGameImpl implements MainGame {
 	private final Grid grid;
 	private final Set<String> wordsFound;
 	private final LocalDateTime dateTime;
-	private final BonusManager bonusManager;
 	private int failedAttempts;
 	private long duration;
 	private double currentScore;
 	
-	public MainGameImpl(final Grid grid, final long duration, final BonusManager bonusManager) {
+	public MainGameImpl(final Grid grid, final long duration) {
 		this.grid = grid;
 		this.duration = duration;
 		this.wordsFound = new HashSet<>();
 		this.dateTime = LocalDateTime.now();
-		this.bonusManager = bonusManager;
 		this.failedAttempts = 0;
 		this.currentScore = 0;
 	}
@@ -36,34 +34,26 @@ public class MainGameImpl implements MainGame {
 	// performs the add operation as well
 	// false otherwise --> this.updateFailedAttempts(f -> f + 1)
 	
-	//TODO: Fix this method
-	
 	@Override
 	public boolean attempt(final String word) {
-		Optional.of(word)
-				.filter(w -> this.grid.getWordsCanBeFound().contains(word) && !this.alreadyFound(word))
-				.ifPresent(w -> {
-					this.updateFailedAttempts(f -> f = 0);
-					this.addWordFound(w);
-				});
+		final var attempt = Optional.of(word).filter(w -> this.wordsToBeFound().contains(w));
+		
+		if(attempt.isPresent()) {
+			this.updateFailedAttempts(f -> f = 0);
+			this.addWordFound(attempt.get());
+			return true;
+		}
 		
 		this.updateFailedAttempts(f -> f + 1);
 		return false;	
 	}
 	
 	@Override
-	public void useScoreBonus() {
-		this.currentScore = this.bonusManager.applyScoreBonus(currentScore, this.grid.getTotalScore());
-	}
-	
-	@Override
-	public Set<String> useWordBonus() {
-		return this.bonusManager.applyWordBonus(this.wordsToBeFound());
-	}
-
-	@Override
-	public long useTimeBonus(final long currentTime) {
-		return this.bonusManager.applyTimeBonus(currentTime);
+	public Set<String> wordsToBeFound() {
+		return this.grid.getWordsCanBeFound()
+				.stream()
+				.filter(w -> !this.alreadyFound(w))
+				.collect(Collectors.toSet());
 	}
 	
 	@Override
@@ -111,18 +101,10 @@ public class MainGameImpl implements MainGame {
 	
 	private void addWordFound(final String word) {
 		this.wordsFound.add(word);
-		//return this.areWeDone();
 	}
 	
 	private boolean alreadyFound(final String word) {
 		return this.wordsFound.contains(word);
-	}
-	
-	private Set<String> wordsToBeFound() {
-		return this.grid.getWordsCanBeFound()
-				.stream()
-				.filter(w -> !this.wordsFound.contains(w))
-				.collect(Collectors.toSet());
 	}
 	
 	private void updateFailedAttempts(final UnaryOperator<Integer> operation) {

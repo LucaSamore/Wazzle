@@ -10,44 +10,109 @@ import wazzle.model.common.DictionaryImpl;
 import wazzle.model.maingame.Difficulty;
 import wazzle.model.maingame.GridGenerator;
 import wazzle.model.maingame.GridGeneratorImpl;
-import wazzle.model.maingame.GridValidator;
-import wazzle.model.maingame.GridValidatorImpl;
-import wazzle.model.maingame.Mediator;
 
 public class TestGridGenerator {
 
 	// These tests are used to see how much time it takes to generate a grid of a certain difficulty
 	
-//	private final Difficulty easy = new Difficulty(351, 500, 240000L);
-//	private final Difficulty hard = new Difficulty(250, 350, 180000L);
-//	
-//	@Test
-//	public void testGeneratorEasy() {
-//		try {
-//			final Dictionary dataset = new DictionaryImpl(".\\src\\test\\res\\datasetNuovo.txt");
-//			final GridGenerator generatorEasy = new GridGeneratorImpl(dataset, new Pair<Integer,Integer>(6,6), this.easy);
-//			
-//			var grid = generatorEasy.generate();
-//			System.out.println(grid);
-//		
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-//	
-//	@Test
-//	public void testGeneratorHard() {		
-//		try {
-//			final Dictionary dataset = new DictionaryImpl(".\\src\\test\\res\\datasetNuovo.txt");
-//			final GridGenerator generatorHard = new GridGeneratorImpl(dataset, new Pair<Integer,Integer>(6,6), this.hard);
-//			
-//			var grid = generatorHard.generate();
-//			
-//			System.out.println(grid);
-//		
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
+	private static final Pair<Integer,Integer> SHAPE_4x4 = new Pair<>(4,4);
+	private static final Pair<Integer,Integer> SHAPE_5x5 = new Pair<>(5,5);
+	private static final Pair<Integer,Integer> SHAPE_6x6 = new Pair<>(6,6);
+	
+	private final Difficulty easy4x4 = new Difficulty(126, 250, 240000L);
+	private final Difficulty hard4x4 = new Difficulty(50, 125, 180000L);
+	
+	private final Difficulty easy5x5 = new Difficulty(201, 325, 240000L);
+	private final Difficulty hard5x5 = new Difficulty(125, 200, 180000L);
+	
+	private final Difficulty easy6x6 = new Difficulty(351, 500, 240000L);
+	private final Difficulty hard6x6 = new Difficulty(250, 350, 180000L);
+	
+	@Test
+	public void testGeneratorEasy4x4() {
+		try {
+			final Dictionary dataset = new DictionaryImpl(DatasetReader.readDataset("datasetNuovo.txt"));
+			final GridGenerator generatorEasy = new GridGeneratorImpl(dataset, SHAPE_4x4, this.easy4x4);
+			
+			var grid = generatorEasy.generate();
+			System.out.println(grid);
+		
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testGeneratorHard4x4() {		
+		try {
+			final Dictionary dataset = new DictionaryImpl(DatasetReader.readDataset("datasetNuovo.txt"));
+			final GridGenerator generatorHard = new GridGeneratorImpl(dataset, SHAPE_4x4, this.hard4x4);
+			
+			var grid = generatorHard.generate();
+			
+			System.out.println(grid);
+		
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testGeneratorEasy5x5() {
+		try {
+			final Dictionary dataset = new DictionaryImpl(DatasetReader.readDataset("datasetNuovo.txt"));
+			final GridGenerator generatorEasy = new GridGeneratorImpl(dataset, SHAPE_5x5, this.easy5x5);
+			
+			var grid = generatorEasy.generate();
+			System.out.println(grid);
+		
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testGeneratorHard5x5() {		
+		try {
+			final Dictionary dataset = new DictionaryImpl(DatasetReader.readDataset("datasetNuovo.txt"));
+			final GridGenerator generatorHard = new GridGeneratorImpl(dataset, SHAPE_5x5, this.hard5x5);
+			
+			var grid = generatorHard.generate();
 
+			System.out.println(grid);
+		
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testGeneratorEasy6x6() {
+		try {
+			final Dictionary dataset = new DictionaryImpl(DatasetReader.readDataset("datasetNuovo.txt"));
+			final GridGenerator generatorEasy = new GridGeneratorImpl(dataset, SHAPE_6x6, this.easy6x6);
+			
+			var grid = generatorEasy.generate();
+			
+			System.out.println(grid);
+		
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testGeneratorHard6x6() {
+		try {
+			final Dictionary dataset = new DictionaryImpl(DatasetReader.readDataset("datasetNuovo.txt"));
+			final GridGenerator generatorHard = new GridGeneratorImpl(dataset, SHAPE_6x6, this.hard6x6);
+			
+			var grid = generatorHard.generate();
+			
+			System.out.println(grid);
+		
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
