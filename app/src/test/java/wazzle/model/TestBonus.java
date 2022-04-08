@@ -38,6 +38,15 @@ public class TestBonus {
 		long halfMinute = 30000;
 		long increment = 120000;
 		assertTrue(bonusManager.applyTimeBonus(increment) == halfMinute + increment);
-		assertEquals(bonusManager.getTimeBonusQuantity(), 1);	
+		assertEquals(bonusManager.getTimeBonusQuantity(), 1);
+		
+		//Extract
+		int startQuantity = bonusManager.getScoreBonusQuantity() + bonusManager.getWordBonusQuantity() 
+						  + bonusManager.getTimeBonusQuantity();
+		bonusManager.extractBonus();
+		int finalQuantity = bonusManager.getScoreBonusQuantity() + bonusManager.getWordBonusQuantity() 
+		  + bonusManager.getTimeBonusQuantity();
+		assertEquals(1, finalQuantity - startQuantity);
+		
 	}
 }

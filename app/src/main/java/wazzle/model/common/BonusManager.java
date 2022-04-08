@@ -71,5 +71,11 @@ public interface BonusManager {
 	 * @return long which represent the incremented time.
 	 */
 	long applyTimeBonus(final long currentTime);
+	
+	/**
+	 * Extract randomly a bonus and updates its quantity.
+	 * 
+	 */
+	void extractBonus();
 
 }
