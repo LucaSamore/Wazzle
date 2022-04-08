@@ -1,22 +1,23 @@
 package wazzle.controller.maingame;
 
-//import java.util.Collections;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import wazzle.model.maingame.MainGame;
+import wazzle.model.maingame.MainGameImpl;
 
 public class GameHistoryControllerImpl implements GameHistoryController {
 	
-	List<MainGame> gameHistory;
+	List<MainGameImpl> gameHistory;
 	
-//	public ControllerGameHistory(Facade mainController) {
-//		this.gameHistory = mainController.getGameHistory();
-//	}
+	public GameHistoryControllerImpl(WazzleController wazzleController) {
+		this.gameHistory = wazzleController.getGameHistory();
+	}
 
 	@Override
-	public List<MainGame> getGameHistory() {
+	public List<MainGameImpl> getGameHistory() {
 		return this.gameHistory;
 	}
 
@@ -32,14 +33,14 @@ public class GameHistoryControllerImpl implements GameHistoryController {
 	}
 
 	@Override
-	public List<MainGame> getSortedByDataGameHistory() {
-		List<MainGame> sortedGameHistory = this.gameHistory;
-		//Collections.sort(sortedGameHistory, (v1, v2) -> v1.getDateTime().compareTo(v2.getDateTime()));
+	public List<MainGameImpl> getSortedByDataGameHistory() {
+		List<MainGameImpl> sortedGameHistory = this.gameHistory;
+		Collections.sort(sortedGameHistory, (v1, v2) -> v1.getDateTime().compareTo(v2.getDateTime()));
 		return sortedGameHistory;
 	}
 
 	@Override
-	public List<MainGame> getSortedByScoreGameHistory() {
+	public List<MainGameImpl> getSortedByScoreGameHistory() {
 		return this.gameHistory.stream().sorted(Comparator.comparingDouble(MainGame::getCurrentScore)).collect(Collectors.toList());
 	}
 

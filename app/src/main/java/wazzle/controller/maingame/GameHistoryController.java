@@ -3,15 +3,16 @@ package wazzle.controller.maingame;
 import java.util.List;
 
 import wazzle.model.maingame.MainGame;
+import wazzle.model.maingame.MainGameImpl;
 
 public interface GameHistoryController {
 	
-	List<MainGame> getGameHistory();
+	List<MainGameImpl> getGameHistory();
 	
 	MainGame getBestGame();
 	
-	List<MainGame> getSortedByDataGameHistory();
+	List<MainGameImpl> getSortedByDataGameHistory();
 	
-	List<MainGame> getSortedByScoreGameHistory();
+	List<MainGameImpl> getSortedByScoreGameHistory();
 
 }
