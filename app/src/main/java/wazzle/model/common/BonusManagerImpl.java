@@ -1,10 +1,13 @@
 package wazzle.model.common;
 
+import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.function.UnaryOperator;
 
 public class BonusManagerImpl implements BonusManager {
 	
+	private static final Random random = new Random();
 	private ScoreBonus scoreBonus;
 	private WordBonus wordBonus;
 	private TimeBonus timeBonus;
@@ -85,6 +88,34 @@ public class BonusManagerImpl implements BonusManager {
 	public long applyTimeBonus(final long currentTime) {
 		this.updateTimeBonusQuantity(b -> b - 1);
 		return this.timeBonus.apply(currentTime);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void extractBonus() {
+		var extractedBonus = this.extracter().getClass();
+		if (this.scoreBonus.getClass().equals(extractedBonus)) {
+			this.updateScoreBonusQuantity(q -> q+1);
+		}
+		if (this.wordBonus.getClass().equals(extractedBonus)) {
+			this.updateWordBonusQuantity(q -> q+1);
+		}
+		if (this.timeBonus.getClass().equals(extractedBonus)) {
+			this.updateTimeBonusQuantity(q -> q+1);
+		}
+	}
+	
+	/**
+	 * Extract randomly a bonus.
+	 * 
+	 * @return AbstractBonus extracted.
+	 */
+	private AbstractBonus extracter() {
+		List<AbstractBonus> bonuses = List.of(this.bonusFactory.createScoreBonus(), 
+											  this.bonusFactory.createWordBonus(),
+											  this.bonusFactory.createTimeBonus());
+		return bonuses.get(random.nextInt(bonuses.size()));
 	}
 
 }
