@@ -23,7 +23,7 @@ public class MainGameImpl implements MainGame {
 	private final Set<String> wordsFound;
 	
 	@Expose
-	private final LocalDateTime dateTime;
+	private final LocalDateTime dateTime; // TODO: getter in the interface as well!
 	
 	@Expose
 	private long duration;

@@ -56,7 +56,6 @@ public final class TestFileHandler {
 			assertThrows(IOException.class, () -> this.handler.read("I do not exist")); // try to read a file that does not exist
 		} catch (IOException e) {
 			e.printStackTrace();
-			//System.err.println("Exception thrown successfully");
 		}
 	}
 	
@@ -76,7 +75,7 @@ public final class TestFileHandler {
 			
 			final Serializer<MainGame> serializer = new SerializerImpl<>();
 			
-			serializer.serialize(DatasetReader.getPath() + JSON_TEST_FILE, toBeSerialized);
+			serializer.serialize(DatasetReader.getPath() + JSON_TEST_FILE, toBeSerialized.toArray(new MainGameImpl[toBeSerialized.size()]));
 			
 			List<MainGameImpl> deserializedGames = Deserializers.mainGames(DatasetReader.getPath() + JSON_TEST_FILE);
 			
@@ -85,7 +84,6 @@ public final class TestFileHandler {
 			
 		} catch (IOException e) {
 			e.printStackTrace();
-			//System.err.println("Exception thrown successfully");
 		}
 	}
 }

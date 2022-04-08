@@ -4,5 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 public interface Serializer<X> {
-	void serialize(final String path, List<X> toBeWritten) throws IOException;
+	@SuppressWarnings("unchecked")
+	void serialize(final String path, final X... toBeWritten) throws IOException;
 }

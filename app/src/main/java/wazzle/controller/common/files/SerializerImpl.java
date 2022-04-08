@@ -18,8 +18,9 @@ public class SerializerImpl<X> implements Serializer<X> {
 			.serializeNulls()
 			.create();
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public void serialize(final String path, List<X> toBeWritten) throws IOException {
+	public void serialize(final String path, final X... toBeWritten) throws IOException {
 		try(final var writer = new FileWriter(path, StandardCharsets.UTF_8)) {
 			this.gson.toJson(toBeWritten, writer);
 			writer.flush();
