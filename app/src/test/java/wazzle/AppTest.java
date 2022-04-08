@@ -4,6 +4,9 @@
 package wazzle;
 
 import org.junit.Test;
+
+import wazzle.App;
+
 import static org.junit.Assert.*;
 
 public class AppTest {
