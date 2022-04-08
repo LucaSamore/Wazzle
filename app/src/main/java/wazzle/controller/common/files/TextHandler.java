@@ -7,19 +7,22 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 
+
 public final class TextHandler implements FileStrategies<String>{
 	
 	@Override
 	public List<String> read(final String path) throws IOException {
-		return Files.readAllLines(Path.of(path), StandardCharsets.UTF_8);
+		return Files.readAllLines(Path.of(path));
 	}
 	
 	@Override
 	public void append(final String path, final List<String> toBeAdded) throws IOException {
-		for (final var element : toBeAdded) {
-			Files.write(Path.of(path), 
-					(element + System.lineSeparator()).getBytes(), 
-					StandardOpenOption.APPEND);
+		try (final var bufferedWriter = Files.newBufferedWriter(Path.of(path), 
+				StandardCharsets.UTF_8, 
+				StandardOpenOption.APPEND)) {
+			for (final var element : toBeAdded) {
+				bufferedWriter.write(element + System.lineSeparator());
+			}
 		}
 	}
 	

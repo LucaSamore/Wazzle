@@ -2,6 +2,7 @@ package wazzle.controller.common.files;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,9 +20,10 @@ public class SerializerImpl<X> implements Serializer<X> {
 	
 	@Override
 	public void serialize(final String path, List<X> toBeWritten) throws IOException {
-		final var writer = new FileWriter(path);
-		this.gson.toJson(toBeWritten, writer);
-		writer.flush();
-		writer.close();
+		try(final var writer = new FileWriter(path, StandardCharsets.UTF_8)) {
+			this.gson.toJson(toBeWritten, writer);
+			writer.flush();
+			writer.close();
+		}
 	}
 }
