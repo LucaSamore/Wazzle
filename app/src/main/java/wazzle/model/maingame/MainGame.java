@@ -1,5 +1,6 @@
 package wazzle.model.maingame;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 public interface MainGame {
@@ -14,6 +15,8 @@ public interface MainGame {
 	int getFailedAttempts();
 	
 	double getCurrentScore();
+	
+	LocalDateTime getDateTime();
 	
 	Set<Letter> getLettersInGrid();
 	

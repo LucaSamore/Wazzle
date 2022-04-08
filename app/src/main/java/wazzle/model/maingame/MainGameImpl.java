@@ -23,7 +23,7 @@ public class MainGameImpl implements MainGame {
 	private final Set<String> wordsFound;
 	
 	@Expose
-	private final LocalDateTime dateTime; // TODO: getter in the interface as well!
+	private final LocalDateTime dateTime;
 	
 	@Expose
 	private long duration;
@@ -40,10 +40,6 @@ public class MainGameImpl implements MainGame {
 		this.currentScore = 0;
 	}
 	
-	// return true if word is in grid.getWordsCanBeFound() AND word is not in this.wordsFound yet --> this.updateFailedAttempts(f -> f = 0)
-	// performs the add operation as well
-	// false otherwise --> this.updateFailedAttempts(f -> f + 1)
-	
 	@Override
 	public boolean attempt(final String word) {
 		final var attempt = Optional.of(word).filter(w -> this.wordsToBeFound().contains(w));
@@ -51,6 +47,7 @@ public class MainGameImpl implements MainGame {
 		if(attempt.isPresent()) {
 			this.updateFailedAttempts(f -> f = 0);
 			this.addWordFound(attempt.get());
+			this.updateCurrentScore(attempt.get());
 			return true;
 		}
 		
@@ -101,12 +98,13 @@ public class MainGameImpl implements MainGame {
 		return this.currentScore;
 	}
 	
-	public long getDuration() {
-		return this.duration;
-	}
-	
+	@Override
 	public LocalDateTime getDateTime() {
 		return this.dateTime;
+	}
+	
+	public long getDuration() {
+		return this.duration;
 	}
 	
 	private void addWordFound(final String word) {
@@ -115,6 +113,15 @@ public class MainGameImpl implements MainGame {
 	
 	private boolean alreadyFound(final String word) {
 		return this.wordsFound.contains(word);
+	}
+	
+	private void updateCurrentScore(final String word) {
+		this.currentScore += this.getLettersInGrid()
+				.stream()
+				.filter(l -> word.indexOf(l.getContent()) > 0)
+				.distinct()
+				.map(Letter::getScore)
+				.reduce(0.0, (x,y) -> x + y);
 	}
 	
 	private void updateFailedAttempts(final UnaryOperator<Integer> operation) {
