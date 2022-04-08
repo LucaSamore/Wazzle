@@ -15,11 +15,13 @@ public class WazzleControllerImpl implements WazzleController {
 
 	private final FileController fileController;
 	private final List<MainGameImpl> gameHistory;
+	private final Settings settings;
 	private final BonusManager bonusManager;
 		
 	public WazzleControllerImpl() throws IOException {
 		this.fileController = new FileControllerImpl();
 		this.gameHistory = this.fileController.getMainGameHistory("history.json");
+		this.settings = new SettingsImpl();
 		this.bonusManager = this.fileController.getBonuses("bonus.json");
 	}
 	
@@ -34,12 +36,17 @@ public class WazzleControllerImpl implements WazzleController {
 	}
 
 	@Override
-	public void gainBonus() {
-		// TODO Auto-generated method stub
+	public Settings getSettings() {
+		return this.settings;
+	}
 
+	@Override
+	public void gainBonus() {
+		this.bonusManager.extractBonus();
 	}
 	
 	private void extractBonus() {
 	}
+
 
 }

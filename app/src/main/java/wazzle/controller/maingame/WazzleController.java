@@ -7,7 +7,7 @@ import wazzle.model.maingame.MainGameImpl;
 
 public interface WazzleController {
 
-//	Settings getSettings();
+	Settings getSettings();
 	
 	FileController getFileController();
 	
