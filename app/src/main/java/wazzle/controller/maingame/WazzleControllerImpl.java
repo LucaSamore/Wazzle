@@ -44,9 +44,5 @@ public class WazzleControllerImpl implements WazzleController {
 	public void gainBonus() {
 		this.bonusManager.extractBonus();
 	}
-	
-	private void extractBonus() {
-	}
-
 
 }
