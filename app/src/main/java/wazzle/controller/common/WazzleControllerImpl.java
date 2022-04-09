@@ -34,7 +34,7 @@ public class WazzleControllerImpl implements WazzleController {
 	 */
 	@Override
 	public FileController getFileController() {
-		return this.fileController;
+		return this.fileController.getThis();
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class WazzleControllerImpl implements WazzleController {
 	 */
 	@Override
 	public List<MainGameImpl> getGameHistory() {
-		return this.gameHistory;
+		return List.copyOf(this.gameHistory);
 	}
 
 	/**

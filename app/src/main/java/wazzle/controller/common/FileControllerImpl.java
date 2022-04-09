@@ -80,4 +80,10 @@ public final class FileControllerImpl implements FileController {
 		
 		return Deserializers.bonuses(DIRECTORY + fileName);
 	}
+	
+	@Override
+	public FileController getThis() {
+		return this;
+	}
+	
 }

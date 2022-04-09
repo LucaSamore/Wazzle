@@ -19,7 +19,7 @@ public class GameHistoryControllerImpl implements GameHistoryController {
 
 	@Override
 	public List<MainGameImpl> getGameHistory() {
-		return this.gameHistory;
+		return List.copyOf(this.gameHistory);
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class GameHistoryControllerImpl implements GameHistoryController {
 	public List<MainGameImpl> getSortedByDataGameHistory() {
 		List<MainGameImpl> sortedGameHistory = this.gameHistory;
 		Collections.sort(sortedGameHistory, (v1, v2) -> v1.getDateTime().compareTo(v2.getDateTime()));
-		return sortedGameHistory;
+		return List.copyOf(sortedGameHistory);
 	}
 
 	@Override
