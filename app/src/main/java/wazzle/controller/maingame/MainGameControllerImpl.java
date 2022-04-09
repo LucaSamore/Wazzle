@@ -1,12 +1,19 @@
 package wazzle.controller.maingame;
 
 import java.util.Optional;
-
+import java.util.Set;
+import wazzle.controller.common.WazzleController;
 import wazzle.model.maingame.MainGame;
 
 public final class MainGameControllerImpl implements MainGameController {
+	private static final int ATTEMPTS_BEFORE_HELP = 5;
+	private final WazzleController mainController;
+	private Optional<MainGame> game;
 	
-	private Optional<MainGame> game = Optional.empty();
+	public MainGameControllerImpl(final WazzleController mainController) {
+		this.mainController = mainController;
+		this.game = Optional.empty();
+	}
 	
 	@Override
 	public Optional<MainGame> getGame() {
@@ -15,42 +22,56 @@ public final class MainGameControllerImpl implements MainGameController {
 
 	@Override
 	public void startNewGame() {
-		// from wazzle controller
+		
 	}
 
 	@Override
 	public void endGame() {
-		// TODO Auto-generated method stub
-		
+		this.game.ifPresent(g -> {
+			this.saveGame();
+			this.game = Optional.empty();
+		});
 	}
 
 	@Override
-	public void saveGame() {
-		// TODO Auto-generated method stub
-		
+	public boolean attempt(final String word) {
+		if(this.game.isPresent()) {
+			return this.game.get().tryWord(word);
+		}
+		return false;
 	}
-
+	
 	@Override
-	public void attempt(String word) {
-		// TODO Auto-generated method stub
-		
+	public boolean needHelp() {
+		return this.game.get().getFailedAttempts() == ATTEMPTS_BEFORE_HELP;
+	}
+	
+	@Override
+	public boolean areWeDone() {
+		return this.game.get().wordsFound().size() == this.game.get().wordsCanBeFound().size();
 	}
 
 	@Override
 	public void useScoreBonus() {
-		// TODO Auto-generated method stub
-		
+		this.game.get().setCurrentScore(this.mainController
+				.getBonusManager()
+				.applyScoreBonus(this.game.get().getCurrentScore(), this.game.get().getGrid().getTotalScore()));
 	}
 
 	@Override
 	public void useTimeBonus() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
-	public void useWordBonus() {
-		// TODO Auto-generated method stub
-		
+	public Set<String> useWordBonus() {
+		return this.mainController
+				.getBonusManager()
+				.applyWordBonus(this.game.get().wordsToBeFound());
+	}
+	
+	private void saveGame() {
+		// se vuoi rovinarti il sabato sera cambia addMainGametoHistory ;)
+		this.mainController.addMainGametoHistory(this.game.get());
 	}
 }

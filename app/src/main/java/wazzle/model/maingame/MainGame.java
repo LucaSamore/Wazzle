@@ -2,25 +2,30 @@ package wazzle.model.maingame;
 
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.function.UnaryOperator;
+
+import wazzle.controller.common.FileController;
 
 public interface MainGame {
-	boolean attempt(final String word);
+	boolean tryWord(final String word);
+	
+	Set<String> wordsFound();
 	
 	Set<String> wordsToBeFound();
 	
-	boolean needHelp();
+	Set<String> wordsCanBeFound();
 	
-	boolean areWeDone();
+	Set<Letter> lettersInGrid();
 	
-	int getFailedAttempts();
-	
-	double getCurrentScore();
+	Grid getGrid();
 	
 	LocalDateTime getDateTime();
 	
-	Set<Letter> getLettersInGrid();
+	int getFailedAttempts();
 	
-	Set<String> getWordsFound();
+	void setCurrentScore(final double newScore);
 	
-	Set<String> getWordsCanBeFound();
+	double getCurrentScore();
+	
+	MainGame getThis();
 }
