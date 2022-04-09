@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import wazzle.controller.common.WazzleController;
 import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
 

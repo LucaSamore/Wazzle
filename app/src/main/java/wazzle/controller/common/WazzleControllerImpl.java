@@ -1,12 +1,13 @@
-package wazzle.controller.maingame;
+package wazzle.controller.common;
 
 import java.io.IOException;
 
 import java.util.List;
 
-import wazzle.controller.common.FileController;
-import wazzle.controller.common.FileControllerImpl;
+import wazzle.controller.maingame.Settings;
+import wazzle.controller.maingame.SettingsImpl;
 import wazzle.model.common.BonusManager;
+import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
 
 public class WazzleControllerImpl implements WazzleController {
@@ -16,6 +17,11 @@ public class WazzleControllerImpl implements WazzleController {
 	private final List<MainGameImpl> gameHistory;
 	private final BonusManager bonusManager;
 		
+	/**
+	 * Construct a new WazzleController.
+	 * 
+	 * @throws IOException
+	 */
 	public WazzleControllerImpl() throws IOException {
 		this.fileController = new FileControllerImpl();
 		this.settings = new SettingsImpl();
@@ -23,24 +29,52 @@ public class WazzleControllerImpl implements WazzleController {
 		this.bonusManager = this.fileController.getBonuses("bonus.json");
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public FileController getFileController() {
 		return this.fileController;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Settings getSettings() {
 		return this.settings;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<MainGameImpl> getGameHistory() {
 		return this.gameHistory;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public BonusManager getBonusManager() {
+		return this.bonusManager;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void gainBonus() {
 		this.bonusManager.extractBonus();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addMainGametoHistory(final MainGame mainGame) {
+		this.gameHistory.add((MainGameImpl) mainGame);
 	}
 
 }
