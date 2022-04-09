@@ -48,4 +48,6 @@ public interface WazzleController {
 	 * @param mainGame The MainGame to be inserted.
 	 */
 	void addMainGametoHistory(final MainGame mainGame);
+	
+	WazzleController getThis();
 }

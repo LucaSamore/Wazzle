@@ -26,6 +26,4 @@ public interface MainGame {
 	void setCurrentScore(final double newScore);
 	
 	double getCurrentScore();
-	
-	MainGame getThis();
 }

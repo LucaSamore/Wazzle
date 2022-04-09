@@ -76,5 +76,9 @@ public class WazzleControllerImpl implements WazzleController {
 	public void addMainGametoHistory(final MainGame mainGame) {
 		this.gameHistory.add((MainGameImpl) mainGame);
 	}
-
+	
+	@Override
+	public WazzleController getThis() {
+		return this;
+	}
 }

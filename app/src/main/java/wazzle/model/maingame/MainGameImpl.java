@@ -156,9 +156,4 @@ public class MainGameImpl implements MainGame {
 				"failedAttempts: " + this.failedAttempts + System.lineSeparator() +
 				"duration: " + this.duration + System.lineSeparator();
 	}
-
-	@Override
-	public MainGame getThis() {
-		return this;
-	}	
 }

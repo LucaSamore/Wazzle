@@ -11,7 +11,7 @@ public final class MainGameControllerImpl implements MainGameController {
 	private Optional<MainGame> game;
 	
 	public MainGameControllerImpl(final WazzleController mainController) {
-		this.mainController = mainController;
+		this.mainController = mainController.getThis();
 		this.game = Optional.empty();
 	}
 	
@@ -71,7 +71,7 @@ public final class MainGameControllerImpl implements MainGameController {
 	}
 	
 	private void saveGame() {
-		// se vuoi rovinarti il sabato sera cambia addMainGametoHistory ;)
+		// il sabato sera è stato salvato :)
 		this.mainController.addMainGametoHistory(this.game.get());
 	}
 }
