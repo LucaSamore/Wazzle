@@ -25,10 +25,14 @@ public class App extends Application {
 			stage.setHeight(screenViewport.getHeight()*0.75);
 			MainMenuView mainMenuController = new MainMenuView(stage);
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(new URL("file:" + System.getProperty("user.dir") + SEPARATOR + "src" + SEPARATOR + 
-					"main" + SEPARATOR + "res" + SEPARATOR + "layouts" + SEPARATOR + "MainMenu.fxml"));
+//			loader.setLocation(new URL("file:" + System.getProperty("user.dir") System.get
+//					+ SEPARATOR + "src" + SEPARATOR + "main" + SEPARATOR + "res" + SEPARATOR + 
+//					"layouts" + SEPARATOR + "MainMenu.fxml"));
+			URL url = new URL ("file:" + this.getClass().getResource("/layouts/MainMenu.fxml"));
+			String path = "/layouts/MainMenu.fxml";
+			loader.setLocation(url);
 			loader.setController(mainMenuController);
-			Parent root = loader.load();
+			Parent root = loader.load(this.getClass().getResourceAsStream(path));
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
 			stage.show();
