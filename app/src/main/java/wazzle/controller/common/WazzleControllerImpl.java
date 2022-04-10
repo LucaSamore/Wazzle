@@ -16,6 +16,7 @@ public class WazzleControllerImpl implements WazzleController {
 	private final Settings settings;
 	private final List<MainGameImpl> gameHistory;
 	private final BonusManager bonusManager;
+	private final Facade facade;
 		
 	/**
 	 * Construct a new WazzleController.
@@ -27,6 +28,7 @@ public class WazzleControllerImpl implements WazzleController {
 		this.settings = new SettingsImpl();
 		this.gameHistory = this.fileController.getMainGameHistory("history.json");
 		this.bonusManager = this.fileController.getBonuses("bonus.json");
+		this.facade = new Facade();
 	}
 	
 	/**
@@ -60,6 +62,13 @@ public class WazzleControllerImpl implements WazzleController {
 	public BonusManager getBonusManager() {
 		return this.bonusManager;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public Facade getFacade() {
+		return this.facade;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -77,6 +86,9 @@ public class WazzleControllerImpl implements WazzleController {
 		this.gameHistory.add((MainGameImpl) mainGame);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public WazzleController getThis() {
 		return this;

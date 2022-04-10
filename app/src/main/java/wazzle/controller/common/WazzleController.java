@@ -38,6 +38,13 @@ public interface WazzleController {
 	BonusManager getBonusManager();
 	
 	/**
+	 * Gives the Facade.
+	 * 
+	 * @return Facade the facade.
+	 */
+	Facade getFacade();
+	
+	/**
 	 * Extract and add a bonus gained in the MiniGame, using a BonusManager method.
 	 */
 	void gainBonus();
@@ -49,5 +56,10 @@ public interface WazzleController {
 	 */
 	void addMainGametoHistory(final MainGame mainGame);
 	
+	/**
+	 * Gives this Wazzle controller.
+	 * 
+	 * @return WazzleController this Wazzle controller.
+	 */
 	WazzleController getThis();
 }
