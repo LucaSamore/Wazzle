@@ -28,11 +28,15 @@ public class App extends Application {
 //			loader.setLocation(new URL("file:" + System.getProperty("user.dir") System.get
 //					+ SEPARATOR + "src" + SEPARATOR + "main" + SEPARATOR + "res" + SEPARATOR + 
 //					"layouts" + SEPARATOR + "MainMenu.fxml"));
-			URL url = new URL ("file:" + this.getClass().getResource("/layouts/MainMenu.fxml"));
+			
+//			URL url = new URL ("file:" + App.class.getResource("/layouts/MainMenu.fxml"));
+//			loader.setLocation(url);
+//			Parent root1 = loader.load(); 
+			
 			String path = "/layouts/MainMenu.fxml";
-			loader.setLocation(url);
+			Parent root = loader.load(App.class.getResourceAsStream(path));
+			
 			loader.setController(mainMenuController);
-			Parent root = loader.load(this.getClass().getResourceAsStream(path));
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
 			stage.show();
