@@ -1,0 +1,20 @@
+@font-face {
+    src: url("../fonts/Waffle_Crisp.ttf");
+    
+}
+
+.letters{
+		-fx-font-family: "Waffle Crisp";
+}
+
+#mainMenuRightPane{
+	-fx-background-image: url("../img/waffleMainMenu.png");
+	-fx-background-size: stretch ;
+	-fx-background-repeat: no-repeat ;
+	
+}
+
+.settingsButton{
+	-fx-background-image: url("../img/settingsIco.png");
+		-fx-background-size: contain ;
+}
