@@ -1,0 +1,42 @@
+
+@font-face {
+    src: url('../fonts/Waffle_Crisp.ttf');
+    
+}
+
+.orangeButton:hover{
+	-fx-border-width:2.0px;
+	-fx-background-color: #fff;
+	-fx-background-radius:30.0px;
+	-fx-border-color: #faac1b;
+	-fx-text-fill: #faac1b;
+	-fx-border-radius:30.0px;
+
+}
+
+
+.orangeButton{
+	-fx-border-width:2.0px;
+	-fx-background-radius:30.0px;
+	-fx-border-radius:30.0px;
+	-fx-border-color: #faac1b;
+	-fx-font-family: "Waffle Crisp";
+	-fx-background-color: #faac1b;
+	-fx-text-fill: white;
+}
+
+.gridBackground{
+	-fx-background-image: url('../img/Sfondo.png');
+	-fx-background-size: stretch;
+	
+}
+
+
+.longIncave{
+	-fx-background-image: url("../img/bg-long-Incave.png");
+	-fx-background-size: stretch;
+}
+
+.rootBackground{
+	-fx-background-color: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #55c5fc , #92dff3);
+}
