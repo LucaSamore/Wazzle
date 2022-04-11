@@ -82,5 +82,5 @@ tasks.withType<JavaCompile> {
 
 application {
     // Define the main class for the application.
-    mainClass.set("wazzle.App")
+    mainClass.set("wazzle.Launcher")
 }
