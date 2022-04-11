@@ -2,7 +2,11 @@ package wazzle.controller.maingame;
 
 import java.util.Optional;
 import java.util.Set;
+
+import javafx.util.Pair;
 import wazzle.controller.common.WazzleController;
+import wazzle.model.common.Dictionary;
+import wazzle.model.maingame.Difficulty;
 import wazzle.model.maingame.MainGame;
 
 public final class MainGameControllerImpl implements MainGameController {
@@ -21,8 +25,10 @@ public final class MainGameControllerImpl implements MainGameController {
 	}
 
 	@Override
-	public void startNewGame() {
-		
+	public void startNewGame(final Dictionary dataset, final Pair<Integer,Integer> gridShape, final Difficulty difficulty) {
+		if(this.game.isEmpty()) {
+			this.game = Optional.of(this.mainController.getFacade().startNewMainGame(dataset, gridShape, difficulty));
+		}
 	}
 
 	@Override
@@ -71,7 +77,6 @@ public final class MainGameControllerImpl implements MainGameController {
 	}
 	
 	private void saveGame() {
-		// il sabato sera è stato salvato :)
 		this.mainController.addMainGametoHistory(this.game.get());
 	}
 }
