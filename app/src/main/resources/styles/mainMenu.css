@@ -1,0 +1,60 @@
+@font-face {
+    src: url("../fonts/Waffle_Crisp.ttf");
+    
+}
+
+.letters{
+		-fx-font-family: "Waffle Crisp";
+}
+
+#mainMenuRightPane{
+	-fx-background-image: url("../img/waffleMainMenu.png");
+	-fx-background-size: stretch ;
+	-fx-background-repeat: no-repeat ;
+	
+}
+
+.settingsButton{
+	-fx-background-image: url("../img/settingsIco.png");
+		-fx-background-size: contain ;
+}
+
+.orangeButton:hover{
+	-fx-border-width:2.0px;
+	-fx-background-color: #fff;
+	-fx-background-radius:30.0px;
+	-fx-border-color: #faac1b;
+	-fx-text-fill: #faac1b;
+	-fx-border-radius:30.0px;
+
+}
+
+.orangeButton{
+	-fx-border-width:2.0px;
+	-fx-background-radius:30.0px;
+	-fx-border-radius:30.0px;
+	-fx-border-color: #faac1b;
+	-fx-font-family: "Waffle Crisp";
+	-fx-background-color: #faac1b;
+	-fx-text-fill: white;
+}
+
+.redButton:hover{
+	-fx-border-width:2.0px;
+	-fx-background-color: #fff;
+	-fx-background-radius:30.0px;
+	-fx-border-color: red;
+	-fx-text-fill: red;
+	-fx-border-radius:30.0px;
+
+}
+
+.redButton{
+	-fx-border-width:2.0px;
+	-fx-background-radius:30.0px;
+	-fx-border-radius:30.0px;
+	-fx-border-color: red;
+	-fx-font-family: "Waffle Crisp";
+	-fx-background-color: red;
+	-fx-text-fill: white;
+}

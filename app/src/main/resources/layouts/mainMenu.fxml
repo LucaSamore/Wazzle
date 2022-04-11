@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="bp" stylesheets="@../styles/application.css" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1"> <!--  fx:controller="application.MainMenuController"> -->
+<BorderPane fx:id="bp" stylesheets="@../styles/mainMenu.css" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1"> <!--  fx:controller="application.MainMenuController"> -->
    <right>
       <Pane id="mainMenuRightPane" fx:id="mainMenuRightPane" BorderPane.alignment="CENTER" />
    </right>

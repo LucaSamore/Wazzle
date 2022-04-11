@@ -26,7 +26,7 @@ public final class App extends Application {
 			MainMenuView mainMenuController;
 			try {
 				mainMenuController = new MainMenuView(stage);
-				FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("layouts/MainMenu.fxml"));
+				FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("layouts/mainMenu.fxml"));
 				loader.setController(mainMenuController);
 				Parent root = loader.load();
 				Scene scene = new Scene(root);
