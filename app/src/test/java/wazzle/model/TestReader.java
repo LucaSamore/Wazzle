@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public interface DatasetReader {
+public interface TestReader {
 
 	final String separator = System.getProperty("file.separator");
 

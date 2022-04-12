@@ -20,7 +20,7 @@ public final class FileControllerImpl implements FileController {
 	private static final String SEPARATOR = System.getProperty("file.separator");
 	private static final String DIRECTORY = "src" + SEPARATOR + 
 			"main" + SEPARATOR +
-			"res" + SEPARATOR +
+			"resources" + SEPARATOR +
 			"files" + SEPARATOR;
 	
 	private final FileStrategies<String> textFileHandler = new TextHandler();
@@ -78,7 +78,7 @@ public final class FileControllerImpl implements FileController {
 			throw new IOException(fileName + " does not exist!");
 		}
 		
-		return Deserializers.bonuses(DIRECTORY + fileName);
+		return Deserializers.bonuses(DIRECTORY + fileName).get(0);
 	}
 	
 	@Override

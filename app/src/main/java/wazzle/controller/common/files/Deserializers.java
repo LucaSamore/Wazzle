@@ -30,9 +30,9 @@ public interface Deserializers {
 				}.getType());
 	}
 	
-	static BonusManagerImpl bonuses(final String path) throws IOException {
+	static List<BonusManagerImpl> bonuses(final String path) throws IOException {
 		return gson().get().fromJson(Files.newBufferedReader(Path.of(path)), 
-				new TypeToken<BonusManagerImpl>() {
+				new TypeToken<List<BonusManagerImpl>>() {
 					private static final long serialVersionUID = 7485770631566656200L;
 				}.getType());
 	}
