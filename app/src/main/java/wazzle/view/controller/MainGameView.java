@@ -78,7 +78,9 @@ public final class MainGameView {
 	private final DoubleProperty visualUnit;
 
 	public MainGameView(final Stage stage) {
-		this.stage = stage;
+		this.stage = new Stage();
+		this.stage.setWidth(stage.widthProperty().get());
+		this.stage.setHeight(stage.heightProperty().get());
 		this.stage.setWidth(stage.widthProperty().get());
 		this.stage.setHeight(stage.heightProperty().get());
 		this.visualUnit = new SimpleDoubleProperty();
@@ -86,8 +88,7 @@ public final class MainGameView {
 		this.standardFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.asString(), ";");
 		this.letterFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(2).asString(), ";");
 		this.pointFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(0.8).asString(), ";");
-		this.titleFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(2).asString(), ";");
-		
+		this.titleFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(2).asString(), ";");	
 	}
 
 	public void initialize() {
