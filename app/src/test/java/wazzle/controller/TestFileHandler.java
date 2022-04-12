@@ -4,10 +4,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import javafx.util.Pair;
-import wazzle.controller.common.files.Deserializers;
+import wazzle.controller.common.files.Deserializer;
 import wazzle.controller.common.files.FileStrategies;
 import wazzle.controller.common.files.Serializer;
-import wazzle.controller.common.files.SerializerImpl;
 import wazzle.controller.common.files.TextHandler;
 import wazzle.model.TestReader;
 import wazzle.model.common.BonusManager;
@@ -21,7 +20,6 @@ import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
@@ -77,11 +75,9 @@ public final class TestFileHandler {
 			
 			final List<MainGame> toBeSerialized = List.of(game1, game2, game3);
 			
-			final Serializer<MainGame> serializer = new SerializerImpl<>();
+			Serializer.<MainGame>serialize(TestReader.getPath() + JSON_TEST_GAMES_FILE, toBeSerialized.toArray(new MainGameImpl[toBeSerialized.size()]));
 			
-			serializer.serialize(TestReader.getPath() + JSON_TEST_GAMES_FILE, toBeSerialized.toArray(new MainGameImpl[toBeSerialized.size()]));
-			
-			List<MainGameImpl> deserializedGames = Deserializers.mainGames(TestReader.getPath() + JSON_TEST_GAMES_FILE);
+			List<MainGameImpl> deserializedGames = Deserializer.<MainGameImpl>deserialize(MainGameImpl.class, TestReader.getPath() + JSON_TEST_GAMES_FILE);
 			
 			System.out.println(deserializedGames + System.lineSeparator());
 			System.out.println(deserializedGames.get(0));
@@ -94,17 +90,15 @@ public final class TestFileHandler {
 	@Test
 	public void testJsonBonusesFile() {
 		try {
-			
 			final var bonuses = new BonusManagerImpl();
-			final var serializer = new SerializerImpl<BonusManager>();
 			
 			bonuses.updateScoreBonusQuantity(q -> q + 500);
 			bonuses.updateTimeBonusQuantity(q -> q + 100);
 			bonuses.updateWordBonusQuantity(q -> q + 25);
 			
-			serializer.serialize(TestReader.getPath() + JSON_TEST_BONUSES_FILE, List.of(bonuses).toArray(new BonusManagerImpl[0]));
+			Serializer.<BonusManager>serialize(TestReader.getPath() + JSON_TEST_BONUSES_FILE, List.of(bonuses).toArray(new BonusManagerImpl[0]));
 			
-			BonusManagerImpl deserializedBonuses = Deserializers.bonuses(TestReader.getPath() + JSON_TEST_BONUSES_FILE).get(0);
+			BonusManagerImpl deserializedBonuses = Deserializer.<BonusManagerImpl>deserialize(BonusManagerImpl.class, TestReader.getPath() + JSON_TEST_BONUSES_FILE).get(0);
 			
 			System.out.println("Score quantity: " + deserializedBonuses.getScoreBonusQuantity() + 
 					" Time quantity: " + deserializedBonuses.getTimeBonusQuantity() + 
