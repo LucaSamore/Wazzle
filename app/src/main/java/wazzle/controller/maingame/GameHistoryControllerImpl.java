@@ -1,20 +1,20 @@
 package wazzle.controller.maingame;
 
 import java.util.Collections;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import wazzle.controller.common.WazzleController;
 import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
 
 public class GameHistoryControllerImpl implements GameHistoryController {
 	
-	List<MainGameImpl> gameHistory;
+	private final List<MainGameImpl> gameHistory;
 	
-	public GameHistoryControllerImpl(WazzleController wazzleController) {
-		this.gameHistory = wazzleController.getGameHistory();
+	public GameHistoryControllerImpl(List<MainGameImpl> gameHistory) {
+		this.gameHistory = gameHistory;
 	}
 
 	@Override
@@ -43,6 +43,11 @@ public class GameHistoryControllerImpl implements GameHistoryController {
 	@Override
 	public List<MainGameImpl> getSortedByScoreGameHistory() {
 		return this.gameHistory.stream().sorted(Comparator.comparingDouble(MainGame::getCurrentScore)).collect(Collectors.toList());
+	}
+
+	@Override
+	public void addNewGame(MainGameImpl maingame) {
+		this.gameHistory.add(maingame);
 	}
 
 }

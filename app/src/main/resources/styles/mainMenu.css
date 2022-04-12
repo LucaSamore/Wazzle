@@ -11,7 +11,6 @@
 	-fx-background-image: url("../img/waffleMainMenu.png");
 	-fx-background-size: stretch ;
 	-fx-background-repeat: no-repeat ;
-	
 }
 
 .settingsButton{
@@ -26,7 +25,6 @@
 	-fx-border-color: #faac1b;
 	-fx-text-fill: #faac1b;
 	-fx-border-radius:30.0px;
-
 }
 
 .orangeButton{
@@ -46,7 +44,6 @@
 	-fx-border-color: red;
 	-fx-text-fill: red;
 	-fx-border-radius:30.0px;
-
 }
 
 .redButton{

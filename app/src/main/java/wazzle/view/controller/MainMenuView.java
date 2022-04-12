@@ -2,6 +2,7 @@ package wazzle.view.controller;
 
 import java.io.IOException;
 
+
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringExpression;
 import javafx.beans.property.DoubleProperty;
@@ -16,10 +17,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-//import wazzle.controller.common.WazzleController;
-//import wazzle.controller.common.WazzleControllerImpl;
+import wazzle.controller.common.WazzleController;
+import wazzle.controller.common.WazzleControllerImpl;
 //import wazzle.controller.maingame.MainGameController;
 //import wazzle.controller.maingame.MainGameControllerImpl;
+import wazzle.view.SceneSwitcher;
 
 public final class MainMenuView {
 	
@@ -39,7 +41,7 @@ public final class MainMenuView {
 	private Button startMiniGameButton;
 
 	@FXML
-	private Button leaderboardButton;
+	private Button gameHistoryButton;
 
 	@FXML
 	private Label titleLabel;
@@ -50,50 +52,54 @@ public final class MainMenuView {
 	@FXML
 	private ImageView settingsIcon;
 
+	private static final double ZERO_ZERO_FIVE = 0.05;
+	private static final double ZERO_ONE = 0.1;
+	private static final double ZERO_FOUR = 0.4;
+	private static final double ZERO_FIVE = 0.5;
 	private Stage stage;
 	private DoubleProperty visualUnit;
-	//private WazzleController wazzleController;
+	private WazzleController wazzleController;
 	//private MainGameController mainGameController;
 	//private MiniGameController miniGameController;
 
 	public MainMenuView(final Stage stage) throws IOException {
-		this.stage = new Stage();
-		this.stage.setWidth(stage.widthProperty().get());
-		this.stage.setHeight(stage.heightProperty().get());
+		this.stage = stage;
+		stage.setUserData(new WazzleControllerImpl());
 		
-		visualUnit = new SimpleDoubleProperty();
-		visualUnit.bind(Bindings.min(stage.heightProperty(), stage.widthProperty()));
+		this.wazzleController = (WazzleController) stage.getUserData();
 		
-		//this.wazzleController = new WazzleControllerImpl();
-		//this.mainGameController = new MainGameControllerImpl(this.wazzleController);
+		this.visualUnit = new SimpleDoubleProperty();
+		this.visualUnit.bind(Bindings.min(this.stage.heightProperty(), this.stage.widthProperty()));
 	}
 
 	public void initialize() {
-		setGraphic();
+		this.setGraphic();
 	}
 
 	private void setGraphic() {
-		StringExpression titleFontSize = Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.1).asString(), "px;");
-		StringExpression fontSize = Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.05).asString(), "px;");
+		StringExpression titleFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(ZERO_ONE).asString(), "px;");
+		StringExpression fontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(ZERO_ZERO_FIVE).asString(), "px;");
 
-		mainMenuRightPane.prefWidthProperty().bind(stage.widthProperty().multiply(0.4));
-		mainMenuRightPane.maxWidthProperty().bind(stage.widthProperty().multiply(0.4));
+		mainMenuRightPane.prefWidthProperty().bind(this.stage.widthProperty().multiply(ZERO_FOUR));
+		mainMenuRightPane.maxWidthProperty().bind(this.stage.widthProperty().multiply(ZERO_FOUR));
 		
-		mainWrapperButtons.maxWidthProperty().bind(visualUnit.multiply(0.5));
-		mainWrapperButtons.spacingProperty().bind(stage.heightProperty().multiply(0.05));
+		mainWrapperButtons.maxWidthProperty().bind(this.visualUnit.multiply(ZERO_FIVE));
+		mainWrapperButtons.spacingProperty().bind(this.stage.heightProperty().multiply(ZERO_ZERO_FIVE));
 		mainWrapperButtons.styleProperty().bind(fontSize);
 		mainWrapperButtons.getStyleClass().add("letters");
 		
 		Image cogwheelSettingsImage = new Image("img/settingsIcon.png");
 		
 		settingsIcon.setImage(cogwheelSettingsImage);
-		settingsIcon.fitWidthProperty().bind(visualUnit.multiply(0.1));
-		settingsIcon.fitHeightProperty().bind(visualUnit.multiply(0.1));
+		settingsIcon.fitWidthProperty().bind(this.visualUnit.multiply(ZERO_ONE));
+		settingsIcon.fitHeightProperty().bind(this.visualUnit.multiply(ZERO_ONE));
 		
 		titleLabel.styleProperty().bind(titleFontSize);
+		
+		visualUnit.get();
 	}
 
-	public void goToScene(final ActionEvent event) {
+	public void goToScene(final ActionEvent event) throws IOException {
 
 		Node node = (Node) event.getSource();
 		
@@ -104,8 +110,16 @@ public final class MainMenuView {
 
 		case "startMainGameButton":
 			break;
+		
+		case "gameHistoryButton":
+			break;
 
 		case "settingsButton":
+			this.stage.setUserData(this.wazzleController);
+			SceneSwitcher.<SettingsView>switchScene(event, new SettingsView(this.stage), "layouts/SettingPage.fxml");
+			break;
+			
+		case "exitButton":
 			break;
 			
 		default:

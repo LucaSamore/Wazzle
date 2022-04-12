@@ -22,7 +22,7 @@
                </VBox.margin>
             </Button>
             <Button fx:id="startMiniGameButton" alignment="CENTER" contentDisplay="CENTER" layoutX="44.0" layoutY="283.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goToScene" pickOnBounds="false" styleClass="orangeButton" text="Bonus giornaliero" textAlignment="CENTER" />
-            <Button fx:id="leaderboardButton" alignment="CENTER" contentDisplay="CENTER" layoutX="69.0" layoutY="222.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goToScene" pickOnBounds="false" styleClass="orangeButton" text="classifica" textAlignment="CENTER" />
+            <Button fx:id="gameHistoryButton" alignment="CENTER" contentDisplay="CENTER" layoutX="69.0" layoutY="222.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goToScene" pickOnBounds="false" styleClass="orangeButton" text="Storico partite" textAlignment="CENTER" />
             <Button fx:id="exitButton" alignment="CENTER" contentDisplay="CENTER" layoutX="53.0" layoutY="323.0" mnemonicParsing="false" onAction="#goToScene" pickOnBounds="false" styleClass="redButton" text="Esci" textAlignment="CENTER" />
          </children>
       </VBox>

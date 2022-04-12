@@ -5,10 +5,12 @@ package wazzle;
 
 import java.io.IOException;
 
+
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import wazzle.controller.common.WazzleControllerImpl;
+import wazzle.view.Loader;
 import wazzle.view.controller.MainMenuView;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -20,25 +22,23 @@ import javafx.geometry.Rectangle2D;
 public final class App extends Application {
 
 	public void start(Stage stage) {
-			Rectangle2D screenViewport = Screen.getPrimary().getBounds();
-			stage.setWidth(screenViewport.getWidth()*0.75);
-			stage.setHeight(screenViewport.getHeight()*0.75);
-			MainMenuView mainMenuController;
-			try {
-				mainMenuController = new MainMenuView(stage);
-				FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("layouts/mainMenu.fxml"));
-				loader.setController(mainMenuController);
-				Parent root = loader.load();
-				Scene scene = new Scene(root);
-				stage.setScene(scene);
-				stage.show();
-			} catch (IOException e) {
-				Alert alert = new Alert(AlertType.NONE);
-				alert.setContentText("Non so che ca**o sia successo. RIPROVA GRAZIE :)");
-				ButtonType exitButton = new ButtonType("Ok riprovo ma non urlare");
-				alert.getButtonTypes().setAll(exitButton);
-				alert.showAndWait();
-			}
+		Rectangle2D screenViewport = Screen.getPrimary().getBounds();
+		MainMenuView mainMenuController;
+		try {
+			stage.setUserData(new WazzleControllerImpl());
+			mainMenuController = new MainMenuView(stage);
+			Scene scene = new Scene(Loader.<MainMenuView, Parent>loadFXMLElement(mainMenuController, "layouts/mainMenu.fxml"), 
+							screenViewport.getWidth()*0.75, screenViewport.getHeight()*0.75);
+			stage.setScene(scene);
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+			Alert alert = new Alert(AlertType.NONE);
+			alert.setContentText("Non so che ca**o sia successo. RIPROVA GRAZIE :)");
+			ButtonType exitButton = new ButtonType("Ok riprovo ma non urlare");
+			alert.getButtonTypes().setAll(exitButton);
+			alert.showAndWait();
+		}
 	}
 	
     public static void main(final String... args) {

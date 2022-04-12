@@ -15,4 +15,5 @@ public interface GameHistoryController {
 	
 	List<MainGameImpl> getSortedByScoreGameHistory();
 
+	void addNewGame(MainGameImpl maingame);
 }

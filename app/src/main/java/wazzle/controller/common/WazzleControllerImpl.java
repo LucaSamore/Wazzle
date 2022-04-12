@@ -2,19 +2,27 @@ package wazzle.controller.common;
 
 import java.io.IOException;
 
+
 import java.util.List;
 
+import wazzle.controller.maingame.GameHistoryController;
+import wazzle.controller.maingame.GameHistoryControllerImpl;
 import wazzle.controller.maingame.Settings;
+import wazzle.controller.maingame.SettingsController;
+import wazzle.controller.maingame.SettingsControllerImpl;
 import wazzle.controller.maingame.SettingsImpl;
 import wazzle.model.common.BonusManager;
+import wazzle.model.common.BonusManagerImpl;
 import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
 
 public class WazzleControllerImpl implements WazzleController {
 
 	private final FileController fileController;
-	private final Settings settings;
-	private final List<MainGameImpl> gameHistory;
+//	private final Settings settings;
+//	private final List<MainGameImpl> gameHistory;
+	private final SettingsController settingsController;
+	private final GameHistoryController gameHistoryController;
 	private final BonusManager bonusManager;
 	private final Facade facade;
 		
@@ -25,9 +33,11 @@ public class WazzleControllerImpl implements WazzleController {
 	 */
 	public WazzleControllerImpl() throws IOException {
 		this.fileController = new FileControllerImpl();
-		this.settings = new SettingsImpl();
-		this.gameHistory = this.fileController.getMainGameHistory("history.json");
-		this.bonusManager = this.fileController.getBonuses("bonus.json");
+		this.settingsController = new SettingsControllerImpl(new SettingsImpl());
+		//this.gameHistoryController = new GameHistoryControllerImpl(this.fileController.getMainGameHistory("history.json"));
+		//this.bonusManager = this.fileController.getBonuses("bonus.json");
+		this.gameHistoryController = new GameHistoryControllerImpl(List.of());
+		this.bonusManager = new BonusManagerImpl();
 		this.facade = new Facade();
 	}
 	
@@ -38,13 +48,29 @@ public class WazzleControllerImpl implements WazzleController {
 	public FileController getFileController() {
 		return this.fileController.getThis();
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SettingsController getSettingsController() {
+		return this.settingsController;
+	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public Settings getSettings() {
-		return this.settings;
+		return this.settingsController.getCurrentSettings();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public GameHistoryController getGameHistoryController() {
+		return this.gameHistoryController;
 	}
 	
 	/**
@@ -52,7 +78,7 @@ public class WazzleControllerImpl implements WazzleController {
 	 */
 	@Override
 	public List<MainGameImpl> getGameHistory() {
-		return List.copyOf(this.gameHistory);
+		return List.copyOf(this.gameHistoryController.getGameHistory());
 	}
 
 	/**
@@ -83,7 +109,15 @@ public class WazzleControllerImpl implements WazzleController {
 	 */
 	@Override
 	public void addMainGametoHistory(final MainGame mainGame) {
-		this.gameHistory.add((MainGameImpl) mainGame);
+		this.gameHistoryController.addNewGame((MainGameImpl) mainGame);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void updateSettings(Settings settings) {
+		this.settingsController.updateSettings(settings.getCurrentDifficulty(), settings.getCurrentGridShape());
 	}
 	
 	/**
