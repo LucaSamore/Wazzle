@@ -120,6 +120,7 @@ public final class MainMenuView {
 			break;
 			
 		case "exitButton":
+			this.stage.close();
 			break;
 			
 		default:
