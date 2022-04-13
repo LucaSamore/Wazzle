@@ -20,5 +20,5 @@ public interface SettingsController {
 	
 	void updateCurrentGridShape(int gridShape);
 
-
+	
 } 
