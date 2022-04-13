@@ -2,7 +2,6 @@ package wazzle.view.controller;
 
 import java.io.IOException;
 
-
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringExpression;
 import javafx.beans.property.DoubleProperty;
@@ -18,9 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import wazzle.controller.common.WazzleController;
-import wazzle.controller.common.WazzleControllerImpl;
-//import wazzle.controller.maingame.MainGameController;
-//import wazzle.controller.maingame.MainGameControllerImpl;
+import wazzle.controller.maingame.MainGameControllerImpl;
 import wazzle.view.SceneSwitcher;
 
 public final class MainMenuView {
@@ -64,14 +61,9 @@ public final class MainMenuView {
 
 	public MainMenuView(final Stage stage) throws IOException {
 		this.stage = stage;
-		stage.setUserData(new WazzleControllerImpl());
-		
 		this.wazzleController = (WazzleController) stage.getUserData();
-		
 		this.visualUnit = new SimpleDoubleProperty();
 		this.visualUnit.bind(Bindings.min(this.stage.heightProperty(), this.stage.widthProperty()));
-		this.titleFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(ZERO_ONE).asString(), "px;");
-		this.fontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(ZERO_ZERO_FIVE).asString(), "px;");
 	}
 
 	public void initialize() {
@@ -79,6 +71,9 @@ public final class MainMenuView {
 	}
 
 	private void setGraphic() {
+		this.titleFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(ZERO_ONE).asString(), ";");
+		this.fontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(ZERO_ZERO_FIVE).asString(), ";");
+		
 		mainMenuRightPane.prefWidthProperty().bind(this.stage.widthProperty().multiply(ZERO_FOUR));
 		mainMenuRightPane.maxWidthProperty().bind(this.stage.widthProperty().multiply(ZERO_FOUR));
 		
@@ -106,6 +101,8 @@ public final class MainMenuView {
 			break;
 
 		case "startMainGameButton":
+			this.stage.setUserData(new MainGameControllerImpl(this.wazzleController));
+			SceneSwitcher.<MainGameView>switchScene(event, new MainGameView(this.stage), "layouts/MainGame.fxml");
 			break;
 		
 		case "gameHistoryButton":

@@ -5,7 +5,6 @@ package wazzle;
 
 import java.io.IOException;
 
-
 import javafx.application.Application;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
