@@ -1,0 +1,13 @@
+[
+  {
+    "scoreBonus": {
+      "quantity": 500
+    },
+    "wordBonus": {
+      "quantity": 25
+    },
+    "timeBonus": {
+      "quantity": 100
+    }
+  }
+]

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<VBox fx:id="mainVbox" alignment="CENTER" stylesheets="@../styles/main-game.css" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1"> <!-- fx:controller="application.MainGameController" -->
+   <children>
+      <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
+         <children>
+            <Label fx:id="titleLabel" alignment="CENTER" contentDisplay="CENTER" styleClass="letters" text="Wazzle!" />
+         </children>
+      </VBox>
+      <HBox alignment="CENTER" fillHeight="false" VBox.vgrow="NEVER">
+         <children>
+            <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
+               <children>
+                  <VBox fx:id="leftPanel" alignment="CENTER">
+                     <children>
+                        <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                           <children>
+                              <HBox spacing="20.0">
+                                 <children>
+                                    <Label fx:id="timerLabel" alignment="CENTER" ellipsisString="" minHeight="-Infinity" minWidth="-Infinity" text="Timer" textAlignment="CENTER" textOverrun="CLIP" />
+                                    <Label fx:id="timerValueLabel" alignment="CENTER" ellipsisString="" minHeight="-Infinity" minWidth="-Infinity" text="1:42" textAlignment="CENTER" textOverrun="CLIP" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                           <children>
+                              <HBox spacing="20.0">
+                                 <children>
+                                    <Label fx:id="pointsLabel" minHeight="-Infinity" minWidth="-Infinity" text="Score" />
+                                    <Label fx:id="pointsValueLabel" minHeight="-Infinity" minWidth="-Infinity" text="86" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" fillHeight="false">
+               <children>
+            	<GridPane fx:id="grid" alignment="CENTER" styleClass="gridBackground" />
+               </children>
+            </HBox>
+            <HBox fx:id="wrapperRightPane" alignment="CENTER" HBox.hgrow="ALWAYS">
+               <children>
+                  <VBox fx:id="rightPanel" alignment="CENTER" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="bonusLabel" text="Bonus" />
+                        <Button fx:id="bonusScoreButton" alignment="CENTER" contentDisplay="CENTER" minHeight="1.0" minWidth="1.0" mnemonicParsing="false" onAction="#getBonus" pickOnBounds="false" styleClass="orangeButton" text="Punti" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS" />
+                        <Button fx:id="bonusTimeButton" alignment="CENTER" contentDisplay="CENTER" minHeight="1.0" minWidth="1.0" mnemonicParsing="false" onAction="#getBonus" pickOnBounds="false" styleClass="orangeButton" text="Tempo" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS" />
+                        <Button fx:id="bonusWordButton" alignment="CENTER" contentDisplay="CENTER" minHeight="1.0" minWidth="1.0" mnemonicParsing="false" onAction="#getBonus" pickOnBounds="false" styleClass="orangeButton" text="Parole" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS" />
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <VBox fx:id="bottomPanel" alignment="CENTER" VBox.vgrow="ALWAYS">
+         <children>
+            <Button fx:id="leaveButton" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#leaveGame" pickOnBounds="false" styleClass="redButton" text="Abbandona" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" VBox.vgrow="ALWAYS" />
+         </children>
+      </VBox>
+   </children>
+   <styleClass>
+      <String fx:value="rootBackground" />
+      <String fx:value="letters" />
+   </styleClass>
+</VBox>

@@ -1,24 +1,24 @@
 package wazzle.controller.maingame;
 
 import java.util.Map;
-
-import javafx.util.Pair;
 import wazzle.model.maingame.Difficulty;
 
 public interface SettingsController {
 
 		
-	Map<String, Map<Pair<Integer, Integer>, Difficulty>> getAllDifficulties();
+	Map<String, Map<Integer, Difficulty>> getAllDifficulties();
+	
+	Settings getCurrentSettings();
 
-	Pair<Integer, Integer> getCurrentGridShape();
+	int getCurrentGridShape();
 
 	Difficulty getCurrentDifficulty();
 	
-	void updateSettings(final Difficulty difficulty, final Pair<Integer, Integer> gridShape);
+	void updateSettings(final Difficulty difficulty, final int gridShape);
 	
 	void updateCurrentDifficulty(final Difficulty difficulty);
 	
-	void updateCurrentGridShape(Pair<Integer, Integer> gridShape);
+	void updateCurrentGridShape(int gridShape);
 
-
+	
 } 

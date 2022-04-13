@@ -37,7 +37,7 @@ public class TestWeightedAlphabet {
 	@Test
 	public void test() throws Exception {
 
-		Dictionary dict = new DictionaryImpl(DatasetReader.readDataset("testDictionary.txt"));
+		Dictionary dict = new DictionaryImpl(TestReader.readDataset("testDictionary.txt"));
 		Frequency freq = new FrequencyImpl(dict);
 		WeightedAlphabet wa = new WeightedAlphabetImpl(freq.computeFrequency().getWeightedAlphabet());
 		assertEquals(expectedTestMap, wa.getWeightedAlphabet());
