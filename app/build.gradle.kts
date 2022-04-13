@@ -47,7 +47,7 @@ allprojects {
     }
     
     spotbugs {
-    	excludeFilter.set(file("${project.rootProject.projectDir}/config/spotbugs/exclude.xml"))
+    	excludeFilter.set(file("${project.rootProject.projectDir}/config/spotbugs/excludes.xml"))
     }
 }
 
