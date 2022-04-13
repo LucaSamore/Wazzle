@@ -6,6 +6,9 @@ package wazzle;
 import java.io.IOException;
 
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import wazzle.controller.common.WazzleControllerImpl;
@@ -25,6 +28,8 @@ public final class App extends Application {
 		MainMenuView mainMenuController;
 		try {
 			stage.setUserData(new WazzleControllerImpl());
+			DoubleProperty visualUnit = new SimpleDoubleProperty();
+			visualUnit.bind(Bindings.min(stage.widthProperty(),stage.heightProperty()));
 			mainMenuController = new MainMenuView(stage);
 			Scene scene = new Scene(Loader.<MainMenuView, Parent>loadFXMLElement(mainMenuController, "layouts/mainMenu.fxml"), 
 							screenViewport.getWidth()*0.75, screenViewport.getHeight()*0.75);
