@@ -2,19 +2,20 @@ package wazzle.controller.maingame;
 
 import java.util.Map;
 
-import javafx.util.Pair;
 import wazzle.model.maingame.Difficulty;
 
 public interface Settings {
 	
 	Difficulty getCurrentDifficulty();
 	
-	Pair<Integer, Integer> getCurrentGridShape();
+	int getCurrentGridShape();
 	
-	Map<String, Map<Pair<Integer, Integer>, Difficulty>> getAllDifficulties();
+	Map<String, Map<Integer, Difficulty>> getAllDifficulties();
+	
+	String getCurrentDifficultyName();
 	
 	void updateCurrentDifficulty(Difficulty difficulty);
 	
-	void updateCurrentGridShape(Pair<Integer, Integer> gridShape);
+	void updateCurrentGridShape(int gridShape);
 
 } 
