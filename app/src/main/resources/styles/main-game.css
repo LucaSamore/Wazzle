@@ -1,6 +1,5 @@
 @font-face {
 	src: url("../fonts/Waffle_Crisp.ttf");
-
 }
 
 .gridBackground {
@@ -16,22 +15,15 @@
 	-fx-font-family: "Waffle Crisp";
 }
 
-/*
 .incave {
 	-fx-background-image: url("../img/incave.png");
 	-fx-background-size: stretch;
 }
-*/
 
 .rootBackground {
 	-fx-background-color: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #55c5fc , #92dff3);
 }
 
-.titleLabel {
-	-fx-font-family: "Waffle Crisp";
-}
-
-/*
 .orangeButton:hover {
 	-fx-border-width:2.0px;
 	-fx-background-color: #fff;
@@ -69,4 +61,3 @@
 	-fx-background-color: red;
 	-fx-text-fill: white;
 }
-*/
