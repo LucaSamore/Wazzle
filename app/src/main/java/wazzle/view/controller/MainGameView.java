@@ -20,6 +20,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -78,6 +79,9 @@ public final class MainGameView {
 
 	@FXML
 	private Label bonusLabel;
+	
+	@FXML
+	private HBox wrapperRightPane;
 
 	private final Stage stage;
 	private final StringExpression standardFontSize;
@@ -104,7 +108,7 @@ public final class MainGameView {
 	public void initialize() {
 		this.setGraphics();
 		this.setEventHandler();
-		this.populateGrid(4,4);
+		this.populateGrid(5,5);
 	}
 	
 	public void leaveGame(final ActionEvent event) throws IOException {
@@ -133,10 +137,15 @@ public final class MainGameView {
 	
 	private void setGraphics() {
 		this.grid.setPadding(new Insets(15,15,15,15));
+		
+		this.leftPanel.styleProperty().bind(this.standardFontSize);
+		this.leftPanel.styleProperty().bind(Bindings.concat("-fx-spacing: ", this.visualUnit.asString(), ";"));
+
 		this.rightPanel.styleProperty().bind(Bindings.concat("-fx-spacing: ", this.visualUnit.asString(), ";"));		
+		
 		this.mainVbox.styleProperty().bind(this.standardFontSize);
 		this.titleLabel.styleProperty().bind(this.titleFontSize);
-		this.leftPanel.minWidthProperty().bind(this.pointsLabel.widthProperty());		
+				
 		
 		this.pointsLabel.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
 		this.pointsValueLabel.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
@@ -170,13 +179,14 @@ public final class MainGameView {
 		
 		labelPoints.getStyleClass().add("letters");
 		labelPoints.styleProperty().bind(this.pointFontSize);
+		labelPoints.setPadding(new Insets(0, 7, 3, 0));
 		
 		incave.getStyleClass().add("incave");
 		incave.minHeightProperty().bind(incave.widthProperty());
 		incave.minWidthProperty().bind(Bindings.min(this.stage.widthProperty()
-				.divide(4)
+				.divide(5)
 				.multiply(0.5), this.stage.heightProperty()
-					.divide(4)
+					.divide(5)
 					.multiply(0.5)));
 		
 		draggablePane.maxWidthProperty().bind(incave.widthProperty().multiply(0.5));
@@ -236,5 +246,7 @@ public final class MainGameView {
 		this.lastVisitedPosition = position;
 		this.word += letterLabel.getText();
 		this.titleLabel.setText(this.word);
+		this.visitCell(position);
 	}
+	
 }
