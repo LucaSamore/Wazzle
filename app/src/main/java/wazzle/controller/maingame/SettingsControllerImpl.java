@@ -1,35 +1,38 @@
 package wazzle.controller.maingame;
 
 import java.util.Map;
-
-import javafx.util.Pair;
 import wazzle.model.maingame.Difficulty;
 
 public class SettingsControllerImpl implements SettingsController {
 	
 	private Settings settings;
 	
-	public SettingsControllerImpl() {
-		this.settings = new SettingsImpl();
+	public SettingsControllerImpl(Settings settings) {
+		this.settings = settings;
 	}
+	
+	@Override
+	public Map<String, Map<Integer, Difficulty>> getAllDifficulties() {
+		return this.settings.getAllDifficulties();
+	} 
 
+	@Override
+	public Settings getCurrentSettings() {
+		return this.settings;
+	}
+	
 	@Override
 	public Difficulty getCurrentDifficulty() {
 		return this.settings.getCurrentDifficulty();
 	}
 
 	@Override
-	public Pair<Integer, Integer> getCurrentGridShape() {
+	public int getCurrentGridShape() {
 		return this.settings.getCurrentGridShape();
-	} 
-
-	@Override
-	public Map<String, Map<Pair<Integer, Integer>, Difficulty>> getAllDifficulties() {
-		return this.settings.getAllDifficulties();
 	} 
 	
 	@Override
-	public void updateSettings(Difficulty difficulty, Pair<Integer, Integer> gridShape) {
+	public void updateSettings(Difficulty difficulty, int gridShape) {
 		this.settings.updateCurrentDifficulty(difficulty);
 		this.settings.updateCurrentGridShape(gridShape);
 	}
@@ -40,9 +43,7 @@ public class SettingsControllerImpl implements SettingsController {
 	}
 
 	@Override
-	public void updateCurrentGridShape(Pair<Integer, Integer> gridShape) {
+	public void updateCurrentGridShape(int gridShape) {
 		this.settings.updateCurrentGridShape(gridShape);
 	}
-	
-
 }
