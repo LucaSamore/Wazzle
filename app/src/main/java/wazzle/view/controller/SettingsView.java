@@ -58,17 +58,13 @@ public final class SettingsView {
 		this.setGraphic();
 		this.wazzleController.getSettings().getAllDifficulties().keySet().forEach(e -> difficultySelectorCBox.getItems().add(e));
 		this.difficultySelectorCBox.getSelectionModel().select(difficultySelectorCBox.getItems().get(0));
-		this.gridDimensionSlider.setValue((double) this.wazzleController.getSettings().getCurrentGridShape());
+		this.gridDimensionSlider.setValue(this.wazzleController.getSettings().getCurrentGridShape());
 	}
 
 	private void setGraphic() {
 
 		DoubleProperty visualUnit = new SimpleDoubleProperty();
-        visualUnit.bind(Bindings.min(stage.heightProperty().multiply(0.03), stage.widthProperty().multiply(0.03)));
-        System.out.println(visualUnit);
-        visualUnit.get();
-        System.out.println(visualUnit);
-		
+        visualUnit.bind(Bindings.min(stage.heightProperty().multiply(0.03), stage.widthProperty().multiply(0.03)));		
 		final ObservableValue<String> fontSize = Bindings.concat("-fx-font-size: ", visualUnit.asString(), ";");
 		final ObservableValue<String> paddingValue = Bindings.concat("-fx-padding: ", visualUnit.multiply(0.5).asString(), ";");
 
