@@ -18,4 +18,5 @@ public interface Settings {
 	
 	void updateCurrentGridShape(int gridShape);
 
+	
 } 
