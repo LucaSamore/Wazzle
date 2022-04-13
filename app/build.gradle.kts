@@ -45,6 +45,10 @@ allprojects {
     checkstyle {
         isIgnoreFailures = true
     }
+    
+    spotbugs {
+    	excludeFilter.set(file("${project.rootProject.projectDir}/config/spotbugs/exclude.xml"))
+    }
 }
 
 val javaFXModules = listOf(

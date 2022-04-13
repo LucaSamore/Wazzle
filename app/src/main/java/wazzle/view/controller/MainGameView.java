@@ -1,19 +1,31 @@
 package wazzle.view.controller;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringExpression;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Pair;
+import wazzle.view.SceneSwitcher;
 
 public final class MainGameView {
 	@FXML
@@ -68,35 +80,59 @@ public final class MainGameView {
 	private Label bonusLabel;
 
 	private final Stage stage;
-
 	private final StringExpression standardFontSize;
-	@SuppressWarnings("unused")
 	private final StringExpression letterFontSize;
-	@SuppressWarnings("unused")
 	private final StringExpression pointFontSize;
 	private final StringExpression titleFontSize;
 	private final DoubleProperty visualUnit;
+	
+	private String word;
+	private Set<Pair<Integer, Integer>> alreadyVisitedCells;
+	private Pair<Integer,Integer> lastVisitedPosition;
 
 	public MainGameView(final Stage stage) {
-		this.stage = new Stage();
-		this.stage.setWidth(stage.widthProperty().get());
-		this.stage.setHeight(stage.heightProperty().get());
-		this.stage.setWidth(stage.widthProperty().get());
-		this.stage.setHeight(stage.heightProperty().get());
+		this.stage = stage;
+		this.alreadyVisitedCells = new HashSet<>();
 		this.visualUnit = new SimpleDoubleProperty();
 		this.visualUnit.bind(Bindings.min(stage.heightProperty().multiply(0.05), stage.widthProperty().multiply(0.05)));
 		this.standardFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.asString(), ";");
-		this.letterFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(2).asString(), ";");
-		this.pointFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(0.8).asString(), ";");
+		this.letterFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(1.5).asString(), ";");
+		this.pointFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(0.5).asString(), ";");
 		this.titleFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(2).asString(), ";");	
 	}
 
 	public void initialize() {
-		this.setGraphic();
+		this.setGraphics();
+		this.setEventHandler();
+		this.populateGrid(4,4);
+	}
+	
+	public void leaveGame(final ActionEvent event) throws IOException {
+		final var alert = new Alert(AlertType.NONE);
+		final var confirm = new ButtonType("Conferma");
+		final var cancel = new ButtonType("Annulla");
+		
+		alert.setContentText("Vuoi abbandonare la partita?");
+		alert.getButtonTypes().setAll(confirm, cancel);
+		
+		Optional<ButtonType> result = alert.showAndWait();
+		
+		if (result.isPresent() && result.get().equals(confirm)) {
+			SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), "layouts/MainMenu.fxml");
+		}
 	}
 
-	private void setGraphic() {
-		this.grid.styleProperty().bind(Bindings.concat("-fx-padding: ", this.visualUnit.asString(), ";"));
+	public void getBonus(final ActionEvent event) {
+		
+	}
+	
+	private void setEventHandler() {
+		this.grid.setOnMouseDragReleased(mouseEvent -> finishReading());
+		this.grid.setOnMouseExited(mouseEvent -> finishReading());
+	}
+	
+	private void setGraphics() {
+		this.grid.setPadding(new Insets(15,15,15,15));
 		this.rightPanel.styleProperty().bind(Bindings.concat("-fx-spacing: ", this.visualUnit.asString(), ";"));		
 		this.mainVbox.styleProperty().bind(this.standardFontSize);
 		this.titleLabel.styleProperty().bind(this.titleFontSize);
@@ -112,12 +148,93 @@ public final class MainGameView {
 		this.bonusTimeButton.setMinSize(Button.USE_PREF_SIZE, Button.USE_PREF_SIZE);
 		this.bonusWordButton.setMinSize(Button.USE_PREF_SIZE, Button.USE_PREF_SIZE);
 	}
+	
+	private void populateGrid(final int numCols, final int numRows) {
+		for (int i = 0; i < numCols; i++) {
+			for (int j = 0; j < numRows; j++) {
+				this.addMainGamePane(new Pair<Integer,Integer>(i,j), "L", "5");
+			}
+		}
+	}
+	
+	private void addMainGamePane(final Pair<Integer,Integer> position, final String letter, final String points) {
+		final var incave = new StackPane();
+		final var draggablePane = new Pane();
+		final var letterLabel = new Label(letter);
+		final var labelPoints = new Label(points);
+		
+		GridPane.setMargin(incave, new Insets(6,6,6,6));
+		
+		letterLabel.getStyleClass().add("letters");
+		letterLabel.styleProperty().bind(this.letterFontSize);
+		
+		labelPoints.getStyleClass().add("letters");
+		labelPoints.styleProperty().bind(this.pointFontSize);
+		
+		incave.getStyleClass().add("incave");
+		incave.minHeightProperty().bind(incave.widthProperty());
+		incave.minWidthProperty().bind(Bindings.min(this.stage.widthProperty()
+				.divide(4)
+				.multiply(0.5), this.stage.heightProperty()
+					.divide(4)
+					.multiply(0.5)));
+		
+		draggablePane.maxWidthProperty().bind(incave.widthProperty().multiply(0.5));
+		draggablePane.maxHeightProperty().bind(draggablePane.widthProperty());
+		draggablePane.setOnDragDetected(mouseEvent -> {
+			incave.startFullDrag();
+			this.startReading(position, letterLabel);
+		});
+		draggablePane.setOnMouseDragEntered(mouseEvent -> this.intermediateReading(position, letterLabel));
 
-	public void goToScene(final ActionEvent event) throws IOException {
+		StackPane.setAlignment(draggablePane, Pos.CENTER);
+		StackPane.setAlignment(letterLabel, Pos.CENTER);
+		StackPane.setAlignment(labelPoints, Pos.BOTTOM_RIGHT);
 
+		incave.getChildren().addAll(letterLabel, draggablePane, labelPoints);
+		
+		this.grid.add(incave, position.getKey(), position.getValue());
+	}
+	
+	private void startReading(final Pair<Integer,Integer> position, final Label letterLabel) {
+		this.alreadyVisitedCells.clear();
+		this.word = "";
+		this.readLetter(position, letterLabel);
+	}
+	
+	private void intermediateReading(final Pair<Integer,Integer> position, final Label letterLabel) {
+		if (this.isNeighbour(position) && this.visitCell(position)) {
+			this.readLetter(position, letterLabel);
+		}
+	}
+	
+	private void finishReading() {
+		this.grid.getChildren().forEach(gridPane -> {
+			((StackPane) gridPane).getChildren().get(0).styleProperty().bind(this.letterFontSize);
+		});
 	}
 
-	public void getBonus(final ActionEvent event) {
-		
+	//TODO: Fix this method
+	private boolean isNeighbour(final Pair<Integer,Integer> position) {
+		//hard coded for now, don't sue me please :)
+		return ((position.getKey() == this.lastVisitedPosition.getKey() - 1 && position.getValue() == this.lastVisitedPosition.getValue() - 1)
+				|| (position.getKey() == this.lastVisitedPosition.getKey() - 1 && position.getValue() == this.lastVisitedPosition.getValue())
+				|| (position.getKey() == this.lastVisitedPosition.getKey() - 1 && position.getValue() == this.lastVisitedPosition.getValue() + 1)
+				|| (position.getKey() == this.lastVisitedPosition.getKey() && position.getValue() == this.lastVisitedPosition.getValue() - 1)
+				|| (position.getKey() == this.lastVisitedPosition.getKey() && position.getValue() == this.lastVisitedPosition.getValue() + 1)
+				|| (position.getKey() == this.lastVisitedPosition.getKey() + 1 && position.getValue() == this.lastVisitedPosition.getValue() - 1)
+				|| (position.getKey() == this.lastVisitedPosition.getKey() + 1 && position.getValue() == this.lastVisitedPosition.getValue())
+				|| (position.getKey() == this.lastVisitedPosition.getKey() + 1 && position.getValue() == this.lastVisitedPosition.getValue() + 1));
+	}
+
+	private boolean visitCell(final Pair<Integer,Integer> position) {
+		return this.alreadyVisitedCells.add(position);
+	}
+	
+	private void readLetter(final Pair<Integer,Integer> position, final Label letterLabel) {
+		letterLabel.styleProperty().bind(letterFontSize.concat("-fx-text-fill: white; "));
+		this.lastVisitedPosition = position;
+		this.word += letterLabel.getText();
+		this.titleLabel.setText(this.word);
 	}
 }
