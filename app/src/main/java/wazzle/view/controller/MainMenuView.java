@@ -102,7 +102,7 @@ public final class MainMenuView {
 
 		case "startMainGameButton":
 			this.stage.setUserData(new MainGameControllerImpl(this.wazzleController));
-			SceneSwitcher.<MainGameView>switchScene(event, new MainGameView(this.stage), "layouts/MainGame.fxml");
+			SceneSwitcher.<LoadingView>switchScene(event, new LoadingView(this.stage), "layouts/LoadingScreen.fxml");
 			break;
 		
 		case "gameHistoryButton":
@@ -121,5 +121,4 @@ public final class MainMenuView {
 			throw new IllegalArgumentException("Unexpected value in MainMenu: " + node.getId());
 		}
 	}
-
 }
