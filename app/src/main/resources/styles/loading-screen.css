@@ -1,0 +1,13 @@
+
+@font-face {
+    src: url("Waffle_Crisp.ttf");
+    
+}
+
+.letters{
+		-fx-font-family: "Waffle Crisp";
+}
+
+.rootBackground{
+	-fx-background-color: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #55c5fc , #92dff3);
+}

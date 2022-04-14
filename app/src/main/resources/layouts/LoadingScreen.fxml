@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane styleClass="rootBackground" stylesheets="@../styles/loading-screen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="imageContainer" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER" />
+      <HBox alignment="BOTTOM_CENTER" fillHeight="false" styleClass="letters" StackPane.alignment="BOTTOM_CENTER">
+         <children>
+            <Label fx:id="loadingLabel" alignment="BOTTOM_CENTER" styleClass="letters" text="Caricamento">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="firstDot" alignment="BOTTOM_CENTER" styleClass="letters" text=" .">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="secondDot" alignment="BOTTOM_CENTER" layoutX="142.0" layoutY="143.0" styleClass="letters" text=".">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="thirdDot" alignment="BOTTOM_CENTER" layoutX="144.0" layoutY="143.0" styleClass="letters" text=".">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </children>
+</StackPane>
