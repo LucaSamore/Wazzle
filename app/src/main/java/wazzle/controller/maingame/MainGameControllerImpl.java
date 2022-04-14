@@ -79,4 +79,9 @@ public final class MainGameControllerImpl implements MainGameController {
 	private void saveGame() {
 		this.mainController.addMainGametoHistory(this.game.get());
 	}
+
+	@Override
+	public WazzleController getMainController() {
+		return this.mainController;
+	}
 }
