@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox fx:id="mainVbox" alignment="CENTER" stylesheets="@../styles/main-game.css" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1"> <!-- fx:controller="application.MainGameController" -->
    <children>
       <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
@@ -27,7 +26,7 @@
                               <HBox spacing="20.0">
                                  <children>
                                     <Label fx:id="timerLabel" alignment="CENTER" ellipsisString="" minHeight="-Infinity" minWidth="-Infinity" text="Timer" textAlignment="CENTER" textOverrun="CLIP" />
-                                    <Label fx:id="timerValueLabel" alignment="CENTER" ellipsisString="" minHeight="-Infinity" minWidth="-Infinity" text="1:42" textAlignment="CENTER" textOverrun="CLIP" />
+                                    <Label fx:id="timerValueLabel" alignment="CENTER" ellipsisString="" minHeight="-Infinity" minWidth="-Infinity" text="0" textAlignment="CENTER" textOverrun="CLIP" />
                                  </children>
                               </HBox>
                            </children>
@@ -37,7 +36,7 @@
                               <HBox spacing="20.0">
                                  <children>
                                     <Label fx:id="pointsLabel" minHeight="-Infinity" minWidth="-Infinity" text="Score" />
-                                    <Label fx:id="pointsValueLabel" minHeight="-Infinity" minWidth="-Infinity" text="86" />
+                                    <Label fx:id="pointsValueLabel" minHeight="-Infinity" minWidth="-Infinity" text="0" />
                                  </children>
                               </HBox>
                            </children>
@@ -56,9 +55,9 @@
                   <VBox fx:id="rightPanel" alignment="CENTER" HBox.hgrow="ALWAYS">
                      <children>
                         <Label fx:id="bonusLabel" text="Bonus" />
-                        <Button fx:id="bonusScoreButton" alignment="CENTER" contentDisplay="CENTER" minHeight="1.0" minWidth="1.0" mnemonicParsing="false" onAction="#getBonus" pickOnBounds="false" styleClass="orangeButton" text="Punti" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS" />
-                        <Button fx:id="bonusTimeButton" alignment="CENTER" contentDisplay="CENTER" minHeight="1.0" minWidth="1.0" mnemonicParsing="false" onAction="#getBonus" pickOnBounds="false" styleClass="orangeButton" text="Tempo" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS" />
-                        <Button fx:id="bonusWordButton" alignment="CENTER" contentDisplay="CENTER" minHeight="1.0" minWidth="1.0" mnemonicParsing="false" onAction="#getBonus" pickOnBounds="false" styleClass="orangeButton" text="Parole" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS" />
+                        <Button fx:id="bonusScoreButton" alignment="CENTER" contentDisplay="CENTER" minHeight="1.0" minWidth="1.0" mnemonicParsing="false" onAction="#gainScoreBonus" pickOnBounds="false" styleClass="orangeButton" text="Punti" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS" />
+                        <Button fx:id="bonusTimeButton" alignment="CENTER" contentDisplay="CENTER" minHeight="1.0" minWidth="1.0" mnemonicParsing="false" onAction="#gainTimeBonus" pickOnBounds="false" styleClass="orangeButton" text="Tempo" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS" />
+                        <Button fx:id="bonusWordButton" alignment="CENTER" contentDisplay="CENTER" minHeight="1.0" minWidth="1.0" mnemonicParsing="false" onAction="#gainWordBonus" pickOnBounds="false" styleClass="orangeButton" text="Parole" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS" />
                      </children>
                      <HBox.margin>
                         <Insets />

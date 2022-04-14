@@ -112,12 +112,16 @@ public class MainGameImpl implements MainGame {
 	}
 	
 	private void addWordScore(final String word) {
-		this.currentScore += this.lettersInGrid()
-				.stream()
-				.filter(l -> word.indexOf(l.getContent()) > 0)
-				.distinct()
-				.map(Letter::getScore)
-				.reduce(0.0, (x,y) -> x + y);
+		System.out.println(this.lettersInGrid());
+        word.chars()
+        	.mapToObj(c -> (char)c)
+        	.forEach(c -> {
+        		this.lettersInGrid()
+        			.stream()
+        			.filter(l -> l.getContent() == c)
+        			.findFirst()
+        			.ifPresent(l -> this.currentScore += l.getScore());
+        });
 	}
 	
 	private boolean alreadyFound(final String word) {
