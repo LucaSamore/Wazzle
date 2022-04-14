@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import wazzle.controller.common.files.Deserializers;
+import wazzle.controller.common.files.Deserializer;
 import wazzle.controller.common.files.FileStrategies;
-import wazzle.controller.common.files.SerializerImpl;
+import wazzle.controller.common.files.Serializer;
 import wazzle.controller.common.files.TextHandler;
 import wazzle.model.common.BonusManager;
 import wazzle.model.common.BonusManagerImpl;
@@ -20,7 +20,7 @@ public final class FileControllerImpl implements FileController {
 	private static final String SEPARATOR = System.getProperty("file.separator");
 	private static final String DIRECTORY = "src" + SEPARATOR + 
 			"main" + SEPARATOR +
-			"res" + SEPARATOR +
+			"resources" + SEPARATOR +
 			"files" + SEPARATOR;
 	
 	private final FileStrategies<String> textFileHandler = new TextHandler();
@@ -48,8 +48,7 @@ public final class FileControllerImpl implements FileController {
 			this.create(DIRECTORY + fileName);
 		}
 		
-		final var serializer = new SerializerImpl<MainGame>();
-		serializer.serialize(DIRECTORY + fileName, games.toArray(new MainGameImpl[games.size()]));
+		Serializer.<MainGame>serialize(DIRECTORY + fileName, games.toArray(new MainGameImpl[games.size()]));
 	}
 
 	@Override
@@ -58,18 +57,16 @@ public final class FileControllerImpl implements FileController {
 			this.create(DIRECTORY + fileName);
 		}
 		
-		final var serializer = new SerializerImpl<BonusManager>();
-		serializer.serialize(DIRECTORY + fileName, bonuses);
+		Serializer.<BonusManager>serialize(DIRECTORY + fileName, List.of(bonuses).toArray(new BonusManagerImpl[0]));
 	}
 	
-
 	@Override
 	public List<MainGameImpl> getMainGameHistory(final String fileName) throws IOException{
 		if(!this.exists(DIRECTORY + fileName)) {
 			throw new IOException(fileName + " does not exist!");
 		}
 		
-		return Deserializers.mainGames(DIRECTORY + fileName);
+		return Deserializer.<MainGameImpl>deserialize(MainGameImpl.class, DIRECTORY + fileName);
 	}
 
 	@Override
@@ -78,6 +75,11 @@ public final class FileControllerImpl implements FileController {
 			throw new IOException(fileName + " does not exist!");
 		}
 		
-		return Deserializers.bonuses(DIRECTORY + fileName);
+		return Deserializer.<BonusManagerImpl>deserialize(BonusManagerImpl.class, DIRECTORY + fileName).get(0);
+	}
+	
+	@Override
+	public FileController getThis() {
+		return this;
 	}
 }

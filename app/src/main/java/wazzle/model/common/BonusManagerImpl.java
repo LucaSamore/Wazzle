@@ -5,12 +5,21 @@ import java.util.Random;
 import java.util.Set;
 import java.util.function.UnaryOperator;
 
+import com.google.gson.annotations.Expose;
+
 public class BonusManagerImpl implements BonusManager {
 	
 	private static final Random random = new Random();
+	
+	@Expose
 	private ScoreBonus scoreBonus;
+	
+	@Expose
 	private WordBonus wordBonus;
+	
+	@Expose
 	private TimeBonus timeBonus;
+	
 	private AbstractBonusFactory bonusFactory;
 	
 	/**

@@ -2,12 +2,15 @@ package wazzle.model.common;
 
 import java.util.function.UnaryOperator;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * AbstractBonus offers an abstraction for all the Bonuses.
  *
  */
 public abstract class AbstractBonus {
 
+	@Expose
 	protected int quantity;
 	
 	/**

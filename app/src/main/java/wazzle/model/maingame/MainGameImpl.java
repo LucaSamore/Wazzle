@@ -15,21 +15,21 @@ import java.util.Optional;
 import wazzle.model.common.BonusManager;
 
 public class MainGameImpl implements MainGame {
-	private static final int ATTEMPTS_BEFORE_HELP = 5;
-	private final Grid grid;
-	private int failedAttempts;	
 	
 	@Expose
 	private final Set<String> wordsFound;
 	
 	@Expose
-	private final LocalDateTime dateTime; // TODO: getter in the interface as well!
+	private final LocalDateTime dateTime;
 	
 	@Expose
 	private long duration;
 	
 	@Expose
 	private double currentScore;
+	
+	private final Grid grid;
+	private int failedAttempts;	
 	
 	public MainGameImpl(final Grid grid, final long duration) {
 		this.grid = grid;
@@ -40,22 +40,24 @@ public class MainGameImpl implements MainGame {
 		this.currentScore = 0;
 	}
 	
-	// return true if word is in grid.getWordsCanBeFound() AND word is not in this.wordsFound yet --> this.updateFailedAttempts(f -> f = 0)
-	// performs the add operation as well
-	// false otherwise --> this.updateFailedAttempts(f -> f + 1)
-	
 	@Override
-	public boolean attempt(final String word) {
+	public boolean tryWord(final String word) {
 		final var attempt = Optional.of(word).filter(w -> this.wordsToBeFound().contains(w));
 		
 		if(attempt.isPresent()) {
 			this.updateFailedAttempts(f -> f = 0);
 			this.addWordFound(attempt.get());
+			this.addWordScore(attempt.get());
 			return true;
 		}
 		
 		this.updateFailedAttempts(f -> f + 1);
 		return false;	
+	}
+	
+	@Override
+	public Set<String> wordsFound() {
+		return Set.copyOf(this.wordsFound);
 	}
 	
 	@Override
@@ -67,33 +69,33 @@ public class MainGameImpl implements MainGame {
 	}
 	
 	@Override
-	public boolean needHelp() {
-		return this.failedAttempts == ATTEMPTS_BEFORE_HELP;
+	public Set<String> wordsCanBeFound() {
+		return Set.copyOf(this.grid.getWordsCanBeFound());
 	}
 	
 	@Override
-	public boolean areWeDone() {
-		return this.wordsFound.size() == this.grid.getWordsCanBeFound().size();
-	}
-	
-	@Override
-	public Set<Letter> getLettersInGrid() {
+	public Set<Letter> lettersInGrid() {
 		return Set.copyOf(this.grid.getLetters());
 	}
 	
 	@Override
-	public Set<String> getWordsFound() {
-		return Set.copyOf(this.wordsFound);
+	public Grid getGrid() {
+		return this.grid;
 	}
 	
 	@Override
-	public Set<String> getWordsCanBeFound() {
-		return Set.copyOf(this.grid.getWordsCanBeFound());
+	public LocalDateTime getDateTime() {
+		return this.dateTime;
 	}
 	
 	@Override
 	public int getFailedAttempts() {
 		return this.failedAttempts;
+	}
+	
+	@Override
+	public void setCurrentScore(final double newScore) {
+		this.currentScore = newScore;
 	}
 	
 	@Override
@@ -105,12 +107,17 @@ public class MainGameImpl implements MainGame {
 		return this.duration;
 	}
 	
-	public LocalDateTime getDateTime() {
-		return this.dateTime;
-	}
-	
 	private void addWordFound(final String word) {
 		this.wordsFound.add(word);
+	}
+	
+	private void addWordScore(final String word) {
+		this.currentScore += this.lettersInGrid()
+				.stream()
+				.filter(l -> word.indexOf(l.getContent()) > 0)
+				.distinct()
+				.map(Letter::getScore)
+				.reduce(0.0, (x,y) -> x + y);
 	}
 	
 	private boolean alreadyFound(final String word) {

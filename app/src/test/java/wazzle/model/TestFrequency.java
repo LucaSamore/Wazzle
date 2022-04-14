@@ -21,7 +21,7 @@ public class TestFrequency {
 
 	public TestFrequency() throws Exception {
 
-		this.dict = new DictionaryImpl(DatasetReader.readDataset("testDictionary.txt"));
+		this.dict = new DictionaryImpl(TestReader.readDataset("testDictionary.txt"));
 
 	}
 

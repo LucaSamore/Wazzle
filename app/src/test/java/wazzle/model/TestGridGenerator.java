@@ -31,7 +31,7 @@ public class TestGridGenerator {
 	@Test
 	public void testGeneratorEasy4x4() {
 		try {
-			final Dictionary dataset = new DictionaryImpl(DatasetReader.readDataset("datasetNuovo.txt"));
+			final Dictionary dataset = new DictionaryImpl(TestReader.readDataset("datasetNuovo.txt"));
 			final GridGenerator generatorEasy = new GridGeneratorImpl(dataset, SHAPE_4x4, this.easy4x4);
 			
 			var grid = generatorEasy.generate();
@@ -45,7 +45,7 @@ public class TestGridGenerator {
 	@Test
 	public void testGeneratorHard4x4() {		
 		try {
-			final Dictionary dataset = new DictionaryImpl(DatasetReader.readDataset("datasetNuovo.txt"));
+			final Dictionary dataset = new DictionaryImpl(TestReader.readDataset("datasetNuovo.txt"));
 			final GridGenerator generatorHard = new GridGeneratorImpl(dataset, SHAPE_4x4, this.hard4x4);
 			
 			var grid = generatorHard.generate();
@@ -60,7 +60,7 @@ public class TestGridGenerator {
 	@Test
 	public void testGeneratorEasy5x5() {
 		try {
-			final Dictionary dataset = new DictionaryImpl(DatasetReader.readDataset("datasetNuovo.txt"));
+			final Dictionary dataset = new DictionaryImpl(TestReader.readDataset("datasetNuovo.txt"));
 			final GridGenerator generatorEasy = new GridGeneratorImpl(dataset, SHAPE_5x5, this.easy5x5);
 			
 			var grid = generatorEasy.generate();
@@ -74,7 +74,7 @@ public class TestGridGenerator {
 	@Test
 	public void testGeneratorHard5x5() {		
 		try {
-			final Dictionary dataset = new DictionaryImpl(DatasetReader.readDataset("datasetNuovo.txt"));
+			final Dictionary dataset = new DictionaryImpl(TestReader.readDataset("datasetNuovo.txt"));
 			final GridGenerator generatorHard = new GridGeneratorImpl(dataset, SHAPE_5x5, this.hard5x5);
 			
 			var grid = generatorHard.generate();
@@ -89,7 +89,7 @@ public class TestGridGenerator {
 	@Test
 	public void testGeneratorEasy6x6() {
 		try {
-			final Dictionary dataset = new DictionaryImpl(DatasetReader.readDataset("datasetNuovo.txt"));
+			final Dictionary dataset = new DictionaryImpl(TestReader.readDataset("datasetNuovo.txt"));
 			final GridGenerator generatorEasy = new GridGeneratorImpl(dataset, SHAPE_6x6, this.easy6x6);
 			
 			var grid = generatorEasy.generate();
@@ -104,7 +104,7 @@ public class TestGridGenerator {
 	@Test
 	public void testGeneratorHard6x6() {
 		try {
-			final Dictionary dataset = new DictionaryImpl(DatasetReader.readDataset("datasetNuovo.txt"));
+			final Dictionary dataset = new DictionaryImpl(TestReader.readDataset("datasetNuovo.txt"));
 			final GridGenerator generatorHard = new GridGeneratorImpl(dataset, SHAPE_6x6, this.hard6x6);
 			
 			var grid = generatorHard.generate();

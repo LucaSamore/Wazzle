@@ -37,7 +37,7 @@ public class TestGridValidator {
 	@Test
 	public void testValidationOutputEasy4x4() {
 		try {
-			final Dictionary dataset = new DictionaryImpl(DatasetReader.readDataset("datasetNuovo.txt"));
+			final Dictionary dataset = new DictionaryImpl(TestReader.readDataset("datasetNuovo.txt"));
 			final Mediator mediator = new Mediator(dataset, SHAPE_4x4);
 			final GridValidator validator = new GridValidatorImpl(dataset, this.easy4x4);
 			
@@ -66,7 +66,7 @@ public class TestGridValidator {
 	@Test
 	public void testValidationOutputHard4x4() {
 		try {
-			final Dictionary dataset = new DictionaryImpl(DatasetReader.readDataset("datasetNuovo.txt"));
+			final Dictionary dataset = new DictionaryImpl(TestReader.readDataset("datasetNuovo.txt"));
 			final Mediator mediator = new Mediator(dataset, SHAPE_4x4);
 			final GridValidator validator = new GridValidatorImpl(dataset, this.hard4x4);
 			
@@ -95,7 +95,7 @@ public class TestGridValidator {
 	@Test
 	public void testValidationOutputEasy5x5() {
 		try {
-			final Dictionary dataset = new DictionaryImpl(DatasetReader.readDataset("datasetNuovo.txt"));
+			final Dictionary dataset = new DictionaryImpl(TestReader.readDataset("datasetNuovo.txt"));
 			final Mediator mediator = new Mediator(dataset, SHAPE_5x5);
 			final GridValidator validator = new GridValidatorImpl(dataset, this.easy5x5);
 			
@@ -124,7 +124,7 @@ public class TestGridValidator {
 	@Test
 	public void testValidationOutputHard5x5() {
 		try {
-			final Dictionary dataset = new DictionaryImpl(DatasetReader.readDataset("datasetNuovo.txt"));
+			final Dictionary dataset = new DictionaryImpl(TestReader.readDataset("datasetNuovo.txt"));
 			final Mediator mediator = new Mediator(dataset, SHAPE_5x5);
 			final GridValidator validator = new GridValidatorImpl(dataset, this.hard5x5);
 			
@@ -153,7 +153,7 @@ public class TestGridValidator {
 	@Test
 	public void testValidationOutputEasy6x6() {
 		try {
-			final Dictionary dataset = new DictionaryImpl(DatasetReader.readDataset("datasetNuovo.txt"));
+			final Dictionary dataset = new DictionaryImpl(TestReader.readDataset("datasetNuovo.txt"));
 			final Mediator mediator = new Mediator(dataset, SHAPE_6x6);
 			final GridValidator validator = new GridValidatorImpl(dataset, this.easy6x6);
 			
@@ -182,7 +182,7 @@ public class TestGridValidator {
 	@Test
 	public void testValidationOutputHard6x6() {
 		try {
-			final Dictionary dataset = new DictionaryImpl(DatasetReader.readDataset("datasetNuovo.txt"));
+			final Dictionary dataset = new DictionaryImpl(TestReader.readDataset("datasetNuovo.txt"));
 			final Mediator mediator = new Mediator(dataset, SHAPE_6x6);
 			final GridValidator validator = new GridValidatorImpl(dataset, this.hard6x6);
 			
