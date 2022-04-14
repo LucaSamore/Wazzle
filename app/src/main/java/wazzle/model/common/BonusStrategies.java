@@ -30,7 +30,7 @@ public interface BonusStrategies {
 	 * @return BinaryOperator<Double> which represent the operation that must be done when the TimeBonus is used.
 	 */
 	static UnaryOperator<Long> timeBonus() {
-		return i -> i+30000;
+		return i -> i + 30;
 	}
 	
 	/**
@@ -51,11 +51,11 @@ public interface BonusStrategies {
 	private static Set<String> extractWords(final Set<String> words) {
 		var random = new Random();
 		Set<String> extractedWords = new HashSet<>();
-		IntStream.rangeClosed(1, 4)
+		IntStream.rangeClosed(1, 3)
 		  .boxed()
 		  .forEach(i -> extractedWords.add(words.stream()
 				  				 .collect(Collectors.toList())
-				  				 .get(random.nextInt(i))));
+				  				 .get(random.nextInt(words.size()-1))));
 		return extractedWords;
 	}
 }
