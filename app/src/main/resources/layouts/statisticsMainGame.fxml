@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="mainWrapper" alignment="CENTER" fillWidth="false" styleClass="rootBackground" stylesheets="@../styles/statistics-main-game.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox fx:id="mainStatisticWindow" alignment="CENTER" VBox.vgrow="ALWAYS">
+         <children>
+            <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
+               <children>
+                  <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                     <children>
+                        <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
+                           <children>
+                              <HBox alignment="CENTER" styleClass="longIncave" VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <Label fx:id="wordsFoundLabel" alignment="CENTER" text="Parole Trovate" HBox.hgrow="ALWAYS">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" styleClass="longIncave" VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <Label fx:id="pointsLabel" alignment="CENTER" text="Punteggio" HBox.hgrow="ALWAYS">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
+                           <children>
+                              <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <HBox alignment="CENTER" styleClass="longIncave" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label fx:id="wordsFoundValueLabel" alignment="CENTER" text="10" HBox.hgrow="ALWAYS">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <Label fx:id="separatorWordLabel" text="/" HBox.hgrow="ALWAYS" />
+                                    <HBox alignment="CENTER" styleClass="longIncave" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label fx:id="totalWordsValueLabel" alignment="CENTER" text="9999" HBox.hgrow="ALWAYS">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <HBox alignment="CENTER" styleClass="longIncave" HBox.hgrow="ALWAYS">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <children>
+                                          <Label fx:id="pointsValueLabel" alignment="CENTER" text="12345" HBox.hgrow="ALWAYS">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" layoutX="10.0" layoutY="60.0" styleClass="longIncave" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label fx:id="longestWordFoundLabel" alignment="CENTER" text="Parola più lunga" textAlignment="CENTER" />
+                  <Label fx:id="longestWordFoundValueLabel" alignment="CENTER" contentDisplay="CENTER" text="Wafflunghissimo" textAlignment="CENTER" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" layoutX="10.0" layoutY="44.0" styleClass="longIncave" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label fx:id="mostValuableWordLabel" alignment="CENTER" text="parola con più punti" />
+                  <Label fx:id="mostValuableWordValueLabel" alignment="CENTER" text="Waffpotentissimo" />
+               </children>
+            </VBox>
+         </children>
+         <styleClass>
+            <String fx:value="gridBackground" />
+            <String fx:value="letters" />
+         </styleClass>
+      </VBox>
+      <HBox fx:id="buttonWrapper" VBox.vgrow="NEVER">
+         <children>
+            <Button fx:id="playAgainButton" mnemonicParsing="false" onAction="#goToScene" styleClass="orangeButton" text="Rigioca" />
+            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#goToScene" styleClass="redButton" text="Esci" />
+         </children>
+      </HBox>
+   </children>
+</VBox>
