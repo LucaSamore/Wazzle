@@ -26,4 +26,6 @@ public interface MainGame {
 	void setCurrentScore(final double newScore);
 	
 	double getCurrentScore();
+	
+	double getScoreFromWord(final String word);
 }

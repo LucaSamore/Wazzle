@@ -31,13 +31,14 @@ public final class FileControllerImpl implements FileController {
 	}
 	
 	@Override
-	public Dictionary getDataset(final String fileName) throws IOException {
-		if(!this.exists(DIRECTORY + fileName)) {
-			throw new IOException(fileName + " does not exist!");
-		}
-		
+	public Dictionary getDataset(final String fileName) throws IOException {		
+//		if(!this.exists(ClassLoader.getSystemResource("files/"+fileName))) {
+//			System.out.println("ECCEZIONE BRODY");
+//			throw new IOException(fileName + " does not exist!");
+//		}
+				
 		return new DictionaryImpl(this.textFileHandler
-				.read(DIRECTORY + fileName)
+				.read(ClassLoader.getSystemResourceAsStream("files/" + fileName))
 				.stream()
 				.collect(Collectors.toSet()));
 	}

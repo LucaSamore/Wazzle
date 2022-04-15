@@ -1,5 +1,6 @@
 package wazzle.controller.maingame;
 
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.Set;
 
@@ -83,5 +84,31 @@ public final class MainGameControllerImpl implements MainGameController {
 	@Override
 	public WazzleController getMainController() {
 		return this.mainController;
+	}
+
+	@Override
+	public String longestWord() {
+		return this.game.get()
+				.wordsFound()
+				.stream()
+				.max(Comparator.comparingInt(String::length))
+				.orElse("");
+	}
+
+	@Override
+	public String highestScoreWord() {		
+		double max = this.game.get()
+				.wordsFound()
+				.stream()
+				.map(w -> this.game.get().getScoreFromWord(w))
+				.max(Comparator.comparingDouble(Double::doubleValue))
+				.orElse(Double.NaN);
+		
+		return this.game.get()
+				.wordsFound()
+				.stream()
+				.filter(w -> max == this.game.get().getScoreFromWord(w))
+				.findFirst()
+				.get();
 	}
 }
