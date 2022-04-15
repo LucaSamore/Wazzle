@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane styleClass="rootBackground" stylesheets="@../styles/loading-screen.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane styleClass="rootBackground" stylesheets="@../styles/loading-screen.css" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fx:id="imageContainer" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER" />
       <HBox alignment="BOTTOM_CENTER" fillHeight="false" styleClass="letters" StackPane.alignment="BOTTOM_CENTER">

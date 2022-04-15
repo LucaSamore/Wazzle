@@ -2,11 +2,17 @@ package wazzle.model.maingame;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.google.gson.annotations.Expose;
 
@@ -112,12 +118,16 @@ public class MainGameImpl implements MainGame {
 	}
 	
 	private void addWordScore(final String word) {
-		this.currentScore += this.lettersInGrid()
-				.stream()
-				.filter(l -> word.indexOf(l.getContent()) > 0)
-				.distinct()
-				.map(Letter::getScore)
-				.reduce(0.0, (x,y) -> x + y);
+		System.out.println(this.lettersInGrid());
+        word.chars()
+        	.mapToObj(c -> (char)c)
+        	.forEach(c -> {
+        		this.lettersInGrid()
+        			.stream()
+        			.filter(l -> l.getContent() == c)
+        			.findFirst()
+        			.ifPresent(l -> this.currentScore += l.getScore());
+        });
 	}
 	
 	private boolean alreadyFound(final String word) {
@@ -155,5 +165,27 @@ public class MainGameImpl implements MainGame {
 				"dateTime: " + this.dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + System.lineSeparator() +
 				"failedAttempts: " + this.failedAttempts + System.lineSeparator() +
 				"duration: " + this.duration + System.lineSeparator();
+	}
+
+	@Override
+	public double getScoreFromWord(final String word) {
+		return word.chars()
+				   .mapToObj(c -> (char)c)
+				   .collect(Collectors.toList())
+				   .stream()
+				   .collect(Collectors.toMap(c -> c, c -> this.charsWithScore(word).get(c)))
+				   .values()
+				   .stream()
+				   .reduce(0.0, (x, y) -> x + y);
+	}
+	
+	private Map<Character, Double> charsWithScore(final String word) {
+		Map<Character, Double> result = new HashMap<>();
+		this.lettersInGrid()
+			.stream()
+			.forEach(l -> { if (!result.keySet().contains(l.getContent())) {
+				result.put(l.getContent(), l.getScore());
+			}});
+		return result;
 	}
 }

@@ -29,5 +29,9 @@ public interface MainGameController {
 	Set<String> useWordBonus();
 	
 	WazzleController getMainController();
+	
+	String longestWord();
+	
+	String highestScoreWord();
 
 }

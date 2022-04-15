@@ -92,11 +92,13 @@ public class LoadingView {
 		Task<Void> task = new Task<Void>() {
 			@Override
 			public Void call() throws IOException {
-				var shape = mainGameController.getMainController().getSettings().getCurrentGridShape();
+				var shape = mainGameController.getMainController().getSettings().getCurrentGridShape();				
 				mainGameController.startNewGame(mainGameController
 						.getMainController()
 						.getFileController()
 						.getDataset(DATASET_NAME), new Pair<Integer,Integer>(shape,shape), mainGameController.getMainController().getSettings().getCurrentDifficulty());
+				
+				
 				flag = true;
 				return null;
 			}

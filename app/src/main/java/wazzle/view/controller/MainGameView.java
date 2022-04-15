@@ -26,6 +26,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import wazzle.controller.maingame.MainGameController;
 import wazzle.view.SceneSwitcher;
 
 public final class MainGameView {
@@ -81,6 +82,9 @@ public final class MainGameView {
 	private Label bonusLabel;
 	
 	@FXML
+	private Label wordSuggestionLabel;
+	
+	@FXML
 	private HBox wrapperRightPane;
 
 	private final Stage stage;
@@ -93,22 +97,25 @@ public final class MainGameView {
 	private String word;
 	private Set<Pair<Integer, Integer>> alreadyVisitedCells;
 	private Pair<Integer,Integer> lastVisitedPosition;
+	private final MainGameController controller;
 
 	public MainGameView(final Stage stage) {
 		this.stage = stage;
+		this.controller = (MainGameController)stage.getUserData();
 		this.alreadyVisitedCells = new HashSet<>();
 		this.visualUnit = new SimpleDoubleProperty();
 		this.visualUnit.bind(Bindings.min(stage.heightProperty().multiply(0.05), stage.widthProperty().multiply(0.05)));
 		this.standardFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.asString(), ";");
 		this.letterFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(1.5).asString(), ";");
 		this.pointFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(0.5).asString(), ";");
-		this.titleFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(2).asString(), ";");	
+		this.titleFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(2).asString(), ";");
 	}
 
 	public void initialize() {
 		this.setGraphics();
 		this.setEventHandler();
-		this.populateGrid(5,5);
+		var shape = this.controller.getMainController().getSettings().getCurrentGridShape();
+		this.populateGrid(shape,shape);
 	}
 	
 	public void leaveGame(final ActionEvent event) throws IOException {
@@ -122,17 +129,34 @@ public final class MainGameView {
 		Optional<ButtonType> result = alert.showAndWait();
 		
 		if (result.isPresent() && result.get().equals(confirm)) {
-			SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), "layouts/MainMenu.fxml");
+			this.stage.setUserData(this.controller.getMainController());
+			SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), "layouts/mainMenu.fxml");
 		}
 	}
 
-	public void getBonus(final ActionEvent event) {
+	public void gainScoreBonus(final ActionEvent event) {
+		this.controller.useScoreBonus();
+		this.pointsValueLabel.setText(""+ (int)this.controller.getGame().get().getCurrentScore());
+		((Button) event.getSource()).setDisable(true);
+	}
+	
+	public void gainTimeBonus(final ActionEvent event) {
 		
 	}
 	
+	public void gainWordBonus(final ActionEvent event) {
+		this.wordSuggestionLabel.setText("Un suggerimento per te " + System.lineSeparator() + String.join(" - ", this.controller.useWordBonus()));
+		((Button) event.getSource()).setDisable(true);
+	}
+	
 	private void setEventHandler() {
-		this.grid.setOnMouseDragReleased(mouseEvent -> finishReading());
-		this.grid.setOnMouseExited(mouseEvent -> finishReading());
+		this.mainVbox.setOnMouseDragReleased(mouseEvent -> submitWord());
+		this.mainVbox.setOnMouseExited(mouseEvent -> this.finishInvalidReading());
+		
+		this.bonusScoreButton.setOnMouseDragReleased(mouseEvent -> this.finishInvalidReading());
+        this.bonusTimeButton.setOnMouseDragReleased(mouseEvent -> this.finishInvalidReading());
+        this.bonusWordButton.setOnMouseDragReleased(mouseEvent -> this.finishInvalidReading());
+        this.leaveButton.setOnMouseDragReleased(mouseEvent -> this.finishInvalidReading());
 	}
 	
 	private void setGraphics() {
@@ -159,11 +183,12 @@ public final class MainGameView {
 	}
 	
 	private void populateGrid(final int numCols, final int numRows) {
-		for (int i = 0; i < numCols; i++) {
-			for (int j = 0; j < numRows; j++) {
-				this.addMainGamePane(new Pair<Integer,Integer>(i,j), "L", "5");
-			}
-		}
+		this.controller.getGame()
+			.get()
+			.getGrid()
+			.getLetters()
+			.forEach(l -> this.addMainGamePane(l.getPosition(), "" + l.getContent(), "" + "" + (int)(l.getScore()))); //TODO: fix 
+		System.out.println(this.controller.getGame().get().getGrid().getWordsCanBeFound());
 	}
 	
 	private void addMainGamePane(final Pair<Integer,Integer> position, final String letter, final String points) {
@@ -207,6 +232,7 @@ public final class MainGameView {
 	}
 	
 	private void startReading(final Pair<Integer,Integer> position, final Label letterLabel) {
+		this.titleLabel.styleProperty().bind(this.titleFontSize.concat("-fx-text-fill: black; "));
 		this.alreadyVisitedCells.clear();
 		this.word = "";
 		this.readLetter(position, letterLabel);
@@ -218,9 +244,23 @@ public final class MainGameView {
 		}
 	}
 	
-	private void finishReading() {
+	private void submitWord() {
 		this.grid.getChildren().forEach(gridPane -> {
 			((StackPane) gridPane).getChildren().get(0).styleProperty().bind(this.letterFontSize);
+		});
+		
+		//TODO: finish
+		if(this.controller.attempt(this.titleLabel.getText())) {
+			this.pointsValueLabel.setText(""+ (int)this.controller.getGame().get().getCurrentScore());
+			this.titleLabel.styleProperty().bind(this.titleFontSize.concat("-fx-text-fill: green; "));
+		} else {
+			this.titleLabel.styleProperty().bind(this.titleFontSize.concat("-fx-text-fill: red; "));
+		}
+	}
+	
+	private void finishInvalidReading() {
+		this.grid.getChildren().forEach(incave -> {
+			((StackPane) incave).getChildren().get(0).styleProperty().bind(this.letterFontSize);
 		});
 	}
 

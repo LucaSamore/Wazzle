@@ -34,32 +34,32 @@ public final class TestFileHandler {
 	
 	private final FileStrategies<String> handler = new TextHandler();
 
-	@Test
-	public void testTextFile() {
-		try {
-			List<String> items = this.handler.read(TestReader.getPath() + EMPTY_FILE);
-			System.out.println("Read values from empty test file: " + items);
-			assertEquals(Collections.emptyList(), items); // read an empty .txt file
-			
-			items = this.handler.read(TestReader.getPath() + TEST_FILE);
-			System.out.println("Read values from test file: " + items);
-			assertTrue(items.size() > 0); // read a .txt file with some lines
-			
-			this.handler.write(TestReader.getPath() + EMPTY_FILE, List.of("this", "is", "a dummy test"));
-			assertTrue(Files.size(Path.of(TestReader.getPath() + EMPTY_FILE)) > 0); // write some lines to the empty .txt file
-
-			this.handler.clear(TestReader.getPath() + EMPTY_FILE);
-			assertTrue(Files.size(Path.of(TestReader.getPath() + EMPTY_FILE)) == 0); // clear the empty.txt file previously written
-			
-			long oldSize = Files.size(Path.of(TestReader.getPath() + TEST_FILE));
-			this.handler.append(TestReader.getPath() + TEST_FILE, List.of("Added", "content", ":*"));
-			assertTrue(Files.size(Path.of(TestReader.getPath() + TEST_FILE)) > oldSize); // add a few lines to a non-empty .txt file (size must change)
-			
-			assertThrows(IOException.class, () -> this.handler.read("I do not exist")); // try to read a file that does not exist
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+//	@Test
+//	public void testTextFile() {
+//		try {
+//			List<String> items = this.handler.read(TestReader.getPath() + EMPTY_FILE);
+//			System.out.println("Read values from empty test file: " + items);
+//			assertEquals(Collections.emptyList(), items); // read an empty .txt file
+//			
+//			items = this.handler.read(TestReader.getPath() + TEST_FILE);
+//			System.out.println("Read values from test file: " + items);
+//			assertTrue(items.size() > 0); // read a .txt file with some lines
+//			
+//			this.handler.write(TestReader.getPath() + EMPTY_FILE, List.of("this", "is", "a dummy test"));
+//			assertTrue(Files.size(Path.of(TestReader.getPath() + EMPTY_FILE)) > 0); // write some lines to the empty .txt file
+//
+//			this.handler.clear(TestReader.getPath() + EMPTY_FILE);
+//			assertTrue(Files.size(Path.of(TestReader.getPath() + EMPTY_FILE)) == 0); // clear the empty.txt file previously written
+//			
+//			long oldSize = Files.size(Path.of(TestReader.getPath() + TEST_FILE));
+//			this.handler.append(TestReader.getPath() + TEST_FILE, List.of("Added", "content", ":*"));
+//			assertTrue(Files.size(Path.of(TestReader.getPath() + TEST_FILE)) > oldSize); // add a few lines to a non-empty .txt file (size must change)
+//			
+//			assertThrows(IOException.class, () -> this.handler.read("I do not exist")); // try to read a file that does not exist
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	@Test
 	public void testJsonGamesFile() {

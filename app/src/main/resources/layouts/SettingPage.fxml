@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox alignment="CENTER" fillHeight="false" styleClass="rootBackground" stylesheets="@../styles/settings.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<HBox alignment="CENTER" fillHeight="false" styleClass="rootBackground" stylesheets="@../styles/settings.css" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox fx:id="mainSettingsWrapper" alignment="CENTER" HBox.hgrow="NEVER">
          <children>
