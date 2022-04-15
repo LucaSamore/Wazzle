@@ -174,7 +174,9 @@ public final class MainGameView {
 	}
 	
 	public void gainTimeBonus(final ActionEvent event) {
-		
+		this.controller.useTimeBonus();
+		timerValueLabel.setText("" + this.controller.getRemainingTime());
+		((Button) event.getSource()).setDisable(true);
 	}
 	
 	public void gainWordBonus(final ActionEvent event) {

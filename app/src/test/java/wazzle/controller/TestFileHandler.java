@@ -63,49 +63,49 @@ public final class TestFileHandler {
 	
 	@Test
 	public void testJsonGamesFile() {
-		try {
-			final Dictionary dataset = new DictionaryImpl(TestReader.readDataset("datasetNuovo.txt"));
-			final Pair<Integer,Integer> shape = new Pair<>(4,4);
-			final Difficulty difficulty = new Difficulty(126, 250, 240000L);
-			final GridGenerator generator = new GridGeneratorImpl(dataset, shape, difficulty);
-			
-			final MainGame game1 = new MainGameImpl(generator.generate(), difficulty.getTimeInMilliseconds());
-			final MainGame game2 = new MainGameImpl(generator.generate(), difficulty.getTimeInMilliseconds());
-			final MainGame game3 = new MainGameImpl(generator.generate(), difficulty.getTimeInMilliseconds());
-			
-			final List<MainGame> toBeSerialized = List.of(game1, game2, game3);
-			
-			Serializer.<MainGame>serialize(TestReader.getPath() + JSON_TEST_GAMES_FILE, toBeSerialized.toArray(new MainGameImpl[toBeSerialized.size()]));
-			
-			List<MainGameImpl> deserializedGames = Deserializer.<MainGameImpl>deserialize(MainGameImpl.class, TestReader.getPath() + JSON_TEST_GAMES_FILE);
-			
-			System.out.println(deserializedGames + System.lineSeparator());
-			System.out.println(deserializedGames.get(0));
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+////			final Dictionary dataset = new DictionaryImpl(TestReader.readDataset("datasetNuovo.txt"));
+////			final Pair<Integer,Integer> shape = new Pair<>(4,4);
+////			final Difficulty difficulty = new Difficulty(126, 250, 240000L);
+////			final GridGenerator generator = new GridGeneratorImpl(dataset, shape, difficulty);
+////			
+////			final MainGame game1 = new MainGameImpl(generator.generate(), difficulty.getTimeInMilliseconds());
+////			final MainGame game2 = new MainGameImpl(generator.generate(), difficulty.getTimeInMilliseconds());
+////			final MainGame game3 = new MainGameImpl(generator.generate(), difficulty.getTimeInMilliseconds());
+////			
+////			final List<MainGame> toBeSerialized = List.of(game1, game2, game3);
+////			
+////			Serializer.<MainGame>serialize(TestReader.getPath() + JSON_TEST_GAMES_FILE, toBeSerialized.toArray(new MainGameImpl[toBeSerialized.size()]));
+////			
+////			List<MainGameImpl> deserializedGames = Deserializer.<MainGameImpl>deserialize(MainGameImpl.class, TestReader.getPath() + JSON_TEST_GAMES_FILE);
+////			
+////			System.out.println(deserializedGames + System.lineSeparator());
+////			System.out.println(deserializedGames.get(0));
+////			
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	@Test
 	public void testJsonBonusesFile() {
-		try {
-			final var bonuses = new BonusManagerImpl();
-			
-			bonuses.updateScoreBonusQuantity(q -> q + 500);
-			bonuses.updateTimeBonusQuantity(q -> q + 100);
-			bonuses.updateWordBonusQuantity(q -> q + 25);
-			
-			Serializer.<BonusManager>serialize(TestReader.getPath() + JSON_TEST_BONUSES_FILE, List.of(bonuses).toArray(new BonusManagerImpl[0]));
-			
-			BonusManagerImpl deserializedBonuses = Deserializer.<BonusManagerImpl>deserialize(BonusManagerImpl.class, TestReader.getPath() + JSON_TEST_BONUSES_FILE).get(0);
-			
-			System.out.println("Score quantity: " + deserializedBonuses.getScoreBonusQuantity() + 
-					" Time quantity: " + deserializedBonuses.getTimeBonusQuantity() + 
-					" Word quantity: " + deserializedBonuses.getWordBonusQuantity());
-		
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+////			final var bonuses = new BonusManagerImpl();
+////			
+////			bonuses.updateScoreBonusQuantity(q -> q + 500);
+////			bonuses.updateTimeBonusQuantity(q -> q + 100);
+////			bonuses.updateWordBonusQuantity(q -> q + 25);
+////			
+////			Serializer.<BonusManager>serialize(TestReader.getPath() + JSON_TEST_BONUSES_FILE, List.of(bonuses).toArray(new BonusManagerImpl[0]));
+////			
+////			BonusManagerImpl deserializedBonuses = Deserializer.<BonusManagerImpl>deserialize(BonusManagerImpl.class, TestReader.getPath() + JSON_TEST_BONUSES_FILE).get(0);
+////			
+////			System.out.println("Score quantity: " + deserializedBonuses.getScoreBonusQuantity() + 
+////					" Time quantity: " + deserializedBonuses.getTimeBonusQuantity() + 
+////					" Word quantity: " + deserializedBonuses.getWordBonusQuantity());
+//		
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 }

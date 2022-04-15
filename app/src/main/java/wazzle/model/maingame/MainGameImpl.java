@@ -169,14 +169,14 @@ public class MainGameImpl implements MainGame {
 
 	@Override
 	public double getScoreFromWord(final String word) {
-		return word.chars()
-				   .mapToObj(c -> (char)c)
-				   .collect(Collectors.toList())
-				   .stream()
-				   .collect(Collectors.toMap(c -> c, c -> this.charsWithScore(word).get(c)))
-				   .values()
-				   .stream()
-				   .reduce(0.0, (x, y) -> x + y);
+        return word.chars()
+                .mapToObj(c -> (char)c)
+                .collect(Collectors.toList())
+                .stream()
+                .map(c -> this.charsWithScore(word).get(c))
+                .collect(Collectors.toList())
+                .stream()
+                .reduce(0.0, (x, y) -> x + y);
 	}
 	
 	private Map<Character, Double> charsWithScore(final String word) {

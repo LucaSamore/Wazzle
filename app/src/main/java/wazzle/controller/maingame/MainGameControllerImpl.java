@@ -73,7 +73,7 @@ public final class MainGameControllerImpl implements MainGameController {
 
 	@Override
 	public void useTimeBonus() {
-		// TODO Auto-generated method stub
+		this.timeRemaining = this.mainController.getBonusManager().applyTimeBonus(this.timeRemaining);
 	}
 
 	@Override
@@ -103,19 +103,19 @@ public final class MainGameControllerImpl implements MainGameController {
 
 	@Override
 	public String highestScoreWord() {		
-		double max = this.game.get()
-				.wordsFound()
-				.stream()
-				.map(w -> this.game.get().getScoreFromWord(w))
-				.max(Comparator.comparingDouble(Double::doubleValue))
-				.orElse(Double.NaN);
-		
-		return this.game.get()
-				.wordsFound()
-				.stream()
-				.filter(w -> max == this.game.get().getScoreFromWord(w))
-				.findFirst()
-				.get();
+        double max = this.game.get()
+                .wordsFound()
+                .stream()
+                .map(w -> this.game.get().getScoreFromWord(w))
+                .max(Comparator.comparingDouble(Double::doubleValue))
+                .orElse(Double.NaN);
+
+        return this.game.get()
+                .wordsFound()
+                .stream()
+                .filter(w -> max == this.game.get().getScoreFromWord(w))
+                .findFirst()
+                .get();
 	}
 	
 	@Override
