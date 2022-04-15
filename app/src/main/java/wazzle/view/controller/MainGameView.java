@@ -193,6 +193,10 @@ public final class MainGameView {
 	}
 	
 	private void setGraphics() {
+		this.bonusScoreButton.setDisable(this.controller.getMainController().getBonusManager().getScoreBonusQuantity() == 0);
+		this.bonusTimeButton.setDisable(this.controller.getMainController().getBonusManager().getTimeBonusQuantity() == 0);
+		this.bonusWordButton.setDisable(this.controller.getMainController().getBonusManager().getWordBonusQuantity() == 0);
+		
 		this.grid.setPadding(new Insets(15,15,15,15));
 		
 		this.leftPanel.styleProperty().bind(this.standardFontSize);

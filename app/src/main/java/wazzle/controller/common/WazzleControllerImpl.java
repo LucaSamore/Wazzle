@@ -18,9 +18,8 @@ import wazzle.model.maingame.MainGameImpl;
 
 public class WazzleControllerImpl implements WazzleController {
 
+	private static final String BONUSES_PATH = "files/bonuses.json";
 	private final FileController fileController;
-//	private final Settings settings;
-//	private final List<MainGameImpl> gameHistory;
 	private final SettingsController settingsController;
 	private final GameHistoryController gameHistoryController;
 	private final BonusManager bonusManager;
@@ -35,9 +34,12 @@ public class WazzleControllerImpl implements WazzleController {
 		this.fileController = new FileControllerImpl();
 		this.settingsController = new SettingsControllerImpl(new SettingsImpl());
 		//this.gameHistoryController = new GameHistoryControllerImpl(this.fileController.getMainGameHistory("history.json"));
-		//this.bonusManager = this.fileController.getBonuses("bonus.json");
 		this.gameHistoryController = new GameHistoryControllerImpl(List.of());
+		var bonusQuantity = this.fileController.getBonuses(BONUSES_PATH);
 		this.bonusManager = new BonusManagerImpl();
+		this.bonusManager.updateScoreBonusQuantity(i -> bonusQuantity.getScoreBonusQuantity());
+		this.bonusManager.updateTimeBonusQuantity(i -> bonusQuantity.getTimeBonusQuantity());
+		this.bonusManager.updateWordBonusQuantity(i -> bonusQuantity.getWordBonusQuantity());
 		this.facade = new Facade();
 	}
 	
