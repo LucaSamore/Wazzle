@@ -41,6 +41,11 @@
                               </HBox>
                            </children>
                         </VBox>
+                        <Button fx:id="leaveButton" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#leaveGame" pickOnBounds="false" styleClass="redButton" text="Abbandona" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </Button>
                      </children>
                   </VBox>
                </children>
@@ -69,7 +74,7 @@
       </HBox>
       <VBox fx:id="bottomPanel" alignment="CENTER" VBox.vgrow="ALWAYS">
          <children>
-            <Button fx:id="leaveButton" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#leaveGame" pickOnBounds="false" styleClass="redButton" text="Abbandona" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" VBox.vgrow="ALWAYS" />
+            <Label fx:id="wordSuggestionLabel" textAlignment="CENTER" />
          </children>
       </VBox>
    </children>

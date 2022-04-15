@@ -145,7 +145,8 @@ public final class MainGameView {
 	}
 	
 	public void gainWordBonus(final ActionEvent event) {
-		
+		this.wordSuggestionLabel.setText("Un suggerimento per te " + System.lineSeparator() + String.join(" - ", this.controller.useWordBonus()));
+		((Button) event.getSource()).setDisable(true);
 	}
 	
 	private void setEventHandler() {
