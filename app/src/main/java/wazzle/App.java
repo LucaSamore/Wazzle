@@ -13,6 +13,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import wazzle.controller.common.WazzleControllerImpl;
 import wazzle.view.Loader;
+import wazzle.view.WindowCloser;
 import wazzle.view.controller.MainMenuView;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -29,12 +30,14 @@ public final class App extends Application {
 		try {
 			stage.setUserData(new WazzleControllerImpl());
 			DoubleProperty visualUnit = new SimpleDoubleProperty();
-			visualUnit.bind(Bindings.min(stage.widthProperty(),stage.heightProperty()));
-			mainMenuController = new MainMenuView(stage);
+			visualUnit.set(Math.min(screenViewport.getWidth()*0.75, screenViewport.getHeight()*0.75));
+			mainMenuController = new MainMenuView(stage, visualUnit);
 			Scene scene = new Scene(Loader.<MainMenuView, Parent>loadFXMLElement(mainMenuController, "layouts/mainMenu.fxml"), 
 							screenViewport.getWidth()*0.75, screenViewport.getHeight()*0.75);
 			stage.setScene(scene);
 			stage.show();
+			visualUnit.bind(Bindings.min(stage.widthProperty(),stage.heightProperty()));
+			WindowCloser.onExit(stage);
 		} catch (IOException e) {
 			e.printStackTrace();
 			Alert alert = new Alert(AlertType.NONE);

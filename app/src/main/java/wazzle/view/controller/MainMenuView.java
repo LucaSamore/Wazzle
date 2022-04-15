@@ -65,6 +65,12 @@ public final class MainMenuView {
 		this.visualUnit = new SimpleDoubleProperty();
 		this.visualUnit.bind(Bindings.min(this.stage.heightProperty(), this.stage.widthProperty()));
 	}
+	
+	public MainMenuView(final Stage stage, DoubleProperty visualUnit) throws IOException {
+		this.stage = stage;
+		this.wazzleController = (WazzleController) stage.getUserData();
+		this.visualUnit = visualUnit;
+	}
 
 	public void initialize() {
 		this.setGraphic();
@@ -91,6 +97,10 @@ public final class MainMenuView {
 		titleLabel.styleProperty().bind(this.titleFontSize);
 	}
 
+	public void exitApplication(ActionEvent event) {
+		System.exit(0);
+	}
+	
 	public void goToScene(final ActionEvent event) throws IOException {
 
 		Node node = (Node) event.getSource();
@@ -114,7 +124,7 @@ public final class MainMenuView {
 			break;
 			
 		case "exitButton":
-			this.stage.close();
+			this.exitApplication(event);
 			break;
 			
 		default:

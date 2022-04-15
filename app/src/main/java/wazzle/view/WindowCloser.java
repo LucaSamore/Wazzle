@@ -29,7 +29,7 @@ public class WindowCloser {
 		e.consume();
 	}
 	
-	static void onExit(final Stage stage) {
+	public static void onExit(final Stage stage) {
 		stage.getScene()
 			.getWindow()
 			.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, e -> defaultClose(e));
