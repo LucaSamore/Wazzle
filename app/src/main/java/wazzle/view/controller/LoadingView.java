@@ -45,7 +45,7 @@ public class LoadingView {
 	@FXML
 	private Label loadingLabel;
 	
-	private static final String DATASET_NAME = "dataset.txt";
+	private static final String DATASET_NAME = "files/dataset.txt";
 	private static final String IMAGE_PATH = "img/WaffleLoadingScreen.png";
 	private static final String NEXT_SCENE_FXML = "layouts/MainGame.fxml";
 	
