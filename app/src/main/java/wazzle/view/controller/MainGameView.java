@@ -1,10 +1,13 @@
 package wazzle.view.controller;
 
 import java.io.IOException;
+
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringExpression;
 import javafx.beans.property.DoubleProperty;
@@ -98,6 +101,7 @@ public final class MainGameView {
 	private Set<Pair<Integer, Integer>> alreadyVisitedCells;
 	private Pair<Integer,Integer> lastVisitedPosition;
 	private final MainGameController controller;
+	private AnimationTimer animationTimer;
 
 	public MainGameView(final Stage stage) {
 		this.stage = stage;
@@ -116,6 +120,33 @@ public final class MainGameView {
 		this.setEventHandler();
 		var shape = this.controller.getMainController().getSettings().getCurrentGridShape();
 		this.populateGrid(shape,shape);
+		this.controller.startTimer();
+		this.startTimer();
+	}
+	
+	private void startTimer() {		
+		this.animationTimer = new AnimationTimer() {
+			@Override
+			public void handle(long now) {
+				Platform.runLater(new Runnable(){
+					@Override
+					public void run() {
+						final var timeRemaining = controller.getRemainingTime();
+						timerValueLabel.setText("" + timeRemaining);
+						
+						if(timeRemaining <= 0) {
+							animationTimer.stop();
+							stage.setUserData(controller);
+							DoubleProperty visualUnit = new SimpleDoubleProperty();
+							visualUnit.bind(Bindings.min(stage.widthProperty(),stage.heightProperty()));
+							//TODO: instance a statistics controller and a scene
+							//TODO: switch scene to statistics controller
+						}
+					}
+				});
+			}
+		};
+		this.animationTimer.start();
 	}
 	
 	public void leaveGame(final ActionEvent event) throws IOException {
@@ -129,6 +160,8 @@ public final class MainGameView {
 		Optional<ButtonType> result = alert.showAndWait();
 		
 		if (result.isPresent() && result.get().equals(confirm)) {
+			this.animationTimer.stop();
+			this.controller.stopTimer();
 			this.stage.setUserData(this.controller.getMainController());
 			SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), "layouts/mainMenu.fxml");
 		}

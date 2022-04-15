@@ -33,5 +33,10 @@ public interface MainGameController {
 	String longestWord();
 	
 	String highestScoreWord();
-
+	
+	void startTimer();
+	
+	void stopTimer();
+	
+	long getRemainingTime();
 }
