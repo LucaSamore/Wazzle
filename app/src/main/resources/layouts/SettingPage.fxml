@@ -36,12 +36,12 @@
                <children>
                   <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
                      <children>
-                        <Button fx:id="okButton" alignment="CENTER" mnemonicParsing="false" onAction="#goToScene" styleClass="orangeButton" text="OK" textAlignment="CENTER" />
+                        <Button fx:id="okButton" alignment="CENTER" mnemonicParsing="false" onAction="#goToScene" styleClass="orangeButton" text="Salva" textAlignment="CENTER" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
                      <children>
-                        <Button fx:id="cancelButton" alignment="CENTER" mnemonicParsing="false" onAction="#goToScene" styleClass="orangeButton" text="Annulla" textAlignment="CENTER" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="cancelButton" alignment="CENTER" mnemonicParsing="false" onAction="#goToScene" styleClass="redButton" text="Esci" textAlignment="CENTER" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                </children>

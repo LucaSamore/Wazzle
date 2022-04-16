@@ -90,10 +90,10 @@ public final class SettingsView {
 		final Node node = (Node) event.getSource();
 
 		if (node.getId().equals("okButton")) {
-//			final var sliderValue = (int) this.gridDimensionSlider.getValue();
-//			this.wazzleController.getSettingsController().updateSettings(
-//					this.wazzleController.getSettingsController().getAllDifficulties().get(difficultySelectorCBox.getValue()).get(sliderValue),
-//					sliderValue);
+			final var sliderValue = (int) this.gridDimensionSlider.getValue();
+			this.wazzleController.getSettingsController().updateSettings(
+					this.wazzleController.getSettingsController().getAllDifficulties().get(difficultySelectorCBox.getValue()).get(sliderValue),
+					sliderValue);
 		}
 		this.stage.setUserData(this.wazzleController);
 		SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), "layouts/MainMenu.fxml");
