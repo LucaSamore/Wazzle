@@ -113,7 +113,7 @@ public final class MainGameView {
 		this.controller = (MainGameController)stage.getUserData();
 		this.alreadyVisitedCells = new HashSet<>();
 		this.visualUnit = new SimpleDoubleProperty();
-		this.visualUnit.bind(Bindings.min(stage.heightProperty().multiply(0.05), stage.widthProperty().multiply(0.05)));
+		this.visualUnit.bind(Bindings.min(stage.heightProperty().multiply(0.045), stage.widthProperty().multiply(0.045)));
 		this.standardFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.asString(), ";");
 		this.letterFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(1.5).asString(), ";");
 		this.pointFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(0.5).asString(), ";");
