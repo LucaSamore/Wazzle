@@ -18,7 +18,7 @@ import wazzle.model.maingame.MainGameImpl;
 
 public class WazzleControllerImpl implements WazzleController {
 
-	private static final String BONUSES_PATH = "files/bonuses.json";
+	private static final String BONUSES_PATH = "bonuses.json";
 	private final FileController fileController;
 	private final SettingsController settingsController;
 	private final GameHistoryController gameHistoryController;

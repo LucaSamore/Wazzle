@@ -11,23 +11,27 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public final class TextHandler implements FileStrategies<String>{
 	
+	private static final String ENCODING = "UTF-8";
+	
 	@Override
-	public List<String> read(final InputStream path) throws IOException {
-		//return Files.readAllLines(Path.of(path));
-		String content = "";
+	public List<String> read(final String path) throws IOException {
+		return Files.readAllLines(Path.of(path));
+	}
+	
+	@Override
+	public List<String> read(InputStream stream) throws IOException {
+		final var fullContent = new ArrayList<String>();
+		var line = "";
 		
-		List<String> result = new ArrayList<>();
-		
-		try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(path, "UTF-8"))) {
-			while ((content = bufferedReader.readLine()) != null) {    
-                result.add(content);
+		try (final var reader = new BufferedReader(new InputStreamReader(stream, ENCODING))) {
+			while ((line = reader.readLine()) != null) {    
+                fullContent.add(line);
             } 
 		}
 		
-		return result;
+		return fullContent;
 	}
 	
 	@Override

@@ -7,7 +7,9 @@ import java.nio.file.Path;
 import java.util.List;
 
 public interface FileStrategies<X> {
-	List<X> read(final InputStream path) throws IOException;
+	List<X> read(final String path) throws IOException;
+	
+	List<X> read(final InputStream stream) throws IOException;
 	
 	void write(final String path, final List<X> toBeWritten) throws IOException;
 	

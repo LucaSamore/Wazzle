@@ -1,6 +1,8 @@
 package wazzle.controller.common;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,12 +20,17 @@ import wazzle.model.maingame.MainGameImpl;
 public final class FileControllerImpl implements FileController {
 
 	private static final String SEPARATOR = System.getProperty("file.separator");
-	private static final String DIRECTORY = "src" + SEPARATOR + 
-			"main" + SEPARATOR +
-			"resources" + SEPARATOR;
-			// + "files" + SEPARATOR;
+	private static final String DIRECTORY = 
+			System.getProperty("user.home") + SEPARATOR + 
+			"wazzle" + SEPARATOR + 
+			"files" + SEPARATOR;
 	
-	private final FileStrategies<String> textFileHandler = new TextHandler();
+	private final FileStrategies<String> textFileHandler;
+	
+	public FileControllerImpl() throws IOException {
+		this.textFileHandler = new TextHandler();
+		this.buildFoldersStructure();
+	}
 	
 	@Override
 	public String getPath() {
@@ -31,12 +38,7 @@ public final class FileControllerImpl implements FileController {
 	}
 	
 	@Override
-	public Dictionary getDataset(final String fileName) throws IOException {		
-//		if(!this.exists(ClassLoader.getSystemResource("files/"+fileName))) {
-//			System.out.println("ECCEZIONE BRODY");
-//			throw new IOException(fileName + " does not exist!");
-//		}
-				
+	public Dictionary getDataset(final String fileName) throws IOException {
 		return new DictionaryImpl(this.textFileHandler
 				.read(ClassLoader.getSystemResourceAsStream("files/" + fileName))
 				.stream()
@@ -64,7 +66,7 @@ public final class FileControllerImpl implements FileController {
 	@Override
 	public List<MainGameImpl> getMainGameHistory(final String fileName) throws IOException{
 		if(!this.exists(DIRECTORY + fileName)) {
-			throw new IOException(fileName + " does not exist!");
+			this.create(DIRECTORY + fileName);
 		}
 		
 		return Deserializer.<MainGameImpl>deserialize(MainGameImpl.class, DIRECTORY + fileName);
@@ -73,7 +75,8 @@ public final class FileControllerImpl implements FileController {
 	@Override
 	public BonusManagerImpl getBonuses(final String fileName) throws IOException{
 		if(!this.exists(DIRECTORY + fileName)) {
-			throw new IOException(fileName + " does not exist!");
+			this.create(DIRECTORY + fileName);
+			Serializer.<BonusManager>serialize(DIRECTORY + fileName, List.of(new BonusManagerImpl()).toArray(new BonusManagerImpl[0]));
 		}
 		
 		return Deserializer.<BonusManagerImpl>deserialize(BonusManagerImpl.class, DIRECTORY + fileName).get(0);
@@ -82,5 +85,11 @@ public final class FileControllerImpl implements FileController {
 	@Override
 	public FileController getThis() {
 		return this;
+	}
+	
+	private void buildFoldersStructure() throws IOException {
+		if(!this.exists(DIRECTORY)) {
+			Files.createDirectories(Path.of(DIRECTORY));
+		}
 	}
 }
