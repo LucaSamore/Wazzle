@@ -18,7 +18,6 @@ import wazzle.model.maingame.MainGameImpl;
 
 public class WazzleControllerImpl implements WazzleController {
 
-	private static final String BONUSES_PATH = "bonuses.json";
 	private final FileController fileController;
 	private final SettingsController settingsController;
 	private final GameHistoryController gameHistoryController;
@@ -32,14 +31,10 @@ public class WazzleControllerImpl implements WazzleController {
 	 */
 	public WazzleControllerImpl() throws IOException {
 		this.fileController = new FileControllerImpl();
-		this.settingsController = new SettingsControllerImpl(new SettingsImpl());
+		this.bonusManager = this.bonusesFromFile();
+		this.settingsController = new SettingsControllerImpl(this.settingsFromFile());
 		//this.gameHistoryController = new GameHistoryControllerImpl(this.fileController.getMainGameHistory("history.json"));
 		this.gameHistoryController = new GameHistoryControllerImpl(List.of());
-		var bonusQuantity = this.fileController.getBonuses(BONUSES_PATH);
-		this.bonusManager = new BonusManagerImpl();
-		this.bonusManager.updateScoreBonusQuantity(i -> bonusQuantity.getScoreBonusQuantity());
-		this.bonusManager.updateTimeBonusQuantity(i -> bonusQuantity.getTimeBonusQuantity());
-		this.bonusManager.updateWordBonusQuantity(i -> bonusQuantity.getWordBonusQuantity());
 		this.facade = new Facade();
 	}
 	
@@ -128,5 +123,22 @@ public class WazzleControllerImpl implements WazzleController {
 	@Override
 	public WazzleController getThis() {
 		return this;
+	}
+	
+	private BonusManager bonusesFromFile() throws IOException {
+		final var bonusQuantity = this.fileController.getBonuses(WazzleFiles.BONUSES.getFileName());
+		final var bonuses = new BonusManagerImpl();
+		bonuses.updateScoreBonusQuantity(i -> bonusQuantity.getScoreBonusQuantity());
+		bonuses.updateTimeBonusQuantity(i -> bonusQuantity.getTimeBonusQuantity());
+		bonuses.updateWordBonusQuantity(i -> bonusQuantity.getWordBonusQuantity());
+		return bonuses;
+	}
+	
+	private Settings settingsFromFile() throws IOException {
+		final var content = this.fileController.getSettings(WazzleFiles.SETTINGS.getFileName());
+		final var settings = new SettingsImpl();
+		settings.updateCurrentDifficulty(content.getCurrentDifficulty());
+		settings.updateCurrentGridShape(content.getCurrentGridShape());
+		return settings;
 	}
 }

@@ -10,6 +10,8 @@ import wazzle.controller.common.files.Deserializer;
 import wazzle.controller.common.files.FileStrategies;
 import wazzle.controller.common.files.Serializer;
 import wazzle.controller.common.files.TextHandler;
+import wazzle.controller.maingame.Settings;
+import wazzle.controller.maingame.SettingsImpl;
 import wazzle.model.common.BonusManager;
 import wazzle.model.common.BonusManagerImpl;
 import wazzle.model.common.Dictionary;
@@ -64,6 +66,15 @@ public final class FileControllerImpl implements FileController {
 	}
 	
 	@Override
+	public void saveSettings(final String fileName, final Settings settings) throws IOException {
+		if(!this.exists(DIRECTORY + fileName)) {
+			this.create(DIRECTORY + fileName);
+		}
+		
+		Serializer.<Settings>serialize(DIRECTORY + fileName, List.of(settings).toArray(new SettingsImpl[0]));
+	}
+	
+	@Override
 	public List<MainGameImpl> getMainGameHistory(final String fileName) throws IOException{
 		if(!this.exists(DIRECTORY + fileName)) {
 			this.create(DIRECTORY + fileName);
@@ -80,6 +91,16 @@ public final class FileControllerImpl implements FileController {
 		}
 		
 		return Deserializer.<BonusManagerImpl>deserialize(BonusManagerImpl.class, DIRECTORY + fileName).get(0);
+	}
+	
+	@Override
+	public Settings getSettings(String fileName) throws IOException {
+		if(!this.exists(DIRECTORY + fileName)) {
+			this.create(DIRECTORY + fileName);
+			Serializer.<Settings>serialize(DIRECTORY + fileName, List.of(new SettingsImpl()).toArray(new SettingsImpl[0]));
+		}
+		
+		return Deserializer.<SettingsImpl>deserialize(SettingsImpl.class, DIRECTORY + fileName).get(0);
 	}
 	
 	@Override
