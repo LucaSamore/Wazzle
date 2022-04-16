@@ -21,7 +21,7 @@ public final class FileControllerImpl implements FileController {
 	private static final String DIRECTORY = "src" + SEPARATOR + 
 			"main" + SEPARATOR +
 			"resources" + SEPARATOR;
-			// + "files" + SEPARATOR;
+			//"files" + SEPARATOR;
 	
 	private final FileStrategies<String> textFileHandler = new TextHandler();
 	

@@ -1,0 +1,31 @@
+[
+  {
+    "wordsFound": [
+      "sere",
+      "re",
+      "sera",
+      "rei",
+      "ira",
+      "rai",
+      "seria",
+      "ire",
+      "cera"
+    ],
+    "dateTime": "2022-04-16 10:32:51",
+    "duration": 240000,
+    "currentScore": 77.11354414414944
+  },
+  {
+    "wordsFound": [
+      "lei",
+      "lati",
+      "le",
+      "lette",
+      "lena",
+      "latte"
+    ],
+    "dateTime": "2022-04-16 11:36:28",
+    "duration": 240000,
+    "currentScore": 73.74140915545338
+  }
+]
