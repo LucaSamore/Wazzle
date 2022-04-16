@@ -44,31 +44,37 @@ public final class SettingsView {
 	@FXML
 	private Button cancelButton;
 
+	private DoubleProperty visualUnit;
 	private final Stage stage;
 	private final WazzleController wazzleController;
 
 	public SettingsView(final Stage stage) {
-		this.stage = new Stage();
-		this.stage.setWidth(stage.widthProperty().get());
-		this.stage.setHeight(stage.heightProperty().get());
+		this.stage = stage;
+		this.visualUnit = new SimpleDoubleProperty();
+		this.visualUnit.bind(Bindings.min(stage.heightProperty().multiply(0.05), stage.widthProperty().multiply(0.05)));
 		this.wazzleController = (WazzleControllerImpl) stage.getUserData();
 	}
 
 	public void initialize() {
 		this.setGraphic();
-		this.wazzleController.getSettings().getAllDifficulties().keySet().forEach(e -> difficultySelectorCBox.getItems().add(e));
-		this.difficultySelectorCBox.getSelectionModel().select(difficultySelectorCBox.getItems().get(0));
+		this.wazzleController.getSettings().getAllDifficulties().keySet()
+				.forEach(e -> difficultySelectorCBox.getItems().add(e));
+
+		this.difficultySelectorCBox.getSelectionModel().select(this.wazzleController.getSettings().getCurrentDifficultyName());
 		this.gridDimensionSlider.setValue(this.wazzleController.getSettings().getCurrentGridShape());
 	}
 
 	private void setGraphic() {
 
-		DoubleProperty visualUnit = new SimpleDoubleProperty();
-        visualUnit.bind(Bindings.min(stage.heightProperty().multiply(0.03), stage.widthProperty().multiply(0.03)));		
 		final ObservableValue<String> fontSize = Bindings.concat("-fx-font-size: ", visualUnit.asString(), ";");
-		final ObservableValue<String> paddingValue = Bindings.concat("-fx-padding: ", visualUnit.multiply(0.5).asString(), ";");
+		final ObservableValue<String> cbBoxItemFont = Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.7).asString(), ";");
+		final ObservableValue<String> paddingValue = Bindings.concat("-fx-padding: ",
+				visualUnit.multiply(0.5).asString(), ";");
 
+		this.difficultySelectorCBox.styleProperty().bind(cbBoxItemFont);
+		this.difficultySelectorCBox.getStyleClass().add("longIncave");
 		this.gridDimensionSlider.maxWidthProperty().bind(visualUnit.multiply(10));
+		this.mainSettingWindow.getStyleClass().add("letters");
 		this.mainSettingWindow.styleProperty().bind(paddingValue);
 		this.mainSettingWindow.getChildren().forEach(e -> e.styleProperty().bind(paddingValue));
 		this.mainSettingsWrapper.spacingProperty().bind(visualUnit);
