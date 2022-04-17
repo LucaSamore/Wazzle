@@ -126,7 +126,6 @@ public final class MainGameControllerImpl implements MainGameController {
 				
 				if(timeRemaining <= 0) {
 					this.cancel();
-					System.out.println("task stoppato");
 					return;
 				}
 			}

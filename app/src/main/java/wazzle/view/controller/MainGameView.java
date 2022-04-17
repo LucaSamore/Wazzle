@@ -246,7 +246,6 @@ public final class MainGameView {
 			.getGrid()
 			.getLetters()
 			.forEach(l -> this.addMainGamePane(l.getPosition(), "" + l.getContent(), "" + "" + (int)(l.getScore()))); //TODO: fix 
-		System.out.println(this.controller.getGame().get().getGrid().getWordsCanBeFound());
 	}
 	
 	private void addMainGamePane(final Pair<Integer,Integer> position, final String letter, final String points) {

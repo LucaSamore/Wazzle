@@ -118,7 +118,6 @@ public class MainGameImpl implements MainGame {
 	}
 	
 	private void addWordScore(final String word) {
-		System.out.println(this.lettersInGrid());
         word.chars()
         	.mapToObj(c -> (char)c)
         	.forEach(c -> {
