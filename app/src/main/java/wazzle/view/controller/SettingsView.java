@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import wazzle.controller.common.WazzleController;
 import wazzle.controller.common.WazzleControllerImpl;
+import wazzle.controller.common.WazzleFiles;
 import wazzle.view.SceneSwitcher;
 
 public final class SettingsView {
@@ -94,9 +95,12 @@ public final class SettingsView {
 			this.wazzleController.getSettingsController().updateSettings(
 					this.wazzleController.getSettingsController().getAllDifficulties().get(difficultySelectorCBox.getValue()).get(sliderValue),
 					sliderValue);
+			
+			//TODO: move this logic in wazzle controller
+			this.wazzleController.getFileController().saveSettings(WazzleFiles.SETTINGS.getFileName(), this.wazzleController.getSettings());
 		}
 		this.stage.setUserData(this.wazzleController);
-		SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), "layouts/MainMenu.fxml");
+		SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), "layouts/mainMenu.fxml");
 	}
 
 }

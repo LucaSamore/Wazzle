@@ -16,6 +16,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -30,6 +32,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import wazzle.controller.maingame.MainGameController;
+import wazzle.view.Loader;
 import wazzle.view.SceneSwitcher;
 
 public final class MainGameView {
@@ -90,6 +93,8 @@ public final class MainGameView {
 	@FXML
 	private HBox wrapperRightPane;
 
+	private static final String STATISTICS_MAIN_GAME_PATH = "layouts/statisticsMainGame.fxml";
+	
 	private final Stage stage;
 	private final StringExpression standardFontSize;
 	private final StringExpression letterFontSize;
@@ -108,7 +113,7 @@ public final class MainGameView {
 		this.controller = (MainGameController)stage.getUserData();
 		this.alreadyVisitedCells = new HashSet<>();
 		this.visualUnit = new SimpleDoubleProperty();
-		this.visualUnit.bind(Bindings.min(stage.heightProperty().multiply(0.05), stage.widthProperty().multiply(0.05)));
+		this.visualUnit.bind(Bindings.min(stage.heightProperty().multiply(0.045), stage.widthProperty().multiply(0.045)));
 		this.standardFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.asString(), ";");
 		this.letterFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(1.5).asString(), ";");
 		this.pointFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(0.5).asString(), ";");
@@ -139,8 +144,16 @@ public final class MainGameView {
 							stage.setUserData(controller);
 							DoubleProperty visualUnit = new SimpleDoubleProperty();
 							visualUnit.bind(Bindings.min(stage.widthProperty(),stage.heightProperty()));
-							//TODO: instance a statistics controller and a scene
-							//TODO: switch scene to statistics controller
+							StatisticsMainGameView controller = new StatisticsMainGameView(stage);
+							final Scene scene;
+							try {
+								scene = new Scene(Loader.<StatisticsMainGameView, Parent>loadFXMLElement(controller, STATISTICS_MAIN_GAME_PATH), 
+												stage.getWidth()*0.75, stage.getHeight()*0.75);
+								stage.setScene(scene);
+								stage.show();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
 						}
 					}
 				});
