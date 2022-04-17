@@ -107,11 +107,14 @@ public final class MainGameView {
 	private Pair<Integer,Integer> lastVisitedPosition;
 	private final MainGameController controller;
 	private AnimationTimer animationTimer;
+	
+	private Set<String> suggestedWords;
 
 	public MainGameView(final Stage stage) {
 		this.stage = stage;
 		this.controller = (MainGameController)stage.getUserData();
 		this.alreadyVisitedCells = new HashSet<>();
+		this.suggestedWords = new HashSet<>();
 		this.visualUnit = new SimpleDoubleProperty();
 		this.visualUnit.bind(Bindings.min(stage.heightProperty().multiply(0.045), stage.widthProperty().multiply(0.045)));
 		this.standardFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.asString(), ";");
@@ -195,7 +198,8 @@ public final class MainGameView {
 	}
 	
 	public void gainWordBonus(final ActionEvent event) {
-		this.wordSuggestionLabel.setText("Un suggerimento per te " + System.lineSeparator() + String.join(" - ", this.controller.useWordBonus()));
+		this.suggestedWords = this.controller.useWordBonus();
+		this.wordSuggestionLabel.setText("Un suggerimento per te " + System.lineSeparator() + String.join(" - ", this.suggestedWords));
 		((Button) event.getSource()).setDisable(true);
 	}
 	
@@ -303,12 +307,24 @@ public final class MainGameView {
 			((StackPane) gridPane).getChildren().get(0).styleProperty().bind(this.letterFontSize);
 		});
 		
-		//TODO: finish
+		//TODO: add switch to stats if areWeDone is true 
 		if(this.controller.attempt(this.titleLabel.getText())) {
 			this.pointsValueLabel.setText(""+ (int)this.controller.getGame().get().getCurrentScore());
 			this.titleLabel.styleProperty().bind(this.titleFontSize.concat("-fx-text-fill: green; "));
+			
+			this.suggestedWords.remove(this.titleLabel.getText());
+			this.wordSuggestionLabel.setText("Un suggerimento per te " + System.lineSeparator() + String.join(" - ", this.suggestedWords));
+			
+			if(this.suggestedWords.isEmpty()) {
+				this.wordSuggestionLabel.setText("");
+			}
+
+			
 		} else {
 			this.titleLabel.styleProperty().bind(this.titleFontSize.concat("-fx-text-fill: red; "));
+			if(this.controller.needHelp() && !this.bonusWordButton.isDisable()) {
+				this.wordSuggestionLabel.setText("Se stai facendo schifo al gioco usa il bonus delle parole :)");
+			}
 		}
 	}
 	
