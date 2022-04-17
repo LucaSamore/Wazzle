@@ -115,6 +115,21 @@ public class WazzleControllerImpl implements WazzleController {
 		this.settingsController.updateSettings(settings.getCurrentDifficulty(), settings.getCurrentGridShape());
 	}
 	
+	@Override
+	public void saveSettings() throws IOException {
+		this.fileController.saveSettings(WazzleFiles.SETTINGS.getFileName(), this.getSettings());
+	}
+
+	@Override
+	public void saveGameHistory() throws IOException {
+		this.fileController.saveGames(WazzleFiles.HISTORY.getFileName(), this.getGameHistory());
+	}
+
+	@Override
+	public void saveBonuses() throws IOException {
+		this.fileController.saveBonuses(WazzleFiles.BONUSES.getFileName(), this.getBonusManager());
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -123,6 +138,11 @@ public class WazzleControllerImpl implements WazzleController {
 		return this;
 	}
 	
+	/**
+	 * Takes bonuses from file using file controller.
+	 * 
+	 * @return BonusManager the bonus manager filled with bonuses quantities saved.
+	 */
 	private BonusManager bonusesFromFile() throws IOException {
 		final var bonusQuantity = this.fileController.getBonuses(WazzleFiles.BONUSES.getFileName());
 		final var bonuses = new BonusManagerImpl();
@@ -132,6 +152,11 @@ public class WazzleControllerImpl implements WazzleController {
 		return bonuses;
 	}
 	
+	/**
+	 * Takes settings from file using file controller.
+	 * 
+	 * @return Settings the saved settings.
+	 */
 	private Settings settingsFromFile() throws IOException {
 		final var content = this.fileController.getSettings(WazzleFiles.SETTINGS.getFileName());
 		final var settings = new SettingsImpl();
@@ -140,6 +165,11 @@ public class WazzleControllerImpl implements WazzleController {
 		return settings;
 	}
 	
+	/**
+	 * Takes game history from file using file controller.
+	 * 
+	 * @return List<MainGameImpl> the saved main game games.
+	 */
 	private List<MainGameImpl> gameHistoryFromFile() throws IOException {
 		final var content = this.fileController.getMainGameHistory(WazzleFiles.HISTORY.getFileName());
 		final var gameHistory = new LinkedList<MainGameImpl>();

@@ -48,7 +48,7 @@ public final class FileControllerImpl implements FileController {
 	}
 
 	@Override
-	public void saveGames(final String fileName, final List<MainGame> games) throws IOException {
+	public void saveGames(final String fileName, final List<MainGameImpl> games) throws IOException {
 		if(!this.exists(DIRECTORY + fileName)) {
 			this.create(DIRECTORY + fileName);
 		}

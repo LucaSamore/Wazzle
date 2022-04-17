@@ -18,7 +18,7 @@ public interface FileController {
 	
 	Dictionary getDataset(final String fileName) throws IOException;
 	
-	void saveGames(final String fileName, final List<MainGame> games) throws IOException;
+	void saveGames(final String fileName, final List<MainGameImpl> games) throws IOException;
 	
 	//void saveGames(final String fileName, List<MiniGame> games);
 	

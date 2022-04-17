@@ -141,6 +141,7 @@ public final class MainGameView {
 						
 						if(timeRemaining <= 0) {
 							animationTimer.stop();
+							saveGame();
 							stage.setUserData(controller);
 							DoubleProperty visualUnit = new SimpleDoubleProperty();
 							visualUnit.bind(Bindings.min(stage.widthProperty(),stage.heightProperty()));
@@ -175,6 +176,7 @@ public final class MainGameView {
 		if (result.isPresent() && result.get().equals(confirm)) {
 			this.animationTimer.stop();
 			this.controller.stopTimer();
+			this.controller.getMainController().saveBonuses();
 			this.stage.setUserData(this.controller.getMainController());
 			SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), "layouts/mainMenu.fxml");
 		}
@@ -341,4 +343,14 @@ public final class MainGameView {
 		this.visitCell(position);
 	}
 	
+	private void saveGame() {
+		this.controller.getMainController().addMainGametoHistory(this.controller.getGame().get());
+		try {
+			this.controller.getMainController().saveGameHistory();
+			this.controller.getMainController().saveBonuses();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
