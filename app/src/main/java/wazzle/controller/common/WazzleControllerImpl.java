@@ -1,8 +1,7 @@
 package wazzle.controller.common;
 
 import java.io.IOException;
-
-
+import java.util.LinkedList;
 import java.util.List;
 
 import wazzle.controller.maingame.GameHistoryController;
@@ -18,11 +17,6 @@ import wazzle.model.maingame.MainGameImpl;
 
 public class WazzleControllerImpl implements WazzleController {
 
-<<<<<<< HEAD
-	private final static String BONUSES_PATH = "bonuses.json";
-	private final static String GAME_HISTORY_PATH = "game-history.json";
-=======
->>>>>>> 2c3654506f3a35a9c3564833dad361b1c13e9dd7
 	private final FileController fileController;
 	private final SettingsController settingsController;
 	private final GameHistoryController gameHistoryController;
@@ -38,8 +32,7 @@ public class WazzleControllerImpl implements WazzleController {
 		this.fileController = new FileControllerImpl();
 		this.bonusManager = this.bonusesFromFile();
 		this.settingsController = new SettingsControllerImpl(this.settingsFromFile());
-		//this.gameHistoryController = new GameHistoryControllerImpl(this.fileController.getMainGameHistory("history.json"));
-		this.gameHistoryController = new GameHistoryControllerImpl(List.of());
+		this.gameHistoryController = new GameHistoryControllerImpl(this.gameHistoryFromFile());
 		this.facade = new Facade();
 	}
 	
@@ -145,5 +138,12 @@ public class WazzleControllerImpl implements WazzleController {
 		settings.updateCurrentDifficulty(content.getCurrentDifficulty());
 		settings.updateCurrentGridShape(content.getCurrentGridShape());
 		return settings;
+	}
+	
+	private List<MainGameImpl> gameHistoryFromFile() throws IOException {
+		final var content = this.fileController.getMainGameHistory(WazzleFiles.HISTORY.getFileName());
+		final var gameHistory = new LinkedList<MainGameImpl>();
+		gameHistory.addAll(content);
+		return gameHistory;
 	}
 }

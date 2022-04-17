@@ -41,7 +41,7 @@ public class HistoryView {
 	private final StringExpression titleFontSize;
 	private final WazzleController wazzleController;
 
-	private static final String MAIN_MENU_PATH = "layouts/MainMenu.fxml";
+	private static final String MAIN_MENU_PATH = "layouts/mainMenu.fxml";
 	
 	public HistoryView(Stage stage) {
 		this.stage = stage;

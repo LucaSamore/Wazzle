@@ -78,6 +78,7 @@ public final class FileControllerImpl implements FileController {
 	public List<MainGameImpl> getMainGameHistory(final String fileName) throws IOException{
 		if(!this.exists(DIRECTORY + fileName)) {
 			this.create(DIRECTORY + fileName);
+			Serializer.<MainGame>serialize(DIRECTORY + fileName, List.of().toArray(new MainGameImpl[0]));
 		}
 		
 		return Deserializer.<MainGameImpl>deserialize(MainGameImpl.class, DIRECTORY + fileName);
