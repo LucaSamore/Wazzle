@@ -18,27 +18,22 @@ public class WordCheckerImpl implements WordChecker {
 
 		List<Pair<Character, Result>> result = new ArrayList<>();
 
-		if (attempt.getGuessedWord().equals(attempt.getTargetWord())) {
-			IntStream.range(0, attempt.getTargetWord().length()).boxed().forEach(i -> {
+		IntStream.range(0, attempt.getTargetWord().length()).boxed().forEach(i -> {
+			if (attempt.getGuessedWord().charAt(i) == attempt.getTargetWord().charAt(i)) {
 				result.add(new Pair<>(attempt.getGuessedWord().charAt(i), Result.CORRECT));
-			});
-			word.setCorrect();
-		} else {
-
-			IntStream.range(0, attempt.getTargetWord().length()).boxed().forEach(i -> {
-				if (attempt.getGuessedWord().charAt(i) == attempt.getTargetWord().charAt(i)) {
-					result.add(new Pair<>(attempt.getGuessedWord().charAt(i), Result.CORRECT));
-				} else if (attempt.getTargetWord().chars().boxed().collect(Collectors.toList())
-						.contains(attempt.getGuessedWord().codePointAt(i))) {
-					result.add(new Pair<>(attempt.getGuessedWord().charAt(i), Result.CORRECT_WRONG_PLACE));
-				} else {
-					result.add(new Pair<>(attempt.getGuessedWord().charAt(i), Result.WRONG));
-				}
-			});
-			word.setWrong();
-		}
-
+			} else if (attempt.getTargetWord().chars().boxed().collect(Collectors.toList())
+					.contains(attempt.getGuessedWord().codePointAt(i))) {
+				result.add(new Pair<>(attempt.getGuessedWord().charAt(i), Result.CORRECT_WRONG_PLACE));
+			} else {
+				result.add(new Pair<>(attempt.getGuessedWord().charAt(i), Result.WRONG));
+			}
+		});
 		word.setCompositeWord(result);
 		return word;
+	}
+
+	@Override
+	public boolean isCorrectWord(Attempt attempt) {
+		return attempt.getGuessedWord().equals(attempt.getTargetWord());
 	}
 }

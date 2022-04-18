@@ -32,7 +32,7 @@ public class TestWordChecker {
 		
 		expectedWord = new MiniGameWordImpl();
 		expectedWord.setCompositeWord(result);
-		expectedWord.setWrong();
+		assertFalse(wordChecker.isCorrectWord(attempt));
 		assertEquals(expectedWord, wordChecker.computeAttemptResult(attempt));
 		
 		attempt = new AttemptImpl("crema", "grana");
@@ -44,7 +44,7 @@ public class TestWordChecker {
 		
 		expectedWord = new MiniGameWordImpl();
 		expectedWord.setCompositeWord(result);
-		expectedWord.setWrong();
+		assertFalse(wordChecker.isCorrectWord(attempt));
 		assertEquals(expectedWord, wordChecker.computeAttemptResult(attempt));
 		
 		attempt = new AttemptImpl("cappa", "frodi");
@@ -56,7 +56,7 @@ public class TestWordChecker {
 		
 		expectedWord = new MiniGameWordImpl();
 		expectedWord.setCompositeWord(result);
-		expectedWord.setWrong();
+		assertFalse(wordChecker.isCorrectWord(attempt));
 		assertEquals(expectedWord, wordChecker.computeAttemptResult(attempt));
 		
 		attempt = new AttemptImpl("gatto", "gatto");
@@ -67,7 +67,7 @@ public class TestWordChecker {
 				new Pair<>('o', Result.CORRECT)));
 		expectedWord = new MiniGameWordImpl();
 		expectedWord.setCompositeWord(result);
-		expectedWord.setCorrect();
+		assertTrue(wordChecker.isCorrectWord(attempt));
 		assertEquals(expectedWord, wordChecker.computeAttemptResult(attempt));
 	}
 }
