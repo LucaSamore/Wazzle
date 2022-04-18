@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 import wazzle.model.common.Dictionary;
 import wazzle.model.common.DictionaryImpl;
 
-public final class FiveWordDictionary extends FilteredDictionary{
+public final class FiveLetterDictionary extends FilteredDictionary{
 
-	public FiveWordDictionary(Dictionary dictionary) {
+	public FiveLetterDictionary(Dictionary dictionary) {
 		super(dictionary);
 	}
 

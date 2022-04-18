@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import wazzle.model.common.Dictionary;
 import wazzle.model.common.DictionaryImpl;
-import wazzle.model.minigame.FiveWordDictionary;
+import wazzle.model.minigame.FiveLetterDictionary;
 
 public class TestFilteredDictionary {
 	
@@ -22,7 +22,7 @@ public class TestFilteredDictionary {
 		Set<String> targetSet = new HashSet<>();
 		targetSet.add("AAAAA");
 		
-		Dictionary filteredDictionary = new FiveWordDictionary(new DictionaryImpl(TestReader.readDataset("testDictionary.txt")));
+		Dictionary filteredDictionary = new FiveLetterDictionary(new DictionaryImpl(TestReader.readDataset("testDictionary.txt")));
 		assertEquals(filteredDictionary.getWords(), targetSet);
 	};
 }
