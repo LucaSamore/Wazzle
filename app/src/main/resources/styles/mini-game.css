@@ -1,0 +1,89 @@
+
+@font-face {
+    src: url("../fonts/Waffle_Crisp.ttf");
+    
+}
+
+.gridBackground{
+	-fx-background-image: url('../../img/Sfondo.png');
+	-fx-background-size: stretch;
+	
+}
+
+.letters{
+		-fx-font-family: "Waffle Crisp";
+}
+
+.incave{
+	-fx-background-image: url("../../img/incavo.png");
+	-fx-background-size: stretch;
+	}
+
+.rootBackground{
+	-fx-background-color: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #55c5fc , #92dff3);
+}
+
+.orangeButton:hover{
+	-fx-border-width:2.0px;
+	-fx-background-color: #fff;
+	-fx-background-radius:30.0px;
+	-fx-border-color: #faac1b;
+	-fx-text-fill: #faac1b;
+	-fx-border-radius:30.0px;
+
+}
+
+
+.orangeButton{
+	-fx-border-width:2.0px;
+	-fx-background-radius:30.0px;
+	-fx-border-radius:30.0px;
+	-fx-border-color: #faac1b;
+	-fx-font-family: "Waffle Crisp";
+	-fx-background-color: #faac1b;
+	-fx-text-fill: white;
+	
+
+}
+
+.redButton:hover{
+	-fx-border-width:2.0px;
+	-fx-background-color: #fff;
+	-fx-background-radius:30.0px;
+	-fx-border-color: red;
+	-fx-text-fill: red;
+	-fx-border-radius:30.0px;
+
+}
+
+
+.redButton{
+	-fx-border-width:2.0px;
+	-fx-background-radius:30.0px;
+	-fx-border-radius:30.0px;
+	-fx-border-color: red;
+	-fx-font-family: "Waffle Crisp";
+	-fx-background-color: red;
+	-fx-text-fill: white;
+}
+
+.greenButton:hover{
+	-fx-border-width:2.0px;
+	-fx-background-color: #fff;
+	-fx-background-radius:30.0px;
+	-fx-border-color: #32cd32;
+	-fx-text-fill: #32cd32;
+	-fx-border-radius:30.0px;
+
+}
+
+
+.greenButton{
+	-fx-border-width:2.0px;
+	-fx-background-radius:30.0px;
+	-fx-border-radius:30.0px;
+	-fx-border-color: #32cd32;
+	-fx-font-family: "Waffle Crisp";
+	-fx-background-color: #32cd32;
+	-fx-text-fill: white;
+}
