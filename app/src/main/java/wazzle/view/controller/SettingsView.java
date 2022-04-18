@@ -1,6 +1,7 @@
 package wazzle.view.controller;
 
 import java.io.IOException;
+
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -94,9 +95,10 @@ public final class SettingsView {
 			this.wazzleController.getSettingsController().updateSettings(
 					this.wazzleController.getSettingsController().getAllDifficulties().get(difficultySelectorCBox.getValue()).get(sliderValue),
 					sliderValue);
+			this.wazzleController.saveSettings();
 		}
 		this.stage.setUserData(this.wazzleController);
-		SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), "layouts/MainMenu.fxml");
+		SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), "layouts/mainMenu.fxml");
 	}
 
 }

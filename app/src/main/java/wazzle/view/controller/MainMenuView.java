@@ -53,6 +53,9 @@ public final class MainMenuView {
 	private static final double ZERO_ONE = 0.1;
 	private static final double ZERO_FOUR = 0.4;
 	private static final double ZERO_FIVE = 0.5;
+	private static final String LOADING_SCREEN_PATH = "layouts/LoadingScreen.fxml";
+	private static final String SETTINGS_PATH = "layouts/SettingPage.fxml";
+	private static final String GAME_HISTORY_PATH = "layouts/history.fxml";
 	private Stage stage;
 	private DoubleProperty visualUnit;
 	private StringExpression titleFontSize;
@@ -112,15 +115,17 @@ public final class MainMenuView {
 
 		case "startMainGameButton":
 			this.stage.setUserData(new MainGameControllerImpl(this.wazzleController));
-			SceneSwitcher.<LoadingView>switchScene(event, new LoadingView(this.stage), "layouts/LoadingScreen.fxml");
+			SceneSwitcher.<LoadingView>switchScene(event, new LoadingView(this.stage), LOADING_SCREEN_PATH);
 			break;
 		
 		case "gameHistoryButton":
+			this.stage.setUserData(this.wazzleController);
+			SceneSwitcher.<HistoryView>switchScene(event, new HistoryView(this.stage), GAME_HISTORY_PATH);
 			break;
 
 		case "settingsButton":
 			this.stage.setUserData(this.wazzleController);
-			SceneSwitcher.<SettingsView>switchScene(event, new SettingsView(this.stage), "layouts/SettingPage.fxml");
+			SceneSwitcher.<SettingsView>switchScene(event, new SettingsView(this.stage), SETTINGS_PATH);
 			break;
 			
 		case "exitButton":

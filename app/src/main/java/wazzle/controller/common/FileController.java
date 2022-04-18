@@ -6,6 +6,7 @@ import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.util.List;
 
+import wazzle.controller.maingame.Settings;
 import wazzle.model.common.BonusManager;
 import wazzle.model.common.BonusManagerImpl;
 import wazzle.model.common.Dictionary;
@@ -17,13 +18,13 @@ public interface FileController {
 	
 	Dictionary getDataset(final String fileName) throws IOException;
 	
-	void saveGames(final String fileName, final List<MainGame> games) throws IOException;
+	void saveGames(final String fileName, final List<MainGameImpl> games) throws IOException;
 	
 	//void saveGames(final String fileName, List<MiniGame> games);
 	
 	void saveBonuses(final String fileName, final BonusManager bonuses) throws IOException;
 	
-	//void saveSettings(final String fileName, Settings settings);
+	void saveSettings(final String fileName, Settings settings) throws IOException;
 	
 	List<MainGameImpl> getMainGameHistory(final String fileName) throws IOException;
 	
@@ -31,7 +32,7 @@ public interface FileController {
 	
 	BonusManagerImpl getBonuses(final String fileName) throws IOException;
 	
-	//Settings getSettings(final String fileName) throws IOException;
+	Settings getSettings(final String fileName) throws IOException;
 	
 	default void create(final String fullPath) throws IOException {
 		Files.createFile(Path.of(fullPath));

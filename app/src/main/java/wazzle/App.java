@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.geometry.Rectangle2D;
 
 public final class App extends Application {
@@ -35,6 +36,7 @@ public final class App extends Application {
 			Scene scene = new Scene(Loader.<MainMenuView, Parent>loadFXMLElement(mainMenuController, "layouts/mainMenu.fxml"), 
 							screenViewport.getWidth()*0.75, screenViewport.getHeight()*0.75);
 			stage.setScene(scene);
+			stage.getIcons().add(new Image("img/wazzle-icon.jpeg"));
 			stage.show();
 			visualUnit.bind(Bindings.min(stage.widthProperty(),stage.heightProperty()));
 			WindowCloser.onExit(stage);

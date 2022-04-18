@@ -1,5 +1,6 @@
 package wazzle.controller.common;
 
+import java.io.IOException;
 import java.util.List;
 
 import wazzle.controller.maingame.GameHistoryController;
@@ -78,6 +79,27 @@ public interface WazzleController {
 	 * @param Settings The settings.
 	 */
 	void updateSettings(final Settings settings);
+	
+	/**
+	 * Save settings to file.
+	 * 
+	 * @throws IOException 
+	 */
+	void saveSettings() throws IOException;
+	
+	/**
+	 * Save game history to file.
+	 * 
+	 * @throws IOException 
+	 */
+	void saveGameHistory() throws IOException;
+	
+	/**
+	 * Save bonuses to file.
+	 * 
+	 * @throws IOException 
+	 */
+	void saveBonuses() throws IOException;
 	
 	/**
 	 * Gives this Wazzle controller.

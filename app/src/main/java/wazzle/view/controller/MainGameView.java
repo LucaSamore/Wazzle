@@ -16,6 +16,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -30,6 +32,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import wazzle.controller.maingame.MainGameController;
+import wazzle.view.Loader;
 import wazzle.view.SceneSwitcher;
 
 public final class MainGameView {
@@ -90,6 +93,8 @@ public final class MainGameView {
 	@FXML
 	private HBox wrapperRightPane;
 
+	private static final String STATISTICS_MAIN_GAME_PATH = "layouts/statisticsMainGame.fxml";
+	
 	private final Stage stage;
 	private final StringExpression standardFontSize;
 	private final StringExpression letterFontSize;
@@ -102,13 +107,16 @@ public final class MainGameView {
 	private Pair<Integer,Integer> lastVisitedPosition;
 	private final MainGameController controller;
 	private AnimationTimer animationTimer;
+	
+	private Set<String> suggestedWords;
 
 	public MainGameView(final Stage stage) {
 		this.stage = stage;
 		this.controller = (MainGameController)stage.getUserData();
 		this.alreadyVisitedCells = new HashSet<>();
+		this.suggestedWords = new HashSet<>();
 		this.visualUnit = new SimpleDoubleProperty();
-		this.visualUnit.bind(Bindings.min(stage.heightProperty().multiply(0.05), stage.widthProperty().multiply(0.05)));
+		this.visualUnit.bind(Bindings.min(stage.heightProperty().multiply(0.045), stage.widthProperty().multiply(0.045)));
 		this.standardFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.asString(), ";");
 		this.letterFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(1.5).asString(), ";");
 		this.pointFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(0.5).asString(), ";");
@@ -136,11 +144,20 @@ public final class MainGameView {
 						
 						if(timeRemaining <= 0) {
 							animationTimer.stop();
+							saveGame();
 							stage.setUserData(controller);
 							DoubleProperty visualUnit = new SimpleDoubleProperty();
 							visualUnit.bind(Bindings.min(stage.widthProperty(),stage.heightProperty()));
-							//TODO: instance a statistics controller and a scene
-							//TODO: switch scene to statistics controller
+							StatisticsMainGameView controller = new StatisticsMainGameView(stage);
+							final Scene scene;
+							try {
+								scene = new Scene(Loader.<StatisticsMainGameView, Parent>loadFXMLElement(controller, STATISTICS_MAIN_GAME_PATH), 
+												stage.getWidth()*0.75, stage.getHeight()*0.75);
+								stage.setScene(scene);
+								stage.show();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
 						}
 					}
 				});
@@ -162,6 +179,7 @@ public final class MainGameView {
 		if (result.isPresent() && result.get().equals(confirm)) {
 			this.animationTimer.stop();
 			this.controller.stopTimer();
+			this.controller.getMainController().saveBonuses();
 			this.stage.setUserData(this.controller.getMainController());
 			SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), "layouts/mainMenu.fxml");
 		}
@@ -180,7 +198,8 @@ public final class MainGameView {
 	}
 	
 	public void gainWordBonus(final ActionEvent event) {
-		this.wordSuggestionLabel.setText("Un suggerimento per te " + System.lineSeparator() + String.join(" - ", this.controller.useWordBonus()));
+		this.suggestedWords = this.controller.useWordBonus();
+		this.wordSuggestionLabel.setText("Un suggerimento per te " + System.lineSeparator() + String.join(" - ", this.suggestedWords));
 		((Button) event.getSource()).setDisable(true);
 	}
 	
@@ -227,7 +246,6 @@ public final class MainGameView {
 			.getGrid()
 			.getLetters()
 			.forEach(l -> this.addMainGamePane(l.getPosition(), "" + l.getContent(), "" + "" + (int)(l.getScore()))); //TODO: fix 
-		System.out.println(this.controller.getGame().get().getGrid().getWordsCanBeFound());
 	}
 	
 	private void addMainGamePane(final Pair<Integer,Integer> position, final String letter, final String points) {
@@ -288,12 +306,24 @@ public final class MainGameView {
 			((StackPane) gridPane).getChildren().get(0).styleProperty().bind(this.letterFontSize);
 		});
 		
-		//TODO: finish
+		//TODO: add switch to stats if areWeDone is true 
 		if(this.controller.attempt(this.titleLabel.getText())) {
 			this.pointsValueLabel.setText(""+ (int)this.controller.getGame().get().getCurrentScore());
 			this.titleLabel.styleProperty().bind(this.titleFontSize.concat("-fx-text-fill: green; "));
+			
+			this.suggestedWords.remove(this.titleLabel.getText());
+			this.wordSuggestionLabel.setText("Un suggerimento per te " + System.lineSeparator() + String.join(" - ", this.suggestedWords));
+			
+			if(this.suggestedWords.isEmpty()) {
+				this.wordSuggestionLabel.setText("");
+			}
+
+			
 		} else {
 			this.titleLabel.styleProperty().bind(this.titleFontSize.concat("-fx-text-fill: red; "));
+			if(this.controller.needHelp() && !this.bonusWordButton.isDisable()) {
+				this.wordSuggestionLabel.setText("Se stai facendo schifo al gioco usa il bonus delle parole :)");
+			}
 		}
 	}
 	
@@ -328,4 +358,14 @@ public final class MainGameView {
 		this.visitCell(position);
 	}
 	
+	private void saveGame() {
+		this.controller.getMainController().addMainGametoHistory(this.controller.getGame().get());
+		try {
+			this.controller.getMainController().saveGameHistory();
+			this.controller.getMainController().saveBonuses();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

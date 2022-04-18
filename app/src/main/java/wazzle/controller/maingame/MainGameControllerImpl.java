@@ -23,7 +23,6 @@ public final class MainGameControllerImpl implements MainGameController {
 		this.mainController = mainController.getThis();
 		this.game = Optional.empty();
 		this.timeRemaining = (int) mainController.getSettings().getCurrentDifficulty().getTimeInMilliseconds() / 1000;
-		//this.timeRemaining = 15;
 	}
 	
 	@Override
@@ -127,7 +126,6 @@ public final class MainGameControllerImpl implements MainGameController {
 				
 				if(timeRemaining <= 0) {
 					this.cancel();
-					System.out.println("task stoppato");
 					return;
 				}
 			}
