@@ -6,8 +6,8 @@ public class AttemptImpl implements Attempt {
 	private String guessedWord;
 
 	public AttemptImpl(String targetWord, String guessedWord) {
-		this.targetWord = new String(targetWord);
-		this.guessedWord = new String(guessedWord);
+		this.targetWord = targetWord;
+		this.guessedWord = guessedWord;
 	}
 
 	@Override
