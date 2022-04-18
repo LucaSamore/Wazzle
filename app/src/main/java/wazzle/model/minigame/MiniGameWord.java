@@ -10,10 +10,4 @@ public interface MiniGameWord {
 
 	public void setCompositeWord(List<Pair<Character, Result>> compositeWord);
 
-	public boolean isCorrect();
-
-	public void setCorrect();
-	
-	public void setWrong();
-
 }

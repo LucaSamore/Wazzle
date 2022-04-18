@@ -8,6 +8,7 @@ import javafx.util.Pair;
 public class MiniGameWordImpl implements MiniGameWord {
 	private List<Pair<Character, Result>> compositeWord;
 	private boolean isTheCorrectWord;
+
 	public MiniGameWordImpl() {
 	}
 
@@ -48,21 +49,4 @@ public class MiniGameWordImpl implements MiniGameWord {
 	public void setCompositeWord(List<Pair<Character, Result>> compositeWord) {
 		this.compositeWord = compositeWord;
 	}
-	
-	@Override
-	public void setCorrect() {
-		this.isTheCorrectWord = true;
-	}
-	
-	@Override
-	public void setWrong() {
-		this.isTheCorrectWord = false;
-	}
-	
-	@Override
-	public boolean isCorrect() {
-		return this.isTheCorrectWord;
-	} 
-	
-
 }
