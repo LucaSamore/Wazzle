@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 import wazzle.controller.common.WazzleControllerImpl;
 import wazzle.view.FXMLFiles;
 import wazzle.view.Loader;
-import wazzle.view.WindowCloser;
 import wazzle.view.controller.MainMenuView;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -40,7 +39,6 @@ public final class App extends Application {
 			stage.getIcons().add(new Image("img/wazzle-icon.jpeg"));
 			stage.show();
 			visualUnit.bind(Bindings.min(stage.widthProperty(),stage.heightProperty()));
-			//WindowCloser.onExit(stage);
 		} catch (IOException e) {
 			e.printStackTrace();
 			Alert alert = new Alert(AlertType.NONE);
