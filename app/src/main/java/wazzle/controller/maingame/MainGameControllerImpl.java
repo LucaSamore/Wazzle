@@ -20,13 +20,12 @@ public final class MainGameControllerImpl implements MainGameController {
 	public MainGameControllerImpl(final WazzleController mainController) {
 		this.mainController = mainController.getThis();
 		this.game = Optional.empty();
-//		this.timer = new GameTimerImpl(
-//			      (long) this.mainController
-//			        .getSettings()
-//			        .getCurrentDifficulty()
-//			        .getTimeInMilliseconds() / 1000
-//			      );
-		this.timer = new GameTimerImpl((long) 15);
+		this.timer = new GameTimerImpl(
+			      (long) this.mainController
+			        .getSettings()
+			        .getCurrentDifficulty()
+			        .getTimeInMilliseconds() / 1000
+			      );
 	}
 	
 	@Override
