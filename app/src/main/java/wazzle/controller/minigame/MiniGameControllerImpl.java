@@ -46,4 +46,14 @@ public class MiniGameControllerImpl implements MiniGameController {
 		return currentMinigame.computeResult();
 	}
 	
+	@Override
+	public int getCurrentAttemptsNumber() {
+		return currentMinigame.getCurrentAttemptsNumber();
+	}
+
+	@Override
+	public String getTargetWord() {
+		return currentMinigame.getTargetWord();
+	}
+	
 }

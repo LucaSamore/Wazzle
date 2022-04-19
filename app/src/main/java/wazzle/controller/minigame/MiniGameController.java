@@ -11,4 +11,8 @@ public interface MiniGameController {
 
 	MiniGameWord computeDifferencies();
 
+	int getCurrentAttemptsNumber();
+
+	public String getTargetWord();
+
 }
