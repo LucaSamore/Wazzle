@@ -13,7 +13,7 @@ public class ComparatorImpl implements Comparator {
 	private Set<String> availableWords;
 
 	public ComparatorImpl(final Dictionary dictionary) {
-		this.availableWords = new HashSet<>(dictionary.getWords());
+		this.availableWords = new HashSet<>(new FiveLetterDictionary(dictionary).getWords());
 	}
 
 	private String pickRandomWord() {
