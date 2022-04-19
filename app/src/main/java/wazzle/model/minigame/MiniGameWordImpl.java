@@ -7,19 +7,18 @@ import javafx.util.Pair;
 
 public class MiniGameWordImpl implements MiniGameWord {
 	private List<Pair<Character, Result>> compositeWord;
-	private boolean isTheCorrectWord;
 
 	public MiniGameWordImpl() {
 	}
 
 	@Override
 	public String toString() {
-		return "MiniGameWordImpl [compositeWord=" + compositeWord + ", isTheCorrectWord=" + isTheCorrectWord + "]";
+		return "MiniGameWordImpl [compositeWord=" + compositeWord + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(compositeWord, isTheCorrectWord);
+		return Objects.hash(compositeWord);
 	}
 
 	@Override
@@ -31,7 +30,7 @@ public class MiniGameWordImpl implements MiniGameWord {
 		if (getClass() != obj.getClass())
 			return false;
 		MiniGameWordImpl other = (MiniGameWordImpl) obj;
-		return Objects.equals(compositeWord, other.compositeWord) && isTheCorrectWord == other.isTheCorrectWord;
+		return Objects.equals(compositeWord, other.compositeWord);
 	}
 
 	/**
