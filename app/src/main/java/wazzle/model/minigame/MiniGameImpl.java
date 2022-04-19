@@ -2,41 +2,81 @@ package wazzle.model.minigame;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
-
-import javafx.util.Pair;
-import wazzle.controller.common.WazzleController;
-import wazzle.controller.common.WazzleControllerImpl;
+import java.util.LinkedList;
+import java.util.Optional;
 
 public class MiniGameImpl implements MiniGame {
 
 //	private int tentativesLeft;
 	private String targetWord;
-	private List<MiniGameWord> guessedWords;
+	private LinkedList<MiniGameWord> guessedWords;
 	private LocalDateTime gameStarTimeDate;
 	private WordChecker wordChecker;
+	private AttemptImpl currentAttempt;
+//	private Optional<SavedMiniGame> savedMiniGame = Optional.empty();
 
+//	/**
+//	 * nested class for the memento pattern (Snapshot/memento)
+//	 */
+//	class SavedMiniGame {
+//		private final String savedTargetWord;
+//		private final LinkedList<MiniGameWord> savedGuessedWords;
+//		private final LocalDateTime savedGameStarTimeDate;
+//		private final AttemptImpl savedCurrentAttempt;
+//
+//		private SavedMiniGame(String targetWord, LinkedList<MiniGameWord> guessedWords, LocalDateTime gameStarTimeDate,
+//				AttemptImpl currentAttempt) {
+//			this.savedGameStarTimeDate = gameStarTimeDate;
+//			this.savedGuessedWords = guessedWords;
+//			this.savedTargetWord = targetWord;
+//			this.savedCurrentAttempt = currentAttempt;
+//		}
+//
+//		private void restorePreviousGame() {
+//			MiniGameImpl.this.gameStarTimeDate = this.savedGameStarTimeDate;
+//			MiniGameImpl.this.guessedWords = this.savedGuessedWords;
+//			MiniGameImpl.this.targetWord = this.savedTargetWord;
+//			MiniGameImpl.this.currentAttempt = this.savedCurrentAttempt;
+//		}
+//	}
+//	
+//		//END OF INNER CLASS//
+	
 	public MiniGameImpl() {
 		this.wordChecker = new WordCheckerImpl();
+		this.guessedWords = new LinkedList<MiniGameWord>();
+		try {
+			this.targetWord = new WordsDispenserImpl().getSuitableWord();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(targetWord);
 	}
 
-	@Override
-	public void saveMiniGame() {
-		// TODO crea il memento
-	}
+//	@Override
+//	public Optional<SavedMiniGame> takeSnapshot(String targetWord, LinkedList<MiniGameWord> guessedWords, LocalDateTime gameStarTimeDate,
+//			AttemptImpl currentAttempt) {
+//		return Optional.of(new SavedMiniGame(targetWord, guessedWords, gameStarTimeDate, currentAttempt));
+//	}
 
 	@Override
-	public void loadMiniGame() {
-		// TODO setta questa classe uguale al memento
+	public boolean loadMiniGame() {
+//		if (savedMiniGame.isPresent()) {
+//			this.savedMiniGame.ifPresent(SavedMiniGame::restorePreviousGame);
+//			return true;
+//		}
+		return false;
 	}
 
-	@Override
-	public MiniGameImpl createNewMiniGame() throws IOException {
-		this.targetWord = new WordsDispenserImpl().getSuitableWord();
-		this.gameStarTimeDate = LocalDateTime.now();
-		return this;
-	}
+//	@Override
+//	public MiniGameImpl createNewMiniGame() throws IOException {
+////		this.targetWord = new WordsDispenserImpl().getSuitableWord();
+////		this.gameStarTimeDate = LocalDateTime.now();
+////		this.guessedWords = new LinkedList<MiniGameWord>();
+////		this.savedMiniGame = Optional.empty();
+//		return this;
+//	}
 
 	@Override
 	public String getTargetWord() {
@@ -45,34 +85,23 @@ public class MiniGameImpl implements MiniGame {
 
 	@Override
 	public boolean isWordCorrect(String guessedWord) {
-		return this.targetWord.equals(guessedWord);
+		this.currentAttempt = new AttemptImpl(this.getTargetWord(), guessedWord);
+		return this.wordChecker.isCorrectWord(this.currentAttempt);
 	}
 
 	private void addGuessedWord(MiniGameWord wrongWord) {
 		this.guessedWords.add(wrongWord);
 	}
-	
-//
-//	@Override
-//	public List<MiniGameWordAttempt> getAllGuessedWords() {
-//		return this.guessedWords;
-//	}
 
 	@Override
 	public LocalDateTime getGameStarTimeDate() {
 		return gameStarTimeDate;
 	}
 
-//	@Override
-//	public MiniGameWordAttempt getLastGuessedWord() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-
 	@Override
-	public MiniGameWord guess(String guessedWord) {
-		Attempt attempt= new AttemptImpl(guessedWord, this.targetWord);
-		return this.wordChecker.computeAttemptResult(attempt);
+	public MiniGameWord computeResult() {
+		this.addGuessedWord(this.wordChecker.computeAttemptResult(this.currentAttempt));
+		return guessedWords.getLast();
 	}
 
 }
