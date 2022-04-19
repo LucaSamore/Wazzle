@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import wazzle.controller.common.WazzleControllerImpl;
 import wazzle.controller.maingame.MainGameController;
 import wazzle.controller.maingame.MainGameControllerImpl;
+import wazzle.view.FXMLFiles;
 import wazzle.view.SceneSwitcher;
 import wazzle.view.WindowCloser;
 
@@ -66,8 +67,6 @@ public class StatisticsMainGameView {
 	@FXML
 	private Label mostValuableWordValueLabel;
 
-	private final static String LOADING_PATH = "layouts/LoadingScreen.fxml";
-	private final static String MAIN_MENU_PATH = "layouts/mainMenu.fxml";
 	private Stage stage;
 	private DoubleProperty visualUnit;
 	private MainGameController mainGameController;
@@ -121,12 +120,12 @@ public class StatisticsMainGameView {
 
 		case "exitButton":
 			this.stage.setUserData(new WazzleControllerImpl());
-			SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), MAIN_MENU_PATH);
+			SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), FXMLFiles.MAIN_MENU.getPath());
 			break;
 
 		case "playAgainButton":
 			this.stage.setUserData(new MainGameControllerImpl(this.mainGameController.getMainController()));
-			SceneSwitcher.<LoadingView>switchScene(event, new LoadingView(this.stage), LOADING_PATH);
+			SceneSwitcher.<LoadingView>switchScene(event, new LoadingView(this.stage), FXMLFiles.LOADING_SCREEN.getPath());
 			break;
 
 		default:

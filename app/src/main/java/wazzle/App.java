@@ -12,6 +12,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import wazzle.controller.common.WazzleControllerImpl;
+import wazzle.view.FXMLFiles;
 import wazzle.view.Loader;
 import wazzle.view.WindowCloser;
 import wazzle.view.controller.MainMenuView;
@@ -33,7 +34,7 @@ public final class App extends Application {
 			DoubleProperty visualUnit = new SimpleDoubleProperty();
 			visualUnit.set(Math.min(screenViewport.getWidth()*0.75, screenViewport.getHeight()*0.75));
 			mainMenuController = new MainMenuView(stage, visualUnit);
-			Scene scene = new Scene(Loader.<MainMenuView, Parent>loadFXMLElement(mainMenuController, "layouts/mainMenu.fxml"), 
+			Scene scene = new Scene(Loader.<MainMenuView, Parent>loadFXMLElement(mainMenuController, FXMLFiles.MAIN_MENU.getPath()), 
 							screenViewport.getWidth()*0.75, screenViewport.getHeight()*0.75);
 			stage.setScene(scene);
 			stage.getIcons().add(new Image("img/wazzle-icon.jpeg"));

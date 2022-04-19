@@ -32,6 +32,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import wazzle.controller.maingame.MainGameController;
+import wazzle.view.FXMLFiles;
 import wazzle.view.Loader;
 import wazzle.view.SceneSwitcher;
 
@@ -92,8 +93,6 @@ public final class MainGameView {
 	
 	@FXML
 	private HBox wrapperRightPane;
-
-	private static final String STATISTICS_MAIN_GAME_PATH = "layouts/statisticsMainGame.fxml";
 	
 	private final Stage stage;
 	private final StringExpression standardFontSize;
@@ -151,7 +150,7 @@ public final class MainGameView {
 							StatisticsMainGameView controller = new StatisticsMainGameView(stage);
 							final Scene scene;
 							try {
-								scene = new Scene(Loader.<StatisticsMainGameView, Parent>loadFXMLElement(controller, STATISTICS_MAIN_GAME_PATH), 
+								scene = new Scene(Loader.<StatisticsMainGameView, Parent>loadFXMLElement(controller, FXMLFiles.MAIN_GAME_STATS.getPath()), 
 												stage.getWidth()*0.75, stage.getHeight()*0.75);
 								stage.setScene(scene);
 								stage.show();
@@ -181,7 +180,7 @@ public final class MainGameView {
 			this.controller.stopTimer();
 			this.controller.getMainController().saveBonuses();
 			this.stage.setUserData(this.controller.getMainController());
-			SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), "layouts/mainMenu.fxml");
+			SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), FXMLFiles.MAIN_MENU.getPath());
 		}
 	}
 

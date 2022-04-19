@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import wazzle.controller.common.WazzleController;
 import wazzle.controller.common.WazzleControllerImpl;
+import wazzle.view.FXMLFiles;
 import wazzle.view.SceneSwitcher;
 
 public final class SettingsView {
@@ -98,7 +99,7 @@ public final class SettingsView {
 			this.wazzleController.saveSettings();
 		}
 		this.stage.setUserData(this.wazzleController);
-		SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), "layouts/mainMenu.fxml");
+		SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), FXMLFiles.MAIN_MENU.getPath());
 	}
 
 }

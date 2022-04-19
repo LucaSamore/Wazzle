@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import wazzle.controller.common.WazzleController;
 import wazzle.controller.maingame.MainGameControllerImpl;
+import wazzle.view.FXMLFiles;
 import wazzle.view.SceneSwitcher;
 
 public final class MainMenuView {
@@ -53,9 +54,6 @@ public final class MainMenuView {
 	private static final double ZERO_ONE = 0.1;
 	private static final double ZERO_FOUR = 0.4;
 	private static final double ZERO_FIVE = 0.5;
-	private static final String LOADING_SCREEN_PATH = "layouts/LoadingScreen.fxml";
-	private static final String SETTINGS_PATH = "layouts/SettingPage.fxml";
-	private static final String GAME_HISTORY_PATH = "layouts/history.fxml";
 	private Stage stage;
 	private DoubleProperty visualUnit;
 	private StringExpression titleFontSize;
@@ -115,17 +113,17 @@ public final class MainMenuView {
 
 		case "startMainGameButton":
 			this.stage.setUserData(new MainGameControllerImpl(this.wazzleController));
-			SceneSwitcher.<LoadingView>switchScene(event, new LoadingView(this.stage), LOADING_SCREEN_PATH);
+			SceneSwitcher.<LoadingView>switchScene(event, new LoadingView(this.stage), FXMLFiles.LOADING_SCREEN.getPath());
 			break;
 		
 		case "gameHistoryButton":
 			this.stage.setUserData(this.wazzleController);
-			SceneSwitcher.<HistoryView>switchScene(event, new HistoryView(this.stage), GAME_HISTORY_PATH);
+			SceneSwitcher.<HistoryView>switchScene(event, new HistoryView(this.stage), FXMLFiles.HISTORY.getPath());
 			break;
 
 		case "settingsButton":
 			this.stage.setUserData(this.wazzleController);
-			SceneSwitcher.<SettingsView>switchScene(event, new SettingsView(this.stage), SETTINGS_PATH);
+			SceneSwitcher.<SettingsView>switchScene(event, new SettingsView(this.stage), FXMLFiles.SETTINGS.getPath());
 			break;
 			
 		case "exitButton":

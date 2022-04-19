@@ -25,7 +25,9 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.Pair;
+import wazzle.controller.common.WazzleFiles;
 import wazzle.controller.maingame.MainGameController;
+import wazzle.view.FXMLFiles;
 import wazzle.view.Loader;
 
 public class LoadingView {
@@ -45,9 +47,7 @@ public class LoadingView {
 	@FXML
 	private Label loadingLabel;
 	
-	private static final String DATASET_NAME = "dataset.txt";
 	private static final String IMAGE_PATH = "img/WaffleLoadingScreen.png";
-	private static final String NEXT_SCENE_FXML = "layouts/MainGame.fxml";
 	
 	private AnimationTimer animationTimer;
 	private DoubleProperty visualUnit;
@@ -96,7 +96,7 @@ public class LoadingView {
 				mainGameController.startNewGame(mainGameController
 						.getMainController()
 						.getFileController()
-						.getDataset(DATASET_NAME), new Pair<Integer,Integer>(shape,shape), mainGameController.getMainController().getSettings().getCurrentDifficulty());
+						.getDataset(WazzleFiles.DATASET.getFileName()), new Pair<Integer,Integer>(shape,shape), mainGameController.getMainController().getSettings().getCurrentDifficulty());
 				
 				
 				flag = true;
@@ -164,7 +164,7 @@ public class LoadingView {
 	}
 
 	public void goToMainGame(Stage stage) throws IOException {
-		Parent element = Loader.<MainGameView,Parent>loadFXMLElement(new MainGameView(stage), NEXT_SCENE_FXML);
+		Parent element = Loader.<MainGameView,Parent>loadFXMLElement(new MainGameView(stage), FXMLFiles.MAIN_GAME.getPath());
 		Scene scene = new Scene(element, stage.getScene().getWidth(), stage.getScene().getHeight());
 		stage.setUserData(this.mainGameController);
 		stage.setScene(scene);

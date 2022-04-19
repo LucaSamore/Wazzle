@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import wazzle.controller.common.WazzleController;
 import wazzle.model.maingame.MainGame;
+import wazzle.view.FXMLFiles;
 import wazzle.view.SceneSwitcher;
 
 public class HistoryView {
@@ -40,8 +41,6 @@ public class HistoryView {
 	private final StringExpression headerFontSize;
 	private final StringExpression titleFontSize;
 	private final WazzleController wazzleController;
-
-	private static final String MAIN_MENU_PATH = "layouts/mainMenu.fxml";
 	
 	public HistoryView(Stage stage) {
 		this.stage = stage;
@@ -110,7 +109,7 @@ public class HistoryView {
 
 	public void goToScene(final ActionEvent event) throws IOException {
 		this.stage.setUserData(this.wazzleController);
-		SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), MAIN_MENU_PATH);
+		SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), FXMLFiles.MAIN_MENU.getPath());
 	}
 
 }
