@@ -259,8 +259,8 @@ public class MiniGameView {
 				this.currentWord = "";
 				for (int i = 0; i < NUM_COLS; i++) {
 					removeGridElement(i, this.currentRowIndex);
-					addMiniGamePane(word.getCompositeWord().get(i).getKey().toString(), i, this.currentRowIndex,
-							word.getCompositeWord().get(i).getValue().getColor());
+					addMiniGamePane("" + word.getCompositeWord().get(i).getCharacter(), i, this.currentRowIndex,
+							word.getCompositeWord().get(i).getResult());
 				}
 				this.currentRowIndex++;
 				if (this.currentRowIndex == NUM_ROWS) {
