@@ -6,7 +6,7 @@ import java.util.Objects;
 import javafx.util.Pair;
 
 public class MiniGameWordImpl implements MiniGameWord {
-	private List<Pair<Character, Result>> compositeWord;
+	private List<WordElement> compositeWord;
 
 	public MiniGameWordImpl() {
 	}
@@ -37,15 +37,15 @@ public class MiniGameWordImpl implements MiniGameWord {
 	 * @return the compositeWord
 	 */
 	@Override
-	public List<Pair<Character, Result>> getCompositeWord() {
-		return compositeWord;
+	public List<WordElement> getCompositeWord() {
+		return List.copyOf(this.compositeWord);
 	}
 
 	/**
 	 * @param compositeWord the compositeWord to set
 	 */
 	@Override
-	public void setCompositeWord(List<Pair<Character, Result>> compositeWord) {
+	public void setCompositeWord(List<WordElement> compositeWord) {
 		this.compositeWord = compositeWord;
 	}
 }

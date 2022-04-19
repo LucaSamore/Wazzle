@@ -16,16 +16,16 @@ public class WordCheckerImpl implements WordChecker {
 	public MiniGameWord computeAttemptResult(final Attempt attempt) {
 		MiniGameWord word = new MiniGameWordImpl();
 
-		List<Pair<Character, Result>> result = new ArrayList<>();
+		List<WordElement> result = new ArrayList<>();
 
 		IntStream.range(0, attempt.getTargetWord().length()).boxed().forEach(i -> {
 			if (attempt.getGuessedWord().charAt(i) == attempt.getTargetWord().charAt(i)) {
-				result.add(new Pair<>(attempt.getGuessedWord().charAt(i), Result.CORRECT));
+				result.add(new WordElement(attempt.getGuessedWord().charAt(i), Result.CORRECT.getState()));
 			} else if (attempt.getTargetWord().chars().boxed().collect(Collectors.toList())
 					.contains(attempt.getGuessedWord().codePointAt(i))) {
-				result.add(new Pair<>(attempt.getGuessedWord().charAt(i), Result.CORRECT_WRONG_PLACE));
+				result.add(new WordElement(attempt.getGuessedWord().charAt(i), Result.CORRECT_WRONG_PLACE.getState()));
 			} else {
-				result.add(new Pair<>(attempt.getGuessedWord().charAt(i), Result.WRONG));
+				result.add(new WordElement(attempt.getGuessedWord().charAt(i), Result.WRONG.getState()));
 			}
 		});
 		word.setCompositeWord(result);

@@ -6,8 +6,8 @@ import javafx.util.Pair;
 
 public interface MiniGameWord {
 
-	public List<Pair<Character, Result>> getCompositeWord();
+	public List<WordElement> getCompositeWord();
 
-	public void setCompositeWord(List<Pair<Character, Result>> compositeWord);
+	public void setCompositeWord(List<WordElement> result);
 
 }
