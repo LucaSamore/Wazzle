@@ -10,7 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public interface Serializer {
-	static Supplier<Gson> gson() {
+	default Supplier<Gson> serializationGson() {
 		return () -> new GsonBuilder()
 				.setPrettyPrinting()
 				.excludeFieldsWithoutExposeAnnotation()
@@ -20,9 +20,9 @@ public interface Serializer {
 	}
 	
 	@SuppressWarnings("unchecked")
-	static <X> void serialize(final String path, final X... toBeWritten) throws IOException {
+	default <X> void serialize(final String path, final X... toBeWritten) throws IOException {
 		try(final var writer = new FileWriter(path, StandardCharsets.UTF_8)) {
-			gson().get().toJson(toBeWritten, writer);
+			this.serializationGson().get().toJson(toBeWritten, writer);
 			writer.flush();
 			writer.close();
 		}
