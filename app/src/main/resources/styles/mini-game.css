@@ -5,17 +5,17 @@
 }
 
 .gridBackground{
-	-fx-background-image: url('../../img/Sfondo.png');
+	-fx-background-image: url('../img/waffle-background.png');
 	-fx-background-size: stretch;
 	
 }
 
 .letters{
-		-fx-font-family: "Waffle Crisp";
+	-fx-font-family: "Waffle Crisp";
 }
 
 .incave{
-	-fx-background-image: url("../../img/incavo.png");
+	-fx-background-image: url("../img/incave.png");
 	-fx-background-size: stretch;
 	}
 

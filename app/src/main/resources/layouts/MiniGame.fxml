@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane styleClass="rootBackground" stylesheets="@application.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane styleClass="rootBackground" stylesheets="@../styles/mini-game.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox fx:id="mainWrapper" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="@application.css" StackPane.alignment="CENTER">
+      <VBox fx:id="mainWrapper" alignment="CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" StackPane.alignment="CENTER">
          <children>
             <GridPane fx:id="wordsGrid" alignment="CENTER" style="-fx-border-color: red;" styleClass="gridBackground" VBox.vgrow="ALWAYS">
       </GridPane>
@@ -40,7 +40,7 @@
                   <VBox fx:id="buttonWrapper" alignment="CENTER">
                      <children>
                         <Button fx:id="sendWord" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#sendWord" styleClass="greenButton" text="Invia" />
-                        <Button fx:id="deleteButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#sendWord" styleClass="redButton" text="cancella" />
+                        <Button fx:id="deleteButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancelWord" styleClass="redButton" text="cancella" />
                      </children>
                   </VBox>
                </children>

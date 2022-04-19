@@ -2,33 +2,28 @@ package wazzle.view.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
-
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Pair;
+import wazzle.controller.maingame.MainGameController;
+import wazzle.controller.minigame.MiniGameController;
+import wazzle.controller.minigame.MiniGameControllerImpl;
+import wazzle.model.minigame.MiniGameWord;
 
 public class MiniGameView {
 
@@ -51,12 +46,6 @@ public class MiniGameView {
 	private Button deleteButton;
 
 	@FXML
-	private HBox commandsWrapper;
-
-	@FXML
-	private VBox buttonWrapper;
-
-	@FXML
 	private VBox mainWrapper;
 
 	@FXML
@@ -68,15 +57,26 @@ public class MiniGameView {
 	private static final String UPPER_ROW_CHARACTERS = "qwertyuiop";
 	private static final String MIDDLE_ROW_CHARACTERS = "asdfghjkl";
 	private static final String LOWER_ROW_CHARACTERS = "zxcvbnm";
+	private static final int NUM_ROWS = 6;
+	private static final int NUM_COLS = 5;
 
 	private Map<Integer, String> keyboardCharacters;
 	private Map<Integer, GridPane> keyboardKeys;
 
 	private Stage stage;
+
+	private final MiniGameController controller;
 	private DoubleProperty visualUnit;
+	private int currentTypeIndex;
+	private int currentRowIndex;
+	private String currentWord;
 
 	public MiniGameView(Stage stage) {
 		this.stage = stage;
+		this.currentWord = "";
+		this.controller = (MiniGameControllerImpl) stage.getUserData();
+		this.currentTypeIndex = 0;
+		this.currentRowIndex = 0;
 		this.keyboardCharacters = new HashMap<>();
 		this.keyboardCharacters.put(0, UPPER_ROW_CHARACTERS);
 		this.keyboardCharacters.put(1, MIDDLE_ROW_CHARACTERS);
@@ -91,18 +91,26 @@ public class MiniGameView {
 		this.keyboardKeys.put(1, secondRowGrid);
 		this.keyboardKeys.put(2, thirdRowGrid);
 
-		this.stage = stage;
-
 		visualUnit = new SimpleDoubleProperty();
 		visualUnit.bind(Bindings.min(stage.widthProperty().multiply(0.05), stage.heightProperty().multiply(0.05)));
 	}
 
 	public void initialize() {
 
-		populateLettersGrid(6, 5);
+		populateLettersGrid(NUM_ROWS, NUM_COLS);
 		populateKeyboardGrid();
 		setGraphic();
 
+	}
+
+	private Node getNodeByCoords(final int row, final int column) {
+		ObservableList<Node> childrens = this.wordsGrid.getChildren();
+		for (Node node : childrens) {
+			if (GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column) {
+				return node;
+			}
+		}
+		return null;
 	}
 
 	private void populateKeyboardGrid() {
@@ -132,9 +140,9 @@ public class MiniGameView {
 
 		incave.minWidthProperty().bind(letterLabel.heightProperty());
 
-
 		containerPane.setOnMouseClicked(e -> {
-			System.out.println(((Label)((StackPane)((Pane)e.getSource()).getParent()).getChildren().get(0)).getText());
+			String letter = ((Label) ((StackPane) ((Pane) e.getSource()).getParent()).getChildren().get(0)).getText();
+			typeLetterGrid(letter);
 		});
 
 		incave.getChildren().addAll(letterLabel, containerPane);
@@ -162,82 +170,111 @@ public class MiniGameView {
 	}
 
 	private void populateLettersGrid(int numRows, int numCols) {
-		for (int colIndex = 0; colIndex < numCols; colIndex++) {
-			for (int rowIndex = 0; rowIndex < numRows; rowIndex++) {
-				addMiniGamePane(colIndex, rowIndex);
+		for (int rowIndex = 0; rowIndex < numRows; rowIndex++) {
+			for (int colIndex = 0; colIndex < numCols; colIndex++) {
+				addMiniGamePane(null, colIndex, rowIndex, 2);
 			}
 		}
-
 	}
-	
 
-	private void addMiniGamePane(int colIndex, int rowIndex) {
+	private void addMiniGamePane(String letter, int colIndex, int rowIndex, int state) {
+		System.out.println("Added pane with letter " + letter + " at col " + colIndex + " row " + rowIndex
+				+ " with color: " + state);
 
 		incave = new StackPane();
+		incave.getStyleClass().add("incave");
+
 		Pane coloredPane = new Pane();
 
-//////DEBUG
-		var random = new Random();
-		int randomValue = random.nextInt(3);
-		switch (randomValue) {
+		switch (state) {
 		case 0:
-			coloredPane.setStyle("-fx-background-color: #0000;" + "-fx-background-radius: 10");
+			coloredPane.setStyle("-fx-background-color:#45E521;" + "-fx-background-radius: 10");
 			break;
 		case 1:
 			coloredPane.setStyle("-fx-background-color: yellow;" + "-fx-background-radius: 10");
 			break;
 		case 2:
-			coloredPane.setStyle("-fx-background-color: #45E521;" + "-fx-background-radius: 10");
+			coloredPane.setStyle("-fx-background-color: #0000;" + "-fx-background-radius: 10");
 			break;
 		}
-////DEGUG
 
 		coloredPane.maxWidthProperty().bind(incave.widthProperty().multiply(0.6));
 		coloredPane.maxHeightProperty().bind(coloredPane.widthProperty());
 
-		incave.getStyleClass().add("incave");
-
-		Label letterLabel = new Label("" + (char) (65 + new Random().nextInt(15)));
+		Label letterLabel = new Label(letter);
 		letterLabel.getStyleClass().add("letters");
-
 		letterLabel.styleProperty().bind(Bindings.concat("-fx-font-size: ", visualUnit.asString(), ";"));
-
 		StackPane.setAlignment(coloredPane, Pos.CENTER);
 		StackPane.setAlignment(letterLabel, Pos.CENTER);
-
 		incave.minWidthProperty().bind(letterLabel.heightProperty());
 		incave.getChildren().addAll(coloredPane, letterLabel);
-		// TODO, first row grid è nel posto sbagliato.
-
 		wordsGrid.add(incave, colIndex, rowIndex);
 
+	}
+
+	private void typeLetterGrid(String string) {
+		if (currentTypeIndex < NUM_COLS) {
+			removeGridElement(currentTypeIndex, currentRowIndex);
+			addMiniGamePane(string, currentTypeIndex, currentRowIndex, 2);
+			currentTypeIndex++;
+			this.currentWord += string;
+		}
 	}
 
 	private void setGraphic() {
 		firstRowGrid.maxWidthProperty().bind(incave.widthProperty().multiply(UPPER_ROW_CHARACTERS.length()));
 		sendWord.styleProperty().bind(Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.75).asString(), ";"));
 		deleteButton.fontProperty().bind(sendWord.fontProperty());
-
-		buttonWrapper.spacingProperty().bind(visualUnit.multiply(0.75));
-
 		wordsGrid.styleProperty().bind(Bindings.concat("-fx-padding: ", visualUnit.multiply(0.6).asString(), ";"));
-
 		wordsGrid.hgapProperty().bind(visualUnit.multiply(0.2));
 		wordsGrid.vgapProperty().bind(wordsGrid.hgapProperty());
-
 		mainWrapper.spacingProperty().bind(visualUnit);
-
-		commandsWrapper.spacingProperty().bind(visualUnit);
-		commandsWrapper.styleProperty()
-				.bind(Bindings.concat("-fx-padding: ", visualUnit.multiply(0.6).asString(), ";"));
 	}
 
 	public void goToScene(ActionEvent event) throws IOException {
+//		Node node = (Node) event.getSource();
+//		stage = (Stage) node.getScene().getWindow();
+//		FXMLLoader loader = new FXMLLoader();
+//		loader.setController(new MenuController(stage));
+//		loader.setLocation(getClass().getResource(PathToFXMLFiles.MAINMENU.getPath()));
+//		Parent root = loader.load();
+//		Scene scene = new Scene(root, stage.getScene().getWidth(), stage.getScene().getHeight());
+//		stage.setScene(scene);
+//		stage.show();
 	}
-	
+
+	private void removeGridElement(final int column, final int row) {
+		System.out.println("removed elem at: row" + row + "column: " + column);
+		this.wordsGrid.getChildren().remove(getNodeByCoords(row, column));
+	}
 
 	public void sendWord() {
-		// TODO document why this method is empty
+		if (currentTypeIndex == NUM_COLS) {
+			if (this.controller.guessWord(currentWord)) {
+				System.out.println("Gioco finito!");
+			} else {
+				this.currentTypeIndex = 0;
+				this.controller.guessWord(currentWord);
+				MiniGameWord word = this.controller.computeDifferencies();
+				this.currentWord = "";
+				for (int i = 0; i < NUM_COLS; i++) {
+					removeGridElement(i, this.currentRowIndex);
+					addMiniGamePane(word.getCompositeWord().get(i).getKey().toString(), i, this.currentRowIndex,
+							word.getCompositeWord().get(i).getValue().getColor());
+				}
+				this.currentRowIndex++;
+				if (this.currentRowIndex == NUM_ROWS) {
+					System.out.println("Gioco finito!");
+				}
+			}
+		}
 	}
-	
+
+	public void cancelWord() {
+		for (int i = 0; i < NUM_COLS; i++) {
+			removeGridElement(i, this.currentRowIndex);
+			addMiniGamePane("", i, this.currentRowIndex, 2);
+		}
+		this.currentTypeIndex = 0;
+	}
 }
