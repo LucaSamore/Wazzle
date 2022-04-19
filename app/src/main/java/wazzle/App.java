@@ -40,7 +40,7 @@ public final class App extends Application {
 			stage.getIcons().add(new Image("img/wazzle-icon.jpeg"));
 			stage.show();
 			visualUnit.bind(Bindings.min(stage.widthProperty(),stage.heightProperty()));
-			WindowCloser.onExit(stage);
+			//WindowCloser.onExit(stage);
 		} catch (IOException e) {
 			e.printStackTrace();
 			Alert alert = new Alert(AlertType.NONE);

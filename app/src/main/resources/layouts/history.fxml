@@ -16,7 +16,7 @@
                   <Font name="Waffle Crisp" size="12.0" />
                </font></Label>
             <GridPane fx:id="mainGrid" alignment="CENTER" styleClass="gridBackground" VBox.vgrow="NEVER" />
-            <Button fx:id="leaveButton" mnemonicParsing="false" onAction="#goToScene" styleClass="redButton" text="Torna al menu principale" />
+            <Button fx:id="leaveButton" mnemonicParsing="false" onAction="#nextScene" styleClass="redButton" text="Torna al menu principale" />
          </children>
       </VBox>
    </children>

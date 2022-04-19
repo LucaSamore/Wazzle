@@ -1,6 +1,5 @@
 package wazzle.view;
 
-
 import java.util.Optional;
 
 import javafx.scene.control.Alert;
@@ -9,10 +8,9 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-public class WindowCloser {
-	private WindowCloser() {}
+public interface WindowCloser {
 	
-	private static void defaultClose(WindowEvent e) {
+	private void defaultClose(final WindowEvent e) {
 		final var alert = new Alert(AlertType.NONE);
 		final var confirm = new ButtonType("Conferma");
 		final var cancel = new ButtonType("Annulla");
@@ -29,9 +27,9 @@ public class WindowCloser {
 		e.consume();
 	}
 	
-	public static void onExit(final Stage stage) {
+	default void closeWindow(final Stage stage) {
 		stage.getScene()
 			.getWindow()
-			.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, e -> defaultClose(e));
+			.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::defaultClose);
 	}
 }

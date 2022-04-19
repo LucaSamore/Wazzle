@@ -107,8 +107,8 @@
       </VBox>
       <HBox fx:id="buttonWrapper" VBox.vgrow="NEVER">
          <children>
-            <Button fx:id="playAgainButton" mnemonicParsing="false" onAction="#goToScene" styleClass="orangeButton" text="Rigioca" />
-            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#goToScene" styleClass="redButton" text="Esci" />
+            <Button fx:id="playAgainButton" mnemonicParsing="false" onAction="#nextScene" styleClass="orangeButton" text="Rigioca" />
+            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#nextScene" styleClass="redButton" text="Esci" />
          </children>
       </HBox>
    </children>

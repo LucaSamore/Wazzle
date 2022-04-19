@@ -36,7 +36,7 @@ import wazzle.view.FXMLFiles;
 import wazzle.view.Loader;
 import wazzle.view.SceneSwitcher;
 
-public final class MainGameView {
+public final class MainGameView extends View<MainGameController> {
 	@FXML
 	private VBox mainVbox;
 
@@ -94,17 +94,14 @@ public final class MainGameView {
 	@FXML
 	private HBox wrapperRightPane;
 	
-	private final Stage stage;
 	private final StringExpression standardFontSize;
 	private final StringExpression letterFontSize;
 	private final StringExpression pointFontSize;
 	private final StringExpression titleFontSize;
-	private final DoubleProperty visualUnit;
 	
 	private String word;
 	private Set<Pair<Integer, Integer>> alreadyVisitedCells;
 	private Pair<Integer,Integer> lastVisitedPosition;
-	private final MainGameController controller;
 	private AnimationTimer animationTimer;
 	
 	private Set<String> suggestedWords;
@@ -120,15 +117,11 @@ public final class MainGameView {
 		this.letterFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(1.5).asString(), ";");
 		this.pointFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(0.5).asString(), ";");
 		this.titleFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(2).asString(), ";");
+		this.onClose();
 	}
 
 	public void initialize() {
-		this.setGraphics();
-		this.setEventHandler();
-		var shape = this.controller.getMainController().getSettings().getCurrentGridShape();
-		this.populateGrid(shape,shape);
-		this.controller.startTimer();
-		this.startTimer();
+		this.buildView();
 	}
 	
 	private void startTimer() {		
@@ -210,33 +203,6 @@ public final class MainGameView {
         this.bonusTimeButton.setOnMouseDragReleased(mouseEvent -> this.finishInvalidReading());
         this.bonusWordButton.setOnMouseDragReleased(mouseEvent -> this.finishInvalidReading());
         this.leaveButton.setOnMouseDragReleased(mouseEvent -> this.finishInvalidReading());
-	}
-	
-	private void setGraphics() {
-		this.bonusScoreButton.setDisable(this.controller.getMainController().getBonusManager().getScoreBonusQuantity() == 0);
-		this.bonusTimeButton.setDisable(this.controller.getMainController().getBonusManager().getTimeBonusQuantity() == 0);
-		this.bonusWordButton.setDisable(this.controller.getMainController().getBonusManager().getWordBonusQuantity() == 0);
-		
-		this.grid.setPadding(new Insets(15,15,15,15));
-		
-		this.leftPanel.styleProperty().bind(this.standardFontSize);
-		this.leftPanel.styleProperty().bind(Bindings.concat("-fx-spacing: ", this.visualUnit.asString(), ";"));
-
-		this.rightPanel.styleProperty().bind(Bindings.concat("-fx-spacing: ", this.visualUnit.asString(), ";"));		
-		
-		this.mainVbox.styleProperty().bind(this.standardFontSize);
-		this.titleLabel.styleProperty().bind(this.titleFontSize);
-				
-		
-		this.pointsLabel.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
-		this.pointsValueLabel.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
-		
-		this.timerLabel.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
-		this.timerValueLabel.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
-		
-		this.bonusScoreButton.setMinSize(Button.USE_PREF_SIZE, Button.USE_PREF_SIZE);
-		this.bonusTimeButton.setMinSize(Button.USE_PREF_SIZE, Button.USE_PREF_SIZE);
-		this.bonusWordButton.setMinSize(Button.USE_PREF_SIZE, Button.USE_PREF_SIZE);
 	}
 	
 	private void populateGrid(final int numCols, final int numRows) {
@@ -366,5 +332,48 @@ public final class MainGameView {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void nextScene(ActionEvent event) throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void buildView() {
+		this.setGraphics();
+		this.setEventHandler();
+		var shape = this.controller.getMainController().getSettings().getCurrentGridShape();
+		this.populateGrid(shape,shape);
+		this.controller.startTimer();
+		this.startTimer();
+	}
+
+	@Override
+	protected void setGraphics() {
+		this.bonusScoreButton.setDisable(this.controller.getMainController().getBonusManager().getScoreBonusQuantity() == 0);
+		this.bonusTimeButton.setDisable(this.controller.getMainController().getBonusManager().getTimeBonusQuantity() == 0);
+		this.bonusWordButton.setDisable(this.controller.getMainController().getBonusManager().getWordBonusQuantity() == 0);
+		
+		this.grid.setPadding(new Insets(15,15,15,15));
+		
+		this.leftPanel.styleProperty().bind(this.standardFontSize);
+		this.leftPanel.styleProperty().bind(Bindings.concat("-fx-spacing: ", this.visualUnit.asString(), ";"));
+
+		this.rightPanel.styleProperty().bind(Bindings.concat("-fx-spacing: ", this.visualUnit.asString(), ";"));		
+		
+		this.mainVbox.styleProperty().bind(this.standardFontSize);
+		this.titleLabel.styleProperty().bind(this.titleFontSize);
+				
+		this.pointsLabel.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
+		this.pointsValueLabel.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
+		
+		this.timerLabel.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
+		this.timerValueLabel.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
+		
+		this.bonusScoreButton.setMinSize(Button.USE_PREF_SIZE, Button.USE_PREF_SIZE);
+		this.bonusTimeButton.setMinSize(Button.USE_PREF_SIZE, Button.USE_PREF_SIZE);
+		this.bonusWordButton.setMinSize(Button.USE_PREF_SIZE, Button.USE_PREF_SIZE);
 	}
 }
