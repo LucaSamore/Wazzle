@@ -2,19 +2,19 @@ package wazzle.model.minigame;
 
 public enum Result {
 	
-	CORRECT("45e521"),
+	CORRECT(0),
 
-	CORRECT_WRONG_PLACE("ffff00"),
+	CORRECT_WRONG_PLACE(1),
 	
-	WRONG("");
+	WRONG(2);
 	
-	private String color;
+	private int state;
 	
-	private Result(String color) {
-		this.color = color;
+	private Result(int state) {
+		this.state = state;
 	}
 
-	public String getColor() {
-		return color;
+	public int getColor() {
+		return state;
 	}
 }
