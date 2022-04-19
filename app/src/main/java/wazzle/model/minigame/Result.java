@@ -8,13 +8,13 @@ public enum Result {
 	
 	WRONG(2);
 	
-	private int state;
+	private final int state;
 	
-	private Result(int state) {
+	private Result(final int state) {
 		this.state = state;
 	}
 
-	public int getColor() {
+	public int getState() {
 		return state;
 	}
 }
