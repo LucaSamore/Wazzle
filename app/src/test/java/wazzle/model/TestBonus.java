@@ -29,14 +29,16 @@ public class TestBonus {
 		bonusManager.updateWordBonusQuantity(b -> b-1);
 		assertEquals(bonusManager.getWordBonusQuantity(), 2);
 		Set<String> toFoundWords = Set.of("cane", "gatto", "topo", "ape", "libellula", "rana");
-		assertTrue(toFoundWords.containsAll(bonusManager.applyWordBonus(toFoundWords)));
+		Set<String> suggestion = bonusManager.applyWordBonus(toFoundWords);
+		assertTrue(toFoundWords.containsAll(suggestion));
+		assertEquals(suggestion.size(), 3);
 		assertEquals(bonusManager.getWordBonusQuantity(), 1);
 		
 		//TimeBonus
 		bonusManager.updateTimeBonusQuantity(b -> b+2);
 		assertEquals(bonusManager.getTimeBonusQuantity(), 2);	
-		long halfMinute = 30000;
-		long increment = 120000;
+		long halfMinute = 30;
+		long increment = 120;
 		assertTrue(bonusManager.applyTimeBonus(increment) == halfMinute + increment);
 		assertEquals(bonusManager.getTimeBonusQuantity(), 1);
 		
