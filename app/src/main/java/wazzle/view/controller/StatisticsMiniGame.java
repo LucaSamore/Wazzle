@@ -19,6 +19,7 @@ import wazzle.controller.maingame.MainGameController;
 import wazzle.controller.maingame.MainGameControllerImpl;
 import wazzle.controller.minigame.MiniGameController;
 import wazzle.controller.minigame.MiniGameControllerImpl;
+import wazzle.model.minigame.MiniGame.State;
 import wazzle.view.SceneSwitcher;
 import wazzle.view.WindowCloser;
 
@@ -74,14 +75,12 @@ public class StatisticsMiniGame {
 	}
 
 	private void setGraphic() {
-//		this.mainGameController.getGame().get().wordsFound();
-//
-		this.targetWordValueLabel.setText("" + this.miniGameController.getCurrentAttemptsNumber());
-		this.attemptsValueLabel.setText("" + this.miniGameController.getTargetWord());
-//TODO
-		//		this.resultValueLabel.setText("" + this.miniGameController.getGameStatus());
-//		this.longestWordFoundValueLabel.setText("" + this.mainGameController.longestWord());
-//		this.mostValuableWordValueLabel.setText("" + this.mainGameController.highestScoreWord());
+		this.targetWordValueLabel.setText("" + this.miniGameController.getTargetWord());
+		this.attemptsValueLabel.setText("" + this.miniGameController.getCurrentAttemptsNumber());
+		
+		if(miniGameController.getState() == State.FAILED) {
+			resultValueLabel.setText("Hai perso!");
+		}
 
 		ObservableValue<String> fontSizeValue = Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.05).asString(),
 				";");
@@ -89,13 +88,12 @@ public class StatisticsMiniGame {
 				";");
 
 		mainStatisticWindow.maxHeightProperty().bind(mainStatisticWindow.widthProperty());
-
 		mainStatisticWindow.minWidthProperty().bind(visualUnit.multiply(0.7));
+		mainStatisticWindow.styleProperty().bind(Bindings.concat(fontSizeValue, paddingValue));
 
 		mainWrapper.spacingProperty().bind(visualUnit.multiply(0.02));
 		buttonWrapper.spacingProperty().bind(visualUnit.multiply(0.02));
 
-		mainStatisticWindow.styleProperty().bind(Bindings.concat(fontSizeValue, paddingValue));
 		exitButton.styleProperty().bind(fontSizeValue);
 		playAgainButton.styleProperty().bind(fontSizeValue);
 

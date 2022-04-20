@@ -39,7 +39,7 @@
                   </HBox>
                   <VBox fx:id="buttonWrapper" alignment="CENTER">
                      <children>
-                        <Button fx:id="sendWord" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#sendWord" styleClass="greenButton" text="Invia" />
+                        <Button fx:id="sendWord" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#nextScene" styleClass="greenButton" text="Invia" />
                         <Button fx:id="deleteButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancelWord" styleClass="redButton" text="cancella" />
                      </children>
                   </VBox>
