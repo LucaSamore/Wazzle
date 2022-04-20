@@ -4,9 +4,7 @@ import java.time.LocalDateTime;
 
 public interface MiniGame {
 	enum State {
-		IN_PROGRESS(0),
-		FAILED(1),
-		WON(2);
+		IN_PROGRESS(0), FAILED(1), WON(2);
 
 		private final int currentState;
 
@@ -19,24 +17,24 @@ public interface MiniGame {
 		}
 	}
 
-	public boolean loadMiniGame();
+	boolean loadMiniGame();
 
-	public LocalDateTime getGameStarTimeDate();
+	LocalDateTime getGameStarTimeDate();
 
-	public String getTargetWord();
+	String getTargetWord();
 
-	public boolean isWordCorrect(String guessedWord);
+	boolean isWordCorrect(String guessedWord);
 
-	public MiniGameWord computeResult();
+	int getWordLenght();
 
-	public int getCurrentAttemptsNumber();
+	int getMaxAttemptsNumber();
 
-	public int getWordLenght();
+	void setGameState(State state);
 
-	public int getMaxAttemptsNumber();
+	State getGameState();
 
-	public void setGameState(State state);
+	int getCurrentAttemptsNumber();
 
-	public State getGameState();
+	MiniGameWord computeResult(String guessedWord);
 
 }

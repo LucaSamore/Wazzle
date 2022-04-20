@@ -1,10 +1,9 @@
 package wazzle.model.minigame;
 
 public interface WordChecker {
-	
 
-	public MiniGameWord computeAttemptResult(Attempt attempt);
+	MiniGameWord computeAttemptResult(String attempt);
 
-	boolean isCorrectWord(Attempt attempt);
+	boolean isCorrectWord(String guessedWord);
 
 }
