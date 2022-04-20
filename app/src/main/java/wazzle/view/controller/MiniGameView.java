@@ -2,9 +2,7 @@ package wazzle.view.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Random;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -20,14 +18,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import wazzle.controller.maingame.MainGameController;
 import wazzle.controller.minigame.MiniGameController;
-import wazzle.controller.minigame.MiniGameControllerImpl;
-import wazzle.model.minigame.MiniGame.State;
 import wazzle.model.minigame.MiniGameWord;
 import wazzle.model.minigame.Result;
+import wazzle.view.FXMLFiles;
+import wazzle.view.SceneSwitcher;
 
-public class MiniGameView {
+public final class MiniGameView extends View<MiniGameController> {
 
 	@FXML
 	private GridPane wordsGrid;
@@ -62,9 +59,6 @@ public class MiniGameView {
 	private Map<Integer, String> keyboardCharacters;
 	private Map<Integer, GridPane> keyboardKeys;
 
-
-	private final MiniGameController controller;
-	private DoubleProperty visualUnit;
 	private int currentTypeIndex;
 	private int currentRowIndex;
 	private String currentWord;
@@ -72,8 +66,15 @@ public class MiniGameView {
 	private int numCols;
 
 	public MiniGameView(Stage stage) {
+		this.stage = stage;
 		this.currentWord = "";
 		this.controller = (MiniGameController) stage.getUserData();
+		try {
+			this.controller.startGame(this.controller.getMainController().getDataset());
+		} catch (IOException e) {
+			// TODO GENERARE ALERT
+			e.printStackTrace();
+		}
 		this.numRows = this.controller.getMaxAttemptsNumber();
 		this.numCols = this.controller.getWordLenght();
 		this.currentTypeIndex = 0;
@@ -92,16 +93,9 @@ public class MiniGameView {
 		this.keyboardKeys.put(1, secondRowGrid);
 		this.keyboardKeys.put(2, thirdRowGrid);
 
-		visualUnit = new SimpleDoubleProperty();
-		visualUnit.bind(Bindings.min(stage.widthProperty().multiply(0.05), stage.heightProperty().multiply(0.05)));
-	}
-
-	public void initialize() {
-
-		populateLettersGrid(numRows, this.numCols);
-		populateKeyboardGrid();
-		setGraphic();
-
+		this.visualUnit = new SimpleDoubleProperty();
+		this.visualUnit.bind(Bindings.min(stage.widthProperty().multiply(0.05), stage.heightProperty().multiply(0.05)));
+		this.onClose();
 	}
 
 	private Node getNodeByCoords(final int row, final int column) {
@@ -185,15 +179,15 @@ public class MiniGameView {
 		Pane coloredPane = new Pane();
 
 		switch (state) {
-			case 0:
-				coloredPane.setStyle("-fx-background-color:#45E521;" + "-fx-background-radius: 10");
-				break;
-			case 1:
-				coloredPane.setStyle("-fx-background-color: yellow;" + "-fx-background-radius: 10");
-				break;
-			default:
-				coloredPane.setStyle("-fx-background-color: #0000;" + "-fx-background-radius: 10");
-				break;
+		case 0:
+			coloredPane.setStyle("-fx-background-color:#45E521;" + "-fx-background-radius: 10");
+			break;
+		case 1:
+			coloredPane.setStyle("-fx-background-color: yellow;" + "-fx-background-radius: 10");
+			break;
+		default:
+			coloredPane.setStyle("-fx-background-color: #0000;" + "-fx-background-radius: 10");
+			break;
 		}
 
 		coloredPane.maxWidthProperty().bind(incave.widthProperty().multiply(0.6));
@@ -219,62 +213,8 @@ public class MiniGameView {
 		}
 	}
 
-	private void setGraphic() {
-		firstRowGrid.maxWidthProperty().bind(incave.widthProperty().multiply(UPPER_ROW_CHARACTERS.length()));
-		sendWord.styleProperty().bind(Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.75).asString(), ";"));
-		deleteButton.fontProperty().bind(sendWord.fontProperty());
-		wordsGrid.styleProperty().bind(Bindings.concat("-fx-padding: ", visualUnit.multiply(0.6).asString(), ";"));
-		wordsGrid.hgapProperty().bind(visualUnit.multiply(0.2));
-		wordsGrid.vgapProperty().bind(wordsGrid.hgapProperty());
-		mainWrapper.spacingProperty().bind(visualUnit);
-	}
-
-	public void goToScene(ActionEvent event) throws IOException {
-
-	}
-
 	private void removeGridElement(final int column, final int row) {
 		this.wordsGrid.getChildren().remove(getNodeByCoords(row, column));
-	}
-
-	public void sendWord() {
-		if (currentTypeIndex == this.numCols) {
-//			if (this.controller.getState() == State.WON) {
-//				System.out.println("Gioco finito con successo!");
-//			}else if (this.controller.getState() == State.FAILED) {
-//				System.out.println("Gioco finito con fallimento!");
-//			} else {
-//				MiniGameWord word = this.controller.computeDifferencies();
-//				
-//				for (int i = 0; i < this.numCols; i++) {
-//					removeGridElement(i, this.currentRowIndex);
-//					addMiniGamePane("" + word.getCompositeWord().get(i).getCharacter(), i, this.currentRowIndex,
-//							word.getCompositeWord().get(i).getResult());
-//				}
-			this.controller.guessWord(this.currentWord);
-			switch (this.controller.getState()) {
-			case WON:
-				System.out.println("Gioco finito con successo!");
-				break;
-			case FAILED:
-				System.out.println("Gioco finito con fallimento!");
-				break;
-
-			default:
-				MiniGameWord word = this.controller.computeDifferencies();
-				for (int i = 0; i < this.numCols; i++) {
-					removeGridElement(i, this.currentRowIndex);
-					addMiniGamePane("" + word.getCompositeWord().get(i).getCharacter(), i, this.currentRowIndex,
-							word.getCompositeWord().get(i).getResult());
-				}
-				this.currentWord = "";
-				this.currentTypeIndex = 0;
-				this.currentRowIndex++;
-
-				break;
-			}
-		}
-
 	}
 
 	public void cancelWord() {
@@ -284,5 +224,49 @@ public class MiniGameView {
 		}
 		this.currentTypeIndex = 0;
 		this.currentWord = "";
+	}
+
+	@Override
+	public void nextScene(ActionEvent event) throws IOException {
+		if (currentTypeIndex == this.numCols) {
+			this.controller.guessWord(this.currentWord);
+			
+			switch (this.controller.getState()) {
+				case IN_PROGRESS:
+					MiniGameWord word = this.controller.computeDifferencies(this.currentWord);
+					for (int i = 0; i < this.numCols; i++) {
+						removeGridElement(i, this.currentRowIndex);
+						addMiniGamePane("" + word.getCompositeWord().get(i).getCharacter(), i, this.currentRowIndex,
+								word.getCompositeWord().get(i).getResult());
+					}
+					this.currentWord = "";
+					this.currentTypeIndex = 0;
+					this.currentRowIndex++;
+					break;
+				default:
+					this.stage.setUserData(this.controller);
+					SceneSwitcher.<StatisticsMiniGame>switchScene(event, new StatisticsMiniGame(this.stage),
+							FXMLFiles.MINI_GAME_STATS.getPath());
+					break;
+			}
+		}
+	}
+
+	@Override
+	protected void buildView() {
+		populateLettersGrid(this.numRows, this.numCols);
+		populateKeyboardGrid();
+		setGraphics();
+	}
+
+	@Override
+	protected void setGraphics() {
+		firstRowGrid.maxWidthProperty().bind(incave.widthProperty().multiply(UPPER_ROW_CHARACTERS.length()));
+		sendWord.styleProperty().bind(Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.75).asString(), ";"));
+		deleteButton.fontProperty().bind(sendWord.fontProperty());
+		wordsGrid.styleProperty().bind(Bindings.concat("-fx-padding: ", visualUnit.multiply(0.6).asString(), ";"));
+		wordsGrid.hgapProperty().bind(visualUnit.multiply(0.2));
+		wordsGrid.vgapProperty().bind(wordsGrid.hgapProperty());
+		mainWrapper.spacingProperty().bind(visualUnit);
 	}
 }

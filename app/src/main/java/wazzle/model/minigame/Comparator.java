@@ -1,17 +1,25 @@
 package wazzle.model.minigame;
 
+import java.util.Set;
+
 import wazzle.model.common.Dictionary;
 
 public interface Comparator {
 	
-	public String getSuitableWord();
+//	public String getSuitableWord();
 
-	public boolean isAvailableWordsEmpty();
+	Set<String> getAvailableWords();
+	
+	boolean areThereAnyAvailableWords();
+	
+	void restoreAvailableWords();
 
-	public void removeFromSavedDataset(String suitableWord);
+	void notAvailableAnymore(String word);
 
-	public void saveDataSet();
-
-	public void refreshDataSet(Dictionary dictionary);
+//	public void removeFromSavedDataset(String suitableWord);
+//
+//	public void saveDataSet();
+//
+//	public void refreshDataSet(Dictionary dictionary);
 
 }

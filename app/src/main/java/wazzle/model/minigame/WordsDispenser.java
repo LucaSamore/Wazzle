@@ -6,8 +6,5 @@ import wazzle.controller.common.WazzleController;
 
 public interface WordsDispenser {
 
-	public String getSuitableWord() throws IOException;
-
-
-	
+	String extractWord();
 }

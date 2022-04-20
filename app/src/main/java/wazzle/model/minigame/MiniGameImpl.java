@@ -17,20 +17,13 @@ public class MiniGameImpl implements MiniGame {
 	@Expose
 	private List<MiniGameWord> guessedWords;
 
-	@Expose
-	private LocalDateTime gameStarTimeDate;
-
-	@Expose
-	private int nuberOfAttemptsSoFar;
-	
 	private WordChecker wordChecker;
-	private AttemptImpl currentAttempt;
 	private State gameState;
 
-	public MiniGameImpl() throws IOException {
-		this.wordChecker = new WordCheckerImpl();
+	public MiniGameImpl(final String word) {
 		this.guessedWords = new LinkedList<MiniGameWord>();
-		this.targetWord = new WordsDispenserImpl().getSuitableWord();
+		this.targetWord = word;
+		this.wordChecker = new WordCheckerImpl(word);
 		this.gameState = State.IN_PROGRESS;
 		System.out.println(targetWord);
 	}
@@ -52,33 +45,21 @@ public class MiniGameImpl implements MiniGame {
 
 	@Override
 	public boolean isWordCorrect(String guessedWord) {
-		this.nuberOfAttemptsSoFar++;
-		this.currentAttempt = new AttemptImpl(this.getTargetWord(), guessedWord);
-		return this.wordChecker.isCorrectWord(this.currentAttempt);
+		return this.wordChecker.isCorrectWord(guessedWord);
 	}
 
-	private void addGuessedWord(MiniGameWord wrongWord) {
-		this.guessedWords.add(wrongWord);
-	}
-
-	@Override
-	public LocalDateTime getGameStarTimeDate() {
-		return gameStarTimeDate;
+	private void addGuessedWord(MiniGameWord word) {
+		this.guessedWords.add(word);
 	}
 
 	@Override
-	public MiniGameWord computeResult() {
-		this.addGuessedWord(this.wordChecker.computeAttemptResult(this.currentAttempt));
+	public MiniGameWord computeResult(final String guessedWord) {
+		this.addGuessedWord(this.wordChecker.computeAttemptResult(guessedWord));
 		return guessedWords.get(guessedWords.size() - 1);
 	}
 
 	@Override
-	public int getCurrentAttemptsNumber() {
-		return this.nuberOfAttemptsSoFar;
-	}
-
-	@Override
-	public void setGameState(State state) {
+	public void setGameState(final State state) {
 		this.gameState = state;
 	}
 
@@ -90,5 +71,13 @@ public class MiniGameImpl implements MiniGame {
 	@Override
 	public int getMaxAttemptsNumber() {
 		return MiniGameImpl.MAX_ATTEMPTS_NUMBER;
+	}
+
+	public void setWordChecker(final WordChecker wordChecker) {
+		this.wordChecker = wordChecker;
+	}
+
+	public int getCurrentAttemptsNumber() {
+		return guessedWords.size();
 	}
 }
