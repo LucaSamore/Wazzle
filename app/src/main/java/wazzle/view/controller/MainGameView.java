@@ -284,8 +284,7 @@ public final class MainGameView extends View<MainGameController> {
 
 	@Override
 	public void nextScene(ActionEvent event) throws IOException {
-		// TODO Auto-generated method stub
-		
+		this.gameTimerView.stopWithoutSave(event);		
 	}
 
 	@Override
