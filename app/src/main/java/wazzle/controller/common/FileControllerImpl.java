@@ -19,7 +19,7 @@ import wazzle.model.common.DictionaryImpl;
 import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
 
-public final class FileControllerImpl implements FileController {
+public final class FileControllerImpl implements FileController, Serializer, Deserializer {
 
 	private static final String SEPARATOR = System.getProperty("file.separator");
 	private static final String DIRECTORY = 
@@ -53,7 +53,7 @@ public final class FileControllerImpl implements FileController {
 			this.create(DIRECTORY + fileName);
 		}
 		
-		Serializer.<MainGame>serialize(DIRECTORY + fileName, games.toArray(new MainGameImpl[games.size()]));
+		this.<MainGame>serialize(DIRECTORY + fileName, games.toArray(new MainGameImpl[games.size()]));
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public final class FileControllerImpl implements FileController {
 			this.create(DIRECTORY + fileName);
 		}
 		
-		Serializer.<BonusManager>serialize(DIRECTORY + fileName, List.of(bonuses).toArray(new BonusManagerImpl[0]));
+		this.<BonusManager>serialize(DIRECTORY + fileName, List.of(bonuses).toArray(new BonusManagerImpl[0]));
 	}
 	
 	@Override
@@ -71,37 +71,37 @@ public final class FileControllerImpl implements FileController {
 			this.create(DIRECTORY + fileName);
 		}
 		
-		Serializer.<Settings>serialize(DIRECTORY + fileName, List.of(settings).toArray(new SettingsImpl[0]));
+		this.<Settings>serialize(DIRECTORY + fileName, List.of(settings).toArray(new SettingsImpl[0]));
 	}
 	
 	@Override
 	public List<MainGameImpl> getMainGameHistory(final String fileName) throws IOException{
 		if(!this.exists(DIRECTORY + fileName)) {
 			this.create(DIRECTORY + fileName);
-			Serializer.<MainGame>serialize(DIRECTORY + fileName, List.of().toArray(new MainGameImpl[0]));
+			this.<MainGame>serialize(DIRECTORY + fileName, List.of().toArray(new MainGameImpl[0]));
 		}
 		
-		return Deserializer.<MainGameImpl>deserialize(MainGameImpl.class, DIRECTORY + fileName);
+		return this.<MainGameImpl>deserialize(MainGameImpl.class, DIRECTORY + fileName);
 	}
 
 	@Override
 	public BonusManagerImpl getBonuses(final String fileName) throws IOException{
 		if(!this.exists(DIRECTORY + fileName)) {
 			this.create(DIRECTORY + fileName);
-			Serializer.<BonusManager>serialize(DIRECTORY + fileName, List.of(new BonusManagerImpl()).toArray(new BonusManagerImpl[0]));
+			this.<BonusManager>serialize(DIRECTORY + fileName, List.of(new BonusManagerImpl()).toArray(new BonusManagerImpl[0]));
 		}
 		
-		return Deserializer.<BonusManagerImpl>deserialize(BonusManagerImpl.class, DIRECTORY + fileName).get(0);
+		return this.<BonusManagerImpl>deserialize(BonusManagerImpl.class, DIRECTORY + fileName).get(0);
 	}
 	
 	@Override
 	public Settings getSettings(String fileName) throws IOException {
 		if(!this.exists(DIRECTORY + fileName)) {
 			this.create(DIRECTORY + fileName);
-			Serializer.<Settings>serialize(DIRECTORY + fileName, List.of(new SettingsImpl()).toArray(new SettingsImpl[0]));
+			this.<Settings>serialize(DIRECTORY + fileName, List.of(new SettingsImpl()).toArray(new SettingsImpl[0]));
 		}
 		
-		return Deserializer.<SettingsImpl>deserialize(SettingsImpl.class, DIRECTORY + fileName).get(0);
+		return this.<SettingsImpl>deserialize(SettingsImpl.class, DIRECTORY + fileName).get(0);
 	}
 	
 	@Override

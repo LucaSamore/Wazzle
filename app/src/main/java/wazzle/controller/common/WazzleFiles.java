@@ -2,8 +2,12 @@ package wazzle.controller.common;
 
 public enum WazzleFiles {
 	HISTORY("history.json"),
+	
 	BONUSES("bonuses.json"),
-	SETTINGS("settings.json");
+	
+	SETTINGS("settings.json"),
+	
+	DATASET("dataset.txt");
 	
 	private final String fileName;
 

@@ -13,15 +13,15 @@ import com.google.gson.reflect.TypeToken;
 
 public interface Deserializer {
 	
-	static Supplier<Gson> gson() {
+	default Supplier<Gson> deserializationGson() {
 		return () -> new GsonBuilder()
 				.excludeFieldsWithoutExposeAnnotation()
 				.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer())
 				.create();
 	}
 	
-	static <T> List<T> deserialize(final Class<T> myClass, final String path) throws IOException {
-	    return gson().get().fromJson(Files.readString(Path.of(path)), 
+	default <T> List<T> deserialize(final Class<T> myClass, final String path) throws IOException {
+	    return this.deserializationGson().get().fromJson(Files.readString(Path.of(path)), 
 	    		TypeToken.getParameterized(List.class, myClass).getType());
 	}
 }

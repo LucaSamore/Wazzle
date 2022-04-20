@@ -1,10 +1,9 @@
 package wazzle.controller.maingame;
 
 import java.util.Comparator;
+
 import java.util.Optional;
 import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javafx.util.Pair;
 import wazzle.controller.common.WazzleController;
@@ -16,13 +15,17 @@ public final class MainGameControllerImpl implements MainGameController {
 	private static final int ATTEMPTS_BEFORE_HELP = 5;
 	private final WazzleController mainController;
 	private Optional<MainGame> game;
-	private long timeRemaining;
-	private TimerTask timer;
+	private final GameTimer timer;
 	
 	public MainGameControllerImpl(final WazzleController mainController) {
 		this.mainController = mainController.getThis();
 		this.game = Optional.empty();
-		this.timeRemaining = (int) mainController.getSettings().getCurrentDifficulty().getTimeInMilliseconds() / 1000;
+		this.timer = new GameTimerImpl(
+			      (long) this.mainController
+			        .getSettings()
+			        .getCurrentDifficulty()
+			        .getTimeInMilliseconds() / 1000
+			      );
 	}
 	
 	@Override
@@ -72,7 +75,7 @@ public final class MainGameControllerImpl implements MainGameController {
 
 	@Override
 	public void useTimeBonus() {
-		this.timeRemaining = this.mainController.getBonusManager().applyTimeBonus(this.timeRemaining);
+		this.timer.updateTime(this.mainController.getBonusManager().applyTimeBonus(this.timer.getRemainingTime()));
 	}
 
 	@Override
@@ -118,28 +121,7 @@ public final class MainGameControllerImpl implements MainGameController {
 	}
 	
 	@Override
-	public void startTimer() {
-		this.timer = new TimerTask() {
-			@Override
-			public void run() {
-				timeRemaining--;
-				
-				if(timeRemaining <= 0) {
-					this.cancel();
-					return;
-				}
-			}
-		};
-		new Timer().scheduleAtFixedRate(this.timer, 1000L, 1000L);
-	}
-	
-	@Override
-	public void stopTimer() {
-		this.timer.cancel();
-	}
-
-	@Override
-	public long getRemainingTime() {
-		return this.timeRemaining;
+	public GameTimer getTimer() {
+		return this.timer;
 	}
 }

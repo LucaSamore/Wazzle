@@ -3,7 +3,6 @@ package wazzle.view.controller;
 import java.io.IOException;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -17,10 +16,10 @@ import javafx.stage.Stage;
 import wazzle.controller.common.WazzleControllerImpl;
 import wazzle.controller.maingame.MainGameController;
 import wazzle.controller.maingame.MainGameControllerImpl;
+import wazzle.view.FXMLFiles;
 import wazzle.view.SceneSwitcher;
-import wazzle.view.WindowCloser;
 
-public class StatisticsMainGameView {
+public final class StatisticsMainGameView extends View<MainGameController>{
 	@FXML
 	private VBox mainStatisticWindow;
 
@@ -66,32 +65,48 @@ public class StatisticsMainGameView {
 	@FXML
 	private Label mostValuableWordValueLabel;
 
-	private final static String LOADING_PATH = "layouts/LoadingScreen.fxml";
-	private final static String MAIN_MENU_PATH = "layouts/mainMenu.fxml";
-	private Stage stage;
-	private DoubleProperty visualUnit;
-	private MainGameController mainGameController;
-
 	public StatisticsMainGameView(Stage stage) {
 		this.stage = stage;
-		visualUnit = new SimpleDoubleProperty();
-		visualUnit.bind(Bindings.min(stage.heightProperty(), stage.widthProperty()));
+		this.visualUnit = new SimpleDoubleProperty();
+		this.visualUnit.bind(Bindings.min(stage.heightProperty(), stage.widthProperty()));
+		this.controller = (MainGameControllerImpl) this.stage.getUserData();
+		this.onClose();
+	}
+
+	@Override
+	public void nextScene(ActionEvent event) throws IOException {
+		Node node = (Node) event.getSource();
 		
-		this.mainGameController = (MainGameControllerImpl) this.stage.getUserData();
-		WindowCloser.onExit(this.stage);
+		switch (node.getId()) {
+
+		case "exitButton":
+			this.stage.setUserData(new WazzleControllerImpl());
+			SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), FXMLFiles.MAIN_MENU.getPath());
+			break;
+
+		case "playAgainButton":
+			this.stage.setUserData(new MainGameControllerImpl(this.controller.getMainController()));
+			SceneSwitcher.<LoadingView>switchScene(event, new LoadingView(this.stage), FXMLFiles.LOADING_SCREEN.getPath());
+			break;
+
+		default:
+			break;
+		}
 	}
 
-	public void initialize() {
-		setGraphic();
+	@Override
+	protected void buildView() {
+		this.setGraphics();
 	}
 
-	private void setGraphic() {
-		this.mainGameController.getGame().get().wordsFound();
-		this.wordsFoundValueLabel.setText(""+ (int)this.mainGameController.getGame().get().wordsFound().size());
-		this.totalWordsValueLabel.setText(""+ (int)this.mainGameController.getGame().get().wordsToBeFound().size());
-		this.pointsValueLabel.setText(""+ (int)this.mainGameController.getGame().get().getCurrentScore());
-		this.longestWordFoundValueLabel.setText(""+ this.mainGameController.longestWord());
-		this.mostValuableWordValueLabel.setText(""+ this.mainGameController.highestScoreWord());
+	@Override
+	protected void setGraphics() {
+		this.controller.getGame().get().wordsFound();
+		this.wordsFoundValueLabel.setText(""+ (int)this.controller.getGame().get().wordsFound().size());
+		this.totalWordsValueLabel.setText(""+ (int)this.controller.getGame().get().wordsToBeFound().size());
+		this.pointsValueLabel.setText(""+ (int)this.controller.getGame().get().getCurrentScore());
+		this.longestWordFoundValueLabel.setText(""+ this.controller.longestWord());
+		this.mostValuableWordValueLabel.setText(""+ this.controller.highestScoreWord());
 		
 		ObservableValue<String> fontSizeValue = Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.05).asString(), ";");
 		ObservableValue<String> paddingValue = Bindings.concat("-fx-padding: ", visualUnit.multiply(0.05).asString(), ";");
@@ -107,30 +122,9 @@ public class StatisticsMainGameView {
 		exitButton.styleProperty().bind(fontSizeValue);
 		playAgainButton.styleProperty().bind(fontSizeValue);
 		
-		
 		longestWordFoundLabel.styleProperty()
 				.bind(Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.025).asString(), ";"));
 		mostValuableWordLabel.styleProperty()
 				.bind(Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.025).asString(), ";"));
-	}
-
-	public void goToScene(ActionEvent event) throws IOException {
-		Node node = (Node) event.getSource();
-		
-		switch (node.getId()) {
-
-		case "exitButton":
-			this.stage.setUserData(new WazzleControllerImpl());
-			SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), MAIN_MENU_PATH);
-			break;
-
-		case "playAgainButton":
-			this.stage.setUserData(new MainGameControllerImpl(this.mainGameController.getMainController()));
-			SceneSwitcher.<LoadingView>switchScene(event, new LoadingView(this.stage), LOADING_PATH);
-			break;
-
-		default:
-			break;
-		}
 	}
 }

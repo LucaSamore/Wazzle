@@ -6,18 +6,13 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import javafx.animation.AnimationTimer;
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringExpression;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -32,10 +27,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import wazzle.controller.maingame.MainGameController;
-import wazzle.view.Loader;
-import wazzle.view.SceneSwitcher;
 
-public final class MainGameView {
+public final class MainGameView extends View<MainGameController> {
 	@FXML
 	private VBox mainVbox;
 
@@ -92,21 +85,16 @@ public final class MainGameView {
 	
 	@FXML
 	private HBox wrapperRightPane;
-
-	private static final String STATISTICS_MAIN_GAME_PATH = "layouts/statisticsMainGame.fxml";
 	
-	private final Stage stage;
 	private final StringExpression standardFontSize;
 	private final StringExpression letterFontSize;
 	private final StringExpression pointFontSize;
 	private final StringExpression titleFontSize;
-	private final DoubleProperty visualUnit;
 	
 	private String word;
 	private Set<Pair<Integer, Integer>> alreadyVisitedCells;
 	private Pair<Integer,Integer> lastVisitedPosition;
-	private final MainGameController controller;
-	private AnimationTimer animationTimer;
+	private GameTimerView gameTimerView;
 	
 	private Set<String> suggestedWords;
 
@@ -121,49 +109,18 @@ public final class MainGameView {
 		this.letterFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(1.5).asString(), ";");
 		this.pointFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(0.5).asString(), ";");
 		this.titleFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(2).asString(), ";");
+		this.gameTimerView = new GameTimerViewImpl();
+		this.onClose();
 	}
 
 	public void initialize() {
-		this.setGraphics();
-		this.setEventHandler();
-		var shape = this.controller.getMainController().getSettings().getCurrentGridShape();
-		this.populateGrid(shape,shape);
-		this.controller.startTimer();
-		this.startTimer();
+		this.buildView();
 	}
 	
-	private void startTimer() {		
-		this.animationTimer = new AnimationTimer() {
-			@Override
-			public void handle(long now) {
-				Platform.runLater(new Runnable(){
-					@Override
-					public void run() {
-						final var timeRemaining = controller.getRemainingTime();
-						timerValueLabel.setText("" + timeRemaining);
-						
-						if(timeRemaining <= 0) {
-							animationTimer.stop();
-							saveGame();
-							stage.setUserData(controller);
-							DoubleProperty visualUnit = new SimpleDoubleProperty();
-							visualUnit.bind(Bindings.min(stage.widthProperty(),stage.heightProperty()));
-							StatisticsMainGameView controller = new StatisticsMainGameView(stage);
-							final Scene scene;
-							try {
-								scene = new Scene(Loader.<StatisticsMainGameView, Parent>loadFXMLElement(controller, STATISTICS_MAIN_GAME_PATH), 
-												stage.getWidth()*0.75, stage.getHeight()*0.75);
-								stage.setScene(scene);
-								stage.show();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-					}
-				});
-			}
-		};
-		this.animationTimer.start();
+	private void startTimer() {	
+		this.gameTimerView.setLabel(this.timerValueLabel);
+		this.gameTimerView.attach(this);
+		this.gameTimerView.start();
 	}
 	
 	public void leaveGame(final ActionEvent event) throws IOException {
@@ -177,11 +134,7 @@ public final class MainGameView {
 		Optional<ButtonType> result = alert.showAndWait();
 		
 		if (result.isPresent() && result.get().equals(confirm)) {
-			this.animationTimer.stop();
-			this.controller.stopTimer();
-			this.controller.getMainController().saveBonuses();
-			this.stage.setUserData(this.controller.getMainController());
-			SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), "layouts/mainMenu.fxml");
+			this.gameTimerView.stopWithoutSave(event);
 		}
 	}
 
@@ -192,9 +145,7 @@ public final class MainGameView {
 	}
 	
 	public void gainTimeBonus(final ActionEvent event) {
-		this.controller.useTimeBonus();
-		timerValueLabel.setText("" + this.controller.getRemainingTime());
-		((Button) event.getSource()).setDisable(true);
+		this.gameTimerView.gainBonus(event);
 	}
 	
 	public void gainWordBonus(final ActionEvent event) {
@@ -211,33 +162,6 @@ public final class MainGameView {
         this.bonusTimeButton.setOnMouseDragReleased(mouseEvent -> this.finishInvalidReading());
         this.bonusWordButton.setOnMouseDragReleased(mouseEvent -> this.finishInvalidReading());
         this.leaveButton.setOnMouseDragReleased(mouseEvent -> this.finishInvalidReading());
-	}
-	
-	private void setGraphics() {
-		this.bonusScoreButton.setDisable(this.controller.getMainController().getBonusManager().getScoreBonusQuantity() == 0);
-		this.bonusTimeButton.setDisable(this.controller.getMainController().getBonusManager().getTimeBonusQuantity() == 0);
-		this.bonusWordButton.setDisable(this.controller.getMainController().getBonusManager().getWordBonusQuantity() == 0);
-		
-		this.grid.setPadding(new Insets(15,15,15,15));
-		
-		this.leftPanel.styleProperty().bind(this.standardFontSize);
-		this.leftPanel.styleProperty().bind(Bindings.concat("-fx-spacing: ", this.visualUnit.asString(), ";"));
-
-		this.rightPanel.styleProperty().bind(Bindings.concat("-fx-spacing: ", this.visualUnit.asString(), ";"));		
-		
-		this.mainVbox.styleProperty().bind(this.standardFontSize);
-		this.titleLabel.styleProperty().bind(this.titleFontSize);
-				
-		
-		this.pointsLabel.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
-		this.pointsValueLabel.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
-		
-		this.timerLabel.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
-		this.timerValueLabel.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
-		
-		this.bonusScoreButton.setMinSize(Button.USE_PREF_SIZE, Button.USE_PREF_SIZE);
-		this.bonusTimeButton.setMinSize(Button.USE_PREF_SIZE, Button.USE_PREF_SIZE);
-		this.bonusWordButton.setMinSize(Button.USE_PREF_SIZE, Button.USE_PREF_SIZE);
 	}
 	
 	private void populateGrid(final int numCols, final int numRows) {
@@ -357,15 +281,58 @@ public final class MainGameView {
 		this.titleLabel.setText(this.word);
 		this.visitCell(position);
 	}
+
+	@Override
+	public void nextScene(ActionEvent event) throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void buildView() {
+		this.setGraphics();
+		this.setEventHandler();
+		var shape = this.controller.getMainController().getSettings().getCurrentGridShape();
+		this.populateGrid(shape,shape);
+		this.startTimer();
+	}
+
+	@Override
+	protected void setGraphics() {
+		this.bonusScoreButton.setDisable(this.controller.getMainController().getBonusManager().getScoreBonusQuantity() == 0);
+		this.bonusTimeButton.setDisable(this.controller.getMainController().getBonusManager().getTimeBonusQuantity() == 0);
+		this.bonusWordButton.setDisable(this.controller.getMainController().getBonusManager().getWordBonusQuantity() == 0);
+		
+		this.grid.setPadding(new Insets(15,15,15,15));
+		
+		this.leftPanel.styleProperty().bind(this.standardFontSize);
+		this.leftPanel.styleProperty().bind(Bindings.concat("-fx-spacing: ", this.visualUnit.asString(), ";"));
+
+		this.rightPanel.styleProperty().bind(Bindings.concat("-fx-spacing: ", this.visualUnit.asString(), ";"));		
+		
+		this.mainVbox.styleProperty().bind(this.standardFontSize);
+		this.titleLabel.styleProperty().bind(this.titleFontSize);
+				
+		this.pointsLabel.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
+		this.pointsValueLabel.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
+		
+		this.timerLabel.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
+		this.timerValueLabel.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
+		
+		this.bonusScoreButton.setMinSize(Button.USE_PREF_SIZE, Button.USE_PREF_SIZE);
+		this.bonusTimeButton.setMinSize(Button.USE_PREF_SIZE, Button.USE_PREF_SIZE);
+		this.bonusWordButton.setMinSize(Button.USE_PREF_SIZE, Button.USE_PREF_SIZE);
+	}
 	
-	private void saveGame() {
-		this.controller.getMainController().addMainGametoHistory(this.controller.getGame().get());
-		try {
-			this.controller.getMainController().saveGameHistory();
-			this.controller.getMainController().saveBonuses();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void update() {
+		this.gameTimerView.setUpdatedController(this);
+	}
+	
+	public MainGameController getMainGameController() {
+		return this.controller;
+	}
+	
+	public Stage getStage() {
+		return this.stage;
 	}
 }

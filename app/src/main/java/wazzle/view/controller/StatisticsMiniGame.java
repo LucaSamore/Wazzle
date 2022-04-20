@@ -67,7 +67,6 @@ public class StatisticsMiniGame {
 		visualUnit.bind(Bindings.min(stage.heightProperty(), stage.widthProperty()));
 
 		this.miniGameController = (MiniGameControllerImpl) this.stage.getUserData();
-		WindowCloser.onExit(this.stage);
 	}
 
 	public void initialize() {

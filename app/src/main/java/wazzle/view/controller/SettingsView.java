@@ -17,9 +17,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import wazzle.controller.common.WazzleController;
 import wazzle.controller.common.WazzleControllerImpl;
+import wazzle.view.FXMLFiles;
 import wazzle.view.SceneSwitcher;
 
-public final class SettingsView {
+public final class SettingsView extends View<WazzleController>{
 
 	@FXML
 	private VBox mainSettingWindow;
@@ -45,28 +46,41 @@ public final class SettingsView {
 	@FXML
 	private Button cancelButton;
 
-	private DoubleProperty visualUnit;
-	private final Stage stage;
-	private final WazzleController wazzleController;
-
 	public SettingsView(final Stage stage) {
 		this.stage = stage;
 		this.visualUnit = new SimpleDoubleProperty();
 		this.visualUnit.bind(Bindings.min(stage.heightProperty().multiply(0.05), stage.widthProperty().multiply(0.05)));
-		this.wazzleController = (WazzleControllerImpl) stage.getUserData();
+		this.controller = (WazzleControllerImpl) stage.getUserData();
+		this.onClose();
 	}
 
-	public void initialize() {
-		this.setGraphic();
-		this.wazzleController.getSettings().getAllDifficulties().keySet()
+	@Override
+	public void nextScene(ActionEvent event) throws IOException {
+		final Node node = (Node) event.getSource();
+
+		if (node.getId().equals("okButton")) {
+			final var sliderValue = (int) this.gridDimensionSlider.getValue();
+			this.controller.getSettingsController().updateSettings(
+					this.controller.getSettingsController().getAllDifficulties().get(difficultySelectorCBox.getValue()).get(sliderValue),
+					sliderValue);
+			this.controller.saveSettings();
+		}
+		this.stage.setUserData(this.controller);
+		SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), FXMLFiles.MAIN_MENU.getPath());
+	}
+
+	@Override
+	protected void buildView() {
+		this.setGraphics();
+		this.controller.getSettings().getAllDifficulties().keySet()
 				.forEach(e -> difficultySelectorCBox.getItems().add(e));
 
-		this.difficultySelectorCBox.getSelectionModel().select(this.wazzleController.getSettings().getCurrentDifficultyName());
-		this.gridDimensionSlider.setValue(this.wazzleController.getSettings().getCurrentGridShape());
+		this.difficultySelectorCBox.getSelectionModel().select(this.controller.getSettings().getCurrentDifficultyName());
+		this.gridDimensionSlider.setValue(this.controller.getSettings().getCurrentGridShape());
 	}
 
-	private void setGraphic() {
-
+	@Override
+	protected void setGraphics() {
 		final ObservableValue<String> fontSize = Bindings.concat("-fx-font-size: ", visualUnit.asString(), ";");
 		final ObservableValue<String> cbBoxItemFont = Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.7).asString(), ";");
 		final ObservableValue<String> paddingValue = Bindings.concat("-fx-padding: ",
@@ -85,20 +99,6 @@ public final class SettingsView {
 		this.difficultySelectorCBox.maxWidthProperty().bind(gridDimensionSlider.widthProperty());
 		this.okButton.styleProperty().bind(fontSize);
 		this.cancelButton.styleProperty().bind(fontSize);
-	}
-
-	public void goToScene(final ActionEvent event) throws IOException {
-		final Node node = (Node) event.getSource();
-
-		if (node.getId().equals("okButton")) {
-			final var sliderValue = (int) this.gridDimensionSlider.getValue();
-			this.wazzleController.getSettingsController().updateSettings(
-					this.wazzleController.getSettingsController().getAllDifficulties().get(difficultySelectorCBox.getValue()).get(sliderValue),
-					sliderValue);
-			this.wazzleController.saveSettings();
-		}
-		this.stage.setUserData(this.wazzleController);
-		SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), "layouts/mainMenu.fxml");
 	}
 
 }
