@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import wazzle.controller.common.WazzleController;
 import wazzle.controller.maingame.MainGameControllerImpl;
+import wazzle.controller.minigame.MiniGameControllerImpl;
 import wazzle.view.FXMLFiles;
 import wazzle.view.SceneSwitcher;
 
@@ -82,6 +83,8 @@ public final class MainMenuView extends View<WazzleController>{
 		switch (node.getId()) {
 
 		case "startMiniGameButton":
+			this.stage.setUserData(new MiniGameControllerImpl(this.controller));
+			SceneSwitcher.<MiniGameView>switchScene(event, new MiniGameView(this.stage), FXMLFiles.MINI_GAME.getPath());
 			break;
 
 		case "startMainGameButton":
