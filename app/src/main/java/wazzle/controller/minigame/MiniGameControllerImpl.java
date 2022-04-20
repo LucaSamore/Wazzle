@@ -33,7 +33,6 @@ public class MiniGameControllerImpl implements MiniGameController {
 			this.currentMinigame = Optional.of(this.newMiniGame(dictionary));
 		}else {
 			final var loadedMinigame = this.loadMiniGame();
-			
 			loadedMinigame.get().setGameState(State.IN_PROGRESS);
 			loadedMinigame.get().setWordChecker(new WordCheckerImpl(loadedMinigame.get().getTargetWord()));
 			this.currentMinigame = Optional.of(loadedMinigame.get());
