@@ -10,47 +10,53 @@ import com.google.gson.annotations.Expose;
 
 public class MiniGameImpl implements MiniGame {
 
-//	private int tentativesLeft;
+	private static final int MAX_ATTEMPTS_NUMBER = 6;
+	private static final int WORDS_LENGHT = 5;
+
 	@Expose
 	private String targetWord;
-	
+
 	@Expose
-	private LinkedList<MiniGameWord> guessedWords;
-	
+	private List<MiniGameWord> guessedWords;
+
 	@Expose
 	private LocalDateTime gameStarTimeDate;
-	
+
 	private WordChecker wordChecker;
 	private AttemptImpl currentAttempt;
-	private int currentAttemptNumber;
-	
-	public MiniGameImpl() {
+	private int maxAttempts;
+	private int maxWordLenght;
+
+	public MiniGameImpl() throws IOException {
 		this.wordChecker = new WordCheckerImpl();
 		this.guessedWords = new LinkedList<MiniGameWord>();
-		this.currentAttemptNumber = 0;
-		try {
-			this.targetWord = new WordsDispenserImpl().getSuitableWord();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.targetWord = new WordsDispenserImpl().getSuitableWord();
 		System.out.println(targetWord);
 	}
 
 	@Override
 	public boolean loadMiniGame() {
-
 		return false;
 	}
-
 
 	@Override
 	public String getTargetWord() {
 		return this.targetWord;
 	}
+	
+	@Override
+	public int getMaxAttemptsNumber() {
+		return MiniGameImpl.MAX_ATTEMPTS_NUMBER;
+	}
+	
+	@Override
+	public int getWordLenght() {
+		return MiniGameImpl.WORDS_LENGHT;
+	}
 
 	@Override
 	public boolean isWordCorrect(String guessedWord) {
-		currentAttemptNumber++;
+		
 		this.currentAttempt = new AttemptImpl(this.getTargetWord(), guessedWord);
 		return this.wordChecker.isCorrectWord(this.currentAttempt);
 	}
@@ -67,13 +73,11 @@ public class MiniGameImpl implements MiniGame {
 	@Override
 	public MiniGameWord computeResult() {
 		this.addGuessedWord(this.wordChecker.computeAttemptResult(this.currentAttempt));
-		return guessedWords.getLast();
+		return guessedWords.get(guessedWords.size()-1);
 	}
 
 	@Override
 	public int getCurrentAttemptsNumber() {
-		//guessedWords.size();
-		return currentAttemptNumber;
+		return this.guessedWords.size();
 	}
-
 }

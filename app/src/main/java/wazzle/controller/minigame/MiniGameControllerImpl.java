@@ -1,5 +1,7 @@
 package wazzle.controller.minigame;
 
+import java.io.IOException;
+
 import wazzle.controller.common.WazzleController;
 import wazzle.model.maingame.MainGameImpl;
 import wazzle.model.minigame.MiniGame;
@@ -11,29 +13,20 @@ public class MiniGameControllerImpl implements MiniGameController {
 	private MiniGame currentMinigame;
 	private WazzleController wazzleController;
 	
-	public MiniGameControllerImpl(WazzleController wazzleController){
+	public MiniGameControllerImpl(WazzleController wazzleController) throws IOException{
 		this.currentMinigame = new MiniGameImpl();	
 		this.wazzleController = wazzleController;
-//		if (wazzleController.getMiniGameSnapshot().isPresent()) {
-//			this.loadMiniGame(wazzleController.getMiniGameSnapshot());			
-//		}
 	}
 	
 	@Override
 	public void newMiniGame() {
 	}
 
-
-
 	@Override
 	public void saveMiniGame() {
-		 
-		
 	}
 	
 	private void loadMiniGame() {
-//		this.currentMinigame.takeSnapshot(null, null, null, null); //TODO
-//		this.currentMinigame.loadMiniGame();
 	}
 	
 	@Override
@@ -56,4 +49,13 @@ public class MiniGameControllerImpl implements MiniGameController {
 		return currentMinigame.getTargetWord();
 	}
 	
+	@Override
+	public int getWordLenght() {
+		return currentMinigame.getWordLenght();
+	}
+	
+	@Override
+	public int getMaxAttemptsNumber() {
+		return currentMinigame.getMaxAttemptsNumber();
+	}
 }

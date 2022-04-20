@@ -24,6 +24,7 @@ import wazzle.controller.maingame.MainGameController;
 import wazzle.controller.minigame.MiniGameController;
 import wazzle.controller.minigame.MiniGameControllerImpl;
 import wazzle.model.minigame.MiniGameWord;
+import wazzle.model.minigame.Result;
 
 public class MiniGameView {
 
@@ -57,9 +58,6 @@ public class MiniGameView {
 	private static final String UPPER_ROW_CHARACTERS = "qwertyuiop";
 	private static final String MIDDLE_ROW_CHARACTERS = "asdfghjkl";
 	private static final String LOWER_ROW_CHARACTERS = "zxcvbnm";
-	private static final int NUM_ROWS = 6;
-	private static final int NUM_COLS = 5;
-
 	private Map<Integer, String> keyboardCharacters;
 	private Map<Integer, GridPane> keyboardKeys;
 
@@ -70,11 +68,15 @@ public class MiniGameView {
 	private int currentTypeIndex;
 	private int currentRowIndex;
 	private String currentWord;
+	private int numRows;
+	private int numCols;
 
 	public MiniGameView(Stage stage) {
 		this.stage = stage;
 		this.currentWord = "";
-		this.controller = (MiniGameControllerImpl) stage.getUserData();
+		this.controller = (MiniGameController) stage.getUserData();
+		this.numRows = this.controller.getMaxAttemptsNumber();
+		this.numCols = this.controller.getWordLenght();
 		this.currentTypeIndex = 0;
 		this.currentRowIndex = 0;
 		this.keyboardCharacters = new HashMap<>();
@@ -97,7 +99,7 @@ public class MiniGameView {
 
 	public void initialize() {
 
-		populateLettersGrid(NUM_ROWS, NUM_COLS);
+		populateLettersGrid(numRows, this.numCols);
 		populateKeyboardGrid();
 		setGraphic();
 
@@ -171,7 +173,7 @@ public class MiniGameView {
 
 	private void populateLettersGrid(int numRows, int numCols) {
 		for (int rowIndex = 0; rowIndex < numRows; rowIndex++) {
-			for (int colIndex = 0; colIndex < numCols; colIndex++) {
+			for (int colIndex = 0; colIndex < this.numCols; colIndex++) {
 				addMiniGamePane(null, colIndex, rowIndex, 2);
 			}
 		}
@@ -213,9 +215,9 @@ public class MiniGameView {
 	}
 
 	private void typeLetterGrid(String string) {
-		if (currentTypeIndex < NUM_COLS) {
+		if (currentTypeIndex < this.numCols) {
 			removeGridElement(currentTypeIndex, currentRowIndex);
-			addMiniGamePane(string, currentTypeIndex, currentRowIndex, 2);
+			addMiniGamePane(string, currentTypeIndex, currentRowIndex, Result.WRONG.getState());
 			currentTypeIndex++;
 			this.currentWord += string;
 		}
@@ -232,38 +234,31 @@ public class MiniGameView {
 	}
 
 	public void goToScene(ActionEvent event) throws IOException {
-//		Node node = (Node) event.getSource();
-//		stage = (Stage) node.getScene().getWindow();
-//		FXMLLoader loader = new FXMLLoader();
-//		loader.setController(new MenuController(stage));
-//		loader.setLocation(getClass().getResource(PathToFXMLFiles.MAINMENU.getPath()));
-//		Parent root = loader.load();
-//		Scene scene = new Scene(root, stage.getScene().getWidth(), stage.getScene().getHeight());
-//		stage.setScene(scene);
-//		stage.show();
+
 	}
 
 	private void removeGridElement(final int column, final int row) {
-		System.out.println("removed elem at: row" + row + "column: " + column);
 		this.wordsGrid.getChildren().remove(getNodeByCoords(row, column));
 	}
 
 	public void sendWord() {
-		if (currentTypeIndex == NUM_COLS) {
+		if (currentTypeIndex == this.numCols) {
 			if (this.controller.guessWord(currentWord)) {
 				System.out.println("Gioco finito!");
 			} else {
-				this.currentTypeIndex = 0;
-				this.controller.guessWord(currentWord);
 				MiniGameWord word = this.controller.computeDifferencies();
-				this.currentWord = "";
-				for (int i = 0; i < NUM_COLS; i++) {
+				
+				for (int i = 0; i < this.numCols; i++) {
 					removeGridElement(i, this.currentRowIndex);
 					addMiniGamePane("" + word.getCompositeWord().get(i).getCharacter(), i, this.currentRowIndex,
 							word.getCompositeWord().get(i).getResult());
 				}
+				
+				this.currentWord = "";
+				this.currentTypeIndex = 0;
 				this.currentRowIndex++;
-				if (this.currentRowIndex == NUM_ROWS) {
+				
+				if (this.currentRowIndex == numRows) {
 					System.out.println("Gioco finito!");
 				}
 			}
@@ -271,9 +266,9 @@ public class MiniGameView {
 	}
 
 	public void cancelWord() {
-		for (int i = 0; i < NUM_COLS; i++) {
+		for (int i = 0; i < this.numCols; i++) {
 			removeGridElement(i, this.currentRowIndex);
-			addMiniGamePane("", i, this.currentRowIndex, 2);
+			addMiniGamePane("", i, this.currentRowIndex, Result.WRONG.getState());
 		}
 		this.currentTypeIndex = 0;
 	}

@@ -15,4 +15,8 @@ public interface MiniGameController {
 
 	public String getTargetWord();
 
+	int getWordLenght();
+
+	int getMaxAttemptsNumber();
+
 }

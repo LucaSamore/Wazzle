@@ -19,6 +19,10 @@ public interface MiniGame {
 
 	public int getCurrentAttemptsNumber();
 
+	public int getWordLenght();
+
+	public int getMaxAttemptsNumber();
+
 //	Optional<SavedMiniGame> takeSnapshot(String targetWord, LinkedList<MiniGameWord> guessedWords, LocalDateTime gameStarTimeDate,
 //			AttemptImpl currentAttempt);
 }

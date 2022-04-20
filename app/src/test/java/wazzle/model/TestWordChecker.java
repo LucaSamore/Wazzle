@@ -15,6 +15,7 @@ import wazzle.model.minigame.MiniGameWordImpl;
 import wazzle.model.minigame.Result;
 import wazzle.model.minigame.WordChecker;
 import wazzle.model.minigame.WordCheckerImpl;
+import wazzle.model.minigame.WordElement;
 
 public class TestWordChecker {
 
@@ -24,11 +25,11 @@ public class TestWordChecker {
 		MiniGameWord expectedWord;
 		Attempt attempt = new AttemptImpl("gatto", "fatta");
 		
-		List<Pair<Character, Result>> result = new ArrayList<>(List.of(new Pair<>('f', Result.WRONG),
-				new Pair<>('a', Result.CORRECT),
-				new Pair<>('t', Result.CORRECT),
-				new Pair<>('t', Result.CORRECT),
-				new Pair<>('a', Result.CORRECT_WRONG_PLACE)));
+		List<WordElement> result = new ArrayList<>(List.of(new WordElement('f', Result.WRONG.getState()),
+				new  WordElement('a', Result.CORRECT.getState()),
+				new  WordElement('t', Result.CORRECT.getState()),
+				new  WordElement('t', Result.CORRECT.getState()),
+				new  WordElement('a', Result.CORRECT_WRONG_PLACE.getState())));
 		
 		expectedWord = new MiniGameWordImpl();
 		expectedWord.setCompositeWord(result);
@@ -36,11 +37,11 @@ public class TestWordChecker {
 		assertEquals(expectedWord, wordChecker.computeAttemptResult(attempt));
 		
 		attempt = new AttemptImpl("crema", "grana");
-		result = new ArrayList<>(List.of(new Pair<>('g', Result.WRONG),
-				new Pair<>('r', Result.CORRECT),
-				new Pair<>('a', Result.CORRECT_WRONG_PLACE),
-				new Pair<>('n', Result.WRONG),
-				new Pair<>('a', Result.CORRECT)));
+		result = new ArrayList<>(List.of(new WordElement('g', Result.WRONG.getState()),
+				new	 WordElement('r', Result.CORRECT.getState()),
+				new	 WordElement('a', Result.CORRECT_WRONG_PLACE.getState()),
+				new	 WordElement('n', Result.WRONG.getState()),
+				new	 WordElement('a', Result.CORRECT.getState())));
 		
 		expectedWord = new MiniGameWordImpl();
 		expectedWord.setCompositeWord(result);
@@ -48,11 +49,11 @@ public class TestWordChecker {
 		assertEquals(expectedWord, wordChecker.computeAttemptResult(attempt));
 		
 		attempt = new AttemptImpl("cappa", "frodi");
-		result = new ArrayList<>(List.of(new Pair<>('f', Result.WRONG),
-				new Pair<>('r', Result.WRONG),
-				new Pair<>('o', Result.WRONG),
-				new Pair<>('d', Result.WRONG),
-				new Pair<>('i', Result.WRONG)));
+		result = new ArrayList<>(List.of(new WordElement('f', Result.WRONG.getState()),
+				new WordElement('r', Result.WRONG.getState()),
+				new WordElement('o', Result.WRONG.getState()),
+				new WordElement('d', Result.WRONG.getState()),
+				new WordElement('i', Result.WRONG.getState())));
 		
 		expectedWord = new MiniGameWordImpl();
 		expectedWord.setCompositeWord(result);
@@ -60,11 +61,11 @@ public class TestWordChecker {
 		assertEquals(expectedWord, wordChecker.computeAttemptResult(attempt));
 		
 		attempt = new AttemptImpl("gatto", "gatto");
-		result = new ArrayList<>(List.of(new Pair<>('g', Result.CORRECT),
-				new Pair<>('a', Result.CORRECT),
-				new Pair<>('t', Result.CORRECT),
-				new Pair<>('t', Result.CORRECT),
-				new Pair<>('o', Result.CORRECT)));
+		result = new ArrayList<>(List.of(new WordElement('g', Result.CORRECT.getState()),
+				new WordElement('a', Result.CORRECT.getState()),
+				new WordElement('t', Result.CORRECT.getState()),
+				new WordElement('t', Result.CORRECT.getState()),
+				new WordElement('o', Result.CORRECT.getState())));
 		expectedWord = new MiniGameWordImpl();
 		expectedWord.setCompositeWord(result);
 		assertTrue(wordChecker.isCorrectWord(attempt));
