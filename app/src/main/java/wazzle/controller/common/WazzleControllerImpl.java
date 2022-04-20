@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import wazzle.controller.maingame.GameHistoryController;
 import wazzle.controller.maingame.GameHistoryControllerImpl;
@@ -22,6 +23,7 @@ import wazzle.model.minigame.MiniGameImpl;
 
 public class WazzleControllerImpl implements WazzleController {
 
+	private static final int MAX_GAME_HISTORY_VISIBLE = 10;
 	private final FileController fileController;
 	private final SettingsController settingsController;
 	private final GameHistoryController gameHistoryController;
@@ -78,6 +80,7 @@ public class WazzleControllerImpl implements WazzleController {
 	 */
 	@Override
 	public List<MainGameImpl> getGameHistory() {
+		this.gameHistoryController.sortGameHistoryByData();
 		return List.copyOf(this.gameHistoryController.getGameHistory());
 	}
 
@@ -142,7 +145,9 @@ public class WazzleControllerImpl implements WazzleController {
 	 */
 	@Override
 	public void saveGameHistory() throws IOException {
-		this.fileController.saveGames(WazzleFiles.HISTORY.getFileName(), this.getGameHistory());
+		this.fileController.saveGames(WazzleFiles.HISTORY.getFileName(), this.getGameHistory().stream()
+				.limit(MAX_GAME_HISTORY_VISIBLE)
+				.collect(Collectors.toList()));
 	}
 
 	/**
