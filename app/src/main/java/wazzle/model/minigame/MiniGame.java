@@ -19,8 +19,6 @@ public interface MiniGame {
 
 	boolean loadMiniGame();
 
-	LocalDateTime getGameStarTimeDate();
-
 	String getTargetWord();
 
 	boolean isWordCorrect(String guessedWord);
@@ -36,5 +34,6 @@ public interface MiniGame {
 	int getCurrentAttemptsNumber();
 
 	MiniGameWord computeResult(String guessedWord);
+	
 
 }

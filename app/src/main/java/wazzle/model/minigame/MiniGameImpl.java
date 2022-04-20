@@ -17,9 +17,6 @@ public class MiniGameImpl implements MiniGame {
 	@Expose
 	private List<MiniGameWord> guessedWords;
 
-	@Expose
-	private LocalDateTime gameStarTimeDate;
-
 	private WordChecker wordChecker;
 	private State gameState;
 
@@ -51,13 +48,8 @@ public class MiniGameImpl implements MiniGame {
 		return this.wordChecker.isCorrectWord(guessedWord);
 	}
 
-	private void addGuessedWord(MiniGameWord wrongWord) {
-		this.guessedWords.add(wrongWord);
-	}
-
-	@Override
-	public LocalDateTime getGameStarTimeDate() {
-		return gameStarTimeDate;
+	private void addGuessedWord(MiniGameWord word) {
+		this.guessedWords.add(word);
 	}
 
 	@Override
