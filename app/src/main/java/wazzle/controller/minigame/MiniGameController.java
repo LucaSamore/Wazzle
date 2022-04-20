@@ -1,25 +1,35 @@
 package wazzle.controller.minigame;
 
+import java.io.IOException;
+
+import wazzle.controller.common.WazzleController;
+import wazzle.model.common.Dictionary;
+import wazzle.model.minigame.MiniGame;
 import wazzle.model.minigame.MiniGame.State;
 import wazzle.model.minigame.MiniGameWord;
 
 public interface MiniGameController {
-	public void newMiniGame();
 
-	public void saveMiniGame();
+	void saveMiniGame() throws IOException;
 
-	public void guessWord(String guessedWord);
-
-	MiniGameWord computeDifferencies();
+	void guessWord(String guessedWord);
 
 	int getCurrentAttemptsNumber();
 
-	public String getTargetWord();
+	String getTargetWord();
 
 	int getWordLenght();
 
 	int getMaxAttemptsNumber();
 
-	public State getState();
+	State getState();
+
+	void startGame(Dictionary dictionary) throws IOException ;
+
+	MiniGame newMiniGame(Dictionary dictionary);
+
+	MiniGameWord computeDifferencies(String guessedWord);
+
+	WazzleController getMainController();
 
 }
