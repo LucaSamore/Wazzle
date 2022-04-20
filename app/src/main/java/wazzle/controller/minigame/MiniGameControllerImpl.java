@@ -12,11 +12,11 @@ import wazzle.model.minigame.MiniGameWord;
 public class MiniGameControllerImpl implements MiniGameController {
 
 	private MiniGame currentMinigame;
-	private WazzleController wazzleController;
+//	private WazzleController wazzleController;
 	
 	public MiniGameControllerImpl(WazzleController wazzleController) throws IOException{
 		this.currentMinigame = new MiniGameImpl();	
-		this.wazzleController = wazzleController;
+//		this.wazzleController = wazzleController;
 	}
 	
 	@Override
@@ -37,7 +37,7 @@ public class MiniGameControllerImpl implements MiniGameController {
 		} else if (currentMinigame.getCurrentAttemptsNumber() == currentMinigame.getMaxAttemptsNumber()) {
 			currentMinigame.setGameState(State.FAILED);
 		}
-	}
+	}	
 	
 	@Override
 	public MiniGameWord computeDifferencies() {

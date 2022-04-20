@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import wazzle.controller.common.WazzleController;
 import wazzle.controller.maingame.MainGameControllerImpl;
+import wazzle.controller.minigame.MiniGameControllerImpl;
 import wazzle.view.SceneSwitcher;
 
 public final class MainMenuView {
@@ -56,6 +57,7 @@ public final class MainMenuView {
 	private static final String LOADING_SCREEN_PATH = "layouts/LoadingScreen.fxml";
 	private static final String SETTINGS_PATH = "layouts/SettingPage.fxml";
 	private static final String GAME_HISTORY_PATH = "layouts/history.fxml";
+	private static final String MIMIGAME_PATH = "layouts/MiniGame.fxml";
 	private Stage stage;
 	private DoubleProperty visualUnit;
 	private StringExpression titleFontSize;
@@ -111,6 +113,8 @@ public final class MainMenuView {
 		switch (node.getId()) {
 
 		case "startMiniGameButton":
+			this.stage.setUserData(new MiniGameControllerImpl(this.wazzleController));
+			SceneSwitcher.<MiniGameView>switchScene(event, new MiniGameView(this.stage), MIMIGAME_PATH);
 			break;
 
 		case "startMainGameButton":

@@ -19,10 +19,8 @@ public class TestComparator {
 
 	@Test
 	public void test() throws IOException {
-		Set<String> filteredDataset = new HashSet<>(TestReader.readDataset("testDictionary.txt"));
-
-
-		Dictionary filteredDictionary = new FiveLetterDictionary (new DictionaryImpl(filteredDataset));
+//		Set<String> filteredDataset = new HashSet<>(TestReader.readDataset("testDictionary.txt"));
+//		Dictionary filteredDictionary = new FiveLetterDictionary (new DictionaryImpl(filteredDataset));
 		
 		Set<String> savedOnFileDataset = new HashSet<>();
 		savedOnFileDataset.add("AAAAA");

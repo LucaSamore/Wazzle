@@ -62,7 +62,6 @@ public class MiniGameView {
 	private Map<Integer, String> keyboardCharacters;
 	private Map<Integer, GridPane> keyboardKeys;
 
-	private Stage stage;
 
 	private final MiniGameController controller;
 	private DoubleProperty visualUnit;
@@ -73,7 +72,6 @@ public class MiniGameView {
 	private int numCols;
 
 	public MiniGameView(Stage stage) {
-		this.stage = stage;
 		this.currentWord = "";
 		this.controller = (MiniGameController) stage.getUserData();
 		this.numRows = this.controller.getMaxAttemptsNumber();
@@ -187,15 +185,15 @@ public class MiniGameView {
 		Pane coloredPane = new Pane();
 
 		switch (state) {
-		case 0:
-			coloredPane.setStyle("-fx-background-color:#45E521;" + "-fx-background-radius: 10");
-			break;
-		case 1:
-			coloredPane.setStyle("-fx-background-color: yellow;" + "-fx-background-radius: 10");
-			break;
-		case 2:
-			coloredPane.setStyle("-fx-background-color: #0000;" + "-fx-background-radius: 10");
-			break;
+			case 0:
+				coloredPane.setStyle("-fx-background-color:#45E521;" + "-fx-background-radius: 10");
+				break;
+			case 1:
+				coloredPane.setStyle("-fx-background-color: yellow;" + "-fx-background-radius: 10");
+				break;
+			default:
+				coloredPane.setStyle("-fx-background-color: #0000;" + "-fx-background-radius: 10");
+				break;
 		}
 
 		coloredPane.maxWidthProperty().bind(incave.widthProperty().multiply(0.6));
@@ -285,5 +283,6 @@ public class MiniGameView {
 			addMiniGamePane("", i, this.currentRowIndex, Result.WRONG.getState());
 		}
 		this.currentTypeIndex = 0;
+		this.currentWord = "";
 	}
 }
