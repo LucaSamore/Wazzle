@@ -5,13 +5,15 @@ import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 
 import wazzle.controller.maingame.Settings;
 import wazzle.model.common.BonusManager;
 import wazzle.model.common.BonusManagerImpl;
 import wazzle.model.common.Dictionary;
-import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
+import wazzle.model.minigame.MiniGame;
+import wazzle.model.minigame.MiniGameImpl;
 
 public interface FileController {
 	String getPath();
@@ -20,7 +22,7 @@ public interface FileController {
 	
 	void saveGames(final String fileName, final List<MainGameImpl> games) throws IOException;
 	
-	//void saveGames(final String fileName, List<MiniGame> games);
+	void saveMiniGame(final String fileName, final MiniGame game) throws IOException;
 	
 	void saveBonuses(final String fileName, final BonusManager bonuses) throws IOException;
 	
@@ -28,7 +30,7 @@ public interface FileController {
 	
 	List<MainGameImpl> getMainGameHistory(final String fileName) throws IOException;
 	
-	//List<MiniGameImpl> getMiniGameHistory(final String fileName) throws IOException;
+	Optional<MiniGameImpl> getMiniGame(final String fileName) throws IOException;
 	
 	BonusManagerImpl getBonuses(final String fileName) throws IOException;
 	

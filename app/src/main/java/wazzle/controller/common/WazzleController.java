@@ -64,7 +64,7 @@ public interface WazzleController {
 	 * 
 	 * @return MiniGameImpl the last MiniGame saved.
 	 */
-	Optional<MiniGameImpl> getLastMinigame();
+	Optional<MiniGameImpl> getLastMinigame() throws IOException;
 	
 	/**
 	 * Gives the Facade.
@@ -119,7 +119,7 @@ public interface WazzleController {
 	 * @param minigame the minigame which have to been saved.
 	 * @throws IOException
 	 */
-	void saveMinigame(MiniGame minigame) throws IOException;
+	void saveMiniGame(MiniGame minigame) throws IOException;
 	
 	/**
 	 * Delete the last saved minigame.

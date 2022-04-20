@@ -96,9 +96,8 @@ public class WazzleControllerImpl implements WazzleController {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Optional<MiniGameImpl> getLastMinigame() {
-		//return this.fileController.getMiniGame();
-		return Optional.empty();
+	public Optional<MiniGameImpl> getLastMinigame() throws IOException {
+		return this.fileController.getMiniGame(WazzleFiles.MINI_GAME.getFileName());
 	}
 	
 	/**
@@ -162,8 +161,8 @@ public class WazzleControllerImpl implements WazzleController {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void saveMinigame(MiniGame minigame) throws IOException {
-		//this.fileController.saveMinigame(WazzleFiles.MINIGAME.getFileName(), minigame);
+	public void saveMiniGame(final MiniGame minigame) throws IOException {
+		this.fileController.saveMiniGame(WazzleFiles.MINI_GAME.getFileName(), minigame);
 	}
 	
 	/**
@@ -171,7 +170,7 @@ public class WazzleControllerImpl implements WazzleController {
 	 */
 	@Override
 	public void deleteEndedMiniGame() throws IOException {
-		//this.fileController.delete(WazzleFiles.MINIGAME.getFileName());
+		this.fileController.delete(WazzleFiles.MINI_GAME.getFileName());
 	}
 	
 	/**

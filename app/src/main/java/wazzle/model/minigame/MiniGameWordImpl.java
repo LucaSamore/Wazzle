@@ -3,13 +3,14 @@ package wazzle.model.minigame;
 import java.util.List;
 import java.util.Objects;
 
+import com.google.gson.annotations.Expose;
+
 import javafx.util.Pair;
 
 public class MiniGameWordImpl implements MiniGameWord {
+	
+	@Expose
 	private List<WordElement> compositeWord;
-
-	public MiniGameWordImpl() {
-	}
 
 	@Override
 	public String toString() {

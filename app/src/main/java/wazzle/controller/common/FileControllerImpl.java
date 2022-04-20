@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import wazzle.controller.common.files.Deserializer;
@@ -18,6 +19,8 @@ import wazzle.model.common.Dictionary;
 import wazzle.model.common.DictionaryImpl;
 import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
+import wazzle.model.minigame.MiniGame;
+import wazzle.model.minigame.MiniGameImpl;
 
 public final class FileControllerImpl implements FileController, Serializer, Deserializer {
 
@@ -55,6 +58,15 @@ public final class FileControllerImpl implements FileController, Serializer, Des
 		
 		this.<MainGame>serialize(DIRECTORY + fileName, games.toArray(new MainGameImpl[games.size()]));
 	}
+	
+	@Override
+	public void saveMiniGame(final String fileName, final MiniGame game) throws IOException {
+		if(!this.exists(DIRECTORY + fileName)) {
+			this.create(DIRECTORY + fileName);
+		}
+		
+		this.<MiniGame>serialize(DIRECTORY + fileName, List.of(game).toArray(new MiniGameImpl[0]));
+	}
 
 	@Override
 	public void saveBonuses(final String fileName, final BonusManager bonuses) throws IOException {
@@ -83,7 +95,16 @@ public final class FileControllerImpl implements FileController, Serializer, Des
 		
 		return this.<MainGameImpl>deserialize(MainGameImpl.class, DIRECTORY + fileName);
 	}
-
+	
+	@Override
+	public Optional<MiniGameImpl> getMiniGame(final String fileName) throws IOException {
+		if(!this.exists(DIRECTORY + fileName)) {
+			return Optional.empty();
+		}
+		
+		return Optional.of(this.<MiniGameImpl>deserialize(MiniGameImpl.class, DIRECTORY + fileName).get(0));
+	}
+	
 	@Override
 	public BonusManagerImpl getBonuses(final String fileName) throws IOException{
 		if(!this.exists(DIRECTORY + fileName)) {

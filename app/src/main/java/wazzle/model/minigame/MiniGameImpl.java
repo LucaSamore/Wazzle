@@ -20,10 +20,12 @@ public class MiniGameImpl implements MiniGame {
 	@Expose
 	private LocalDateTime gameStarTimeDate;
 
+	@Expose
+	private int nuberOfAttemptsSoFar;
+	
 	private WordChecker wordChecker;
 	private AttemptImpl currentAttempt;
 	private State gameState;
-	private int nuberOfAttemptsSoFar;
 
 	public MiniGameImpl() throws IOException {
 		this.wordChecker = new WordCheckerImpl();
