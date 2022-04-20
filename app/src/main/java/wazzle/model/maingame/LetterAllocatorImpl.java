@@ -16,6 +16,7 @@ import javafx.util.Pair;
 
 public final class LetterAllocatorImpl implements LetterAllocator {
 	
+	private static double CONSTANCE_ROUND = 0.5;
 	/**
 	 * The randomizer.
 	 */
@@ -174,11 +175,11 @@ public final class LetterAllocatorImpl implements LetterAllocator {
 			//The last 2 letter aren't taken casually, to avoid bugs
 			if (toAllocLetters.size() > 1) {
 				extraction = RANDOM.nextInt(toAllocLetters.size()-1);
-				allocatedLetters.add(new LetterImpl(p, toAllocLetters.get(extraction).getKey(), toAllocLetters.get(extraction).getValue()));
+				allocatedLetters.add(new LetterImpl(p, toAllocLetters.get(extraction).getKey(), (int) (toAllocLetters.get(extraction).getValue() + CONSTANCE_ROUND)));
 				toAllocLetters.remove(extraction);
 			}
 			else {
-				allocatedLetters.add(new LetterImpl(p, toAllocLetters.get(0).getKey(), toAllocLetters.get(0).getValue()));
+				allocatedLetters.add(new LetterImpl(p, toAllocLetters.get(0).getKey(), (int) (toAllocLetters.get(0).getValue() + CONSTANCE_ROUND)));
 				toAllocLetters.remove(0);
 			}	
 		}

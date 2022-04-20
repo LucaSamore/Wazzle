@@ -23,9 +23,9 @@ public interface MainGame {
 	
 	int getFailedAttempts();
 	
-	void setCurrentScore(final double newScore);
+	void setCurrentScore(final int newScore);
 	
-	double getCurrentScore();
+	int getCurrentScore();
 	
-	double getScoreFromWord(final String word);
+	int getScoreFromWord(final String word);
 }

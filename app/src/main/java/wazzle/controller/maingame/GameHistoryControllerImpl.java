@@ -27,8 +27,8 @@ public class GameHistoryControllerImpl implements GameHistoryController {
 		return this.gameHistory.stream().filter(mg -> mg.getCurrentScore() == this.gameHistory
 																				  .stream()
 																				  .map(g -> g.getCurrentScore())
-																				  .max(Comparator.comparing(Double::valueOf))
-																				  .orElse(Double.NaN))
+																				  .max(Comparator.comparing(Integer::valueOf))
+																				  .orElse(0))
 								 		.findFirst()
 								 		.get();
 	}

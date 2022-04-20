@@ -6,7 +6,7 @@ public class LetterImpl implements Letter {
 	
 	private char content;
 	private Pair<Integer, Integer> position;
-	private double score;
+	private int score;
 	
 	/**
 	 * Construct a new Letter. 
@@ -15,7 +15,7 @@ public class LetterImpl implements Letter {
 	 * @param content The content of the Letter.
 	 * @param score	The score of the Letter.
 	 */
-	public LetterImpl (final Pair<Integer, Integer> position, final char content, final double score) {
+	public LetterImpl (final Pair<Integer, Integer> position, final char content, final int score) {
 		this.content = content;
 		this.position = new Pair<>(position.getKey(), position.getValue());
 		this.score = score;
@@ -38,13 +38,8 @@ public class LetterImpl implements Letter {
 	/**
 	 * {@inheritDoc}
 	 */
-	public double getScore() {
+	public int getScore() {
 		return score;
-	}
-
-	@Override
-	public String toString() {
-		return "LetterImpl [content=" + content + ", position=" + position + ", score=" + score + "]";
 	}
 
 	@Override
@@ -53,9 +48,7 @@ public class LetterImpl implements Letter {
 		int result = 1;
 		result = prime * result + content;
 		result = prime * result + ((position == null) ? 0 : position.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(score);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + score;
 		return result;
 	}
 
@@ -75,9 +68,14 @@ public class LetterImpl implements Letter {
 				return false;
 		} else if (!position.equals(other.position))
 			return false;
-		if (Double.doubleToLongBits(score) != Double.doubleToLongBits(other.score))
+		if (score != other.score)
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "LetterImpl [content=" + content + ", position=" + position + ", score=" + score + "]";
 	}
 
 }
