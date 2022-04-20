@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import wazzle.controller.maingame.MainGameController;
 import wazzle.controller.minigame.MiniGameController;
 import wazzle.controller.minigame.MiniGameControllerImpl;
+import wazzle.model.minigame.MiniGame.State;
 import wazzle.model.minigame.MiniGameWord;
 import wazzle.model.minigame.Result;
 
@@ -180,9 +181,6 @@ public class MiniGameView {
 	}
 
 	private void addMiniGamePane(String letter, int colIndex, int rowIndex, int state) {
-		System.out.println("Added pane with letter " + letter + " at col " + colIndex + " row " + rowIndex
-				+ " with color: " + state);
-
 		incave = new StackPane();
 		incave.getStyleClass().add("incave");
 
@@ -243,26 +241,42 @@ public class MiniGameView {
 
 	public void sendWord() {
 		if (currentTypeIndex == this.numCols) {
-			if (this.controller.guessWord(currentWord)) {
-				System.out.println("Gioco finito!");
-			} else {
+//			if (this.controller.getState() == State.WON) {
+//				System.out.println("Gioco finito con successo!");
+//			}else if (this.controller.getState() == State.FAILED) {
+//				System.out.println("Gioco finito con fallimento!");
+//			} else {
+//				MiniGameWord word = this.controller.computeDifferencies();
+//				
+//				for (int i = 0; i < this.numCols; i++) {
+//					removeGridElement(i, this.currentRowIndex);
+//					addMiniGamePane("" + word.getCompositeWord().get(i).getCharacter(), i, this.currentRowIndex,
+//							word.getCompositeWord().get(i).getResult());
+//				}
+			this.controller.guessWord(this.currentWord);
+			switch (this.controller.getState()) {
+			case WON:
+				System.out.println("Gioco finito con successo!");
+				break;
+			case FAILED:
+				System.out.println("Gioco finito con fallimento!");
+				break;
+
+			default:
 				MiniGameWord word = this.controller.computeDifferencies();
-				
 				for (int i = 0; i < this.numCols; i++) {
 					removeGridElement(i, this.currentRowIndex);
 					addMiniGamePane("" + word.getCompositeWord().get(i).getCharacter(), i, this.currentRowIndex,
 							word.getCompositeWord().get(i).getResult());
 				}
-				
 				this.currentWord = "";
 				this.currentTypeIndex = 0;
 				this.currentRowIndex++;
-				
-				if (this.currentRowIndex == numRows) {
-					System.out.println("Gioco finito!");
-				}
+
+				break;
 			}
 		}
+
 	}
 
 	public void cancelWord() {

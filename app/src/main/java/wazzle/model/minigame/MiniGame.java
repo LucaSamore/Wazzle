@@ -2,16 +2,28 @@ package wazzle.model.minigame;
 
 import java.time.LocalDateTime;
 
-
 public interface MiniGame {
+	enum State {
+		IN_PROGRESS(0),
+		FAILED(1),
+		WON(2);
+
+		private final int currentState;
+
+		State(int state) {
+			this.currentState = state;
+		}
+
+		public int getState() {
+			return currentState;
+		}
+	}
 
 	public boolean loadMiniGame();
 
 	public LocalDateTime getGameStarTimeDate();
 
 	public String getTargetWord();
-
-//	public MiniGame createNewMiniGame() throws IOException;
 
 	public boolean isWordCorrect(String guessedWord);
 
@@ -23,6 +35,8 @@ public interface MiniGame {
 
 	public int getMaxAttemptsNumber();
 
-//	Optional<SavedMiniGame> takeSnapshot(String targetWord, LinkedList<MiniGameWord> guessedWords, LocalDateTime gameStarTimeDate,
-//			AttemptImpl currentAttempt);
+	public void setGameState(State state);
+
+	public State getGameState();
+
 }

@@ -1,5 +1,6 @@
 package wazzle.controller.minigame;
 
+import wazzle.model.minigame.MiniGame.State;
 import wazzle.model.minigame.MiniGameWord;
 
 public interface MiniGameController {
@@ -7,7 +8,7 @@ public interface MiniGameController {
 
 	public void saveMiniGame();
 
-	public boolean guessWord(String guessedWord);
+	public void guessWord(String guessedWord);
 
 	MiniGameWord computeDifferencies();
 
@@ -18,5 +19,7 @@ public interface MiniGameController {
 	int getWordLenght();
 
 	int getMaxAttemptsNumber();
+
+	public State getState();
 
 }
