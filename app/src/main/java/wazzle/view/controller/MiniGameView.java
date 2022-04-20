@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import wazzle.controller.maingame.MainGameController;
 import wazzle.controller.minigame.MiniGameController;
 import wazzle.controller.minigame.MiniGameControllerImpl;
+import wazzle.model.minigame.FiveLetterDictionary;
 import wazzle.model.minigame.MiniGame.State;
 import wazzle.model.minigame.MiniGameWord;
 import wazzle.model.minigame.Result;
@@ -74,6 +75,12 @@ public class MiniGameView {
 	public MiniGameView(Stage stage) {
 		this.currentWord = "";
 		this.controller = (MiniGameController) stage.getUserData();
+		try {
+			this.controller.startGame(this.controller.getMainController().getDataset());
+		} catch (IOException e) {
+			// TODO GENERARE ALERT
+			e.printStackTrace();
+		}
 		this.numRows = this.controller.getMaxAttemptsNumber();
 		this.numCols = this.controller.getWordLenght();
 		this.currentTypeIndex = 0;
@@ -239,18 +246,7 @@ public class MiniGameView {
 
 	public void sendWord() {
 		if (currentTypeIndex == this.numCols) {
-//			if (this.controller.getState() == State.WON) {
-//				System.out.println("Gioco finito con successo!");
-//			}else if (this.controller.getState() == State.FAILED) {
-//				System.out.println("Gioco finito con fallimento!");
-//			} else {
-//				MiniGameWord word = this.controller.computeDifferencies();
-//				
-//				for (int i = 0; i < this.numCols; i++) {
-//					removeGridElement(i, this.currentRowIndex);
-//					addMiniGamePane("" + word.getCompositeWord().get(i).getCharacter(), i, this.currentRowIndex,
-//							word.getCompositeWord().get(i).getResult());
-//				}
+			
 			this.controller.guessWord(this.currentWord);
 			switch (this.controller.getState()) {
 			case WON:
@@ -259,9 +255,8 @@ public class MiniGameView {
 			case FAILED:
 				System.out.println("Gioco finito con fallimento!");
 				break;
-
 			default:
-				MiniGameWord word = this.controller.computeDifferencies();
+				MiniGameWord word = this.controller.computeDifferencies(this.currentWord);
 				for (int i = 0; i < this.numCols; i++) {
 					removeGridElement(i, this.currentRowIndex);
 					addMiniGamePane("" + word.getCompositeWord().get(i).getCharacter(), i, this.currentRowIndex,
