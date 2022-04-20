@@ -12,7 +12,7 @@ public final class WordElement {
 	@Expose
 	private int result;
 
-	WordElement(final char character, final int result) {
+	public WordElement(final char character, final int result) {
 		this.character = character;
 		this.result = result;
 	}
