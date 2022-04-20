@@ -84,8 +84,7 @@ public class LoadingView extends View<MainGameController> {
 				var shape = controller.getMainController().getSettings().getCurrentGridShape();				
 				controller.startNewGame(controller
 						.getMainController()
-						.getFileController()
-						.getDataset(WazzleFiles.DATASET.getFileName()), new Pair<Integer,Integer>(shape,shape), controller.getMainController().getSettings().getCurrentDifficulty());
+						.getDataset(), new Pair<Integer,Integer>(shape,shape), controller.getMainController().getSettings().getCurrentDifficulty());
 				
 				
 				flag = true;
