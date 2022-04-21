@@ -55,6 +55,14 @@ public class WazzleControllerImpl implements WazzleController {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Dictionary getShortDataset() throws IOException {
+		return this.fileController.getDataset(WazzleFiles.SHORT_DATASET.getFileName());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public SettingsController getSettingsController() {
 		return this.settingsController;
 	}

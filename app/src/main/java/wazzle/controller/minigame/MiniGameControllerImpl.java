@@ -27,7 +27,7 @@ public class MiniGameControllerImpl implements MiniGameController {
 	public void startGame() throws IOException {
 
 		if (this.loadMiniGame().isEmpty()) {
-			this.currentMinigame = Optional.of(this.newMiniGame(this.wazzleController.getDataset()));
+			this.currentMinigame = Optional.of(this.newMiniGame(this.wazzleController.getShortDataset()));
 		} else {
 			final var loadedMinigame = this.loadMiniGame();
 			loadedMinigame.get().setWordChecker(new WordCheckerImpl(loadedMinigame.get().getTargetWord()));

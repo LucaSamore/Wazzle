@@ -33,10 +33,18 @@ public interface WazzleController {
 	/**
 	 * Gives the dataset.
 	 * 
-	 * @return Dataset the dataset which Wazzle takes the words from.
+	 * @return Dataset the dataset which MainGame takes the words from.
 	 * @throws IOException
 	 */
 	Dictionary getDataset() throws IOException;
+	
+	/**
+	 * Gives the shortest dataset.
+	 * 
+	 * @return Dataset the short dataset which MiniGame takes the words from.
+	 * @throws IOException
+	 */
+	Dictionary getShortDataset() throws IOException;
 	
 	/**
 	 * Gives the game history controller.

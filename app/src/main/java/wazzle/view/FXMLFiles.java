@@ -7,7 +7,7 @@ public enum FXMLFiles {
 	
 	MAIN_GAME("layouts/MainGame.fxml"),
 	
-	MINI_GAME("layouts/miniGame.fxml"),
+	MINI_GAME("layouts/MiniGame.fxml"),
 	
 	LOADING_SCREEN("layouts/LoadingScreen.fxml"),
 	
