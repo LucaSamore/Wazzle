@@ -111,8 +111,8 @@ public class WazzleControllerImpl implements WazzleController {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void gainBonus() {
-		this.bonusManager.extractBonus();
+	public String gainBonus() {
+		return this.bonusManager.extractBonus();
 	}
 
 	/**

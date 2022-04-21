@@ -11,8 +11,9 @@ public class TimeBonus extends AbstractBonus {
 	 * 
 	 * @param applier the operation that must be done when the TimeBonus is used by the user.
 	 */
-	public TimeBonus(final UnaryOperator<Long> applier) {
+	public TimeBonus(final UnaryOperator<Long> applier, String name) {
 		this.applier = applier;
+		this.name = name;
 	}
 	
 	/**

@@ -75,7 +75,9 @@ public interface BonusManager {
 	/**
 	 * Extract randomly a bonus and updates its quantity.
 	 * 
+	 * @return String the bonus name.
+	 * 
 	 */
-	void extractBonus();
+	String extractBonus();
 
 }

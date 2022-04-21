@@ -12,6 +12,7 @@ public abstract class AbstractBonus {
 
 	@Expose
 	protected int quantity;
+	protected String name;
 	
 	/**
 	 * Returns the quantity of the Bonus.
@@ -20,6 +21,15 @@ public abstract class AbstractBonus {
 	 */
 	public int getQuantity() {
 		return this.quantity;
+	}
+	
+	/**
+	 * Returns the name of the Bonus.
+	 * 
+	 * @return String which represent the quantity.
+	 */
+	public String getName() {
+		return this.name;
 	}
 	
 	/**
@@ -40,7 +50,6 @@ public abstract class AbstractBonus {
 		return this.quantity == 0;
 	}
 	
-	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -48,6 +57,7 @@ public abstract class AbstractBonus {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + quantity;
 		return result;
 	}
@@ -64,17 +74,19 @@ public abstract class AbstractBonus {
 		if (getClass() != obj.getClass())
 			return false;
 		AbstractBonus other = (AbstractBonus) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
 		if (quantity != other.quantity)
 			return false;
 		return true;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public String toString() {
-		return "AbstractBonus [quantity=" + quantity + "]";
+		return "AbstractBonus [quantity=" + quantity + ", name=" + name + "]";
 	}
 
 }

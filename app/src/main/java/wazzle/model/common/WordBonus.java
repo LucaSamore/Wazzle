@@ -12,8 +12,9 @@ public class WordBonus extends AbstractBonus {
 	 * 
 	 * @param applier the operation that must be done when the WordBonus is used by the user.
 	 */
-	public WordBonus(final UnaryOperator<Set<String>> applier) {
+	public WordBonus(final UnaryOperator<Set<String>> applier, String name) {
 		this.applier = applier;
+		this.name = name;
 	}
 	
 	/**

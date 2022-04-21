@@ -102,17 +102,21 @@ public class BonusManagerImpl implements BonusManager {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void extractBonus() {
+	public String extractBonus() {
 		var extractedBonus = this.extracter().getClass();
 		if (this.scoreBonus.getClass().equals(extractedBonus)) {
 			this.updateScoreBonusQuantity(q -> q+1);
+			return this.scoreBonus.getName();
 		}
 		if (this.wordBonus.getClass().equals(extractedBonus)) {
 			this.updateWordBonusQuantity(q -> q+1);
+			return this.wordBonus.getName();
 		}
 		if (this.timeBonus.getClass().equals(extractedBonus)) {
 			this.updateTimeBonusQuantity(q -> q+1);
+			return this.timeBonus.getName();
 		}
+		return "";
 	}
 	
 	/**
@@ -120,7 +124,7 @@ public class BonusManagerImpl implements BonusManager {
 	 * 
 	 * @return AbstractBonus extracted.
 	 */
-	private AbstractBonus extracter() {
+	public AbstractBonus extracter() {
 		List<AbstractBonus> bonuses = List.of(this.bonusFactory.createScoreBonus(), 
 											  this.bonusFactory.createWordBonus(),
 											  this.bonusFactory.createTimeBonus());

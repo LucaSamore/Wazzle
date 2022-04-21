@@ -11,8 +11,9 @@ public class ScoreBonus extends AbstractBonus {
 	 * 
 	 * @param applier the operation that must be done when the ScoreBonus is used by the user.
 	 */
-	public ScoreBonus(final BinaryOperator<Integer> applier) {
+	public ScoreBonus(final BinaryOperator<Integer> applier, String name) {
 		this.applier = applier;
+		this.name = name;
 	}
 	
 	/**
