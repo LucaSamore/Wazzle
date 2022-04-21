@@ -66,12 +66,6 @@ public final class TutorialMainGameView {
 	}
 	
 	private void writeTutorialToLabel() {
-		//TODO: Move text to .txt file maybe
-		textLabel.setText(
-				  "Lo scopo del gioco e' quello di cercare il maggior numero di " + System.lineSeparator()
-				+ "parole all'interno del waffle. La parola si colorer� di verde" + System.lineSeparator()
-				+ "se e' corretta e di rosso se sbagliata. durante il gioco e' possibile" + System.lineSeparator()
-				+ "usufruire di tre diversi bonus quali aumento del tempo," + System.lineSeparator()
-				+ "punteggio bonus e suggerimento di parole.");
+		
 	}
 }
