@@ -69,6 +69,10 @@ public final class MiniGameView extends View<MiniGameController> {
 	private static final String UPPER_ROW_CHARACTERS = QWERTYKeyboard.UPPER_ROW.getKeyboardRow();
 	private static final String MIDDLE_ROW_CHARACTERS = QWERTYKeyboard.MIDDLE_ROW.getKeyboardRow();
 	private static final String LOWER_ROW_CHARACTERS = QWERTYKeyboard.LOWER_ROW.getKeyboardRow();
+	private static final String BACKGROUND_RADIUS_10 = "-fx-background-radius: 10";
+	private static final String BACKGROUND_COLOR_WRONG = "-fx-background-color:#0000;";
+	private static final String BACKGROUND_COLOR_CORRECT = "-fx-background-color:#45E521;";
+	private static final String BACKGROUND_COLOR_WRONG_PLACE = "-fx-background-color: yellow;";
 	private Map<Integer, String> keyboardCharacters;
 	private Map<Integer, GridPane> keyboardKeys;
 
@@ -197,13 +201,13 @@ public final class MiniGameView extends View<MiniGameController> {
 
 		switch (state) {
 		case 0:
-			coloredPane.setStyle("-fx-background-color:#45E521;" + "-fx-background-radius: 10");
+			coloredPane.setStyle(BACKGROUND_COLOR_CORRECT + BACKGROUND_RADIUS_10);
 			break;
 		case 1:
-			coloredPane.setStyle("-fx-background-color: yellow;" + "-fx-background-radius: 10");
+			coloredPane.setStyle(BACKGROUND_COLOR_WRONG_PLACE + BACKGROUND_RADIUS_10);
 			break;
 		default:
-			coloredPane.setStyle("-fx-background-color: #0000;" + "-fx-background-radius: 10");
+			coloredPane.setStyle(BACKGROUND_COLOR_WRONG + BACKGROUND_RADIUS_10);
 			break;
 		}
 
@@ -221,7 +225,7 @@ public final class MiniGameView extends View<MiniGameController> {
 
 	}
 
-	private void typeLetterInGrid(String string) {
+	private void typeLetterInGrid(final String string) {
 		if (this.currentTypeIndex < this.numCols) {
 			removeGridElement(this.currentTypeIndex, this.currentRowIndex);
 			addMiniGamePane(string, this.currentTypeIndex, this.currentRowIndex, Result.WRONG.getState());
@@ -243,20 +247,30 @@ public final class MiniGameView extends View<MiniGameController> {
 		this.currentWord.clear();
 	}
 
+	private void sendWordToCompute(final MiniGameWord word) {
+		for (int i = 0; i < this.numCols; i++) {
+			removeGridElement(i, this.currentRowIndex);
+			addMiniGamePane(String.valueOf(word.getCompositeWord().get(i).getCharacter()), i, this.currentRowIndex,
+					word.getCompositeWord().get(i).getResult());
+		}
+		this.currentRowIndex++;
+	}
+	
+//	private void restoreLoadedMinigame() {
+//		for (MiniGameWord miniGameWord : this.controller.getGuessedMiniGameWordsSoFar()) {
+//			this.sendWordToCompute(miniGameWord);
+//		}
+//	}
+	
 	@Override
 	public void nextScene(ActionEvent event) throws IOException {
 		if (currentTypeIndex == this.numCols) {
 			MiniGameWord word = this.controller.guessWord(String.join("", currentWord));
 			switch (this.controller.getState()) {
 			case IN_PROGRESS:
-				for (int i = 0; i < this.numCols; i++) {
-					removeGridElement(i, this.currentRowIndex);
-					addMiniGamePane("" + word.getCompositeWord().get(i).getCharacter(), i, this.currentRowIndex,
-							word.getCompositeWord().get(i).getResult());
-				}
+				this.sendWordToCompute(word);
 				this.currentWord.clear();
 				this.currentTypeIndex = 0;
-				this.currentRowIndex++;
 				break;
 			default:
 				this.stage.setUserData(this.controller);
@@ -285,7 +299,6 @@ public final class MiniGameView extends View<MiniGameController> {
 				this.currentWord.remove(currentTypeIndex);
 				removeGridElement(this.currentTypeIndex, this.currentRowIndex);
 				addMiniGamePane("", this.currentTypeIndex, this.currentRowIndex, Result.WRONG.getState());
-
 				}
 				break;
 			case ENTER:
@@ -304,7 +317,6 @@ public final class MiniGameView extends View<MiniGameController> {
 
 	@Override
 	protected void setGraphics() {
-
 		
 		StringExpression paddingValue = Bindings.concat("-fx-padding: ", visualUnit.multiply(0.6).asString(), ";");
 		StringExpression hgapValue = Bindings.concat("-fx-hgap: ", visualUnit.multiply(0.1).asString(), ";");

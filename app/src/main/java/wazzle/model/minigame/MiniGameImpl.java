@@ -67,8 +67,15 @@ public class MiniGameImpl implements MiniGame {
 	public int getMaxAttemptsNumber() {
 		return MiniGameImpl.MAX_ATTEMPTS_NUMBER;
 	}
-
+	
+	@Override
 	public int getCurrentAttemptsNumber() {
 		return guessedWords.size();
+	}
+	
+	@Override
+	public List<MiniGameWord> getAllGuessedWords(){
+		return this.guessedWords;
+		
 	}
 }

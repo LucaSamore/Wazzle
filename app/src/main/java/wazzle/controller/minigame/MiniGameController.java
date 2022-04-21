@@ -1,8 +1,8 @@
 package wazzle.controller.minigame;
 
 import java.io.IOException;
+import java.util.List;
 
-import wazzle.controller.common.WazzleController;
 import wazzle.model.common.Dictionary;
 import wazzle.model.minigame.MiniGame;
 import wazzle.model.minigame.MiniGame.State;
@@ -29,6 +29,8 @@ public interface MiniGameController {
 	int getMaxAttemptsNumber();
 
 	State getState();
+
+	List<MiniGameWord> getGuessedMiniGameWordsSoFar();
 
 
 }

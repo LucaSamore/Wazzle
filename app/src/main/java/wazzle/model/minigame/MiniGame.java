@@ -1,6 +1,6 @@
 package wazzle.model.minigame;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 public interface MiniGame {
 	enum State {
@@ -30,5 +30,7 @@ public interface MiniGame {
 	int getCurrentAttemptsNumber();
 
 	String getTargetWord();
+
+	List<MiniGameWord> getAllGuessedWords();
 
 }

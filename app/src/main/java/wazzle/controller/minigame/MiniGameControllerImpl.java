@@ -1,18 +1,16 @@
 package wazzle.controller.minigame;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 import wazzle.controller.common.WazzleController;
 import wazzle.model.common.Dictionary;
-import wazzle.model.maingame.MainGameImpl;
 import wazzle.model.minigame.FiveLetterDictionary;
 import wazzle.model.minigame.MiniGame;
 import wazzle.model.minigame.MiniGame.State;
 import wazzle.model.minigame.MiniGameImpl;
 import wazzle.model.minigame.MiniGameWord;
-import wazzle.model.minigame.WordChecker;
-import wazzle.model.minigame.WordCheckerImpl;
 
 public class MiniGameControllerImpl implements MiniGameController {
 
@@ -60,16 +58,18 @@ public class MiniGameControllerImpl implements MiniGameController {
 			this.wazzleController.gainBonus();
 			return "Bonus Ottenuto";
 		}
-		return null;
+		return "";
 	}
 	
-	
-
 	@Override
 	public int getCurrentAttemptsNumber() {
 		return currentMinigame.get().getCurrentAttemptsNumber();
 	}
 
+	@Override
+	public List<MiniGameWord> getGuessedMiniGameWordsSoFar() {
+		return List.copyOf(currentMinigame.get().getAllGuessedWords());
+	}
 	@Override
 	public int getWordLenght() {
 		return currentMinigame.get().getWordLenght();
