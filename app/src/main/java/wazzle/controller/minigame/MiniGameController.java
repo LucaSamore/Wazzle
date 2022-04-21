@@ -11,12 +11,18 @@ import wazzle.model.minigame.MiniGameWord;
 public interface MiniGameController {
 
 	void saveMiniGame() throws IOException;
+	
+	void startGame() throws IOException ;
 
-	void guessWord(String guessedWord);
+	MiniGameWord guessWord(String guessedWord);
+	
+	MiniGame newMiniGame(Dictionary dictionary);
 
-	int getCurrentAttemptsNumber();
-
+	String obtainedBonus();
+	
 	String getTargetWord();
+	
+	int getCurrentAttemptsNumber();
 
 	int getWordLenght();
 
@@ -24,12 +30,5 @@ public interface MiniGameController {
 
 	State getState();
 
-	void startGame(Dictionary dictionary) throws IOException ;
-
-	MiniGame newMiniGame(Dictionary dictionary);
-
-	MiniGameWord computeDifferencies(String guessedWord);
-
-	WazzleController getMainController();
 
 }

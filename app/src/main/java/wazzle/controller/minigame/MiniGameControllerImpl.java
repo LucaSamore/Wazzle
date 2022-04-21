@@ -16,29 +16,25 @@ import wazzle.model.minigame.WordCheckerImpl;
 
 public class MiniGameControllerImpl implements MiniGameController {
 
-
 	private Optional<MiniGame> currentMinigame;
 	private WazzleController wazzleController;
-	
-	public MiniGameControllerImpl(final WazzleController wazzleController) throws IOException{
-		this.currentMinigame = Optional.empty();	
+
+	public MiniGameControllerImpl(final WazzleController wazzleController) {
+		this.currentMinigame = Optional.empty();
 		this.wazzleController = wazzleController;
 	}
-	
-	
-	
+
 	@Override
-	public void startGame(final Dictionary dictionary) throws IOException {
-		if(this.loadMiniGame().isEmpty()) {
-			this.currentMinigame = Optional.of(this.newMiniGame(dictionary));
-		}else {
+	public void startGame() throws IOException {
+
+		if (this.loadMiniGame().isEmpty()) {
+			this.currentMinigame = Optional.of(this.newMiniGame(this.wazzleController.getDataset()));
+		} else {
 			final var loadedMinigame = this.loadMiniGame();
-			loadedMinigame.get().setGameState(State.IN_PROGRESS);
-			loadedMinigame.get().setWordChecker(new WordCheckerImpl(loadedMinigame.get().getTargetWord()));
 			this.currentMinigame = Optional.of(loadedMinigame.get());
 		}
 	}
-	
+
 	@Override
 	public MiniGame newMiniGame(final Dictionary dictionary) {
 		return this.wazzleController.getFacade().startNewMiniGame(new FiveLetterDictionary(dictionary));
@@ -48,52 +44,49 @@ public class MiniGameControllerImpl implements MiniGameController {
 	public void saveMiniGame() throws IOException {
 		this.wazzleController.saveMiniGame(currentMinigame.get());
 	}
-	
+
 	private Optional<MiniGameImpl> loadMiniGame() throws IOException {
 		return this.wazzleController.getLastMinigame();
 	}
-	
+
 	@Override
-	public void guessWord(String guessedWord) {
-		if(currentMinigame.get().isWordCorrect(guessedWord)) {
-			currentMinigame.get().setGameState(State.WON);
-		} else if (currentMinigame.get().getCurrentAttemptsNumber() == currentMinigame.get().getMaxAttemptsNumber()) {
-			currentMinigame.get().setGameState(State.FAILED);
+	public MiniGameWord guessWord(String guessedWord) {
+		return this.currentMinigame.get().computeResult(guessedWord);
+	}
+
+	@Override
+	public String obtainedBonus() {
+		if (this.currentMinigame.get().getGameState() == State.WON) {
+			this.wazzleController.gainBonus();
+			return "Bonus Ottenuto";
 		}
-	}	
-	
-	@Override
-	public MiniGameWord computeDifferencies(final String guessedWord) {
-		return currentMinigame.get().computeResult(guessedWord);
+		return null;
 	}
 	
+	
+
 	@Override
 	public int getCurrentAttemptsNumber() {
 		return currentMinigame.get().getCurrentAttemptsNumber();
 	}
 
 	@Override
-	public String getTargetWord() {
-		return currentMinigame.get().getTargetWord();
-	}
-	
-	@Override
 	public int getWordLenght() {
 		return currentMinigame.get().getWordLenght();
 	}
-	
+
 	@Override
 	public int getMaxAttemptsNumber() {
 		return currentMinigame.get().getMaxAttemptsNumber();
 	}
-	
+
 	@Override
 	public State getState() {
 		return currentMinigame.get().getGameState();
 	}
-	
+
 	@Override
-	public WazzleController getMainController() {
-		return this.wazzleController;
+	public String getTargetWord() {
+		return this.currentMinigame.get().getTargetWord();
 	}
 }

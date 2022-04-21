@@ -1,7 +1,5 @@
 package wazzle.model.minigame;
 
-import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
@@ -30,6 +28,8 @@ public class MiniGameImpl implements MiniGame {
 
 	@Override
 	public boolean loadMiniGame() {
+		this.setGameState(State.IN_PROGRESS);
+		this.wordChecker = new WordCheckerImpl(this.getTargetWord());
 		return false;
 	}
 
@@ -39,27 +39,22 @@ public class MiniGameImpl implements MiniGame {
 	}
 
 	@Override
+	public MiniGameWord computeResult(final String guessedWord) {
+		this.guessedWords.add(this.wordChecker.computeAttemptResult(guessedWord));
+		if (this.wordChecker.isCorrectWord(guessedWord)) {
+			this.setGameState(State.WON);
+		} else if (this.getCurrentAttemptsNumber() == this.getMaxAttemptsNumber()) {
+			this.setGameState(State.FAILED);
+		}
+		return guessedWords.get(guessedWords.size() - 1);
+	}
+	
+	@Override
 	public int getWordLenght() {
 		return MiniGameImpl.WORDS_LENGHT;
 	}
 
-	@Override
-	public boolean isWordCorrect(String guessedWord) {
-		return this.wordChecker.isCorrectWord(guessedWord);
-	}
-
-	private void addGuessedWord(MiniGameWord word) {
-		this.guessedWords.add(word);
-	}
-
-	@Override
-	public MiniGameWord computeResult(final String guessedWord) {
-		this.addGuessedWord(this.wordChecker.computeAttemptResult(guessedWord));
-		return guessedWords.get(guessedWords.size() - 1);
-	}
-
-	@Override
-	public void setGameState(final State state) {
+	private void setGameState(final State state) {
 		this.gameState = state;
 	}
 
@@ -71,10 +66,6 @@ public class MiniGameImpl implements MiniGame {
 	@Override
 	public int getMaxAttemptsNumber() {
 		return MiniGameImpl.MAX_ATTEMPTS_NUMBER;
-	}
-
-	public void setWordChecker(final WordChecker wordChecker) {
-		this.wordChecker = wordChecker;
 	}
 
 	public int getCurrentAttemptsNumber() {

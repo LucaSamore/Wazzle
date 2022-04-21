@@ -12,37 +12,37 @@
          <children>
             <GridPane fx:id="wordsGrid" alignment="CENTER" style="-fx-border-color: red;" styleClass="gridBackground" VBox.vgrow="ALWAYS">
       </GridPane>
-            <HBox VBox.vgrow="ALWAYS">
+            <HBox fx:id="controlWrapper" VBox.vgrow="ALWAYS">
                <children>
-                  <HBox fx:id="commandsWrapper" alignment="CENTER" fillHeight="false" style="-fx-background-color: cyan;" styleClass="gridBackground">
+                  <HBox fx:id="commandsWrapper" alignment="CENTER" fillHeight="false" styleClass="gridBackground">
                      <children>
                         <VBox fx:id="keyboardVbox" alignment="CENTER" fillWidth="false" HBox.hgrow="ALWAYS">
                            <children>
                               <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
                                  <children>
-                                    <GridPane fx:id="firstRowGrid" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-color: red;" HBox.hgrow="ALWAYS" />
+                                    <GridPane fx:id="firstRowGrid" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" HBox.hgrow="ALWAYS" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" VBox.vgrow="ALWAYS">
                                  <children>
-                                    <GridPane fx:id="secondRowGrid" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-color: red;" HBox.hgrow="ALWAYS" />
+                                    <GridPane fx:id="secondRowGrid" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" HBox.hgrow="ALWAYS" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER" layoutX="10.0" layoutY="60.0" VBox.vgrow="ALWAYS">
                                  <children>
-                                    <GridPane fx:id="thirdRowGrid" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-color: red;" HBox.hgrow="ALWAYS" />
+                                    <GridPane fx:id="thirdRowGrid" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" HBox.hgrow="ALWAYS" />
                                  </children>
                               </HBox>
                            </children>
                         </VBox>
                      </children>
                   </HBox>
-                  <VBox fx:id="buttonWrapper" alignment="CENTER">
-                     <children>
-                        <Button fx:id="sendWord" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#nextScene" styleClass="greenButton" text="Invia" />
-                        <Button fx:id="deleteButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancelWord" styleClass="redButton" text="cancella" />
-                     </children>
-                  </VBox>
+               </children>
+            </HBox>
+            <HBox fx:id="buttonsWrapper">
+               <children>
+                  <Button fx:id="sendWord" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#nextScene" styleClass="greenButton" text="Invia" />
+                  <Button fx:id="deleteButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancelWord" styleClass="redButton" text="cancella" />
                </children>
             </HBox>
          </children>

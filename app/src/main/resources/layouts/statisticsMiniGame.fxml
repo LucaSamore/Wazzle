@@ -18,14 +18,20 @@
             </VBox>
             <VBox alignment="CENTER" layoutX="10.0" layoutY="44.0" styleClass="longIncave" VBox.vgrow="ALWAYS">
                <children>
-                  <Label fx:id="attemptLabel" alignment="CENTER" text="tentativi sbagliati" />
+                  <Label fx:id="attemptLabel" alignment="CENTER" text="tentativi" />
                   <Label fx:id="attemptsValueLabel" alignment="CENTER" text="-" />
                </children>
             </VBox>
             <VBox alignment="CENTER" styleClass="longIncave" VBox.vgrow="ALWAYS">
                <children>
                   <Label fx:id="resultLabel" alignment="CENTER" text="Esito" textAlignment="CENTER" />
-                  <Label fx:id="resultValueLabel" alignment="CENTER" contentDisplay="CENTER" text="Successo!" textAlignment="CENTER" />
+                  <Label fx:id="resultValueLabel" alignment="CENTER" contentDisplay="CENTER" text="Fallito..." textAlignment="CENTER" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" styleClass="longIncave" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label fx:id="bonusLabel" alignment="CENTER" text="Bonus Ottenuto" textAlignment="CENTER" />
+                  <Label fx:id="bonusValueLabel" alignment="CENTER" contentDisplay="CENTER" text="Nessuno..." textAlignment="CENTER" />
                </children>
             </VBox>
          </children>

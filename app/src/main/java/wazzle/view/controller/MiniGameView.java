@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringExpression;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
@@ -14,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -49,13 +51,19 @@ public final class MiniGameView extends View<MiniGameController> {
 
 	@FXML
 	private VBox keyboardVbox;
+	
+	@FXML
+	private HBox buttonsWrapper;
 
 	@FXML
 	private StackPane incave;
+	
+	@FXML
+	private HBox controlWrapper;
 
-	private static final String UPPER_ROW_CHARACTERS = "qwertyuiop";
-	private static final String MIDDLE_ROW_CHARACTERS = "asdfghjkl";
-	private static final String LOWER_ROW_CHARACTERS = "zxcvbnm";
+	private static final String UPPER_ROW_CHARACTERS = QWERTYKeyboard.UPPER_ROW.getKeyboardRow();
+	private static final String MIDDLE_ROW_CHARACTERS = QWERTYKeyboard.MIDDLE_ROW.getKeyboardRow();
+	private static final String LOWER_ROW_CHARACTERS = QWERTYKeyboard.LOWER_ROW.getKeyboardRow();
 	private Map<Integer, String> keyboardCharacters;
 	private Map<Integer, GridPane> keyboardKeys;
 
@@ -69,12 +77,14 @@ public final class MiniGameView extends View<MiniGameController> {
 		this.stage = stage;
 		this.currentWord = "";
 		this.controller = (MiniGameController) stage.getUserData();
-		try {
-			this.controller.startGame(this.controller.getMainController().getDataset());
-		} catch (IOException e) {
-			// TODO GENERARE ALERT
-			e.printStackTrace();
-		}
+
+			try {
+				this.controller.startGame();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		this.numRows = this.controller.getMaxAttemptsNumber();
 		this.numCols = this.controller.getWordLenght();
 		this.currentTypeIndex = 0;
@@ -229,11 +239,9 @@ public final class MiniGameView extends View<MiniGameController> {
 	@Override
 	public void nextScene(ActionEvent event) throws IOException {
 		if (currentTypeIndex == this.numCols) {
-			this.controller.guessWord(this.currentWord);
-			
+			MiniGameWord word = this.controller.guessWord(this.currentWord);
 			switch (this.controller.getState()) {
 				case IN_PROGRESS:
-					MiniGameWord word = this.controller.computeDifferencies(this.currentWord);
 					for (int i = 0; i < this.numCols; i++) {
 						removeGridElement(i, this.currentRowIndex);
 						addMiniGamePane("" + word.getCompositeWord().get(i).getCharacter(), i, this.currentRowIndex,
@@ -245,7 +253,7 @@ public final class MiniGameView extends View<MiniGameController> {
 					break;
 				default:
 					this.stage.setUserData(this.controller);
-					SceneSwitcher.<StatisticsMiniGame>switchScene(event, new StatisticsMiniGame(this.stage),
+					SceneSwitcher.<StatisticsMiniGameView>switchScene(event, new StatisticsMiniGameView(this.stage),
 							FXMLFiles.MINI_GAME_STATS.getPath());
 					break;
 			}
@@ -261,12 +269,25 @@ public final class MiniGameView extends View<MiniGameController> {
 
 	@Override
 	protected void setGraphics() {
+		StringExpression paddingValue = Bindings.concat("-fx-padding: ", visualUnit.multiply(0.6).asString(), ";");
+		StringExpression hgapValue = Bindings.concat("-fx-hgap: ", visualUnit.multiply(0.1).asString(), ";");
+		
+
 		firstRowGrid.maxWidthProperty().bind(incave.widthProperty().multiply(UPPER_ROW_CHARACTERS.length()));
 		sendWord.styleProperty().bind(Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.75).asString(), ";"));
 		deleteButton.fontProperty().bind(sendWord.fontProperty());
-		wordsGrid.styleProperty().bind(Bindings.concat("-fx-padding: ", visualUnit.multiply(0.6).asString(), ";"));
+		wordsGrid.styleProperty().bind(paddingValue);
 		wordsGrid.hgapProperty().bind(visualUnit.multiply(0.2));
 		wordsGrid.vgapProperty().bind(wordsGrid.hgapProperty());
-		mainWrapper.spacingProperty().bind(visualUnit);
+		
+		mainWrapper.spacingProperty().bind(visualUnit.multiply(0.5));
+		buttonsWrapper.spacingProperty().bind(visualUnit);
+		keyboardVbox.spacingProperty().bind(visualUnit.multiply(0.1));
+		controlWrapper.spacingProperty().bind(visualUnit);
+		
+		keyboardVbox.styleProperty().bind(paddingValue);
+		firstRowGrid.styleProperty().bind(hgapValue);
+		secondRowGrid.styleProperty().bind(hgapValue);
+		thirdRowGrid.styleProperty().bind(hgapValue);
 	}
 }

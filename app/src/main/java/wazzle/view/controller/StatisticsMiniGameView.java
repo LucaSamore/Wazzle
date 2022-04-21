@@ -15,15 +15,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import wazzle.controller.common.WazzleControllerImpl;
-import wazzle.controller.maingame.MainGameController;
-import wazzle.controller.maingame.MainGameControllerImpl;
 import wazzle.controller.minigame.MiniGameController;
 import wazzle.controller.minigame.MiniGameControllerImpl;
 import wazzle.model.minigame.MiniGame.State;
+import wazzle.view.FXMLFiles;
 import wazzle.view.SceneSwitcher;
-import wazzle.view.WindowCloser;
 
-public class StatisticsMiniGame {
+public class StatisticsMiniGameView {
 	@FXML
 	private VBox mainStatisticWindow;
 
@@ -57,16 +55,21 @@ public class StatisticsMiniGame {
 	@FXML
 	private Label resultValueLabel;
 
-	private static final String MAIN_MENU_PATH = "layouts/mainMenu.fxml";
+	@FXML
+	private Label bonusLabel;
+
+	@FXML
+	private Label bonusValueLabel;
+
+	
 	private Stage stage;
 	private DoubleProperty visualUnit;
 	private MiniGameController miniGameController;
 
-	public StatisticsMiniGame(Stage stage) {
+	public StatisticsMiniGameView(Stage stage) {
 		this.stage = stage;
 		visualUnit = new SimpleDoubleProperty();
 		visualUnit.bind(Bindings.min(stage.heightProperty(), stage.widthProperty()));
-
 		this.miniGameController = (MiniGameControllerImpl) this.stage.getUserData();
 	}
 
@@ -77,35 +80,48 @@ public class StatisticsMiniGame {
 	private void setGraphic() {
 		this.targetWordValueLabel.setText("" + this.miniGameController.getTargetWord());
 		this.attemptsValueLabel.setText("" + this.miniGameController.getCurrentAttemptsNumber());
-		
-		if(miniGameController.getState() == State.FAILED) {
-			resultValueLabel.setText("Hai perso!");
+
+		if (this.miniGameController.getState() == State.WON) {
+			this.resultValueLabel.setText("Hai vinto!");
+//			switch(this.miniGameController.obtainedBonus()) {
+//			case 0:
+//			this.bonusValueLabel.setText("Tempo");
+//			break;
+//			}
+			//TODO
 		}
 
 		ObservableValue<String> fontSizeValue = Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.05).asString(),
 				";");
+		ObservableValue<String> smallerFontSizeValue = Bindings.concat("-fx-font-size: ",
+				visualUnit.multiply(0.05).asString(), ";");
 		ObservableValue<String> paddingValue = Bindings.concat("-fx-padding: ", visualUnit.multiply(0.05).asString(),
 				";");
 
-		mainStatisticWindow.maxHeightProperty().bind(mainStatisticWindow.widthProperty());
-		mainStatisticWindow.minWidthProperty().bind(visualUnit.multiply(0.7));
-		mainStatisticWindow.styleProperty().bind(Bindings.concat(fontSizeValue, paddingValue));
+		this.mainStatisticWindow.maxHeightProperty().bind(mainStatisticWindow.widthProperty());
+		this.mainStatisticWindow.minWidthProperty().bind(visualUnit.multiply(0.7));
+		this.mainStatisticWindow.styleProperty().bind(Bindings.concat(fontSizeValue, paddingValue));
 
-		mainWrapper.spacingProperty().bind(visualUnit.multiply(0.02));
-		buttonWrapper.spacingProperty().bind(visualUnit.multiply(0.02));
+		this.mainWrapper.spacingProperty().bind(visualUnit.multiply(0.02));
+		this.buttonWrapper.spacingProperty().bind(visualUnit.multiply(0.02));
 
-		exitButton.styleProperty().bind(fontSizeValue);
-		playAgainButton.styleProperty().bind(fontSizeValue);
+		this.exitButton.styleProperty().bind(fontSizeValue);
+		this.playAgainButton.styleProperty().bind(fontSizeValue);
 
-		targetWordLabel.styleProperty()
-				.bind(Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.025).asString(), ";"));
-		attemptLabel.styleProperty()
-				.bind(Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.025).asString(), ";"));
+		this.targetWordLabel.styleProperty().bind(smallerFontSizeValue);
+		this.attemptLabel.styleProperty().bind(smallerFontSizeValue);
+		this.bonusLabel.styleProperty().bind(smallerFontSizeValue);
 	}
 
 	public void goToScene(ActionEvent event) throws IOException {
-		this.stage.setUserData(new WazzleControllerImpl());
-		SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), MAIN_MENU_PATH);
+		Node node = (Node) event.getSource();
+		if ("playAgainButton".equals(node.getId())) {
+			this.stage.setUserData(new MiniGameControllerImpl(new WazzleControllerImpl()));
+			SceneSwitcher.<MiniGameView>switchScene(event, new MiniGameView(this.stage), FXMLFiles.MINI_GAME.getPath());
+		} else {
+			this.stage.setUserData(new WazzleControllerImpl());
+			SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), FXMLFiles.MAIN_MENU.getPath());
+		}
 
 	}
 

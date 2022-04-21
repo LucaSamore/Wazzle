@@ -19,21 +19,16 @@ public interface MiniGame {
 
 	boolean loadMiniGame();
 
-	String getTargetWord();
-
-	boolean isWordCorrect(String guessedWord);
+	MiniGameWord computeResult(String guessedWord);
 
 	int getWordLenght();
 
 	int getMaxAttemptsNumber();
 
-	void setGameState(State state);
-
 	State getGameState();
 
 	int getCurrentAttemptsNumber();
 
-	MiniGameWord computeResult(String guessedWord);
-	
+	String getTargetWord();
 
 }
