@@ -21,7 +21,7 @@ import wazzle.model.minigame.MiniGame.State;
 import wazzle.view.FXMLFiles;
 import wazzle.view.SceneSwitcher;
 
-public class StatisticsMiniGameView {
+public class StatisticsMiniGameView extends View<MiniGameController>{
 	@FXML
 	private VBox mainStatisticWindow;
 
@@ -73,11 +73,25 @@ public class StatisticsMiniGameView {
 		this.miniGameController = (MiniGameControllerImpl) this.stage.getUserData();
 	}
 
-	public void initialize() {
-		setGraphic();
+	@Override
+	public void nextScene(ActionEvent event) throws IOException {
+		Node node = (Node) event.getSource();
+		if ("playAgainButton".equals(node.getId())) {
+			this.stage.setUserData(new MiniGameControllerImpl(new WazzleControllerImpl()));
+			SceneSwitcher.<MiniGameView>switchScene(event, new MiniGameView(this.stage), FXMLFiles.MINI_GAME.getPath());
+		} else {
+			this.stage.setUserData(new WazzleControllerImpl());
+			SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), FXMLFiles.MAIN_MENU.getPath());
+		}		
 	}
 
-	private void setGraphic() {
+	@Override
+	protected void buildView() {
+		setGraphics();		
+	}
+
+	@Override
+	protected void setGraphics() {
 		this.targetWordValueLabel.setText("" + this.miniGameController.getTargetWord());
 		this.attemptsValueLabel.setText("" + this.miniGameController.getCurrentAttemptsNumber());
 
@@ -110,19 +124,7 @@ public class StatisticsMiniGameView {
 
 		this.targetWordLabel.styleProperty().bind(smallerFontSizeValue);
 		this.attemptLabel.styleProperty().bind(smallerFontSizeValue);
-		this.bonusLabel.styleProperty().bind(smallerFontSizeValue);
-	}
-
-	public void goToScene(ActionEvent event) throws IOException {
-		Node node = (Node) event.getSource();
-		if ("playAgainButton".equals(node.getId())) {
-			this.stage.setUserData(new MiniGameControllerImpl(new WazzleControllerImpl()));
-			SceneSwitcher.<MiniGameView>switchScene(event, new MiniGameView(this.stage), FXMLFiles.MINI_GAME.getPath());
-		} else {
-			this.stage.setUserData(new WazzleControllerImpl());
-			SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), FXMLFiles.MAIN_MENU.getPath());
-		}
-
+		this.bonusLabel.styleProperty().bind(smallerFontSizeValue);		
 	}
 
 }
