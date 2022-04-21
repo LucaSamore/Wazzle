@@ -291,8 +291,8 @@ public final class MainGameView extends View<MainGameController> {
 	protected void buildView() {
 		this.setGraphics();
 		this.setEventHandler();
-//		var shape = this.controller.getMainController().getSettings().getCurrentGridShape();
-//		this.populateGrid(shape,shape);
+		var shape = this.controller.getMainController().getCurrentDifficulty().getGridShape();
+		this.populateGrid(shape,shape);
 		this.startTimer();
 	}
 
