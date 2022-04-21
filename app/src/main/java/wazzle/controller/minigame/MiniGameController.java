@@ -2,6 +2,7 @@ package wazzle.controller.minigame;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import wazzle.model.common.Dictionary;
 import wazzle.model.minigame.MiniGame;
@@ -18,7 +19,7 @@ public interface MiniGameController {
 	
 	MiniGame newMiniGame(Dictionary dictionary);
 
-	String obtainedBonus();
+	Optional<String> obtainedBonus() throws IOException;
 	
 	String getTargetWord();
 	

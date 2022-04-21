@@ -31,6 +31,10 @@ public interface MiniGame {
 
 	String getTargetWord();
 
-	List<MiniGameWord> getAllGuessedWords();
+	List<MiniGameWordImpl> getAllGuessedWords();
+
+	void setWordChecker(WordChecker wordChecker);
+
+	void setGameState(State state);
 
 }

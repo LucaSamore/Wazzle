@@ -5,13 +5,27 @@ import java.util.Objects;
 
 import com.google.gson.annotations.Expose;
 
-import javafx.util.Pair;
-
 public class MiniGameWordImpl implements MiniGameWord {
 	
 	@Expose
 	private List<WordElement> compositeWord;
 
+	/**
+	 * @return the compositeWord
+	 */
+	@Override
+	public List<WordElement> getCompositeWord() {
+		return List.copyOf(this.compositeWord);
+	}
+
+	/**
+	 * @param compositeWord the compositeWord to set
+	 */
+	@Override
+	public void setCompositeWord(List<WordElement> compositeWord) {
+		this.compositeWord = compositeWord;
+	}
+	
 	@Override
 	public String toString() {
 		return "MiniGameWordImpl [compositeWord=" + compositeWord + "]";
@@ -32,21 +46,5 @@ public class MiniGameWordImpl implements MiniGameWord {
 			return false;
 		MiniGameWordImpl other = (MiniGameWordImpl) obj;
 		return Objects.equals(compositeWord, other.compositeWord);
-	}
-
-	/**
-	 * @return the compositeWord
-	 */
-	@Override
-	public List<WordElement> getCompositeWord() {
-		return List.copyOf(this.compositeWord);
-	}
-
-	/**
-	 * @param compositeWord the compositeWord to set
-	 */
-	@Override
-	public void setCompositeWord(List<WordElement> compositeWord) {
-		this.compositeWord = compositeWord;
 	}
 }

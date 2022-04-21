@@ -11,6 +11,7 @@ import wazzle.model.minigame.MiniGame;
 import wazzle.model.minigame.MiniGame.State;
 import wazzle.model.minigame.MiniGameImpl;
 import wazzle.model.minigame.MiniGameWord;
+import wazzle.model.minigame.WordCheckerImpl;
 
 public class MiniGameControllerImpl implements MiniGameController {
 
@@ -29,6 +30,8 @@ public class MiniGameControllerImpl implements MiniGameController {
 			this.currentMinigame = Optional.of(this.newMiniGame(this.wazzleController.getDataset()));
 		} else {
 			final var loadedMinigame = this.loadMiniGame();
+			loadedMinigame.get().setWordChecker(new WordCheckerImpl(loadedMinigame.get().getTargetWord()));
+			loadedMinigame.get().setGameState(State.IN_PROGRESS);
 			this.currentMinigame = Optional.of(loadedMinigame.get());
 		}
 	}
@@ -53,12 +56,14 @@ public class MiniGameControllerImpl implements MiniGameController {
 	}
 
 	@Override
-	public String obtainedBonus() {
+	public Optional<String> obtainedBonus() throws IOException {
+		this.wazzleController.deleteEndedMiniGame();
 		if (this.currentMinigame.get().getGameState() == State.WON) {
-			this.wazzleController.gainBonus();
-			return "Bonus Ottenuto";
+			var currentBonusName = this.wazzleController.gainBonus();
+			this.wazzleController.saveBonuses();
+			return Optional.of(currentBonusName);
 		}
-		return "";
+		return Optional.empty();
 	}
 	
 	@Override

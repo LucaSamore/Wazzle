@@ -22,6 +22,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import wazzle.controller.common.WazzleControllerImpl;
 import wazzle.controller.minigame.MiniGameController;
 import wazzle.model.minigame.MiniGameWord;
 import wazzle.model.minigame.Result;
@@ -47,7 +48,7 @@ public final class MiniGameView extends View<MiniGameController> {
 
 	@FXML
 	private Button deleteButton;
-	
+
 	@FXML
 	private Button leaveButton;
 
@@ -98,7 +99,7 @@ public final class MiniGameView extends View<MiniGameController> {
 		this.numCols = this.controller.getWordLenght();
 		this.currentTypeIndex = 0;
 		this.currentRowIndex = 0;
-		
+
 		this.keyboardCharacters = new HashMap<>();
 		this.keyboardCharacters.put(0, UPPER_ROW_CHARACTERS);
 		this.keyboardCharacters.put(1, MIDDLE_ROW_CHARACTERS);
@@ -187,7 +188,16 @@ public final class MiniGameView extends View<MiniGameController> {
 	private void populateLettersGrid() {
 		for (int rowIndex = 0; rowIndex < this.numRows; rowIndex++) {
 			for (int colIndex = 0; colIndex < this.numCols; colIndex++) {
-				addMiniGamePane(null, colIndex, rowIndex, 2);
+				
+				String currentLetter = "";
+				int currentColor = Result.WRONG.getState();
+				
+				if(this.controller.getGuessedMiniGameWordsSoFar().size() > rowIndex) {
+					currentLetter += this.controller.getGuessedMiniGameWordsSoFar().get(rowIndex).getCompositeWord().get(colIndex).getCharacter();
+					currentColor = this.controller.getGuessedMiniGameWordsSoFar().get(rowIndex).getCompositeWord().get(colIndex).getResult();
+				}
+				
+				addMiniGamePane(currentLetter, colIndex, rowIndex, currentColor);
 			}
 		}
 	}
@@ -255,13 +265,13 @@ public final class MiniGameView extends View<MiniGameController> {
 		}
 		this.currentRowIndex++;
 	}
-	
+
 //	private void restoreLoadedMinigame() {
 //		for (MiniGameWord miniGameWord : this.controller.getGuessedMiniGameWordsSoFar()) {
 //			this.sendWordToCompute(miniGameWord);
 //		}
 //	}
-	
+
 	@Override
 	public void nextScene(ActionEvent event) throws IOException {
 		if (currentTypeIndex == this.numCols) {
@@ -273,9 +283,11 @@ public final class MiniGameView extends View<MiniGameController> {
 				this.currentTypeIndex = 0;
 				break;
 			default:
+				this.controller.saveMiniGame();
 				this.stage.setUserData(this.controller);
 				SceneSwitcher.<StatisticsMiniGameView>switchScene(event, new StatisticsMiniGameView(this.stage),
 						FXMLFiles.MINI_GAME_STATS.getPath());
+				
 				break;
 			}
 		}
@@ -294,30 +306,41 @@ public final class MiniGameView extends View<MiniGameController> {
 		this.mainWrapper.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
 			switch (event.getCode()) {
 			case BACK_SPACE:
-				if(currentTypeIndex != 0) {
-				currentTypeIndex--;
-				this.currentWord.remove(currentTypeIndex);
-				removeGridElement(this.currentTypeIndex, this.currentRowIndex);
-				addMiniGamePane("", this.currentTypeIndex, this.currentRowIndex, Result.WRONG.getState());
+				if (currentTypeIndex != 0) {
+					currentTypeIndex--;
+					this.currentWord.remove(currentTypeIndex);
+					removeGridElement(this.currentTypeIndex, this.currentRowIndex);
+					addMiniGamePane("", this.currentTypeIndex, this.currentRowIndex, Result.WRONG.getState());
 				}
 				break;
 			case ENTER:
 				this.sendWord.fire();
 				break;
 			default:
-				if(event.getCode().isLetterKey()) {
-				typeLetterInGrid(event.getCode().toString().toLowerCase());
+				if (event.getCode().isLetterKey()) {
+					typeLetterInGrid(event.getCode().toString().toLowerCase());
 				}
 				break;
-
 			}
 			event.consume();
 		});
 	}
-
+	
+	@FXML
+	public void leaveGame(final ActionEvent event) throws IOException {
+		try {
+			this.controller.saveMiniGame();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.stage.setUserData(new WazzleControllerImpl());
+		SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), FXMLFiles.MAIN_MENU.getPath());
+	}
+	
 	@Override
 	protected void setGraphics() {
-		
+
 		StringExpression paddingValue = Bindings.concat("-fx-padding: ", visualUnit.multiply(0.6).asString(), ";");
 		StringExpression hgapValue = Bindings.concat("-fx-hgap: ", visualUnit.multiply(0.1).asString(), ";");
 
@@ -325,7 +348,7 @@ public final class MiniGameView extends View<MiniGameController> {
 		sendWord.styleProperty().bind(Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.75).asString(), ";"));
 		deleteButton.fontProperty().bind(sendWord.fontProperty());
 		leaveButton.fontProperty().bind(sendWord.fontProperty());
-		
+
 		wordsGrid.styleProperty().bind(paddingValue);
 		wordsGrid.hgapProperty().bind(visualUnit.multiply(0.2));
 		wordsGrid.vgapProperty().bind(wordsGrid.hgapProperty());
