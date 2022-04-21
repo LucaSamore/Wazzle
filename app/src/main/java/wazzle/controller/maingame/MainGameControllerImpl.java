@@ -22,7 +22,6 @@ public final class MainGameControllerImpl implements MainGameController {
 		this.game = Optional.empty();
 		this.timer = new GameTimerImpl(
 			      (long) this.mainController
-			        .getSettings()
 			        .getCurrentDifficulty()
 			        .getTimeInMilliseconds() / 1000
 			      );

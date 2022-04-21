@@ -1,7 +1,7 @@
 package wazzle.controller.common;
 
 import java.io.IOException;
-
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -9,13 +9,12 @@ import java.util.stream.Collectors;
 
 import wazzle.controller.maingame.GameHistoryController;
 import wazzle.controller.maingame.GameHistoryControllerImpl;
-import wazzle.controller.maingame.Settings;
 import wazzle.controller.maingame.SettingsController;
 import wazzle.controller.maingame.SettingsControllerImpl;
-import wazzle.controller.maingame.SettingsImpl;
 import wazzle.model.common.BonusManager;
 import wazzle.model.common.BonusManagerImpl;
 import wazzle.model.common.Dictionary;
+import wazzle.model.maingame.Difficulty;
 import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
 import wazzle.model.minigame.MiniGame;
@@ -50,7 +49,7 @@ public class WazzleControllerImpl implements WazzleController {
 	public Dictionary getDataset() throws IOException {
 		return this.fileController.getDataset(WazzleFiles.DATASET.getFileName());
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -71,8 +70,8 @@ public class WazzleControllerImpl implements WazzleController {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Settings getSettings() {
-		return this.settingsController.getCurrentSettings();
+	public Difficulty getCurrentDifficulty() {
+		return this.settingsController.getCurrentDifficulty();
 	}
 	
 	/**
@@ -135,8 +134,8 @@ public class WazzleControllerImpl implements WazzleController {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void updateSettings(Settings settings) {
-		this.settingsController.updateSettings(settings.getCurrentDifficulty(), settings.getCurrentGridShape());
+	public void updateSettings(final Difficulty difficulty) {
+//		this.settingsController.updateSettings(settings.getCurrentDifficulty(), settings.getCurrentGridShape());
 	}
 	
 	/**
@@ -144,7 +143,7 @@ public class WazzleControllerImpl implements WazzleController {
 	 */
 	@Override
 	public void saveSettings() throws IOException {
-		this.fileController.saveSettings(WazzleFiles.SETTINGS.getFileName(), this.getSettings());
+//		this.fileController.saveSettings(WazzleFiles.SETTINGS.getFileName(), this.getCurrentDifficulty());
 	}
 
 	/**
@@ -208,12 +207,13 @@ public class WazzleControllerImpl implements WazzleController {
 	 * 
 	 * @return Settings the saved settings.
 	 */
-	private Settings settingsFromFile() throws IOException {
-		final var content = this.fileController.getSettings(WazzleFiles.SETTINGS.getFileName());
-		final var settings = new SettingsImpl();
-		settings.updateCurrentDifficulty(content.getCurrentDifficulty());
-		settings.updateCurrentGridShape(content.getCurrentGridShape());
-		return settings;
+	private List<Difficulty> settingsFromFile() throws IOException {
+//		final var content = this.fileController.getSettings(WazzleFiles.SETTINGS.getFileName());
+//		final var settings = new SettingsImpl();
+//		settings.updateCurrentDifficulty(content.getCurrentDifficulty());
+//		settings.updateCurrentGridShape(content.getCurrentGridShape());
+//		return settings;
+		return Collections.emptyList();
 	}
 	
 	/**

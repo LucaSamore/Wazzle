@@ -1,49 +1,37 @@
 package wazzle.controller.maingame;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gson.annotations.Expose;
+
 import wazzle.model.maingame.Difficulty;
 
+//TODO setcurrent difficulty to default
+
 public class SettingsControllerImpl implements SettingsController {
+	@Expose
+	private List<Difficulty> difficulties;
 	
-	private Settings settings;
-	
-	public SettingsControllerImpl(Settings settings) {
-		this.settings = settings;
+	@Expose
+	private Difficulty currentDifficulty;
+
+	public SettingsControllerImpl(final List<Difficulty> difficulties) {
+		this.difficulties = new ArrayList<>(difficulties);
 	}
-	
-	@Override
-	public Map<String, Map<Integer, Difficulty>> getAllDifficulties() {
-		return this.settings.getAllDifficulties();
-	} 
 
 	@Override
-	public Settings getCurrentSettings() {
-		return this.settings;
+	public List<Difficulty> getAllDifficulties() {
+		return List.copyOf(this.difficulties);
 	}
-	
+
 	@Override
 	public Difficulty getCurrentDifficulty() {
-		return this.settings.getCurrentDifficulty();
+		return this.currentDifficulty;
 	}
 
 	@Override
-	public int getCurrentGridShape() {
-		return this.settings.getCurrentGridShape();
-	} 
-	
-	@Override
-	public void updateSettings(Difficulty difficulty, int gridShape) {
-		this.settings.updateCurrentDifficulty(difficulty);
-		this.settings.updateCurrentGridShape(gridShape);
-	}
-
-	@Override
-	public void updateCurrentDifficulty(Difficulty difficulty) {
-		this.settings.updateCurrentDifficulty(difficulty);
-	}
-
-	@Override
-	public void updateCurrentGridShape(int gridShape) {
-		this.settings.updateCurrentGridShape(gridShape);
+	public void setCurrentDifficulty(final Difficulty difficulty) {
+		this.currentDifficulty = difficulty;
 	}
 }
