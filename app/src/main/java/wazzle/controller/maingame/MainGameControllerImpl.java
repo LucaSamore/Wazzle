@@ -109,8 +109,8 @@ public final class MainGameControllerImpl implements MainGameController {
                 .wordsFound()
                 .stream()
                 .map(w -> this.game.get().getScoreFromWord(w))
-                .max(Comparator.comparingDouble(Double::doubleValue))
-                .orElse(Double.NaN);
+                .max(Comparator.comparingInt(Integer::intValue))
+                .orElse(0);
 
         return this.game.get()
                 .wordsFound()

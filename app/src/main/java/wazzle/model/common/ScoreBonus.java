@@ -4,15 +4,16 @@ import java.util.function.BinaryOperator;
 
 public class ScoreBonus extends AbstractBonus {
 
-	private final BinaryOperator<Double> applier;
+	private final BinaryOperator<Integer> applier;
 	
 	/**
 	 * Construct a new ScoreBonus.
 	 * 
 	 * @param applier the operation that must be done when the ScoreBonus is used by the user.
 	 */
-	public ScoreBonus(final BinaryOperator<Double> applier) {
+	public ScoreBonus(final BinaryOperator<Integer> applier, String name) {
 		this.applier = applier;
+		this.name = name;
 	}
 	
 	/**
@@ -22,29 +23,23 @@ public class ScoreBonus extends AbstractBonus {
 	 * @param gridTotalScore the sum of all letter scores in the grid.
 	 * @return long which represent the updated score.
 	 */
-	public double apply(final double currentScore, final double gridTotalScore) {
+	public int apply(final int currentScore, final int gridTotalScore) {
 		return this.applier.apply(currentScore, gridTotalScore);
 	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
 		result = prime * result + ((applier == null) ? 0 : applier.hashCode());
 		return result;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
@@ -57,9 +52,6 @@ public class ScoreBonus extends AbstractBonus {
 		return true;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public String toString() {
 		return "ScoreBonus [applier=" + applier + "]";

@@ -32,7 +32,7 @@ public class MainGameImpl implements MainGame {
 	private long duration;
 	
 	@Expose
-	private double currentScore;
+	private int currentScore;
 	
 	private final Grid grid;
 	private int failedAttempts;	
@@ -100,12 +100,12 @@ public class MainGameImpl implements MainGame {
 	}
 	
 	@Override
-	public void setCurrentScore(final double newScore) {
+	public void setCurrentScore(final int newScore) {
 		this.currentScore = newScore;
 	}
 	
 	@Override
-	public double getCurrentScore() {
+	public int getCurrentScore() {
 		return this.currentScore;
 	}
 	
@@ -139,7 +139,15 @@ public class MainGameImpl implements MainGame {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(currentScore, dateTime, duration, failedAttempts, wordsFound);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + currentScore;
+		result = prime * result + ((dateTime == null) ? 0 : dateTime.hashCode());
+		result = prime * result + (int) (duration ^ (duration >>> 32));
+		result = prime * result + failedAttempts;
+		result = prime * result + ((grid == null) ? 0 : grid.hashCode());
+		result = prime * result + ((wordsFound == null) ? 0 : wordsFound.hashCode());
+		return result;
 	}
 
 	@Override
@@ -151,9 +159,28 @@ public class MainGameImpl implements MainGame {
 		if (getClass() != obj.getClass())
 			return false;
 		MainGameImpl other = (MainGameImpl) obj;
-		return Double.doubleToLongBits(currentScore) == Double.doubleToLongBits(other.currentScore)
-				&& Objects.equals(dateTime, other.dateTime) && duration == other.duration
-				&& failedAttempts == other.failedAttempts && Objects.equals(wordsFound, other.wordsFound);
+		if (currentScore != other.currentScore)
+			return false;
+		if (dateTime == null) {
+			if (other.dateTime != null)
+				return false;
+		} else if (!dateTime.equals(other.dateTime))
+			return false;
+		if (duration != other.duration)
+			return false;
+		if (failedAttempts != other.failedAttempts)
+			return false;
+		if (grid == null) {
+			if (other.grid != null)
+				return false;
+		} else if (!grid.equals(other.grid))
+			return false;
+		if (wordsFound == null) {
+			if (other.wordsFound != null)
+				return false;
+		} else if (!wordsFound.equals(other.wordsFound))
+			return false;
+		return true;
 	}
 
 	@Override
@@ -167,7 +194,7 @@ public class MainGameImpl implements MainGame {
 	}
 
 	@Override
-	public double getScoreFromWord(final String word) {
+	public int getScoreFromWord(final String word) {
         return word.chars()
                 .mapToObj(c -> (char)c)
                 .collect(Collectors.toList())
@@ -175,11 +202,11 @@ public class MainGameImpl implements MainGame {
                 .map(c -> this.charsWithScore(word).get(c))
                 .collect(Collectors.toList())
                 .stream()
-                .reduce(0.0, (x, y) -> x + y);
+                .reduce(0, (x, y) -> x + y);
 	}
 	
-	private Map<Character, Double> charsWithScore(final String word) {
-		Map<Character, Double> result = new HashMap<>();
+	private Map<Character, Integer> charsWithScore(final String word) {
+		Map<Character, Integer> result = new HashMap<>();
 		this.lettersInGrid()
 			.stream()
 			.forEach(l -> { if (!result.keySet().contains(l.getContent())) {

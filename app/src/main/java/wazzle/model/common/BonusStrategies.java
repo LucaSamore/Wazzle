@@ -20,7 +20,7 @@ public interface BonusStrategies {
 	 * 
 	 * @return BinaryOperator<Double> which represent the operation that must be done when the ScoreBonus is used.
 	 */
-	static BinaryOperator<Double> scoreBonus() {
+	static BinaryOperator<Integer> scoreBonus() {
 		return (current, bonus) -> current + bonus;
 	}
 	

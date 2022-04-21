@@ -52,9 +52,9 @@ public interface BonusManager {
 	 * 
 	 * @param currentScore the current score obtained by the user.
 	 * @param gridTotalScore the sum of all letter scores in the grid.
-	 * @return double which represents the updated score.
+	 * @return int which represents the updated score.
 	 */
-	double applyScoreBonus(final double currentScore, final double gridTotalScore);
+	int applyScoreBonus(final int currentScore, final int gridTotalScore);
 	
 	/**
 	 * Apply the implications of the WordBonus.
@@ -75,7 +75,9 @@ public interface BonusManager {
 	/**
 	 * Extract randomly a bonus and updates its quantity.
 	 * 
+	 * @return String the bonus name.
+	 * 
 	 */
-	void extractBonus();
+	String extractBonus();
 
 }

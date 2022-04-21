@@ -45,10 +45,11 @@ public class TestBonus {
 		//Extract
 		int startQuantity = bonusManager.getScoreBonusQuantity() + bonusManager.getWordBonusQuantity() 
 						  + bonusManager.getTimeBonusQuantity();
-		bonusManager.extractBonus();
+		String word = bonusManager.extractBonus();
 		int finalQuantity = bonusManager.getScoreBonusQuantity() + bonusManager.getWordBonusQuantity() 
 		  + bonusManager.getTimeBonusQuantity();
 		assertEquals(1, finalQuantity - startQuantity);
+		System.out.println(word);
 		
 	}
 }

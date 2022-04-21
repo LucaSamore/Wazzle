@@ -28,6 +28,6 @@ public interface Letter {
 	 * 
 	 * @return double which represent the score of the letter.
 	 */
-	double getScore();
+	int getScore();
 	
 }

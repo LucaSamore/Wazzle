@@ -76,7 +76,7 @@ public interface WazzleController {
 	/**
 	 * Extract and add a bonus gained in the MiniGame, using a BonusManager method.
 	 */
-	void gainBonus();
+	String gainBonus();
 	
 	/**
 	 * Add a MainGame to game history.
