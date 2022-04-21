@@ -11,7 +11,9 @@ public enum WazzleFiles {
 	
 	SHORT_DATASET("short-dataset.txt"),
 	
-	DATASET("medium-dataset.txt");
+	DATASET("medium-dataset.txt"),
+	
+	ALL_SETTINGS("all-settings.json");
 	
 	private final String fileName;
 
