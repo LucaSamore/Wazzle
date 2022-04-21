@@ -33,6 +33,7 @@ public class MiniGameControllerImpl implements MiniGameController {
 			loadedMinigame.get().setWordChecker(new WordCheckerImpl(loadedMinigame.get().getTargetWord()));
 			loadedMinigame.get().setGameState(State.IN_PROGRESS);
 			this.currentMinigame = Optional.of(loadedMinigame.get());
+			this.wazzleController.deleteEndedMiniGame();
 		}
 	}
 
@@ -46,6 +47,7 @@ public class MiniGameControllerImpl implements MiniGameController {
 		this.wazzleController.saveMiniGame(currentMinigame.get());
 	}
 
+
 	private Optional<MiniGameImpl> loadMiniGame() throws IOException {
 		return this.wazzleController.getLastMinigame();
 	}
@@ -57,7 +59,7 @@ public class MiniGameControllerImpl implements MiniGameController {
 
 	@Override
 	public Optional<String> obtainedBonus() throws IOException {
-		this.wazzleController.deleteEndedMiniGame();
+
 		if (this.currentMinigame.get().getGameState() == State.WON) {
 			var currentBonusName = this.wazzleController.gainBonus();
 			this.wazzleController.saveBonuses();

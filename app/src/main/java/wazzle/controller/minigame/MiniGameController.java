@@ -33,5 +33,4 @@ public interface MiniGameController {
 
 	List<MiniGameWord> getGuessedMiniGameWordsSoFar();
 
-
 }
