@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="mainWrapper" alignment="CENTER" fillWidth="false" styleClass="rootBackground" stylesheets="@../styles/statistics-main-game.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox fx:id="mainStatisticWindow" alignment="CENTER" VBox.vgrow="ALWAYS">
+         <children>
+            <VBox alignment="CENTER" layoutX="10.0" layoutY="60.0" styleClass="longIncave" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label fx:id="targetWordLabel" alignment="CENTER" text="parola da indovinare" textAlignment="CENTER" />
+                  <Label fx:id="targetWordValueLabel" alignment="CENTER" contentDisplay="CENTER" text="-" textAlignment="CENTER" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" layoutX="10.0" layoutY="44.0" styleClass="longIncave" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label fx:id="attemptLabel" alignment="CENTER" text="tentativi sbagliati" />
+                  <Label fx:id="attemptsValueLabel" alignment="CENTER" text="-" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" styleClass="longIncave" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label fx:id="resultLabel" alignment="CENTER" text="Esito" textAlignment="CENTER" />
+                  <Label fx:id="resultValueLabel" alignment="CENTER" contentDisplay="CENTER" text="Successo!" textAlignment="CENTER" />
+               </children>
+            </VBox>
+         </children>
+         <styleClass>
+            <String fx:value="gridBackground" />
+            <String fx:value="letters" />
+         </styleClass>
+      </VBox>
+      <HBox fx:id="buttonWrapper" VBox.vgrow="NEVER">
+         <children>
+            <Button fx:id="playAgainButton" mnemonicParsing="false" onAction="#goToScene" styleClass="orangeButton" text="Rigioca" />
+            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#goToScene" styleClass="redButton" text="Esci" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

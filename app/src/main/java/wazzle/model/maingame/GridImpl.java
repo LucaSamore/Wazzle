@@ -27,11 +27,10 @@ public class GridImpl implements Grid {
 	}
 	
 	@Override
-	public double getTotalScore() {
+	public int getTotalScore() {
 		return this.letters.stream()
 				.map(Letter::getScore)
-				.reduce(0.0, (x,y) -> x + y)
-				.doubleValue();
+				.reduce(0, (x,y) -> x + y);
 	}
 	
 	@Override

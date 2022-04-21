@@ -1,12 +1,12 @@
 package wazzle.model.common;
 
 import java.util.HashSet;
+
 import java.util.Random;
 import java.util.Set;
 import java.util.function.BinaryOperator;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * 
@@ -20,7 +20,7 @@ public interface BonusStrategies {
 	 * 
 	 * @return BinaryOperator<Double> which represent the operation that must be done when the ScoreBonus is used.
 	 */
-	static BinaryOperator<Double> scoreBonus() {
+	static BinaryOperator<Integer> scoreBonus() {
 		return (current, bonus) -> current + bonus;
 	}
 	
@@ -51,11 +51,11 @@ public interface BonusStrategies {
 	private static Set<String> extractWords(final Set<String> words) {
 		var random = new Random();
 		Set<String> extractedWords = new HashSet<>();
-		IntStream.rangeClosed(1, 3)
-		  .boxed()
-		  .forEach(i -> extractedWords.add(words.stream()
-				  				 .collect(Collectors.toList())
-				  				 .get(random.nextInt(words.size()-1))));
+		while (extractedWords.size() != 3) {
+			extractedWords.add(words.stream()
+	  				 				.collect(Collectors.toList())
+	  				 				.get(random.nextInt(words.size()-1)));
+		}
 		return extractedWords;
 	}
 }

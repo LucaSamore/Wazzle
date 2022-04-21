@@ -2,13 +2,17 @@ package wazzle.controller.common;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import wazzle.controller.maingame.GameHistoryController;
 import wazzle.controller.maingame.Settings;
 import wazzle.controller.maingame.SettingsController;
 import wazzle.model.common.BonusManager;
+import wazzle.model.common.Dictionary;
 import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
+import wazzle.model.minigame.MiniGame;
+import wazzle.model.minigame.MiniGameImpl;
 
 public interface WazzleController {
 
@@ -25,13 +29,14 @@ public interface WazzleController {
 	 * @return Settings the settings.
 	 */
 	Settings getSettings();
-	
+
 	/**
-	 * Gives the file controller.
+	 * Gives the dataset.
 	 * 
-	 * @return FileController the file controller.
+	 * @return Dataset the dataset which Wazzle takes the words from.
+	 * @throws IOException
 	 */
-	FileController getFileController();
+	Dictionary getDataset() throws IOException;
 	
 	/**
 	 * Gives the game history controller.
@@ -53,6 +58,13 @@ public interface WazzleController {
 	 * @return BonusManager the bonus manager.
 	 */
 	BonusManager getBonusManager();
+	
+	/**
+	 * Gives the last minigame saved.
+	 * 
+	 * @return MiniGameImpl the last MiniGame saved.
+	 */
+	Optional<MiniGameImpl> getLastMinigame() throws IOException;
 	
 	/**
 	 * Gives the Facade.
@@ -100,6 +112,21 @@ public interface WazzleController {
 	 * @throws IOException 
 	 */
 	void saveBonuses() throws IOException;
+	
+	/**
+	 * Save minigame to file.
+	 * 
+	 * @param minigame the minigame which have to been saved.
+	 * @throws IOException
+	 */
+	void saveMiniGame(MiniGame minigame) throws IOException;
+	
+	/**
+	 * Delete the last saved minigame.
+	 * 
+	 * @throws IOException
+	 */
+	void deleteEndedMiniGame() throws IOException;
 	
 	/**
 	 * Gives this Wazzle controller.

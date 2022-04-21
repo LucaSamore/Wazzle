@@ -27,17 +27,15 @@ public class GameHistoryControllerImpl implements GameHistoryController {
 		return this.gameHistory.stream().filter(mg -> mg.getCurrentScore() == this.gameHistory
 																				  .stream()
 																				  .map(g -> g.getCurrentScore())
-																				  .max(Comparator.comparing(Double::valueOf))
-																				  .orElse(Double.NaN))
+																				  .max(Comparator.comparing(Integer::valueOf))
+																				  .orElse(0))
 								 		.findFirst()
 								 		.get();
 	}
 
 	@Override
-	public List<MainGameImpl> getSortedByDataGameHistory() {
-		List<MainGameImpl> sortedGameHistory = this.gameHistory;
-		Collections.sort(sortedGameHistory, (v1, v2) -> v1.getDateTime().compareTo(v2.getDateTime()));
-		return List.copyOf(sortedGameHistory);
+	public void sortGameHistoryByData() {
+		Collections.sort(this.gameHistory, (v1, v2) -> v2.getDateTime().compareTo(v1.getDateTime()));
 	}
 
 	@Override

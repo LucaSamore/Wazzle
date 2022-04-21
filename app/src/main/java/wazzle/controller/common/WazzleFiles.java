@@ -7,6 +7,8 @@ public enum WazzleFiles {
 	
 	SETTINGS("settings.json"),
 	
+	MINI_GAME("mini-game.json"),
+	
 	DATASET("dataset.txt");
 	
 	private final String fileName;

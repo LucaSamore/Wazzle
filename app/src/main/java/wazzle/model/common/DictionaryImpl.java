@@ -21,6 +21,7 @@ public final class DictionaryImpl implements Dictionary {
 	/**
 	 * @return The Set containing all the words collected.
 	 */
+	@Override
 	public Set<String> getWords() {
 		return Collections.unmodifiableSet(this.words);
 	}

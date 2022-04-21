@@ -48,7 +48,7 @@ public class LoadingView extends View<MainGameController> {
 	@FXML
 	private Label loadingLabel;
 	
-	private static final String IMAGE_PATH = "img/WaffleLoadingScreen.png";
+	private static final String IMAGE_PATH = "img/loading.gif";
 	
 	private AnimationTimer animationTimer;		
 	private boolean flag = false;
@@ -84,8 +84,7 @@ public class LoadingView extends View<MainGameController> {
 				var shape = controller.getMainController().getSettings().getCurrentGridShape();				
 				controller.startNewGame(controller
 						.getMainController()
-						.getFileController()
-						.getDataset(WazzleFiles.DATASET.getFileName()), new Pair<Integer,Integer>(shape,shape), controller.getMainController().getSettings().getCurrentDifficulty());
+						.getDataset(), new Pair<Integer,Integer>(shape,shape), controller.getMainController().getSettings().getCurrentDifficulty());
 				
 				
 				flag = true;
@@ -96,19 +95,15 @@ public class LoadingView extends View<MainGameController> {
 	}
 
 	private void setAnimation() {
+		
 		Image loadingWaffle = new Image(ClassLoader.getSystemResourceAsStream(IMAGE_PATH));
 		imageContainer.setImage(loadingWaffle);
 
 		DoubleProperty dotJumpHeight = new SimpleDoubleProperty();
 		dotJumpHeight.bind(loadingLabel.heightProperty().multiply(0.5 * -1));
-
-		RotateTransition rotation = new RotateTransition();
-		rotation.setNode(imageContainer);
-		rotation.setDuration(Duration.millis(1000));
-		rotation.setCycleCount(Animation.INDEFINITE);
-		rotation.setByAngle(360);
-		rotation.setAxis(Rotate.Z_AXIS);
-		rotation.play();
+		
+		imageContainer.fitHeightProperty().bind(visualUnit);
+		imageContainer.fitWidthProperty().bind(visualUnit);
 
 		TranslateTransition translateFirst = new TranslateTransition();
 		translateFirst.setNode(firstDot);

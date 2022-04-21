@@ -11,7 +11,7 @@ public interface GameHistoryController {
 	
 	MainGame getBestGame();
 	
-	List<MainGameImpl> getSortedByDataGameHistory();
+	void sortGameHistoryByData();
 	
 	List<MainGameImpl> getSortedByScoreGameHistory();
 

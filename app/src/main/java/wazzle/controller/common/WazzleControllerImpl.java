@@ -1,8 +1,11 @@
 package wazzle.controller.common;
 
 import java.io.IOException;
+
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import wazzle.controller.maingame.GameHistoryController;
 import wazzle.controller.maingame.GameHistoryControllerImpl;
@@ -12,11 +15,15 @@ import wazzle.controller.maingame.SettingsControllerImpl;
 import wazzle.controller.maingame.SettingsImpl;
 import wazzle.model.common.BonusManager;
 import wazzle.model.common.BonusManagerImpl;
+import wazzle.model.common.Dictionary;
 import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
+import wazzle.model.minigame.MiniGame;
+import wazzle.model.minigame.MiniGameImpl;
 
 public class WazzleControllerImpl implements WazzleController {
 
+	private static final int MAX_GAME_HISTORY_VISIBLE = 10;
 	private final FileController fileController;
 	private final SettingsController settingsController;
 	private final GameHistoryController gameHistoryController;
@@ -40,8 +47,8 @@ public class WazzleControllerImpl implements WazzleController {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public FileController getFileController() {
-		return this.fileController.getThis();
+	public Dictionary getDataset() throws IOException {
+		return this.fileController.getDataset(WazzleFiles.DATASET.getFileName());
 	}
 	
 	/**
@@ -73,6 +80,7 @@ public class WazzleControllerImpl implements WazzleController {
 	 */
 	@Override
 	public List<MainGameImpl> getGameHistory() {
+		this.gameHistoryController.sortGameHistoryByData();
 		return List.copyOf(this.gameHistoryController.getGameHistory());
 	}
 
@@ -82,6 +90,14 @@ public class WazzleControllerImpl implements WazzleController {
 	@Override
 	public BonusManager getBonusManager() {
 		return this.bonusManager;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Optional<MiniGameImpl> getLastMinigame() throws IOException {
+		return this.fileController.getMiniGame(WazzleFiles.MINI_GAME.getFileName());
 	}
 	
 	/**
@@ -115,19 +131,46 @@ public class WazzleControllerImpl implements WazzleController {
 		this.settingsController.updateSettings(settings.getCurrentDifficulty(), settings.getCurrentGridShape());
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void saveSettings() throws IOException {
 		this.fileController.saveSettings(WazzleFiles.SETTINGS.getFileName(), this.getSettings());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void saveGameHistory() throws IOException {
-		this.fileController.saveGames(WazzleFiles.HISTORY.getFileName(), this.getGameHistory());
+		this.fileController.saveGames(WazzleFiles.HISTORY.getFileName(), this.getGameHistory().stream()
+				.limit(MAX_GAME_HISTORY_VISIBLE)
+				.collect(Collectors.toList()));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void saveBonuses() throws IOException {
 		this.fileController.saveBonuses(WazzleFiles.BONUSES.getFileName(), this.getBonusManager());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void saveMiniGame(final MiniGame minigame) throws IOException {
+		this.fileController.saveMiniGame(WazzleFiles.MINI_GAME.getFileName(), minigame);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void deleteEndedMiniGame() throws IOException {
+		this.fileController.delete(WazzleFiles.MINI_GAME.getFileName());
 	}
 	
 	/**

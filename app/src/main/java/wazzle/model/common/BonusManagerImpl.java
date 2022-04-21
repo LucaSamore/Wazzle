@@ -78,7 +78,7 @@ public class BonusManagerImpl implements BonusManager {
 	/**
 	 * {@inheritDoc}
 	 */
-	public double applyScoreBonus(final double currentScore, final double gridTotalScore) {
+	public int applyScoreBonus(final int currentScore, final int gridTotalScore) {
 		this.updateScoreBonusQuantity(b -> b - 1);
 		return this.scoreBonus.apply(currentScore, gridTotalScore);
 	}
