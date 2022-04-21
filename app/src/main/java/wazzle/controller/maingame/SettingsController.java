@@ -1,24 +1,14 @@
 package wazzle.controller.maingame;
 
-import java.util.Map;
+import java.util.List;
 import wazzle.model.maingame.Difficulty;
 
 public interface SettingsController {
 
-		
-	Map<String, Map<Integer, Difficulty>> getAllDifficulties();
-	
-	Settings getCurrentSettings();
-
-	int getCurrentGridShape();
+	List<Difficulty> getAllDifficulties();
 
 	Difficulty getCurrentDifficulty();
-	
-	void updateSettings(final Difficulty difficulty, final int gridShape);
-	
-	void updateCurrentDifficulty(final Difficulty difficulty);
-	
-	void updateCurrentGridShape(int gridShape);
 
-	
-} 
+	void setCurrentDifficulty(final Difficulty difficulty);
+
+}

@@ -59,10 +59,8 @@ public final class SettingsView extends View<WazzleController>{
 		final Node node = (Node) event.getSource();
 
 		if (node.getId().equals("okButton")) {
-			final var sliderValue = (int) this.gridDimensionSlider.getValue();
-			this.controller.getSettingsController().updateSettings(
-					this.controller.getSettingsController().getAllDifficulties().get(difficultySelectorCBox.getValue()).get(sliderValue),
-					sliderValue);
+//			final var sliderValue = (int) this.gridDimensionSlider.getValue();
+		//	this.controller.getSettingsController().updateSettings(this.controller.getSettingsController().getAllDifficulties().get(difficultySelectorCBox.getValue()).get(sliderValue),sliderValue);
 			this.controller.saveSettings();
 		}
 		this.stage.setUserData(this.controller);
@@ -72,11 +70,11 @@ public final class SettingsView extends View<WazzleController>{
 	@Override
 	protected void buildView() {
 		this.setGraphics();
-		this.controller.getSettings().getAllDifficulties().keySet()
-				.forEach(e -> difficultySelectorCBox.getItems().add(e));
+//		this.controller.getCurrentDifficulty().getAllDifficulties().keySet()
+//				.forEach(e -> difficultySelectorCBox.getItems().add(e));
 
-		this.difficultySelectorCBox.getSelectionModel().select(this.controller.getSettings().getCurrentDifficultyName());
-		this.gridDimensionSlider.setValue(this.controller.getSettings().getCurrentGridShape());
+//		this.difficultySelectorCBox.getSelectionModel().select(this.controller.getCurrentDifficulty().getCurrentDifficultyName());
+//		this.gridDimensionSlider.setValue(this.controller.getCurrentDifficulty().getCurrentGridShape());
 	}
 
 	@Override

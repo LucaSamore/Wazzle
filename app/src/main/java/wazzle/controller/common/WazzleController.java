@@ -9,6 +9,7 @@ import wazzle.controller.maingame.Settings;
 import wazzle.controller.maingame.SettingsController;
 import wazzle.model.common.BonusManager;
 import wazzle.model.common.Dictionary;
+import wazzle.model.maingame.Difficulty;
 import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
 import wazzle.model.minigame.MiniGame;
@@ -28,7 +29,7 @@ public interface WazzleController {
 	 * 
 	 * @return Settings the settings.
 	 */
-	Settings getSettings();
+	Difficulty getCurrentDifficulty();
 
 	/**
 	 * Gives the dataset.
@@ -98,8 +99,7 @@ public interface WazzleController {
 	 * 
 	 * @param Settings The settings.
 	 */
-	void updateSettings(final Settings settings);
-	
+	void updateSettings(Difficulty difficulty);	
 	/**
 	 * Save settings to file.
 	 * 

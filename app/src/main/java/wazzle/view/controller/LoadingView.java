@@ -7,7 +7,6 @@ package wazzle.view.controller;
 import java.io.IOException;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
-import javafx.animation.RotateTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.binding.Bindings;
@@ -22,11 +21,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.util.Pair;
-import wazzle.controller.common.WazzleFiles;
 import wazzle.controller.maingame.MainGameController;
 import wazzle.view.FXMLFiles;
 import wazzle.view.Loader;
@@ -81,11 +77,11 @@ public class LoadingView extends View<MainGameController> {
 		Task<Void> task = new Task<Void>() {
 			@Override
 			public Void call() throws IOException {
-				var shape = controller.getMainController().getSettings().getCurrentGridShape();				
-				controller.startNewGame(controller
-						.getMainController()
-						.getDataset(), new Pair<Integer,Integer>(shape,shape), controller.getMainController().getSettings().getCurrentDifficulty());
-				
+//				var shape = controller.getMainController().getSettings().getCurrentGridShape();				
+//				controller.startNewGame(controller
+//						.getMainController()
+//						.getDataset(), new Pair<Integer,Integer>(shape,shape), controller.getMainController().getSettings().getCurrentDifficulty());
+//				
 				
 				flag = true;
 				return null;
