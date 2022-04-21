@@ -13,12 +13,15 @@ import javafx.beans.binding.StringExpression;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -73,13 +76,13 @@ public final class MiniGameView extends View<MiniGameController> {
 	private static final String UPPER_ROW_CHARACTERS = QWERTYKeyboard.UPPER_ROW.getKeyboardRow();
 	private static final String MIDDLE_ROW_CHARACTERS = QWERTYKeyboard.MIDDLE_ROW.getKeyboardRow();
 	private static final String LOWER_ROW_CHARACTERS = QWERTYKeyboard.LOWER_ROW.getKeyboardRow();
-	private static final int NUMBER_OF_ROWS = 3;
 	private static final String BACKGROUND_RADIUS_10 = "-fx-background-radius: 10";
 	private static final String BACKGROUND_COLOR_WRONG = "-fx-background-color:#0000;";
 	private static final String BACKGROUND_COLOR_CORRECT = "-fx-background-color:#45E521;";
 	private static final String BACKGROUND_COLOR_WRONG_PLACE = "-fx-background-color: yellow;";
-	private Map<Integer, String> keyboardCharacters;
 
+	private EventHandler<KeyEvent> keyPressedHandler;
+	private EventHandler<MouseEvent> clickedOnKeyHandler;
 	private int currentTypeIndex;
 	private int currentRowIndex;
 	private List<String> currentWord;
@@ -105,18 +108,45 @@ public final class MiniGameView extends View<MiniGameController> {
 		this.currentTypeIndex = 0;
 		this.currentRowIndex = 0;
 
-		this.keyboardCharacters = new HashMap<>();
-		this.keyboardCharacters.put(0, UPPER_ROW_CHARACTERS);
-		this.keyboardCharacters.put(1, MIDDLE_ROW_CHARACTERS);
-		this.keyboardCharacters.put(2, LOWER_ROW_CHARACTERS);
-
 		this.firstRowGrid = new GridPane();
 		this.secondRowGrid = new GridPane();
 		this.thirdRowGrid = new GridPane();
 
 		this.visualUnit = new SimpleDoubleProperty();
 		this.visualUnit.bind(Bindings.min(stage.widthProperty().multiply(0.05), stage.heightProperty().multiply(0.05)));
+
+		this.setKeyPressedEventHandler();
+
 		this.onClose();
+	}
+
+	private void setKeyPressedEventHandler() {
+		this.keyPressedHandler = (KeyEvent event) -> {
+			switch (event.getCode()) {
+			case BACK_SPACE:
+				if (currentTypeIndex != 0) {
+					currentTypeIndex--;
+					this.currentWord.remove(currentTypeIndex);
+					removeGridElement(this.currentTypeIndex, this.currentRowIndex);
+					addMiniGamePane("", this.currentTypeIndex, this.currentRowIndex, Result.WRONG.getState());
+				}
+				break;
+			case ENTER:
+				this.sendWord.fire();
+				break;
+			default:
+				if (event.getCode().isLetterKey() && !this.bannedChars.contains(event.getCode().toString().toLowerCase().charAt(0))) {
+					typeLetterInGrid(event.getCode().toString().toLowerCase());
+				}
+				break;
+			}
+			event.consume();
+		};
+
+		this.clickedOnKeyHandler = e -> {
+			String letter = ((Label) ((StackPane) ((Pane) e.getSource()).getParent()).getChildren().get(0)).getText();
+			typeLetterInGrid(letter);
+		};
 	}
 
 	private Node getNodeByCoords(final int row, final int column) {
@@ -129,72 +159,60 @@ public final class MiniGameView extends View<MiniGameController> {
 		return null;
 	}
 
-	private void populateKeyboardGrid() {
-		for (int rowIndex = 0; rowIndex < NUMBER_OF_ROWS; rowIndex++) {
-			for (int colIndex = 0; colIndex < keyboardCharacters.get(rowIndex).length(); colIndex++) {
-				addKeysToKeyboard(rowIndex, colIndex, keyboardCharacters.get(rowIndex).charAt(colIndex));
-			}
+	private void populateKeyboardRow(GridPane rowToPopulate, String string) {
+		for (int colIndex = 0; colIndex < string.length(); colIndex++) {
+			addKeysToKeyboard(rowToPopulate, colIndex, string.charAt(colIndex));
 		}
 
 	}
 
-	private void repopulateKeyboardGrid() {
-		for (int rowIndex = 0; rowIndex < NUMBER_OF_ROWS; rowIndex++) {
-			for (int colIndex = 0; colIndex < keyboardCharacters.get(rowIndex).length(); colIndex++) {
-				removeKeyboardElement(colIndex, rowIndex);
+	private void disableKeyboardKey(GridPane gridToRemoveFrom) {
+		Set<Node> elementsToRemove = new HashSet<>();
+		for (Node sp : gridToRemoveFrom.getChildren()) {
+			var temp = ((Label) ((StackPane) sp).getChildren().get(0)).getText().charAt(0);
+			if (this.bannedChars.contains(temp)) {
+				elementsToRemove.add(sp);
 			}
 		}
-		this.populateKeyboardGrid();
+		elementsToRemove.forEach(e -> {
+			e.getStyleClass().add("darkIncave");
+			e.setDisable(true);
+			e.removeEventFilter(MouseEvent.MOUSE_CLICKED, this.clickedOnKeyHandler);
+		});
 	}
 
-	private void removeKeyboardElement(final int column, final int row) {
-		this.firstRowGrid.getChildren().remove(getNodeByCoords(row, column));
-		this.secondRowGrid.getChildren().remove(getNodeByCoords(row, column));
-		this.thirdRowGrid.getChildren().remove(getNodeByCoords(row, column));
+	private void disableKeyboardKeys() {
+		this.disableKeyboardKey(this.firstRowGrid);
+		this.disableKeyboardKey(this.secondRowGrid);
+		this.disableKeyboardKey(this.thirdRowGrid);
 	}
 
-	private void addKeysToKeyboard(int rowIndex, int colIndex, char charAt) {
+	private void addKeysToKeyboard(GridPane targetGridPane, int colIndex, char charAt) {
 
 		this.incave = new StackPane();
+		if (this.bannedChars.contains(charAt)) {
+			incave.getStyleClass().add("darkIncave");
+		} else {
+			incave.getStyleClass().add("incave");
+		}
+
 		Pane containerPane = new Pane();
 		containerPane.maxWidthProperty().bind(incave.widthProperty());
 		containerPane.maxHeightProperty().bind(containerPane.widthProperty());
+
 		Label letterLabel = new Label(String.valueOf(charAt));
 		letterLabel.getStyleClass().add("letters");
 		letterLabel.styleProperty().bind(Bindings.concat("-fx-font-size: ", visualUnit.asString(), ";"));
-		incave.getStyleClass().add("incave");
-		if (this.bannedChars.contains(charAt)) {
-			incave.getStyleClass().clear();
-			incave.getStyleClass().add("darkIncave");
-		}
+
 		StackPane.setAlignment(letterLabel, Pos.CENTER);
 		StackPane.setAlignment(containerPane, Pos.CENTER);
 
 		incave.minWidthProperty().bind(letterLabel.heightProperty());
 
-		containerPane.setOnMouseClicked(e -> {
-			String letter = ((Label) ((StackPane) ((Pane) e.getSource()).getParent()).getChildren().get(0)).getText();
-			typeLetterInGrid(letter);
-		});
+		containerPane.setOnMouseClicked(this.clickedOnKeyHandler);
 
 		incave.getChildren().addAll(letterLabel, containerPane);
-
-		switch (rowIndex) {
-		case 0:
-			firstRowGrid.add(incave, colIndex, 0);
-			break;
-		
-		case 1: 
-			secondRowGrid.add(incave, colIndex, 0);
-			break;
-		
-		case 2: 
-			thirdRowGrid.add(incave, colIndex, 0);
-			break;
-		
-		default:
-			throw new IllegalArgumentException("Unexpected value: " + rowIndex);
-		}
+		targetGridPane.add(incave, colIndex, 0);
 	}
 
 	private void populateLettersGrid() {
@@ -285,7 +303,7 @@ public final class MiniGameView extends View<MiniGameController> {
 
 		}
 		this.currentRowIndex++;
-		this.repopulateKeyboardGrid();
+		this.disableKeyboardKeys();
 	}
 
 	@Override
@@ -310,35 +328,16 @@ public final class MiniGameView extends View<MiniGameController> {
 
 	@Override
 	protected void buildView() {
-		populateLettersGrid();
-		populateKeyboardGrid();
-		setGraphics();
-		addKeyPressedListener();
+		this.populateLettersGrid();
+		this.populateKeyboardRow(this.firstRowGrid, UPPER_ROW_CHARACTERS);
+		this.populateKeyboardRow(this.secondRowGrid, MIDDLE_ROW_CHARACTERS);
+		this.populateKeyboardRow(this.thirdRowGrid, LOWER_ROW_CHARACTERS);
+		this.setGraphics();
+		this.addKeyPressedListener();
 	}
 
 	private void addKeyPressedListener() {
-
-		this.mainWrapper.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
-			switch (event.getCode()) {
-			case BACK_SPACE:
-				if (currentTypeIndex != 0) {
-					currentTypeIndex--;
-					this.currentWord.remove(currentTypeIndex);
-					removeGridElement(this.currentTypeIndex, this.currentRowIndex);
-					addMiniGamePane("", this.currentTypeIndex, this.currentRowIndex, Result.WRONG.getState());
-				}
-				break;
-			case ENTER:
-				this.sendWord.fire();
-				break;
-			default:
-				if (event.getCode().isLetterKey()) {
-					typeLetterInGrid(event.getCode().toString().toLowerCase());
-				}
-				break;
-			}
-			event.consume();
-		});
+		this.mainWrapper.addEventFilter(KeyEvent.KEY_PRESSED, this.keyPressedHandler);
 	}
 
 	@FXML
