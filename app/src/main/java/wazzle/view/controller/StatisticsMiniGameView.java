@@ -95,16 +95,16 @@ public class StatisticsMiniGameView extends View<MiniGameController>{
 		this.targetWordValueLabel.setText("" + this.miniGameController.getTargetWord());
 		this.attemptsValueLabel.setText("" + this.miniGameController.getCurrentAttemptsNumber());
 
-		if (this.miniGameController.getState() == State.WON) {
-			this.resultValueLabel.setText("Hai vinto!");
-//			switch(this.miniGameController.obtainedBonus()) {
-//			case 0:
-//			this.bonusValueLabel.setText("Tempo");
-//			break;
-//			}
-			//TODO
+		try {
+			this.miniGameController.obtainedBonus().ifPresent(b -> {
+				this.resultValueLabel.setText("Hai vinto!");
+				this.bonusValueLabel.setText(b);
+			});
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
+		
 		ObservableValue<String> fontSizeValue = Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.05).asString(),
 				";");
 		ObservableValue<String> smallerFontSizeValue = Bindings.concat("-fx-font-size: ",
