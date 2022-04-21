@@ -36,7 +36,7 @@ public class SettingsControllerImpl implements SettingsController {
 	}
 
 	@Override
-	public void setCurrentDifficulty(@Nullable final Difficulty difficulty) {
+	public void setCurrentDifficulty(final Difficulty difficulty) {
 		Objects.requireNonNull(difficulty);
 		this.currentDifficulty = difficulty;
 	}
