@@ -47,6 +47,9 @@ public final class MiniGameView extends View<MiniGameController> {
 
 	@FXML
 	private Button deleteButton;
+	
+	@FXML
+	private Button leaveButton;
 
 	@FXML
 	private VBox mainWrapper;
@@ -91,6 +94,7 @@ public final class MiniGameView extends View<MiniGameController> {
 		this.numCols = this.controller.getWordLenght();
 		this.currentTypeIndex = 0;
 		this.currentRowIndex = 0;
+		
 		this.keyboardCharacters = new HashMap<>();
 		this.keyboardCharacters.put(0, UPPER_ROW_CHARACTERS);
 		this.keyboardCharacters.put(1, MIDDLE_ROW_CHARACTERS);
@@ -149,7 +153,7 @@ public final class MiniGameView extends View<MiniGameController> {
 
 		containerPane.setOnMouseClicked(e -> {
 			String letter = ((Label) ((StackPane) ((Pane) e.getSource()).getParent()).getChildren().get(0)).getText();
-			typeLetterGrid(letter);
+			typeLetterInGrid(letter);
 		});
 
 		incave.getChildren().addAll(letterLabel, containerPane);
@@ -217,7 +221,7 @@ public final class MiniGameView extends View<MiniGameController> {
 
 	}
 
-	private void typeLetterGrid(String string) {
+	private void typeLetterInGrid(String string) {
 		if (this.currentTypeIndex < this.numCols) {
 			removeGridElement(this.currentTypeIndex, this.currentRowIndex);
 			addMiniGamePane(string, this.currentTypeIndex, this.currentRowIndex, Result.WRONG.getState());
@@ -289,7 +293,7 @@ public final class MiniGameView extends View<MiniGameController> {
 				break;
 			default:
 				if(event.getCode().isLetterKey()) {
-				typeLetterGrid(event.getCode().toString().toLowerCase());
+				typeLetterInGrid(event.getCode().toString().toLowerCase());
 				}
 				break;
 
@@ -300,12 +304,16 @@ public final class MiniGameView extends View<MiniGameController> {
 
 	@Override
 	protected void setGraphics() {
+
+		
 		StringExpression paddingValue = Bindings.concat("-fx-padding: ", visualUnit.multiply(0.6).asString(), ";");
 		StringExpression hgapValue = Bindings.concat("-fx-hgap: ", visualUnit.multiply(0.1).asString(), ";");
 
 		firstRowGrid.maxWidthProperty().bind(incave.widthProperty().multiply(UPPER_ROW_CHARACTERS.length()));
 		sendWord.styleProperty().bind(Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.75).asString(), ";"));
 		deleteButton.fontProperty().bind(sendWord.fontProperty());
+		leaveButton.fontProperty().bind(sendWord.fontProperty());
+		
 		wordsGrid.styleProperty().bind(paddingValue);
 		wordsGrid.hgapProperty().bind(visualUnit.multiply(0.2));
 		wordsGrid.vgapProperty().bind(wordsGrid.hgapProperty());
