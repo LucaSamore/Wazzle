@@ -177,7 +177,10 @@ public class WazzleControllerImpl implements WazzleController {
 	 */
 	@Override
 	public void deleteEndedMiniGame() throws IOException {
-		this.fileController.delete(WazzleFiles.MINI_GAME.getFileName());
+		this.fileController.delete(System.getProperty("user.home") + System.getProperty("file.separator") + 
+				"wazzle" + System.getProperty("file.separator") + 
+				"files" + System.getProperty("file.separator") + WazzleFiles.MINI_GAME.getFileName());
+		//TODO RIMUOVERE E SISTEMARE
 	}
 	
 	/**

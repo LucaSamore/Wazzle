@@ -19,6 +19,11 @@
 	-fx-background-size: stretch;
 	}
 
+.darkIncave{
+	-fx-background-image: url("../img/dark-incave.png");
+	-fx-background-size: stretch;
+	}
+
 .rootBackground{
 	-fx-background-color: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #55c5fc , #92dff3);
 }
