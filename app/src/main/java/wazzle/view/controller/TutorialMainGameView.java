@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import wazzle.view.Images;
 
 public final class TutorialMainGameView {
 	@FXML
@@ -53,7 +54,7 @@ public final class TutorialMainGameView {
 		final var textFontSize = Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.025).asString(), ";");
 		final var paddingValue = Bindings.concat("-fx-padding: ", visualUnit.multiply(0.05).asString(), ";");
 		final var spacingValue = Bindings.concat("-fx-spacing: ", visualUnit.multiply(0.02).asString(), ";");
-		final var explanationGif = new Image(getClass().getResourceAsStream("img/gitTutorial.gif"));
+		final var explanationGif = new Image(getClass().getResourceAsStream(Images.TUTORIAL_MAIN_GAME.getPath()));
 		elementWrapper.styleProperty().bind(spacingValue);
 		contentWrapper.maxHeightProperty().bind(contentWrapper.widthProperty());
 		contentWrapper.styleProperty().bind(Bindings.concat(paddingValue, spacingValue));

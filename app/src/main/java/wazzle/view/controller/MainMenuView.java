@@ -20,6 +20,7 @@ import wazzle.controller.common.WazzleController;
 import wazzle.controller.maingame.MainGameControllerImpl;
 import wazzle.controller.minigame.MiniGameControllerImpl;
 import wazzle.view.FXMLFiles;
+import wazzle.view.Images;
 import wazzle.view.SceneSwitcher;
 
 public final class MainMenuView extends View<WazzleController>{
@@ -129,7 +130,7 @@ public final class MainMenuView extends View<WazzleController>{
 		mainWrapperButtons.styleProperty().bind(this.fontSize);
 		mainWrapperButtons.getStyleClass().add("letters");
 		
-		Image cogwheelSettingsImage = new Image("img/settingsIcon.png");
+		Image cogwheelSettingsImage = new Image(Images.SETTINGS_ICON.getPath());
 		
 		settingsIcon.setImage(cogwheelSettingsImage);
 		settingsIcon.fitWidthProperty().bind(this.visualUnit.multiply(ZERO_ONE));

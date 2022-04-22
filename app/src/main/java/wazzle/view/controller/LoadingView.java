@@ -26,6 +26,7 @@ import javafx.util.Duration;
 import javafx.util.Pair;
 import wazzle.controller.maingame.MainGameController;
 import wazzle.view.FXMLFiles;
+import wazzle.view.Images;
 import wazzle.view.Loader;
 
 public class LoadingView extends View<MainGameController> {
@@ -44,8 +45,6 @@ public class LoadingView extends View<MainGameController> {
 
 	@FXML
 	private Label loadingLabel;
-	
-	private static final String IMAGE_PATH = "img/loading.gif";
 	
 	private AnimationTimer animationTimer;		
 	private boolean flag = false;
@@ -93,7 +92,7 @@ public class LoadingView extends View<MainGameController> {
 
 	private void setAnimation() {
 		
-		Image loadingWaffle = new Image(ClassLoader.getSystemResourceAsStream(IMAGE_PATH));
+		Image loadingWaffle = new Image(ClassLoader.getSystemResourceAsStream(Images.WALLY.getPath()));
 		imageContainer.setImage(loadingWaffle);
 
 		DoubleProperty dotJumpHeight = new SimpleDoubleProperty();
