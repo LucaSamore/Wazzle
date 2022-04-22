@@ -15,7 +15,9 @@ public enum FXMLFiles {
 	
 	MINI_GAME_STATS("layouts/statisticsMiniGame.fxml"),
 	
-	TUTORIAL("layouts/tutorial.fxml"),
+	TUTORIAL_MAIN_GAME("layouts/TutorialMainGame.fxml"),
+	
+	TUTORIAL_MINI_GAME("layouts/TutorialMiniGame.fxml"),
 	
 	HISTORY("layouts/history.fxml");
 	

@@ -39,6 +39,11 @@ public final class HistoryView extends View<WazzleController>{
 	private final StringExpression headerFontSize;
 	private final StringExpression titleFontSize;
 	
+	/**
+	 * Construct a new HistoryView controller. 
+	 * 
+	 * @param stage the main menu stage.
+	 */
 	public HistoryView(final Stage stage) {
 		this.stage = stage;
 		this.controller = (WazzleController) stage.getUserData();
@@ -49,12 +54,18 @@ public final class HistoryView extends View<WazzleController>{
 		this.titleFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(1.8).asString(), ";");
 	}
 
+	/**
+	 * Switch scene from game history to main menu.
+	 */
 	@Override
 	public void nextScene(ActionEvent event) throws IOException {
 		this.stage.setUserData(this.controller);
 		SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), FXMLFiles.MAIN_MENU.getPath());
 	}
 
+	/**
+	 * Build the game history view with all its graphics and all its information.
+	 */
 	@Override
 	protected void buildView() {
 		this.setGraphics();
@@ -62,6 +73,9 @@ public final class HistoryView extends View<WazzleController>{
 		this.populateGrid();
 	}
 
+	/**
+	 * Set the graphics of the game history view.
+	 */
 	@Override
 	protected void setGraphics() {
 		this.leaveButton.styleProperty().bind(standardFontSize);
@@ -73,23 +87,35 @@ public final class HistoryView extends View<WazzleController>{
 		this.mainVbox.spacingProperty().bind(visualUnit);
 	}
 	
+	/**
+	 * Populate the game history table with all the informations about the last ten games.
+	 */
 	private void populateGrid() {
 		var indexRow = 1;
 		var paddingInsets = new Insets(5, 5, 5, 8);
 		for (MainGame mainGame : controller.getGameHistory()) {
 			var indexColumn = 0;
 			indexRow++;
-			this.addCell(String.valueOf(mainGame.getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))), indexRow, indexColumn, standardFontSize, paddingInsets);
+			this.addField(String.valueOf(mainGame.getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))), indexRow, indexColumn, standardFontSize, paddingInsets);
 			indexColumn++;
-			this.addCell(String.valueOf(mainGame.wordsFound().size()), indexRow, indexColumn, standardFontSize, paddingInsets);
+			this.addField(String.valueOf(mainGame.wordsFound().size()), indexRow, indexColumn, standardFontSize, paddingInsets);
 			indexColumn++;
-			this.addCell(String.valueOf((int) mainGame.getCurrentScore()), indexRow, indexColumn, standardFontSize, paddingInsets);
+			this.addField(String.valueOf((int) mainGame.getCurrentScore()), indexRow, indexColumn, standardFontSize, paddingInsets);
 		}
 	}
 	
-	private void addCell(final String title, final int indexRow, final int indexColumn, final StringExpression fontSize, final Insets paddingInsets) {
+	/**
+	 * Add a field to game history table.
+	 * 
+	 * @param content the content of the field which has to be inserted.
+	 * @param indexRow the row index of the field.
+	 * @param indexColumn the column index of the field.
+	 * @param fontSize the font size of the field.
+	 * @param paddingInsets the padding of the field.
+	 */
+	private void addField(final String content, final int indexRow, final int indexColumn, final StringExpression fontSize, final Insets paddingInsets) {
 		var incave = new StackPane();
-		var letterLabel = new Label(title);
+		var letterLabel = new Label(content);
 		letterLabel.getStyleClass().add("letters");
 		incave.getStyleClass().add("longIncave");
 		letterLabel.styleProperty().bind(fontSize);
@@ -99,16 +125,17 @@ public final class HistoryView extends View<WazzleController>{
 		this.mainGrid.add(incave, indexColumn, indexRow);
 	}
 
+	/**
+	 * Creates game history table header.
+	 */
 	private void createColumnHeader() {
 		var indexRow = 0;
 		var indexColumn = 0;
 		var paddingInsets = new Insets(5, 8, 5, 10);
-		this.addCell("DATA", indexRow, indexColumn, headerFontSize, paddingInsets);
+		this.addField("DATA", indexRow, indexColumn, headerFontSize, paddingInsets);
 		indexColumn++;
-		this.addCell("PAROLE TROVATE", indexRow, indexColumn, headerFontSize, paddingInsets);
+		this.addField("PAROLE TROVATE", indexRow, indexColumn, headerFontSize, paddingInsets);
 		indexColumn++;
-//		this.addCell("PAROLE TOTALI", indexRow, indexColumn);
-//		indexColumn++;
-		this.addCell("PUNTEGGIO", indexRow, indexColumn, headerFontSize, paddingInsets);
+		this.addField("PUNTEGGIO", indexRow, indexColumn, headerFontSize, paddingInsets);
 	}
 }

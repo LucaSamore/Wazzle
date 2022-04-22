@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import wazzle.controller.maingame.MainGameController;
+import wazzle.view.ErrorAlert;
 import wazzle.view.FXMLFiles;
 import wazzle.view.Images;
 import wazzle.view.Loader;
@@ -62,6 +63,7 @@ public class LoadingView extends View<MainGameController> {
 							goToMainGame(stage);
 						} catch (IOException e) {
 							e.printStackTrace();
+							ErrorAlert.show();
 						}
 
 				}				

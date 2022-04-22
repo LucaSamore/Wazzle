@@ -18,6 +18,7 @@ import wazzle.controller.common.WazzleControllerImpl;
 import wazzle.controller.minigame.MiniGameController;
 import wazzle.controller.minigame.MiniGameControllerImpl;
 import wazzle.model.minigame.MiniGame.State;
+import wazzle.view.ErrorAlert;
 import wazzle.view.FXMLFiles;
 import wazzle.view.SceneSwitcher;
 
@@ -103,6 +104,7 @@ public class StatisticsMiniGameView extends View<MiniGameController>{
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			ErrorAlert.show();
 		}
 		
 		ObservableValue<String> fontSizeValue = Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.05).asString(),

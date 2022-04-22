@@ -37,6 +37,25 @@
 	-fx-text-fill: white;
 }
 
+.yellowButton:hover{
+	-fx-border-width:2.0px;
+	-fx-background-color: #fff;
+	-fx-background-radius:30.0px;
+	-fx-border-color: #ffcc00;
+	-fx-text-fill: #ffcc00;
+	-fx-border-radius:30.0px;
+}
+
+.yellowButton{
+	-fx-border-width:2.0px;
+	-fx-background-radius:30.0px;
+	-fx-border-radius:30.0px;
+	-fx-border-color: #ffcc00;
+	-fx-font-family: "Waffle Crisp";
+	-fx-background-color: #ffcc00;
+	-fx-text-fill: white;
+}
+
 .redButton:hover{
 	-fx-border-width:2.0px;
 	-fx-background-color: #fff;
