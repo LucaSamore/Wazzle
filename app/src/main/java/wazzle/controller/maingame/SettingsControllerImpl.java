@@ -25,22 +25,33 @@ public class SettingsControllerImpl implements SettingsController {
 		this.currentDifficulty = currentDifficulty;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<Difficulty> getAllDifficulties() {
 		return List.copyOf(this.difficulties);
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Difficulty getCurrentDifficulty() {
 		return this.currentDifficulty;
 	}
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setCurrentDifficulty(final Difficulty difficulty) {
 		Objects.requireNonNull(difficulty);
 		this.currentDifficulty = difficulty;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Optional<Difficulty> getDifficultyByNameAndShape(final String name, final int shape) {
 		return this.difficulties.stream()

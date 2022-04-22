@@ -12,7 +12,10 @@
    <children>
       <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
          <children>
-            <Label fx:id="titleLabel" alignment="CENTER" contentDisplay="CENTER" styleClass="letters" text="Wazzle!" />
+            <Label fx:id="titleLabel" alignment="CENTER" contentDisplay="CENTER" styleClass="letters" text="Wazzle" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin></Label>
          </children>
       </VBox>
       <HBox alignment="CENTER" fillHeight="false" VBox.vgrow="NEVER">
@@ -49,6 +52,9 @@
                      </children>
                   </VBox>
                </children>
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
             </HBox>
             <HBox alignment="CENTER" fillHeight="false">
                <children>

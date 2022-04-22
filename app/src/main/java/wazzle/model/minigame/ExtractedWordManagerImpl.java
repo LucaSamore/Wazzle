@@ -1,7 +1,6 @@
 package wazzle.model.minigame;
 
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
 import wazzle.model.common.Dictionary;
@@ -9,7 +8,7 @@ import wazzle.model.common.Dictionary;
 /**
  * this class is used to compare differents datasets and pick a random word.
  * 
- * @param the file txt containing all words of length five
+ * @param the dictionary that contains all the word of five letters. 
  * 
  * @see FiveLetterDictionary
  * 
@@ -22,28 +21,38 @@ public class ExtractedWordManagerImpl implements ExtractedWordManager {
 
 	public ExtractedWordManagerImpl(final Dictionary dictionary) {
 		this.dictionary = dictionary;
-		this.restoreAvailableWords();
+		this.restoreAllAvailableWords();
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Set<String> getAvailableWords() {
 		return Set.copyOf(this.availableWords);
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean areThereAnyAvailableWords() {
 		return !this.availableWords.isEmpty();
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public void restoreAvailableWords() {
+	public void restoreAllAvailableWords() {
 		this.availableWords = new HashSet<>(this.dictionary.getWords());
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public void notAvailableAnymore(final String word) {
-		System.out.println("ExtractedWord.. notAvaila... before: " + this.availableWords.size());
+	public void removeFromAvailableWords(final String word) {
 		this.availableWords.remove(word);
-		System.out.println("ExtractedWord.. notAvaila... after: " + this.availableWords.size());
 	}
 }

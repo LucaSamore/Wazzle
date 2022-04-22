@@ -6,15 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 import wazzle.controller.common.WazzleController;
-import wazzle.model.common.Dictionary;
-import wazzle.model.common.DictionaryImpl;
-import wazzle.model.minigame.FiveLetterDictionary;
 import wazzle.model.minigame.MiniGame;
 import wazzle.model.minigame.MiniGame.State;
 import wazzle.model.minigame.MiniGameImpl;
 import wazzle.model.minigame.MiniGameWord;
 import wazzle.model.minigame.WordCheckerImpl;
-import wazzle.model.minigame.WordsDispenser;
 import wazzle.model.minigame.WordsDispenserImpl;
 
 public class MiniGameControllerImpl implements MiniGameController {
@@ -26,12 +22,14 @@ public class MiniGameControllerImpl implements MiniGameController {
 		this.currentMinigame = Optional.empty();
 		this.wazzleController = wazzleController;
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void startGame() throws IOException {
-
 		if (this.loadMiniGame().isEmpty()) {
-			this.currentMinigame = Optional.of(this.newMiniGame(this.wazzleController.getShortDataset()));
+			this.currentMinigame = Optional.of(this.newMiniGame());
 		} else {
 			final var loadedMinigame = this.loadMiniGame();
 			loadedMinigame.get().setWordChecker(new WordCheckerImpl(loadedMinigame.get().getTargetWord()));
@@ -41,29 +39,27 @@ public class MiniGameControllerImpl implements MiniGameController {
 		}
 	}
 
-	@Override
-	public MiniGame newMiniGame(final Dictionary dictionary) {
-		return this.wazzleController.getFacade().startNewMiniGame(new WordsDispenserImpl(this.wazzleController.getExtractedWordManager()));
-	}
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void saveMiniGame() throws IOException {
 		this.wazzleController.saveMiniGame(currentMinigame.get());
 	}
-
-
-	private Optional<MiniGameImpl> loadMiniGame() throws IOException {
-		return this.wazzleController.getLastMinigame();
-	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public MiniGameWord guessWord(String guessedWord) {
 		return this.currentMinigame.get().computeResult(guessedWord);
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Optional<String> obtainedBonus() throws IOException {
-
 		if (this.currentMinigame.get().getGameState() == State.WON) {
 			var currentBonusName = this.wazzleController.gainBonus();
 			this.wazzleController.saveBonuses();
@@ -72,37 +68,75 @@ public class MiniGameControllerImpl implements MiniGameController {
 		return Optional.empty();
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int getCurrentAttemptsNumber() {
 		return currentMinigame.get().getCurrentAttemptsNumber();
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public List<MiniGameWord> getGuessedMiniGameWordsSoFar() {
+	public List<MiniGameWord> getGuessedMinigameWordsSoFar() {
 		return List.copyOf(currentMinigame.get().getAllGuessedWords());
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public int getWordLenght() {
-		return currentMinigame.get().getWordLenght();
+	public int getWordLength() {
+		return currentMinigame.get().getWordLength();
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int getMaxAttemptsNumber() {
 		return currentMinigame.get().getMaxAttemptsNumber();
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public State getState() {
 		return currentMinigame.get().getGameState();
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getTargetWord() {
 		return this.currentMinigame.get().getTargetWord();
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public WazzleController getMainController() {
 		return this.wazzleController;
 	}
+	
+	/**
+	 * Starts a new minigame.
+	 */
+	private MiniGame newMiniGame() {
+		return this.wazzleController.getFacade().startNewMiniGame(new WordsDispenserImpl(this.wazzleController.getExtractedWordManager()));
+	}
+	
+	
+	/**
+	 * Loads a minigame.
+	 */
+	private Optional<MiniGameImpl> loadMiniGame() throws IOException {
+		return this.wazzleController.getLastMinigame();
+	}
+
 }
