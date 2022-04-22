@@ -17,4 +17,11 @@ public interface SceneSwitcher {
 		stage.setScene(scene);
 		stage.show();
 	}
+	
+	static <X> void switchScene(final Stage stage, final X controller, final String path) throws IOException {
+		final var element = Loader.<X,Parent>loadFXMLElement(controller, path);
+		final var scene = new Scene(element, stage.getScene().getWidth(), stage.getScene().getHeight());
+		stage.setScene(scene);
+		stage.show();
+	}
 }
