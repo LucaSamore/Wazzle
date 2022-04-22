@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.checkerframework.common.returnsreceiver.qual.This;
+
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringExpression;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -330,7 +332,7 @@ public final class MiniGameView extends View<MiniGameController> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.stage.setUserData(new WazzleControllerImpl());
+		this.stage.setUserData(this.controller.getMainController());
 		SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), FXMLFiles.MAIN_MENU.getPath());
 	}
 

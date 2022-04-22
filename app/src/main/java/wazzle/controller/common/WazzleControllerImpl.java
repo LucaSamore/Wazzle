@@ -1,9 +1,11 @@
 package wazzle.controller.common;
 
 import java.io.IOException;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -18,6 +20,9 @@ import wazzle.model.common.Dictionary;
 import wazzle.model.maingame.Difficulty;
 import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
+import wazzle.model.minigame.ExtractedWordManager;
+import wazzle.model.minigame.ExtractedWordManagerImpl;
+import wazzle.model.minigame.FiveLetterDictionary;
 import wazzle.model.minigame.MiniGame;
 import wazzle.model.minigame.MiniGameImpl;
 
@@ -29,6 +34,7 @@ public class WazzleControllerImpl implements WazzleController {
 	private final GameHistoryController gameHistoryController;
 	private final BonusManager bonusManager;
 	private final Facade facade;
+	private final ExtractedWordManager extractedWordManager;
 		
 	/**
 	 * Construct a new WazzleController.
@@ -41,6 +47,7 @@ public class WazzleControllerImpl implements WazzleController {
 		this.settingsController = new SettingsControllerImpl(this.settingsFromFile(), this.currentSettingsFromFile());
 		this.gameHistoryController = new GameHistoryControllerImpl(this.gameHistoryFromFile());
 		this.facade = new Facade();
+		this.extractedWordManager = new ExtractedWordManagerImpl(new FiveLetterDictionary(this.getShortDataset()));
 	}
 
 	/**
@@ -114,6 +121,21 @@ public class WazzleControllerImpl implements WazzleController {
 	public Facade getFacade() {
 		return this.facade;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public Set<String> getAvailableWords() {
+		System.out.println("Uso get avaiable in wazc avaw: " + this.extractedWordManager.getAvailableWords().size());
+		return this.extractedWordManager.getAvailableWords();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public ExtractedWordManager getExtractedWordManager() {
+		return this.extractedWordManager;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -138,6 +160,13 @@ public class WazzleControllerImpl implements WazzleController {
 	public void updateSettings(final Difficulty difficulty) {
 		this.settingsController.setCurrentDifficulty(difficulty);
 	}
+	
+//	/**
+//	 * {@inheritDoc}
+//	 */
+//	public void updateAvailableWords(final String word) {
+//		this.extractedWordManager.notAvailableAnymore(word);
+//	}
 	
 	/**
 	 * {@inheritDoc}
@@ -204,14 +233,20 @@ public class WazzleControllerImpl implements WazzleController {
 	}
 	
 	/**
-	 * Takes settings from file using file controller.
+	 * Takes all the existing settings from file using file controller.
 	 * 
-	 * @return Settings the saved settings.
+	 * @return List<Difficulty> which contains all the existing settings.
 	 */
 	private List<Difficulty> settingsFromFile() throws IOException {
 		return this.fileController.getAllSettings(WazzleFiles.ALL_SETTINGS.getFileName());
 	}
 	
+	/**
+	 * Gives the current settings saved.
+	 * 
+	 * @return Difficulty the current difficulty setted in settings.
+	 * @throws IOException
+	 */
 	private @NonNull Difficulty currentSettingsFromFile() throws IOException {
 		return this.fileController.getCurrentSettings(WazzleFiles.SETTINGS.getFileName());
 	}

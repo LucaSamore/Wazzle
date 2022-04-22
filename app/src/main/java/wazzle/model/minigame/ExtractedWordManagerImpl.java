@@ -32,7 +32,7 @@ public class ExtractedWordManagerImpl implements ExtractedWordManager {
 
 	@Override
 	public boolean areThereAnyAvailableWords() {
-		return this.availableWords.isEmpty();
+		return !this.availableWords.isEmpty();
 	}
 
 	@Override
@@ -42,6 +42,8 @@ public class ExtractedWordManagerImpl implements ExtractedWordManager {
 
 	@Override
 	public void notAvailableAnymore(final String word) {
+		System.out.println("ExtractedWord.. notAvaila... before: " + this.availableWords.size());
 		this.availableWords.remove(word);
+		System.out.println("ExtractedWord.. notAvaila... after: " + this.availableWords.size());
 	}
 }

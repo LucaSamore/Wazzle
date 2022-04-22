@@ -77,10 +77,10 @@ public class StatisticsMiniGameView extends View<MiniGameController>{
 	public void nextScene(ActionEvent event) throws IOException {
 		Node node = (Node) event.getSource();
 		if ("playAgainButton".equals(node.getId())) {
-			this.stage.setUserData(new MiniGameControllerImpl(new WazzleControllerImpl()));
+			this.stage.setUserData(new MiniGameControllerImpl(this.miniGameController.getMainController()));
 			SceneSwitcher.<MiniGameView>switchScene(event, new MiniGameView(this.stage), FXMLFiles.MINI_GAME.getPath());
 		} else {
-			this.stage.setUserData(new WazzleControllerImpl());
+			this.stage.setUserData(this.miniGameController.getMainController());
 			SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), FXMLFiles.MAIN_MENU.getPath());
 		}		
 	}

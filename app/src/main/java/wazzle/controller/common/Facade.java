@@ -7,6 +7,7 @@ import wazzle.model.common.GameFactoryImpl;
 import wazzle.model.maingame.Difficulty;
 import wazzle.model.maingame.MainGame;
 import wazzle.model.minigame.MiniGame;
+import wazzle.model.minigame.WordsDispenser;
 
 public final class Facade {
 	private final AbstractGameFactory gameFactory = new GameFactoryImpl();
@@ -15,7 +16,11 @@ public final class Facade {
 		return this.gameFactory.createMainGame(dataset, gridShape, difficulty);
 	}
 	
-	public MiniGame startNewMiniGame(final Dictionary dataset) {
-		return this.gameFactory.createMiniGame(dataset);
+//	public MiniGame startNewMiniGame(final Dictionary dataset) {
+//		return this.gameFactory.createMiniGame(dataset);
+//	}
+	
+	public MiniGame startNewMiniGame(final WordsDispenser wordsDispenser) {
+		return this.gameFactory.createMiniGame(wordsDispenser);
 	}
 }

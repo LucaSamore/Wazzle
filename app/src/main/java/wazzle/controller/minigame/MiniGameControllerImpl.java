@@ -1,17 +1,21 @@
 package wazzle.controller.minigame;
 
 import java.io.IOException;
+
 import java.util.List;
 import java.util.Optional;
 
 import wazzle.controller.common.WazzleController;
 import wazzle.model.common.Dictionary;
+import wazzle.model.common.DictionaryImpl;
 import wazzle.model.minigame.FiveLetterDictionary;
 import wazzle.model.minigame.MiniGame;
 import wazzle.model.minigame.MiniGame.State;
 import wazzle.model.minigame.MiniGameImpl;
 import wazzle.model.minigame.MiniGameWord;
 import wazzle.model.minigame.WordCheckerImpl;
+import wazzle.model.minigame.WordsDispenser;
+import wazzle.model.minigame.WordsDispenserImpl;
 
 public class MiniGameControllerImpl implements MiniGameController {
 
@@ -39,7 +43,7 @@ public class MiniGameControllerImpl implements MiniGameController {
 
 	@Override
 	public MiniGame newMiniGame(final Dictionary dictionary) {
-		return this.wazzleController.getFacade().startNewMiniGame(new FiveLetterDictionary(dictionary));
+		return this.wazzleController.getFacade().startNewMiniGame(new WordsDispenserImpl(this.wazzleController.getExtractedWordManager()));
 	}
 
 	@Override
@@ -95,5 +99,10 @@ public class MiniGameControllerImpl implements MiniGameController {
 	@Override
 	public String getTargetWord() {
 		return this.currentMinigame.get().getTargetWord();
+	}
+	
+	@Override
+	public WazzleController getMainController() {
+		return this.wazzleController;
 	}
 }

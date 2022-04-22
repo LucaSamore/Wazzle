@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import wazzle.controller.common.WazzleController;
 import wazzle.model.common.Dictionary;
 import wazzle.model.minigame.MiniGame;
 import wazzle.model.minigame.MiniGame.State;
@@ -32,5 +33,6 @@ public interface MiniGameController {
 	State getState();
 
 	List<MiniGameWord> getGuessedMiniGameWordsSoFar();
-
+	
+	WazzleController getMainController();
 }
