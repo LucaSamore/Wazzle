@@ -1,25 +1,20 @@
 package wazzle.model.maingame;
 
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import javafx.util.Pair;
 import wazzle.model.common.Dictionary;
 
-/*
- * LetterChooser and LetterAllocator shall have a Mediator instance variable,
- * passed via constructor.
- * Public methods of these classes shall return void and the result will be passed to the Mediator through
- * the notifyFromXYZ() methods. All partial results will be handled in this class.
- * This class is meant to be an interface (sort of a Facade) for GridGenerator, because I want to separate
- * the process of getting N Letters from evaluating the grid quality (via the GridValidator object in GridGenerator)
-*/
+/**
+ * The purpose of this class is to provide an interface (sort of a Facade) for {@link GridGenerator}.
+ * {@code Mediator} separates the process of getting a certain number of {@link Letter} objects
+ * from the creation of {@link Grid} object.
+ */
 public final class Mediator {
 	private final Pair<Integer,Integer> gridShape;
 	private Frequency frequency;
@@ -31,6 +26,12 @@ public final class Mediator {
 	private EnumMap<Range,WeightedAlphabet> classifiedLetters;
 	private Optional<Set<Letter>> letters;
 
+	/**
+	 * Construct a new Mediator object
+	 * @param dataset a {@link Dictionary} object describing the dataset we want to use for the future {@link Grid}
+	 * @param gridShape a {@code Pair<Integer,Integer>} describing the shape of the future {@link Grid}
+	 * @see javafx.util.Pair
+	 */
 	public Mediator(final Dictionary dataset, final Pair<Integer,Integer> gridShape) {
 		Objects.requireNonNull(dataset);
 		Objects.requireNonNull(gridShape);
@@ -40,16 +41,36 @@ public final class Mediator {
 		this.initialize(dataset);
 	}
 
+	/**
+	 * Starts the process of getting ({@link Difficulty#getGridShape()} x {@link Difficulty#getGridShape()}) 
+	 * {@link Letter} objects by calling {@link LetterChooser}.
+	 * @return an {@code Optional} describing the letters computed.
+	 */
 	public Optional<Set<Letter>> computeLetters() {
 		this.chooser.choose();
 		return this.letters;
 	}
-
+	
+	/**
+	 * Given the response from {@link LetterChooser}, allocates the given letters by calling {@link LetterAllocator} 
+	 * @param chosenLetters an {@code EnumMap<Range,List<Pair<Character,Double>>>} describing the letters produced by {@link LetterChooser}
+	 * @return void
+	 * @see java.util.EnumMap
+	 * @see wazzle.model.maingame.Range
+	 * @see java.util.List
+	 * @see javafx.util.Pair
+	 */
 	public void notifyFromChooser(final EnumMap<Range,List<Pair<Character,Double>>> chosenLetters) {
-		this.allocator = new LetterAllocatorImpl(this.unify(chosenLetters), this); // TODO: Remember to call unify here!
+		this.allocator = new LetterAllocatorImpl(this.unify(chosenLetters), this);
 		this.allocator.allocate();
 	}
 
+	/**
+	 * Given the response from {@link LetterAllocator}, fill the computed letters {@code Optional}.
+	 * @param letters a {@code Set<Letter>} describing the letters allocated by {@link LetterAllocator}
+	 * @return void
+	 * @see java.util.Set
+	 */
 	public void notifyFromAllocator(final Set<Letter> letters) {
 		this.letters = Optional.of(letters);
 	}
@@ -62,32 +83,32 @@ public final class Mediator {
 		this.classifiedLetters = this.classifier.classify();
 		this.chooser = new LetterChooserImpl(classifiedLetters, this.gridShape, this);
 	}
-
-	//TODO: fix this method
+	
 	private EnumMap<Range, List<Pair<Character, Double>>> unify(final EnumMap<Range,List<Pair<Character,Double>>> chosenLetters) {
-		List<Pair<Character, Double>> chosenLettersList = new LinkedList<>();
-		
+		final var chosenLettersList = new LinkedList<Pair<Character, Double>>();
 		chosenLetters.entrySet().forEach(e -> chosenLettersList.addAll(e.getValue()));
 		
 		//Filter scored letters for chosen letters
-		List<Pair<Character, Double>> chosenScoredLetters = 
-                chosenLettersList.stream()
-                                  .map(p -> new Pair<>(p.getKey(),
-                                                       this.scoreConverter.convert().getWeightedAlphabet()
-				                                                                    .entrySet()
-				                                                                    .stream()
-				                                                                    .filter(e -> e.getKey() == p.getKey())
-				                                                                    .findAny()
-				                                                                    .get()
-				                                                                    .getValue()))
-                                  .collect(Collectors.toList());
+		List<Pair<Character, Double>> chosenScoredLetters = chosenLettersList
+				.stream()
+				.map(p -> new Pair<>(p.getKey(),
+						this.scoreConverter.convert()
+							.getWeightedAlphabet()
+							.entrySet()
+							.stream()
+							.filter(e -> e.getKey() == p.getKey())
+							.findAny()
+							.get()
+							.getValue()))
+				.collect(Collectors.toList());
 		
+		final var chosenScoredLettersMap = new EnumMap<Range, List<Pair<Character, Double>>>(Range.class);
 		
-		EnumMap<Range, List<Pair<Character, Double>>> chosenScoredLettersMap = new EnumMap<>(Range.class);
-		
-		chosenLetters.entrySet().forEach(e -> chosenScoredLettersMap.put(e.getKey(), chosenScoredLetters.stream()
-				.filter(p1 -> e.getValue().stream()
-						.map(p2 -> p2.getKey())
+		chosenLetters.entrySet().forEach(e -> chosenScoredLettersMap.put(e.getKey(), chosenScoredLetters
+				.stream()
+				.filter(p1 -> e.getValue()
+						.stream()
+						.map(Pair::getKey)
 						.collect(Collectors.toList())
 						.contains(p1.getKey()))
 				.collect(Collectors.toList())));
