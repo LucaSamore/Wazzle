@@ -1,0 +1,44 @@
+[
+  {
+    "difficultyName": "EASY",
+    "gridShape": 4,
+    "lowerBound": 76,
+    "upperBound": 200,
+    "time": 240000
+  },
+  {
+    "difficultyName": "HARD",
+    "gridShape": 4,
+    "lowerBound": 25,
+    "upperBound": 75,
+    "time": 180000
+  },
+  {
+    "difficultyName": "EASY",
+    "gridShape": 5,
+    "lowerBound": 151,
+    "upperBound": 250,
+    "time": 240000
+  },
+  {
+    "difficultyName": "HARD",
+    "gridShape": 5,
+    "lowerBound": 100,
+    "upperBound": 150,
+    "time": 180000
+  },
+  {
+    "difficultyName": "EASY",
+    "gridShape": 6,
+    "lowerBound": 226,
+    "upperBound": 350,
+    "time": 240000
+  },
+  {
+    "difficultyName": "HARD",
+    "gridShape": 6,
+    "lowerBound": 150,
+    "upperBound": 225,
+    "time": 180000
+  }
+]
