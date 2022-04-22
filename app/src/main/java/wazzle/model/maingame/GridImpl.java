@@ -4,8 +4,10 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class GridImpl implements Grid {
-	
+/**
+ * This class is a concrete implementation of {@link Grid}
+ */
+public final class GridImpl implements Grid {
 	private final Set<Letter> letters;
 	private final Set<String> wordsCanBeFound;
 	
@@ -16,28 +18,44 @@ public class GridImpl implements Grid {
 		this.wordsCanBeFound = new HashSet<>(wordsCanBeFound);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Set<Letter> getLetters() {
 		return Set.copyOf(this.letters);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Set<String> getWordsCanBeFound() {
 		return Set.copyOf(this.wordsCanBeFound);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int getTotalScore() {
-		return this.letters.stream()
+		return this.letters
+				.stream()
 				.map(Letter::getScore)
 				.reduce(0, (x,y) -> x + y);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int hashCode() {
 		return Objects.hash(letters, wordsCanBeFound);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -50,6 +68,9 @@ public class GridImpl implements Grid {
 		return Objects.equals(letters, other.letters) && Objects.equals(wordsCanBeFound, other.wordsCanBeFound);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		return "Here's a lo<3ly grid " + System.lineSeparator() + 
