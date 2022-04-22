@@ -1,11 +1,9 @@
 package wazzle.view.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javafx.beans.binding.Bindings;
@@ -19,7 +17,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -30,6 +27,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import wazzle.controller.common.WazzleControllerImpl;
 import wazzle.controller.minigame.MiniGameController;
+import wazzle.model.minigame.MiniGame.State;
 import wazzle.model.minigame.MiniGameWord;
 import wazzle.model.minigame.Result;
 import wazzle.view.FXMLFiles;
@@ -114,10 +112,10 @@ public final class MiniGameView extends View<MiniGameController> {
 
 		this.visualUnit = new SimpleDoubleProperty();
 		this.visualUnit.bind(Bindings.min(stage.widthProperty().multiply(0.05), stage.heightProperty().multiply(0.05)));
-		this.setKeyPressedEventHandler();
+		this.setKeyPressedEventHandlers();
 	}
 
-	private void setKeyPressedEventHandler() {
+	private void setKeyPressedEventHandlers() {
 		this.keyPressedHandler = (KeyEvent event) -> {
 			switch (event.getCode()) {
 			case BACK_SPACE:
@@ -132,7 +130,8 @@ public final class MiniGameView extends View<MiniGameController> {
 				this.sendWord.fire();
 				break;
 			default:
-				if (event.getCode().isLetterKey() && !this.bannedChars.contains(event.getCode().toString().toLowerCase().charAt(0))) {
+				var targetKey = event.getCode().toString().toLowerCase().charAt(0);
+				if (event.getCode().isLetterKey() && !this.bannedChars.contains(targetKey)) {
 					typeLetterInGrid(event.getCode().toString().toLowerCase());
 				}
 				break;
@@ -146,6 +145,10 @@ public final class MiniGameView extends View<MiniGameController> {
 		};
 	}
 
+	private void addKeyPressedListener() {
+		this.mainWrapper.addEventFilter(KeyEvent.KEY_PRESSED, this.keyPressedHandler);
+	}
+	
 	private Node getNodeByCoords(final int row, final int column) {
 		ObservableList<Node> childrens = this.wordsGrid.getChildren();
 		for (Node node : childrens) {
@@ -164,18 +167,14 @@ public final class MiniGameView extends View<MiniGameController> {
 	}
 
 	private void disableKeyboardKey(GridPane gridToRemoveFrom) {
-		Set<Node> elementsToRemove = new HashSet<>();
 		for (Node sp : gridToRemoveFrom.getChildren()) {
-			var temp = ((Label) ((StackPane) sp).getChildren().get(0)).getText().charAt(0);
-			if (this.bannedChars.contains(temp)) {
-				elementsToRemove.add(sp);
+			Character elementToBanFromKeyboard = ((Label) ((StackPane) sp).getChildren().get(0)).getText().charAt(0);
+			if (this.bannedChars.contains(elementToBanFromKeyboard)) {
+				sp.getStyleClass().add("darkIncave");
+				sp.setDisable(true);
+				sp.removeEventFilter(MouseEvent.MOUSE_CLICKED, this.clickedOnKeyHandler);
 			}
 		}
-		elementsToRemove.forEach(e -> {
-			e.getStyleClass().add("darkIncave");
-			e.setDisable(true);
-			e.removeEventFilter(MouseEvent.MOUSE_CLICKED, this.clickedOnKeyHandler);
-		});
 	}
 
 	private void disableKeyboardKeys() {
@@ -187,11 +186,7 @@ public final class MiniGameView extends View<MiniGameController> {
 	private void addKeysToKeyboard(GridPane targetGridPane, int colIndex, char charAt) {
 
 		this.incave = new StackPane();
-		if (this.bannedChars.contains(charAt)) {
-			incave.getStyleClass().add("darkIncave");
-		} else {
-			incave.getStyleClass().add("incave");
-		}
+		this.incave.getStyleClass().add("incave");
 
 		Pane containerPane = new Pane();
 		containerPane.maxWidthProperty().bind(incave.widthProperty());
@@ -215,10 +210,8 @@ public final class MiniGameView extends View<MiniGameController> {
 	private void populateLettersGrid() {
 		for (int rowIndex = 0; rowIndex < this.numRows; rowIndex++) {
 			for (int colIndex = 0; colIndex < this.numCols; colIndex++) {
-
 				String currentLetter = "";
 				int currentColor = Result.WRONG.getState();
-
 				if (this.controller.getGuessedMiniGameWordsSoFar().size() > rowIndex) {
 					currentLetter += this.controller.getGuessedMiniGameWordsSoFar().get(rowIndex).getCompositeWord()
 							.get(colIndex).getCharacter();
@@ -307,18 +300,14 @@ public final class MiniGameView extends View<MiniGameController> {
 	public void nextScene(ActionEvent event) throws IOException {
 		if (currentTypeIndex == this.numCols) {
 			MiniGameWord word = this.controller.guessWord(String.join("", currentWord));
-			switch (this.controller.getState()) {
-			case IN_PROGRESS:
+			if (this.controller.getState() == State.IN_PROGRESS) {
 				this.sendWordToCompute(word);
 				this.currentWord.clear();
 				this.currentTypeIndex = 0;
-				break;
-			default:
+			} else {
 				this.stage.setUserData(this.controller);
 				SceneSwitcher.<StatisticsMiniGameView>switchScene(event, new StatisticsMiniGameView(this.stage),
 						FXMLFiles.MINI_GAME_STATS.getPath());
-
-				break;
 			}
 		}
 	}
@@ -331,10 +320,6 @@ public final class MiniGameView extends View<MiniGameController> {
 		this.populateKeyboardRow(this.thirdRowGrid, LOWER_ROW_CHARACTERS);
 		this.setGraphics();
 		this.addKeyPressedListener();
-	}
-
-	private void addKeyPressedListener() {
-		this.mainWrapper.addEventFilter(KeyEvent.KEY_PRESSED, this.keyPressedHandler);
 	}
 
 	@FXML

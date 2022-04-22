@@ -4,7 +4,7 @@ import java.util.Set;
 
 import wazzle.model.common.Dictionary;
 
-public interface Comparator {
+public interface ExtractedWordManager {
 	
 //	public String getSuitableWord();
 

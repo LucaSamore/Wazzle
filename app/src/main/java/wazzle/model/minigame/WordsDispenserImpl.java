@@ -5,9 +5,9 @@ import java.util.Random;
 public final class WordsDispenserImpl implements WordsDispenser {
 	
 	private static final Random RANDOM = new Random();
-	private final Comparator availableWordManager;
+	private final ExtractedWordManager availableWordManager;
 	
-	public WordsDispenserImpl(final Comparator availableWordManager) {
+	public WordsDispenserImpl(final ExtractedWordManager availableWordManager) {
 		this.availableWordManager = availableWordManager;
 	}
 	

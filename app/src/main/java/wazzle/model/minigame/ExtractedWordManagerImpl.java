@@ -14,13 +14,13 @@ import wazzle.model.common.Dictionary;
  * @see FiveLetterDictionary
  * 
  */
-public class ComparatorImpl implements Comparator {
+public class ExtractedWordManagerImpl implements ExtractedWordManager {
 
 
 	private Set<String> availableWords;
 	private Dictionary dictionary;
 
-	public ComparatorImpl(final Dictionary dictionary) {
+	public ExtractedWordManagerImpl(final Dictionary dictionary) {
 		this.dictionary = dictionary;
 		this.restoreAvailableWords();
 	}
@@ -44,35 +44,4 @@ public class ComparatorImpl implements Comparator {
 	public void notAvailableAnymore(final String word) {
 		this.availableWords.remove(word);
 	}
-
-//	private String pickRandomWord() {
-//		return this.availableWords.toArray()[RANDOM.nextInt(availableWords.size())].toString();
-//	}
-//
-//	@Override
-//	public boolean isDatasetEmpty() {
-//		return this.availableWords.isEmpty();
-//	}
-//
-//	@Override
-//	public String getSuitableWord() {
-//		return pickRandomWord();
-//
-//	}
-//
-//	@Override
-//	public void refreshDataSet(final Dictionary dictionary) {
-//		this.availableWords = dictionary.getWords();
-//	}
-//
-//	@Override
-//	public void saveDataSet() {
-//		// scrivi su file this.availableWords
-//	}
-//
-//	@Override
-//	public void removeFromSavedDataset(String suitableWord) {
-//		this.availableWords.remove(suitableWord);
-//	}
-
 }

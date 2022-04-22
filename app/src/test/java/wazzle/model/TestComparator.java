@@ -10,8 +10,8 @@ import org.junit.Test;
 
 import wazzle.model.common.Dictionary;
 import wazzle.model.common.DictionaryImpl;
-import wazzle.model.minigame.Comparator;
-import wazzle.model.minigame.ComparatorImpl;
+import wazzle.model.minigame.ExtractedWordManager;
+import wazzle.model.minigame.ExtractedWordManagerImpl;
 import wazzle.model.minigame.FilteredDictionary;
 import wazzle.model.minigame.FiveLetterDictionary;
 
