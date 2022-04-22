@@ -27,6 +27,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import wazzle.controller.maingame.MainGameController;
+import wazzle.view.ErrorAlert;
 import wazzle.view.FXMLFiles;
 import wazzle.view.SceneSwitcher;
 
@@ -269,6 +270,7 @@ public final class MainGameView extends View<MainGameController> {
 			SceneSwitcher.<StatisticsMainGameView>switchScene(this.stage, new StatisticsMainGameView(this.stage), FXMLFiles.MAIN_GAME_STATS.getPath());
 		} catch (IOException e) {
 			e.printStackTrace();
+			ErrorAlert.show();
 		}
 	}
 	

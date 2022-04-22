@@ -10,11 +10,9 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.Alert.AlertType;
+import wazzle.view.ErrorAlert;
 import wazzle.view.FXMLFiles;
 import wazzle.view.Loader;
 import wazzle.view.SceneSwitcher;
@@ -52,11 +50,7 @@ public final class GameTimerViewImpl implements GameTimerView {
 								stopAll();
 							} catch (IOException e) {
 								e.printStackTrace();
-								Alert alert = new Alert(AlertType.NONE);
-								alert.setContentText("Non so che ca**o sia successo. RIPROVA GRAZIE :)");
-								ButtonType exitButton = new ButtonType("Ok riprovo ma non urlare");
-								alert.getButtonTypes().setAll(exitButton);
-								alert.showAndWait();
+								ErrorAlert.show();
 							}
 						}
 					}
