@@ -6,12 +6,12 @@ import java.util.Objects;
 import com.google.gson.annotations.Expose;
 
 public class MiniGameWordImpl implements MiniGameWord {
-	
+
 	@Expose
 	private List<WordElement> compositeWord;
 
 	/**
-	 * @return the compositeWord
+	 * {@inheritDoc}
 	 */
 	@Override
 	public List<WordElement> getCompositeWord() {
@@ -19,13 +19,13 @@ public class MiniGameWordImpl implements MiniGameWord {
 	}
 
 	/**
-	 * @param compositeWord the compositeWord to set
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setCompositeWord(List<WordElement> compositeWord) {
 		this.compositeWord = compositeWord;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "MiniGameWordImpl [compositeWord=" + compositeWord + "]";

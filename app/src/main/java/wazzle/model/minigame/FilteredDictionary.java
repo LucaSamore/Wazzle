@@ -4,11 +4,16 @@ import java.util.Set;
 
 import wazzle.model.common.Dictionary;
 
-public abstract class FilteredDictionary implements Dictionary{
+/**
+ * Base abstract decorator, all others decorator must extend this class.
+ * 
+ * @see wazzle.model.minigame.FiveLetterDictionary
+ */
+public abstract class FilteredDictionary implements Dictionary {
 	private Dictionary dictionary;
-	
-	protected FilteredDictionary(final Dictionary words){
-		this.dictionary = words;		
+
+	protected FilteredDictionary(final Dictionary words) {
+		this.dictionary = words;
 	}
 
 	@Override

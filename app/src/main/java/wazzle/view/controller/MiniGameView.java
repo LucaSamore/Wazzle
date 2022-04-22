@@ -6,8 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.checkerframework.common.returnsreceiver.qual.This;
-
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringExpression;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -27,7 +25,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import wazzle.controller.common.WazzleControllerImpl;
 import wazzle.controller.minigame.MiniGameController;
 import wazzle.model.minigame.MiniGame.State;
 import wazzle.model.minigame.MiniGameWord;
@@ -104,7 +101,7 @@ public final class MiniGameView extends View<MiniGameController> {
 		}
 
 		this.numRows = this.controller.getMaxAttemptsNumber();
-		this.numCols = this.controller.getWordLenght();
+		this.numCols = this.controller.getWordLength();
 		this.currentTypeIndex = 0;
 		this.currentRowIndex = 0;
 
@@ -150,7 +147,7 @@ public final class MiniGameView extends View<MiniGameController> {
 	private void addKeyPressedListener() {
 		this.mainWrapper.addEventFilter(KeyEvent.KEY_PRESSED, this.keyPressedHandler);
 	}
-	
+
 	private Node getNodeByCoords(final int row, final int column) {
 		ObservableList<Node> childrens = this.wordsGrid.getChildren();
 		for (Node node : childrens) {
@@ -214,17 +211,17 @@ public final class MiniGameView extends View<MiniGameController> {
 			for (int colIndex = 0; colIndex < this.numCols; colIndex++) {
 				String currentLetter = "";
 				int currentColor = Result.WRONG.getState();
-				if (this.controller.getGuessedMiniGameWordsSoFar().size() > rowIndex) {
-					currentLetter += this.controller.getGuessedMiniGameWordsSoFar().get(rowIndex).getCompositeWord()
+				if (this.controller.getGuessedMinigameWordsSoFar().size() > rowIndex) {
+					currentLetter += this.controller.getGuessedMinigameWordsSoFar().get(rowIndex).getCompositeWord()
 							.get(colIndex).getCharacter();
-					currentColor = this.controller.getGuessedMiniGameWordsSoFar().get(rowIndex).getCompositeWord()
+					currentColor = this.controller.getGuessedMinigameWordsSoFar().get(rowIndex).getCompositeWord()
 							.get(colIndex).getResult();
 				}
 
 				addMiniGamePane(currentLetter, colIndex, rowIndex, currentColor);
 			}
 		}
-		currentRowIndex = this.controller.getGuessedMiniGameWordsSoFar().size();
+		currentRowIndex = this.controller.getGuessedMinigameWordsSoFar().size();
 	}
 
 	private void addMiniGamePane(String letter, int colIndex, int rowIndex, int state) {
@@ -273,6 +270,7 @@ public final class MiniGameView extends View<MiniGameController> {
 		this.wordsGrid.getChildren().remove(getNodeByCoords(row, column));
 	}
 
+	@FXML
 	public void cancelWord() {
 		for (int i = 0; i < this.numCols; i++) {
 			removeGridElement(i, this.currentRowIndex);
@@ -326,11 +324,13 @@ public final class MiniGameView extends View<MiniGameController> {
 
 	@FXML
 	public void leaveGame(final ActionEvent event) throws IOException {
-		try {
-			this.controller.saveMiniGame();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (this.currentRowIndex != 0) {
+			try {
+				this.controller.saveMiniGame();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		this.stage.setUserData(this.controller.getMainController());
 		SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), FXMLFiles.MAIN_MENU.getPath());

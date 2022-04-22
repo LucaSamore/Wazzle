@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import javafx.util.Pair;
-
 public class WordCheckerImpl implements WordChecker {
 
 	private String targetWord;
@@ -15,6 +13,9 @@ public class WordCheckerImpl implements WordChecker {
 		this.targetWord = word;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public MiniGameWord computeAttemptResult(final String attempt) {
 		MiniGameWord word = new MiniGameWordImpl();
@@ -33,7 +34,10 @@ public class WordCheckerImpl implements WordChecker {
 		word.setCompositeWord(result);
 		return word;
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean isCorrectWord(final String guessedWord) {
 		return guessedWord.equals(this.targetWord);

@@ -19,25 +19,32 @@ public class MiniGameImpl implements MiniGame {
 	private State gameState;
 
 	public MiniGameImpl(final String word) {
-		this.guessedWords = new LinkedList<MiniGameWordImpl>();
+		this.guessedWords = new LinkedList<>();
 		this.targetWord = word;
 		this.wordChecker = new WordCheckerImpl(word);
 		this.gameState = State.IN_PROGRESS;
-		System.out.println(targetWord);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public boolean loadMiniGame() {
+	public void loadMiniGame() {
 		this.setGameState(State.IN_PROGRESS);
 		this.wordChecker = new WordCheckerImpl(this.getTargetWord());
-		return false;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getTargetWord() {
 		return this.targetWord;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public MiniGameWord computeResult(final String guessedWord) {
 		this.guessedWords.add((MiniGameWordImpl) this.wordChecker.computeAttemptResult(guessedWord));
@@ -49,36 +56,57 @@ public class MiniGameImpl implements MiniGame {
 		return guessedWords.get(guessedWords.size() - 1);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public int getWordLenght() {
+	public int getWordLength() {
 		return MiniGameImpl.WORDS_LENGHT;
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setWordChecker(final WordChecker wordChecker) {
 		this.wordChecker = wordChecker;
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void setGameState(final State state) {
 		this.gameState = state;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public State getGameState() {
 		return this.gameState;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int getMaxAttemptsNumber() {
 		return MiniGameImpl.MAX_ATTEMPTS_NUMBER;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int getCurrentAttemptsNumber() {
 		return guessedWords.size();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<MiniGameWordImpl> getAllGuessedWords() {
 		return List.copyOf(this.guessedWords);

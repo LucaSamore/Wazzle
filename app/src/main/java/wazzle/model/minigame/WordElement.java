@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.Expose;
 
-//TODO CAMBIARE NOME
+
 public final class WordElement {
 	@Expose
 	private char character;
