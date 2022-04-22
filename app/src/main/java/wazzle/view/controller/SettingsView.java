@@ -87,9 +87,6 @@ public final class SettingsView extends View<WazzleController>{
 				.distinct()
 				.collect(Collectors.toList()));
 		
-		System.out.println(this.controller.getSettingsController().getAllDifficulties());
-		System.out.println(this.controller.getSettingsController().getCurrentDifficulty());
-
 		this.difficultySelectorCBox.getSelectionModel().select(this.controller.getSettingsController().getCurrentDifficulty().getDifficultyName());
 		this.gridDimensionSlider.setValue(this.controller.getSettingsController().getCurrentDifficulty().getGridShape());
 	}
