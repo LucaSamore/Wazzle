@@ -119,7 +119,6 @@ public final class GameTimerViewImpl implements GameTimerView {
 	 */
 	public void gainBonus(final ActionEvent event) {
 		this.mainGameView.getMainGameController().useTimeBonus();
-		System.out.println(this.mainGameView.getMainGameController().getTimer().getRemainingTime());
 		timerValueLabel.setText("" + this.mainGameView.getMainGameController().getTimer().getRemainingTime());
 		((Button) event.getSource()).setDisable(true);
 	}
