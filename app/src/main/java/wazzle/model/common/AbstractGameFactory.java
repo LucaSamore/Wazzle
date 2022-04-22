@@ -9,6 +9,5 @@ import wazzle.model.minigame.WordsDispenser;
 
 public interface AbstractGameFactory {
 	MainGame createMainGame(final Dictionary dataset, final Pair<Integer,Integer> gridShape, final Difficulty difficulty);
-	//MiniGame createMiniGame(final Dictionary dataset);
 	MiniGame createMiniGame(final WordsDispenser wordsDispenser);
 }

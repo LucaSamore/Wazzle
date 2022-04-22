@@ -13,21 +13,13 @@ import wazzle.model.minigame.WordsDispenser;
 import wazzle.model.minigame.WordsDispenserImpl;
 
 public class GameFactoryImpl implements AbstractGameFactory {
-	
-	
-	
+
 	@Override
 	public MainGame createMainGame(final Dictionary dataset, final Pair<Integer, Integer> gridShape, final Difficulty difficulty) {
 		var gridGenerator = new GridGeneratorImpl(dataset, gridShape, difficulty);
 		return new MainGameImpl(gridGenerator.generate(), difficulty.getTimeInMilliseconds());
 	}
-	
-//	@Override
-//	public MiniGame createMiniGame(final Dictionary dataset) {
-//		var wordsDispenser = new WordsDispenserImpl(new ExtractedWordManagerImpl(dataset));
-//		return new MiniGameImpl(wordsDispenser.extractWord());
-//	}
-	
+
 	@Override
 	public MiniGame createMiniGame(final WordsDispenser wordsDispenser) {
 		return new MiniGameImpl(wordsDispenser.extractWord());

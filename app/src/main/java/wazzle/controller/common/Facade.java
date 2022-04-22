@@ -15,11 +15,7 @@ public final class Facade {
 	public MainGame startNewMainGame(final Dictionary dataset, final Pair<Integer,Integer> gridShape, final Difficulty difficulty) {
 		return this.gameFactory.createMainGame(dataset, gridShape, difficulty);
 	}
-	
-//	public MiniGame startNewMiniGame(final Dictionary dataset) {
-//		return this.gameFactory.createMiniGame(dataset);
-//	}
-	
+
 	public MiniGame startNewMiniGame(final WordsDispenser wordsDispenser) {
 		return this.gameFactory.createMiniGame(wordsDispenser);
 	}
