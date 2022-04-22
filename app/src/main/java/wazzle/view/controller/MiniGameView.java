@@ -74,9 +74,11 @@ public final class MiniGameView extends View<MiniGameController> {
 	private static final String MIDDLE_ROW_CHARACTERS = QWERTYKeyboard.MIDDLE_ROW.getKeyboardRow();
 	private static final String LOWER_ROW_CHARACTERS = QWERTYKeyboard.LOWER_ROW.getKeyboardRow();
 	private static final String BACKGROUND_RADIUS_10 = "-fx-background-radius: 10";
-	private static final String BACKGROUND_COLOR_WRONG = "-fx-background-color:#0000;";
+	private static final String BACKGROUND_COLOR_NOT_SET = "-fx-background-color:#0000;";
+	private static final String BACKGROUND_COLOR_WRONG = "-fx-background-color:0000;";
 	private static final String BACKGROUND_COLOR_CORRECT = "-fx-background-color:#45E521;";
 	private static final String BACKGROUND_COLOR_WRONG_PLACE = "-fx-background-color: yellow;";
+	
 
 	private EventHandler<KeyEvent> keyPressedHandler;
 	private EventHandler<MouseEvent> clickedOnKeyHandler;
@@ -122,7 +124,7 @@ public final class MiniGameView extends View<MiniGameController> {
 					currentTypeIndex--;
 					this.currentWord.remove(currentTypeIndex);
 					removeGridElement(this.currentTypeIndex, this.currentRowIndex);
-					addMiniGamePane("", this.currentTypeIndex, this.currentRowIndex, Result.WRONG.getState());
+					addMiniGamePane("", this.currentTypeIndex, this.currentRowIndex, Result.NOT_SET.getState());
 				}
 				break;
 			case ENTER:
@@ -232,6 +234,9 @@ public final class MiniGameView extends View<MiniGameController> {
 		Pane coloredPane = new Pane();
 
 		switch (state) {
+		case -1:
+			coloredPane.setStyle(BACKGROUND_COLOR_NOT_SET + BACKGROUND_RADIUS_10);
+			break;
 		case 0:
 			coloredPane.setStyle(BACKGROUND_COLOR_CORRECT + BACKGROUND_RADIUS_10);
 			break;
@@ -260,7 +265,7 @@ public final class MiniGameView extends View<MiniGameController> {
 	private void typeLetterInGrid(final String string) {
 		if (this.currentTypeIndex < this.numCols) {
 			removeGridElement(this.currentTypeIndex, this.currentRowIndex);
-			addMiniGamePane(string, this.currentTypeIndex, this.currentRowIndex, Result.WRONG.getState());
+			addMiniGamePane(string, this.currentTypeIndex, this.currentRowIndex, Result.NOT_SET.getState());
 			this.currentTypeIndex++;
 			this.currentWord.add(string);
 		}
@@ -274,7 +279,7 @@ public final class MiniGameView extends View<MiniGameController> {
 	public void cancelWord() {
 		for (int i = 0; i < this.numCols; i++) {
 			removeGridElement(i, this.currentRowIndex);
-			addMiniGamePane("", i, this.currentRowIndex, Result.WRONG.getState());
+			addMiniGamePane("", i, this.currentRowIndex, Result.NOT_SET.getState());
 		}
 		this.currentTypeIndex = 0;
 		this.currentWord.clear();
