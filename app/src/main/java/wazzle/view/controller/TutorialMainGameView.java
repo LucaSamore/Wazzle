@@ -54,7 +54,7 @@ public final class TutorialMainGameView {
 		final var textFontSize = Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.025).asString(), ";");
 		final var paddingValue = Bindings.concat("-fx-padding: ", visualUnit.multiply(0.05).asString(), ";");
 		final var spacingValue = Bindings.concat("-fx-spacing: ", visualUnit.multiply(0.02).asString(), ";");
-		final var explanationGif = new Image(getClass().getResourceAsStream(Images.TUTORIAL_MAIN_GAME.getPath()));
+		final var explanationGif = new Image(Images.TUTORIAL_MAIN_GAME.getPath());
 		elementWrapper.styleProperty().bind(spacingValue);
 		contentWrapper.maxHeightProperty().bind(contentWrapper.widthProperty());
 		contentWrapper.styleProperty().bind(Bindings.concat(paddingValue, spacingValue));
