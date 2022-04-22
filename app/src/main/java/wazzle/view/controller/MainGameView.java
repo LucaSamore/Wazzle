@@ -110,7 +110,6 @@ public final class MainGameView extends View<MainGameController> {
 		this.pointFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(0.5).asString(), ";");
 		this.titleFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(2).asString(), ";");
 		this.gameTimerView = new GameTimerViewImpl();
-		this.onClose();
 	}
 
 	public void initialize() {

@@ -52,7 +52,6 @@ public final class SettingsView extends View<WazzleController>{
 		this.visualUnit = new SimpleDoubleProperty();
 		this.visualUnit.bind(Bindings.min(stage.heightProperty().multiply(0.05), stage.widthProperty().multiply(0.05)));
 		this.controller = (WazzleControllerImpl) stage.getUserData();
-		this.onClose();
 	}
 
 	@Override

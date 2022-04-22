@@ -116,7 +116,6 @@ public final class MiniGameView extends View<MiniGameController> {
 
 		this.visualUnit = new SimpleDoubleProperty();
 		this.visualUnit.bind(Bindings.min(stage.widthProperty().multiply(0.05), stage.heightProperty().multiply(0.05)));
-		this.onClose();
 	}
 
 	private Node getNodeByCoords(final int row, final int column) {

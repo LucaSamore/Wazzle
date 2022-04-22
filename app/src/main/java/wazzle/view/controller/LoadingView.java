@@ -70,7 +70,6 @@ public class LoadingView extends View<MainGameController> {
 		
 		this.visualUnit = new SimpleDoubleProperty();
 		this.visualUnit.bind(Bindings.min(stage.heightProperty(), stage.widthProperty()));
-		this.onClose();
 	}
 
 	private void setGrid() {

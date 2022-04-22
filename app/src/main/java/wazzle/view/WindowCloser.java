@@ -15,7 +15,7 @@ public interface WindowCloser {
 		final var confirm = new ButtonType("Conferma");
 		final var cancel = new ButtonType("Annulla");
 		
-		alert.setContentText("Vuoi uscire dal gioco?");
+		alert.setContentText("Vuoi uscire dal gioco? I tuoi dati non verrano salvati.");
 		alert.getButtonTypes().setAll(confirm, cancel);
 		
 		Optional<ButtonType> result = alert.showAndWait();

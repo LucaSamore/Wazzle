@@ -64,7 +64,6 @@ public final class MainMenuView extends View<WazzleController>{
 		this.controller = (WazzleController) stage.getUserData();
 		this.visualUnit = new SimpleDoubleProperty();
 		this.visualUnit.bind(Bindings.min(this.stage.heightProperty(), this.stage.widthProperty()));
-		this.onClose();
 	}
 	
 	public MainMenuView(final Stage stage, DoubleProperty visualUnit) throws IOException {
