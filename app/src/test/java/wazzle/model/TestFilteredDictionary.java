@@ -22,7 +22,7 @@ public class TestFilteredDictionary {
 		Set<String> targetSet = new HashSet<>();
 		targetSet.add("AAAAA");
 		
-		Dictionary filteredDictionary = new FiveLetterDictionary(new DictionaryImpl(TestReader.readDataset("testDictionary.txt")));
+		Dictionary filteredDictionary = new FiveLetterDictionary(new DictionaryImpl(TestFileUtils.readDataset("testDictionary.txt")));
 		assertEquals(filteredDictionary.getWords(), targetSet);
 	};
 }

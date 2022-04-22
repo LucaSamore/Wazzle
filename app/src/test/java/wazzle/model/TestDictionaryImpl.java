@@ -46,13 +46,13 @@ public class TestDictionaryImpl {
 		testSet.add("E");
 		testSet.add("(");
 
-		Dictionary dict = new DictionaryImpl(TestReader.readDataset("testDictionary.txt"));
+		Dictionary dict = new DictionaryImpl(TestFileUtils.readDataset("testDictionary.txt"));
 		assertEquals(testSet, dict.getWords());
 	};
 
 	@Test(expected = IOException.class)
 	public void testOpeningA_NOT_ExitingFile() throws Exception {
-		Dictionary dict = new DictionaryImpl(TestReader.readDataset("NotExistingDataset.txt"));
+		Dictionary dict = new DictionaryImpl(TestFileUtils.readDataset("NotExistingDataset.txt"));
 		System.out.println(dict.getWords());
 	}
 }
