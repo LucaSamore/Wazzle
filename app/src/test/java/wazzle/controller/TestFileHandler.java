@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import javafx.util.Pair;
+import wazzle.controller.common.FileControllerImpl;
+import wazzle.controller.common.WazzleFiles;
 import wazzle.controller.common.files.Deserializer;
 import wazzle.controller.common.files.FileStrategies;
 import wazzle.controller.common.files.Serializer;
@@ -14,6 +16,7 @@ import wazzle.model.common.BonusManagerImpl;
 import wazzle.model.common.Dictionary;
 import wazzle.model.common.DictionaryImpl;
 import wazzle.model.maingame.Difficulty;
+import wazzle.model.maingame.DifficultyNames;
 import wazzle.model.maingame.GridGenerator;
 import wazzle.model.maingame.GridGeneratorImpl;
 import wazzle.model.maingame.MainGame;
@@ -22,6 +25,7 @@ import wazzle.model.maingame.MainGameImpl;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,6 +35,7 @@ public final class TestFileHandler {
 	private static final String EMPTY_FILE = "empty.txt";
 	private static final String JSON_TEST_GAMES_FILE = "games.json";
 	private static final String JSON_TEST_BONUSES_FILE = "bonuses.json";
+	private static final String JSON_ALL_DIFFICULTIES = "all-settings.json";
 	
 	private final FileStrategies<String> handler = new TextHandler();
 
@@ -107,5 +112,22 @@ public final class TestFileHandler {
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
+		try {
+			
+			final var fileController = new FileControllerImpl();
+			var allSettings = new ArrayList<Difficulty>();
+			
+			allSettings.add(new Difficulty(DifficultyNames.EASY.getName(), 4, 76, 200, 240000L));
+			allSettings.add(new Difficulty(DifficultyNames.HARD.getName(), 4, 25, 75, 180000L));
+			allSettings.add(new Difficulty(DifficultyNames.EASY.getName(), 5, 151, 250, 240000L));
+			allSettings.add(new Difficulty(DifficultyNames.HARD.getName(), 5, 100, 150, 180000L));
+			allSettings.add(new Difficulty(DifficultyNames.EASY.getName(), 6, 226, 350, 240000L));
+			allSettings.add(new Difficulty(DifficultyNames.HARD.getName(), 6, 150, 225, 180000L));
+			
+			fileController.saveAllSettings(WazzleFiles.ALL_SETTINGS.getFileName(), allSettings);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	
 	}
 }

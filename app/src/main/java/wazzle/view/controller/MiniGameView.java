@@ -114,10 +114,7 @@ public final class MiniGameView extends View<MiniGameController> {
 
 		this.visualUnit = new SimpleDoubleProperty();
 		this.visualUnit.bind(Bindings.min(stage.widthProperty().multiply(0.05), stage.heightProperty().multiply(0.05)));
-
 		this.setKeyPressedEventHandler();
-
-		this.onClose();
 	}
 
 	private void setKeyPressedEventHandler() {

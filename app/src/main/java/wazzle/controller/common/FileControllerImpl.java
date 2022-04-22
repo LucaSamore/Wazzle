@@ -11,24 +11,17 @@ import wazzle.controller.common.files.Deserializer;
 import wazzle.controller.common.files.FileStrategies;
 import wazzle.controller.common.files.Serializer;
 import wazzle.controller.common.files.TextHandler;
-import wazzle.controller.maingame.Settings;
-import wazzle.controller.maingame.SettingsImpl;
 import wazzle.model.common.BonusManager;
 import wazzle.model.common.BonusManagerImpl;
 import wazzle.model.common.Dictionary;
 import wazzle.model.common.DictionaryImpl;
+import wazzle.model.maingame.Difficulty;
 import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
 import wazzle.model.minigame.MiniGame;
 import wazzle.model.minigame.MiniGameImpl;
 
 public final class FileControllerImpl implements FileController, Serializer, Deserializer {
-
-	private static final String SEPARATOR = System.getProperty("file.separator");
-	private static final String DIRECTORY = 
-			System.getProperty("user.home") + SEPARATOR + 
-			"wazzle" + SEPARATOR + 
-			"files" + SEPARATOR;
 	
 	private final FileStrategies<String> textFileHandler;
 	
@@ -38,91 +31,105 @@ public final class FileControllerImpl implements FileController, Serializer, Des
 	}
 	
 	@Override
-	public String getPath() {
-		return DIRECTORY;
-	}
-	
-	@Override
-	public Dictionary getDataset(final String fileName) throws IOException {
+	public Dictionary getDataset(final String path) throws IOException {
 		return new DictionaryImpl(this.textFileHandler
-				.read(ClassLoader.getSystemResourceAsStream("files/" + fileName))
+				.read(ClassLoader.getSystemResourceAsStream(path))
 				.stream()
 				.collect(Collectors.toSet()));
 	}
 
 	@Override
 	public void saveGames(final String fileName, final List<MainGameImpl> games) throws IOException {
-		if(!this.exists(DIRECTORY + fileName)) {
-			this.create(DIRECTORY + fileName);
+		if(!this.exists(WazzleFiles.getFullPathByName(fileName))) {
+			this.create(WazzleFiles.getFullPathByName(fileName));
 		}
 		
-		this.<MainGame>serialize(DIRECTORY + fileName, games.toArray(new MainGameImpl[games.size()]));
+		this.<MainGame>serialize(WazzleFiles.getFullPathByName(fileName), games.toArray(new MainGameImpl[games.size()]));
 	}
 	
 	@Override
 	public void saveMiniGame(final String fileName, final MiniGame game) throws IOException {
-		if(!this.exists(DIRECTORY + fileName)) {
-			this.create(DIRECTORY + fileName);
+		if(!this.exists(WazzleFiles.getFullPathByName(fileName))) {
+			this.create(WazzleFiles.getFullPathByName(fileName));
 		}
 		
-		this.<MiniGame>serialize(DIRECTORY + fileName, List.of(game).toArray(new MiniGameImpl[0]));
+		this.<MiniGame>serialize(WazzleFiles.getFullPathByName(fileName), List.of(game).toArray(new MiniGameImpl[0]));
 	}
 
 	@Override
 	public void saveBonuses(final String fileName, final BonusManager bonuses) throws IOException {
-		if(!this.exists(DIRECTORY + fileName)) {
-			this.create(DIRECTORY + fileName);
+		if(!this.exists(WazzleFiles.getFullPathByName(fileName))) {
+			this.create(WazzleFiles.getFullPathByName(fileName));
 		}
 		
-		this.<BonusManager>serialize(DIRECTORY + fileName, List.of(bonuses).toArray(new BonusManagerImpl[0]));
+		this.<BonusManager>serialize(WazzleFiles.getFullPathByName(fileName), List.of(bonuses).toArray(new BonusManagerImpl[0]));
 	}
 	
 	@Override
-	public void saveSettings(final String fileName, final Settings settings) throws IOException {
-		if(!this.exists(DIRECTORY + fileName)) {
-			this.create(DIRECTORY + fileName);
+	public void saveCurrentSettings(final String fileName, final Difficulty settings) throws IOException {
+		if(!this.exists(WazzleFiles.getFullPathByName(fileName))) {
+			this.create(WazzleFiles.getFullPathByName(fileName));
 		}
 		
-		this.<Settings>serialize(DIRECTORY + fileName, List.of(settings).toArray(new SettingsImpl[0]));
+		this.<Difficulty>serialize(WazzleFiles.getFullPathByName(fileName), List.of(settings).toArray(new Difficulty[0]));
+	}
+	
+	@Override
+	public void saveAllSettings(final String fileName, final List<Difficulty> allSettings) throws IOException {
+		if(!this.exists(WazzleFiles.getFullPathByName(fileName))) {
+			this.create(WazzleFiles.getFullPathByName(fileName));
+		}
+		
+		this.<Difficulty>serialize(WazzleFiles.getFullPathByName(fileName), allSettings.toArray(new Difficulty[allSettings.size()]));
 	}
 	
 	@Override
 	public List<MainGameImpl> getMainGameHistory(final String fileName) throws IOException{
-		if(!this.exists(DIRECTORY + fileName)) {
-			this.create(DIRECTORY + fileName);
-			this.<MainGame>serialize(DIRECTORY + fileName, List.of().toArray(new MainGameImpl[0]));
+		if(!this.exists(WazzleFiles.getFullPathByName(fileName))) {
+			this.create(WazzleFiles.getFullPathByName(fileName));
+			this.<MainGame>serialize(WazzleFiles.getFullPathByName(fileName), List.of().toArray(new MainGameImpl[0]));
 		}
 		
-		return this.<MainGameImpl>deserialize(MainGameImpl.class, DIRECTORY + fileName);
+		return this.<MainGameImpl>deserialize(MainGameImpl.class, WazzleFiles.getFullPathByName(fileName));
 	}
 	
 	@Override
 	public Optional<MiniGameImpl> getMiniGame(final String fileName) throws IOException {
-		if(!this.exists(DIRECTORY + fileName)) {
+		if(!this.exists(WazzleFiles.getFullPathByName(fileName))) {
 			return Optional.empty();
 		}
 		
-		return Optional.of(this.<MiniGameImpl>deserialize(MiniGameImpl.class, DIRECTORY + fileName).get(0));
+		return Optional.of(this.<MiniGameImpl>deserialize(MiniGameImpl.class, WazzleFiles.getFullPathByName(fileName)).get(0));
 	}
 	
 	@Override
 	public BonusManagerImpl getBonuses(final String fileName) throws IOException{
-		if(!this.exists(DIRECTORY + fileName)) {
-			this.create(DIRECTORY + fileName);
-			this.<BonusManager>serialize(DIRECTORY + fileName, List.of(new BonusManagerImpl()).toArray(new BonusManagerImpl[0]));
+		if(!this.exists(WazzleFiles.getFullPathByName(fileName))) {
+			this.create(WazzleFiles.getFullPathByName(fileName));
+			this.<BonusManager>serialize(WazzleFiles.getFullPathByName(fileName), List.of(new BonusManagerImpl()).toArray(new BonusManagerImpl[0]));
 		}
 		
-		return this.<BonusManagerImpl>deserialize(BonusManagerImpl.class, DIRECTORY + fileName).get(0);
+		return this.<BonusManagerImpl>deserialize(BonusManagerImpl.class, WazzleFiles.getFullPathByName(fileName)).get(0);
 	}
 	
 	@Override
-	public Settings getSettings(String fileName) throws IOException {
-		if(!this.exists(DIRECTORY + fileName)) {
-			this.create(DIRECTORY + fileName);
-			this.<Settings>serialize(DIRECTORY + fileName, List.of(new SettingsImpl()).toArray(new SettingsImpl[0]));
+	public Difficulty getCurrentSettings(final String fileName) throws IOException {
+		if(!this.exists(WazzleFiles.getFullPathByName(fileName))) {
+			this.create(WazzleFiles.getFullPathByName(fileName));
+			this.<Difficulty>serialize(WazzleFiles.getFullPathByName(fileName), List.of(new Difficulty(
+					Difficulty.getDefault().getDifficultyName(), 
+					Difficulty.getDefault().getGridShape(),
+					Difficulty.getDefault().getLowerBound(),
+					Difficulty.getDefault().getUpperBound(),
+					Difficulty.getDefault().getTimeInMilliseconds())).toArray(new Difficulty[0]));
 		}
 		
-		return this.<SettingsImpl>deserialize(SettingsImpl.class, DIRECTORY + fileName).get(0);
+		return this.<Difficulty>deserialize(Difficulty.class, WazzleFiles.getFullPathByName(fileName)).get(0);
+	}
+	
+	@Override
+	public List<Difficulty> getAllSettings(final String path) throws IOException {
+		return this.<Difficulty>deserialize(Difficulty.class, ClassLoader.getSystemResourceAsStream(path));
 	}
 	
 	@Override
@@ -131,8 +138,8 @@ public final class FileControllerImpl implements FileController, Serializer, Des
 	}
 	
 	private void buildFoldersStructure() throws IOException {
-		if(!this.exists(DIRECTORY)) {
-			Files.createDirectories(Path.of(DIRECTORY));
+		if(!this.exists(WazzleFiles.getFoldersStructure())) {
+			Files.createDirectories(Path.of(WazzleFiles.getFoldersStructure()));
 		}
 	}
 }

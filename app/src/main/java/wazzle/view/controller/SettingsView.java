@@ -1,9 +1,9 @@
 package wazzle.view.controller;
 
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import wazzle.controller.common.WazzleController;
 import wazzle.controller.common.WazzleControllerImpl;
+import wazzle.model.maingame.Difficulty;
 import wazzle.view.FXMLFiles;
 import wazzle.view.SceneSwitcher;
 
@@ -51,7 +52,6 @@ public final class SettingsView extends View<WazzleController>{
 		this.visualUnit = new SimpleDoubleProperty();
 		this.visualUnit.bind(Bindings.min(stage.heightProperty().multiply(0.05), stage.widthProperty().multiply(0.05)));
 		this.controller = (WazzleControllerImpl) stage.getUserData();
-		this.onClose();
 	}
 
 	@Override
@@ -59,10 +59,17 @@ public final class SettingsView extends View<WazzleController>{
 		final Node node = (Node) event.getSource();
 
 		if (node.getId().equals("okButton")) {
-//			final var sliderValue = (int) this.gridDimensionSlider.getValue();
-		//	this.controller.getSettingsController().updateSettings(this.controller.getSettingsController().getAllDifficulties().get(difficultySelectorCBox.getValue()).get(sliderValue),sliderValue);
+			final var name = this.difficultySelectorCBox.getValue();
+			final var gridShape = (int) this.gridDimensionSlider.getValue();
+			
+			this.controller.getSettingsController().setCurrentDifficulty(this.controller
+					.getSettingsController()
+					.getDifficultyByNameAndShape(name, gridShape)
+					.get());
+			
 			this.controller.saveSettings();
 		}
+		
 		this.stage.setUserData(this.controller);
 		SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), FXMLFiles.MAIN_MENU.getPath());
 	}
@@ -70,11 +77,17 @@ public final class SettingsView extends View<WazzleController>{
 	@Override
 	protected void buildView() {
 		this.setGraphics();
-//		this.controller.getCurrentDifficulty().getAllDifficulties().keySet()
-//				.forEach(e -> difficultySelectorCBox.getItems().add(e));
-
-//		this.difficultySelectorCBox.getSelectionModel().select(this.controller.getCurrentDifficulty().getCurrentDifficultyName());
-//		this.gridDimensionSlider.setValue(this.controller.getCurrentDifficulty().getCurrentGridShape());
+		
+		this.difficultySelectorCBox.getItems().addAll(this.controller
+				.getSettingsController()
+				.getAllDifficulties()
+				.stream()
+				.map(Difficulty::getDifficultyName)
+				.distinct()
+				.collect(Collectors.toList()));
+		
+		this.difficultySelectorCBox.getSelectionModel().select(this.controller.getSettingsController().getCurrentDifficulty().getDifficultyName());
+		this.gridDimensionSlider.setValue(this.controller.getSettingsController().getCurrentDifficulty().getGridShape());
 	}
 
 	@Override

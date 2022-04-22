@@ -70,7 +70,6 @@ public final class StatisticsMainGameView extends View<MainGameController>{
 		this.visualUnit = new SimpleDoubleProperty();
 		this.visualUnit.bind(Bindings.min(stage.heightProperty(), stage.widthProperty()));
 		this.controller = (MainGameControllerImpl) this.stage.getUserData();
-		this.onClose();
 	}
 
 	@Override

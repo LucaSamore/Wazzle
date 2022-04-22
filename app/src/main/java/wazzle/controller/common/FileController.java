@@ -7,18 +7,17 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
-import wazzle.controller.maingame.Settings;
 import wazzle.model.common.BonusManager;
 import wazzle.model.common.BonusManagerImpl;
 import wazzle.model.common.Dictionary;
+import wazzle.model.maingame.Difficulty;
 import wazzle.model.maingame.MainGameImpl;
 import wazzle.model.minigame.MiniGame;
 import wazzle.model.minigame.MiniGameImpl;
 
 public interface FileController {
-	String getPath();
 	
-	Dictionary getDataset(final String fileName) throws IOException;
+	Dictionary getDataset(final String path) throws IOException;
 	
 	void saveGames(final String fileName, final List<MainGameImpl> games) throws IOException;
 	
@@ -26,7 +25,9 @@ public interface FileController {
 	
 	void saveBonuses(final String fileName, final BonusManager bonuses) throws IOException;
 	
-	void saveSettings(final String fileName, Settings settings) throws IOException;
+	void saveCurrentSettings(final String fileName, Difficulty settings) throws IOException;
+	
+	void saveAllSettings(final String fileName, final List<Difficulty> allSettings) throws IOException;
 	
 	List<MainGameImpl> getMainGameHistory(final String fileName) throws IOException;
 	
@@ -34,7 +35,9 @@ public interface FileController {
 	
 	BonusManagerImpl getBonuses(final String fileName) throws IOException;
 	
-	Settings getSettings(final String fileName) throws IOException;
+	Difficulty getCurrentSettings(final String fileName) throws IOException;
+	
+	List<Difficulty> getAllSettings(final String path) throws IOException;
 	
 	default void create(final String fullPath) throws IOException {
 		Files.createFile(Path.of(fullPath));

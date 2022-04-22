@@ -1,6 +1,9 @@
 package wazzle.controller.common.files;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
@@ -22,6 +25,11 @@ public interface Deserializer {
 	
 	default <T> List<T> deserialize(final Class<T> myClass, final String path) throws IOException {
 	    return this.deserializationGson().get().fromJson(Files.readString(Path.of(path)), 
+	    		TypeToken.getParameterized(List.class, myClass).getType());
+	}
+	
+	default <T> List<T> deserialize(final Class<T> myClass, final InputStream resource) throws IOException {
+	    return this.deserializationGson().get().fromJson(new InputStreamReader(resource, StandardCharsets.UTF_8), 
 	    		TypeToken.getParameterized(List.class, myClass).getType());
 	}
 }

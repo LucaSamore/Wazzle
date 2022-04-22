@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import wazzle.controller.maingame.GameHistoryController;
-import wazzle.controller.maingame.Settings;
 import wazzle.controller.maingame.SettingsController;
 import wazzle.model.common.BonusManager;
 import wazzle.model.common.Dictionary;

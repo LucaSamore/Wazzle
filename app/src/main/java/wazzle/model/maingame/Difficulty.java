@@ -5,6 +5,13 @@ import java.util.Objects;
 import com.google.gson.annotations.Expose;
 
 public final class Difficulty {
+	
+	@Expose
+	private final String difficultyName;
+	
+	@Expose
+	private final int gridShape;
+	
 	@Expose
 	private final int lowerBound;
 	
@@ -14,10 +21,20 @@ public final class Difficulty {
 	@Expose
 	private final long time;
 	
-	public Difficulty(final int lowerBound, final int upperBound, final long time) {
+	public Difficulty(final String difficultyName, final int gridShape, final int lowerBound, final int upperBound, final long time) {
+		this.difficultyName = difficultyName;
+		this.gridShape = gridShape;
 		this.lowerBound = lowerBound;
 		this.upperBound = upperBound;
 		this.time = time;
+	}
+	
+	public String getDifficultyName() {
+		return this.difficultyName;
+	}
+	
+	public int getGridShape() {
+		return this.gridShape;
 	}
 	
 	public int getLowerBound() {
@@ -31,10 +48,14 @@ public final class Difficulty {
 	public long getTimeInMilliseconds() {
 		return this.time;
 	}
+	
+	public static Difficulty getDefault() {
+		return new Difficulty(DifficultyNames.EASY.getName(), 4, 76, 200, 240000L);
+	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(lowerBound, time, upperBound);
+		return Objects.hash(difficultyName, gridShape, lowerBound, time, upperBound);
 	}
 
 	@Override
@@ -46,11 +67,13 @@ public final class Difficulty {
 		if (getClass() != obj.getClass())
 			return false;
 		Difficulty other = (Difficulty) obj;
-		return lowerBound == other.lowerBound && time == other.time && upperBound == other.upperBound;
+		return Objects.equals(difficultyName, other.difficultyName) && gridShape == other.gridShape
+				&& lowerBound == other.lowerBound && time == other.time && upperBound == other.upperBound;
 	}
 
 	@Override
 	public String toString() {
-		return "Difficulty [lowerBound=" + lowerBound + ", upperBound=" + upperBound + ", time=" + time + "]";
+		return "Difficulty [difficultyName=" + difficultyName + ", gridShape=" + gridShape + ", lowerBound="
+				+ lowerBound + ", upperBound=" + upperBound + ", time=" + time + "]";
 	}
 }

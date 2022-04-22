@@ -1,11 +1,12 @@
 package wazzle.controller.common;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import wazzle.controller.maingame.GameHistoryController;
 import wazzle.controller.maingame.GameHistoryControllerImpl;
@@ -37,11 +38,11 @@ public class WazzleControllerImpl implements WazzleController {
 	public WazzleControllerImpl() throws IOException {
 		this.fileController = new FileControllerImpl();
 		this.bonusManager = this.bonusesFromFile();
-		this.settingsController = new SettingsControllerImpl(this.settingsFromFile());
+		this.settingsController = new SettingsControllerImpl(this.settingsFromFile(), this.currentSettingsFromFile());
 		this.gameHistoryController = new GameHistoryControllerImpl(this.gameHistoryFromFile());
 		this.facade = new Facade();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -135,7 +136,7 @@ public class WazzleControllerImpl implements WazzleController {
 	 */
 	@Override
 	public void updateSettings(final Difficulty difficulty) {
-//		this.settingsController.updateSettings(settings.getCurrentDifficulty(), settings.getCurrentGridShape());
+		this.settingsController.setCurrentDifficulty(difficulty);
 	}
 	
 	/**
@@ -143,7 +144,7 @@ public class WazzleControllerImpl implements WazzleController {
 	 */
 	@Override
 	public void saveSettings() throws IOException {
-//		this.fileController.saveSettings(WazzleFiles.SETTINGS.getFileName(), this.getCurrentDifficulty());
+		this.fileController.saveCurrentSettings(WazzleFiles.SETTINGS.getFileName(), this.getCurrentDifficulty());
 	}
 
 	/**
@@ -177,10 +178,7 @@ public class WazzleControllerImpl implements WazzleController {
 	 */
 	@Override
 	public void deleteEndedMiniGame() throws IOException {
-		this.fileController.delete(System.getProperty("user.home") + System.getProperty("file.separator") + 
-				"wazzle" + System.getProperty("file.separator") + 
-				"files" + System.getProperty("file.separator") + WazzleFiles.MINI_GAME.getFileName());
-		//TODO RIMUOVERE E SISTEMARE
+		this.fileController.delete(WazzleFiles.getFullPathByName(WazzleFiles.MINI_GAME.getFileName()));
 	}
 	
 	/**
@@ -211,12 +209,11 @@ public class WazzleControllerImpl implements WazzleController {
 	 * @return Settings the saved settings.
 	 */
 	private List<Difficulty> settingsFromFile() throws IOException {
-//		final var content = this.fileController.getSettings(WazzleFiles.SETTINGS.getFileName());
-//		final var settings = new SettingsImpl();
-//		settings.updateCurrentDifficulty(content.getCurrentDifficulty());
-//		settings.updateCurrentGridShape(content.getCurrentGridShape());
-//		return settings;
-		return Collections.emptyList();
+		return this.fileController.getAllSettings(WazzleFiles.ALL_SETTINGS.getFileName());
+	}
+	
+	private @NonNull Difficulty currentSettingsFromFile() throws IOException {
+		return this.fileController.getCurrentSettings(WazzleFiles.SETTINGS.getFileName());
 	}
 	
 	/**

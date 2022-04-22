@@ -47,7 +47,6 @@ public final class HistoryView extends View<WazzleController>{
 		this.standardFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.asString(), ";");
 		this.headerFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(1.4).asString(), ";");
 		this.titleFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(1.8).asString(), ";");
-		this.onClose();
 	}
 
 	@Override
