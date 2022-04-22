@@ -48,7 +48,7 @@ public final class App extends Application implements WindowCloser {
 		} catch (IOException e) {
 			e.printStackTrace();
 			Alert alert = new Alert(AlertType.NONE);
-			alert.setContentText("Non so che ca**o sia successo. RIPROVA GRAZIE :)");
+			alert.setContentText("Si è verificato un errore. RIPROVA GRAZIE :)");
 			ButtonType exitButton = new ButtonType("Ok riprovo ma non urlare");
 			alert.getButtonTypes().setAll(exitButton);
 			alert.showAndWait();

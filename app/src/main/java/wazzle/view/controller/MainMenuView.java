@@ -59,6 +59,12 @@ public final class MainMenuView extends View<WazzleController>{
 	private StringExpression titleFontSize;
 	private StringExpression fontSize;
 
+	/**
+	 * Construct a new MainMenuView given a stage.
+	 * 
+	 * @param stage the stage passed from the views.
+	 * @throws IOException
+	 */
 	public MainMenuView(final Stage stage) throws IOException {
 		this.stage = stage;
 		this.controller = (WazzleController) stage.getUserData();
@@ -66,75 +72,84 @@ public final class MainMenuView extends View<WazzleController>{
 		this.visualUnit.bind(Bindings.min(this.stage.heightProperty(), this.stage.widthProperty()));
 	}
 	
+	/**
+	 * Construct a new MainMenuView given the primary stage and the starting view properties
+	 * .
+	 * @param stage the primary stage.
+	 * @param visualUnit the starting view properties.
+	 * @throws IOException
+	 */
 	public MainMenuView(final Stage stage, DoubleProperty visualUnit) throws IOException {
 		this.stage = stage;
 		this.controller = (WazzleController) stage.getUserData();
 		this.visualUnit = visualUnit;
 	}
 
+	/**
+	 * Exit from application after clicking the exit button.
+	 * 
+	 * @param event the exit button click event.
+	 */
 	public void exitApplication(ActionEvent event) {
 		System.exit(0);
 	}
 
+	/**
+	 * Switch scene from main menu to all the possible options.
+	 */
 	@Override
 	public void nextScene(ActionEvent event) throws IOException {
 		Node node = (Node) event.getSource();
-		
 		switch (node.getId()) {
-
 		case "startMiniGameButton":
 			this.stage.setUserData(new MiniGameControllerImpl(this.controller));
 			SceneSwitcher.<MiniGameView>switchScene(event, new MiniGameView(this.stage), FXMLFiles.MINI_GAME.getPath());
 			break;
-
 		case "startMainGameButton":
 			this.stage.setUserData(new MainGameControllerImpl(this.controller));
 			SceneSwitcher.<LoadingView>switchScene(event, new LoadingView(this.stage), FXMLFiles.LOADING_SCREEN.getPath());
 			break;
-		
 		case "gameHistoryButton":
 			this.stage.setUserData(this.controller);
 			SceneSwitcher.<HistoryView>switchScene(event, new HistoryView(this.stage), FXMLFiles.HISTORY.getPath());
 			break;
-
 		case "settingsButton":
 			this.stage.setUserData(this.controller);
 			SceneSwitcher.<SettingsView>switchScene(event, new SettingsView(this.stage), FXMLFiles.SETTINGS.getPath());
 			break;
-			
 		case "exitButton":
 			this.exitApplication(event);
 			break;
-			
 		default:
 			throw new IllegalArgumentException("Unexpected value in MainMenu: " + node.getId());
 		}
 	}
 
+	/**
+	 * Build the main menu view with all its graphics and all its information.
+	 */
 	@Override
 	protected void buildView() {
 		this.setGraphics();
 	}
 
+	/**
+	 * Set the graphics of the main menu view.
+	 */
 	@Override
 	protected void setGraphics() {
 		this.titleFontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(ZERO_ONE).asString(), ";");
 		this.fontSize = Bindings.concat("-fx-font-size: ", this.visualUnit.multiply(ZERO_ZERO_FIVE).asString(), ";");
-		
 		mainMenuRightPane.prefWidthProperty().bind(this.stage.widthProperty().multiply(ZERO_FOUR));
 		mainMenuRightPane.maxWidthProperty().bind(this.stage.widthProperty().multiply(ZERO_FOUR));
-		
 		mainWrapperButtons.maxWidthProperty().bind(this.visualUnit.multiply(ZERO_FIVE));
 		mainWrapperButtons.spacingProperty().bind(this.stage.heightProperty().multiply(ZERO_ZERO_FIVE));
 		mainWrapperButtons.styleProperty().bind(this.fontSize);
 		mainWrapperButtons.getStyleClass().add("letters");
-		
 		Image cogwheelSettingsImage = new Image(Images.SETTINGS_ICON.getPath());
-		
 		settingsIcon.setImage(cogwheelSettingsImage);
 		settingsIcon.fitWidthProperty().bind(this.visualUnit.multiply(ZERO_ONE));
 		settingsIcon.fitHeightProperty().bind(this.visualUnit.multiply(ZERO_ONE));
-		
 		titleLabel.styleProperty().bind(this.titleFontSize);
 	}
 }
