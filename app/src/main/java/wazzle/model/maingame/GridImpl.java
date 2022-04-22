@@ -11,6 +11,13 @@ public final class GridImpl implements Grid {
 	private final Set<Letter> letters;
 	private final Set<String> wordsCanBeFound;
 	
+	/**
+	 * Construct a new GridImpl object
+	 * @param letters a {@code Set<Letter>}
+	 * @param wordsCanBeFound a {@code Set<String>}
+	 * 
+	 * @see wazzle.model.maingame.Letter
+	 */
 	public GridImpl(final Set<Letter> letters, final Set<String> wordsCanBeFound) {
 		Objects.requireNonNull(letters);
 		Objects.requireNonNull(wordsCanBeFound);

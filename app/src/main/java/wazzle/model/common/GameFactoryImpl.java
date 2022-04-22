@@ -17,7 +17,6 @@ public final class GameFactoryImpl implements AbstractGameFactory {
 
 	/**
 	 * {@inheritDoc}
-	 * 
 	 */
 	@Override
 	public MainGame createMainGame(final Dictionary dataset, final Pair<Integer, Integer> gridShape, final Difficulty difficulty) {
