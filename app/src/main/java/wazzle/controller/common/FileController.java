@@ -16,9 +16,8 @@ import wazzle.model.minigame.MiniGame;
 import wazzle.model.minigame.MiniGameImpl;
 
 public interface FileController {
-	String getPath();
 	
-	Dictionary getDataset(final String fileName) throws IOException;
+	Dictionary getDataset(final String path) throws IOException;
 	
 	void saveGames(final String fileName, final List<MainGameImpl> games) throws IOException;
 	
@@ -38,7 +37,7 @@ public interface FileController {
 	
 	Difficulty getCurrentSettings(final String fileName) throws IOException;
 	
-	List<Difficulty> getAllSettings(final String fileName) throws IOException;
+	List<Difficulty> getAllSettings(final String path) throws IOException;
 	
 	default void create(final String fullPath) throws IOException {
 		Files.createFile(Path.of(fullPath));
