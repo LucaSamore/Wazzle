@@ -7,7 +7,9 @@ public enum Images {
 	
 	SETTINGS_ICON("img/settingsIcon.png"),
 	
-	TUTORIAL_MAIN_GAME("img/gifTutorial.gif");
+	TUTORIAL_MAIN_GAME("img/gifTutorial.gif"),
+	
+	TUTORIAL_MINI_GAME("img/gifTutorialMiniGame.gif");
 	
 	private final String path;
 	
