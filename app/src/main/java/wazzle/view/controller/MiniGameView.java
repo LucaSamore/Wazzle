@@ -29,6 +29,7 @@ import wazzle.controller.minigame.MiniGameController;
 import wazzle.model.minigame.MiniGame.State;
 import wazzle.model.minigame.MiniGameWord;
 import wazzle.model.minigame.Result;
+import wazzle.view.ErrorAlert;
 import wazzle.view.FXMLFiles;
 import wazzle.view.SceneSwitcher;
 
@@ -98,8 +99,8 @@ public final class MiniGameView extends View<MiniGameController> {
 		try {
 			this.controller.startGame();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			ErrorAlert.show();
 		}
 
 		this.numRows = this.controller.getMaxAttemptsNumber();
@@ -304,9 +305,8 @@ public final class MiniGameView extends View<MiniGameController> {
 	@Override
 	public void nextScene(ActionEvent event) throws IOException {
 		if (currentTypeIndex == this.numCols) {
-			MiniGameWord word = this.controller.guessWord(String.join("", currentWord));
 			if (this.controller.getState() == State.IN_PROGRESS) {
-				this.sendWordToCompute(word);
+				this.sendWordToCompute(this.controller.guessWord(String.join("", currentWord)));
 				this.currentWord.clear();
 				this.currentTypeIndex = 0;
 			} else {
@@ -333,8 +333,8 @@ public final class MiniGameView extends View<MiniGameController> {
 			try {
 				this.controller.saveMiniGame();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				ErrorAlert.show();
 			}
 		}
 		this.stage.setUserData(this.controller.getMainController());
