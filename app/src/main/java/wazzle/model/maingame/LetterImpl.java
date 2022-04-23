@@ -2,7 +2,11 @@ package wazzle.model.maingame;
 
 import javafx.util.Pair;
 
-public class LetterImpl implements Letter {
+/**
+ * This class is a concrete implementation for {@link Letter}.
+ * It provides methods getting letters attributes.
+ */
+public final class LetterImpl implements Letter {
 	
 	private char content;
 	private Pair<Integer, Integer> position;

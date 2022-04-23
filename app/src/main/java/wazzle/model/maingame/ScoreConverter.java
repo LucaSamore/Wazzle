@@ -1,9 +1,8 @@
 package wazzle.model.maingame;
 
 /**
- * 
- * ScoreConverter convert the WeightedAlphabet into another WeightedAlphabet which contains the score.
- *
+ * This interface provides a method for converting the {@link WeightedAlphabet} into 
+ * another {@link WeightedAlphabet} which contains the score.
  */
 public interface ScoreConverter {
 	

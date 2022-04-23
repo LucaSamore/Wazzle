@@ -1,10 +1,12 @@
 package wazzle.controller.maingame;
 
 import java.util.List;
-
 import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
 
+/**
+ * This interface provides methods for managing the {@link MainGame} history. 
+ */
 public interface GameHistoryController {
 	
 	/**

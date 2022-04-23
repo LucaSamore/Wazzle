@@ -1,8 +1,13 @@
 package wazzle.controller.maingame;
 
 import java.util.Timer;
+
 import java.util.TimerTask;
 
+/**
+ * This class is a concrete implementation for {@link GameTimer}
+ * It provides methods for manage the timer.
+ */
 public final class GameTimerImpl implements GameTimer {
 	/**
 	 * The delay.

@@ -5,6 +5,7 @@ package wazzle.controller.maingame;
  * It provides methods for start, stop and update time.
  */
 public interface GameTimer {
+	
 	/**
 	 * Starts the {@link GameTimer}.
 	 */

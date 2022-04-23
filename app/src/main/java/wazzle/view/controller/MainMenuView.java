@@ -1,14 +1,12 @@
 package wazzle.view.controller;
 
 import java.io.IOException;
-
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringExpression;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,6 +23,10 @@ import wazzle.view.FXMLFiles;
 import wazzle.view.Images;
 import wazzle.view.SceneSwitcher;
 
+/**
+ * This class is a concrete implementation for {@link View}.
+ * It provides method for manage the main menu view.
+ */
 public final class MainMenuView extends View<WazzleController>{
 	
 	@FXML

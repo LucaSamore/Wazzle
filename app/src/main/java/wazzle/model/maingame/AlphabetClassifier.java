@@ -2,6 +2,10 @@ package wazzle.model.maingame;
 
 import java.util.EnumMap;
 
+/**
+ * This interface provides a method for classify a {@link WeightedAlphabet} in {@link Ranges}.
+ *
+ */
 public interface AlphabetClassifier {
 	
 	/**

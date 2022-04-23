@@ -3,10 +3,9 @@ package wazzle.model.maingame;
 import javafx.util.Pair;
 
 /**
- *  Letter is an object which have its content, its position, and its score.
+ *  This interface encapsulates the concept of letter.
  *
  */
-
 public interface Letter {
 	
 	/**

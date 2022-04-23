@@ -22,10 +22,10 @@ import wazzle.model.minigame.FiveLetterDictionary;
 import wazzle.model.minigame.SavedMiniGame;
 
 /**
- * This interface represents the main controller far all games.
+ * This class is a concrete implementation for {@link WazzleController}
  * It provides methods for manage every Wazzle component.
  */
-public class WazzleControllerImpl implements WazzleController {
+public final class WazzleControllerImpl implements WazzleController {
 
 	private static final int MAX_GAME_HISTORY_VISIBLE = 10;
 	private final FileController fileController;
