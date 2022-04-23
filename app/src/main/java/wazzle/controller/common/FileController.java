@@ -14,6 +14,7 @@ import wazzle.model.maingame.Difficulty;
 import wazzle.model.maingame.MainGameImpl;
 import wazzle.model.minigame.MiniGame;
 import wazzle.model.minigame.MiniGameImpl;
+import wazzle.model.minigame.SavedMiniGame;
 
 public interface FileController {
 	
@@ -21,7 +22,7 @@ public interface FileController {
 	
 	void saveGames(final String fileName, final List<MainGameImpl> games) throws IOException;
 	
-	void saveMiniGame(final String fileName, final MiniGame game) throws IOException;
+	void saveMiniGame(final String fileName, final SavedMiniGame minigame) throws IOException;
 	
 	void saveBonuses(final String fileName, final BonusManager bonuses) throws IOException;
 	
@@ -31,7 +32,7 @@ public interface FileController {
 	
 	List<MainGameImpl> getMainGameHistory(final String fileName) throws IOException;
 	
-	Optional<MiniGameImpl> getMiniGame(final String fileName) throws IOException;
+	Optional<SavedMiniGame> getMiniGame(final String fileName) throws IOException;
 	
 	BonusManagerImpl getBonuses(final String fileName) throws IOException;
 	

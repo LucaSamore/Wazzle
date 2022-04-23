@@ -12,6 +12,7 @@ public interface MiniGame {
 		IN_PROGRESS(0), FAILED(1), WON(2);
 
 		private final int currentState;
+
 		State(int state) {
 			this.currentState = state;
 		}
@@ -25,7 +26,8 @@ public interface MiniGame {
 	 * Load a previous mini game.
 	 *
 	 */
-	void loadMiniGame();
+//	void loadMiniGame();
+	void loadMiniGame(SavedMiniGame savedMinigame);
 
 	/**
 	 * Compute result.
@@ -78,8 +80,7 @@ public interface MiniGame {
 	 */
 	List<MiniGameWordImpl> getAllGuessedWords();
 
-
-	void setWordChecker(WordChecker wordChecker);
+//	void setWordChecker(WordChecker wordChecker);
 
 	/**
 	 * Sets the current game state.
@@ -87,5 +88,10 @@ public interface MiniGame {
 	 * @param state the new game state
 	 */
 	void setGameState(State state);
+
+
+	SavedMiniGame takeMiniGameSnapshot();
+
+
 
 }

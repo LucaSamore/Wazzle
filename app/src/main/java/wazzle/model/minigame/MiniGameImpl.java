@@ -2,17 +2,14 @@ package wazzle.model.minigame;
 
 import java.util.LinkedList;
 import java.util.List;
-import com.google.gson.annotations.Expose;
 
 public class MiniGameImpl implements MiniGame {
 
 	private static final int MAX_ATTEMPTS_NUMBER = 6;
 	private static final int WORDS_LENGHT = 5;
 
-	@Expose
+	
 	private String targetWord;
-
-	@Expose
 	private List<MiniGameWordImpl> guessedWords;
 
 	private WordChecker wordChecker;
@@ -29,11 +26,20 @@ public class MiniGameImpl implements MiniGame {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void loadMiniGame() {
-		this.setGameState(State.IN_PROGRESS);
+	public void loadMiniGame(final SavedMiniGame savedMinigame) {
+		this.targetWord = savedMinigame.getSavedTargetWord();
+		this.guessedWords = savedMinigame.getSavedMiniGameWordsSoFar();
 		this.wordChecker = new WordCheckerImpl(this.getTargetWord());
+		this.setGameState(State.IN_PROGRESS);
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public SavedMiniGame takeMiniGameSnapshot() {
+		return new SavedMiniGame(this.targetWord, this.guessedWords);
+	}
 	/**
 	 * {@inheritDoc}
 	 */
@@ -64,13 +70,13 @@ public class MiniGameImpl implements MiniGame {
 		return MiniGameImpl.WORDS_LENGHT;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setWordChecker(final WordChecker wordChecker) {
-		this.wordChecker = wordChecker;
-	}
+//	/**
+//	 * {@inheritDoc}
+//	 */
+//	@Override
+//	public void setWordChecker(final WordChecker wordChecker) {
+//		this.wordChecker = wordChecker;
+//	}
 
 	/**
 	 * {@inheritDoc}

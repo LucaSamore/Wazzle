@@ -25,6 +25,7 @@ import wazzle.model.minigame.ExtractedWordManagerImpl;
 import wazzle.model.minigame.FiveLetterDictionary;
 import wazzle.model.minigame.MiniGame;
 import wazzle.model.minigame.MiniGameImpl;
+import wazzle.model.minigame.SavedMiniGame;
 
 public class WazzleControllerImpl implements WazzleController {
 
@@ -111,7 +112,7 @@ public class WazzleControllerImpl implements WazzleController {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Optional<MiniGameImpl> getLastMinigame() throws IOException {
+	public Optional<SavedMiniGame> getLastMinigame() throws IOException {
 		return this.fileController.getMiniGame(WazzleFiles.MINI_GAME.getFileName());
 	}
 	
@@ -198,7 +199,7 @@ public class WazzleControllerImpl implements WazzleController {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void saveMiniGame(final MiniGame minigame) throws IOException {
+	public void saveMiniGame(final SavedMiniGame minigame) throws IOException {
 		this.fileController.saveMiniGame(WazzleFiles.MINI_GAME.getFileName(), minigame);
 	}
 	

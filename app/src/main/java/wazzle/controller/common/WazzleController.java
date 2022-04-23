@@ -15,6 +15,7 @@ import wazzle.model.maingame.MainGameImpl;
 import wazzle.model.minigame.ExtractedWordManager;
 import wazzle.model.minigame.MiniGame;
 import wazzle.model.minigame.MiniGameImpl;
+import wazzle.model.minigame.SavedMiniGame;
 
 public interface WazzleController {
 
@@ -74,7 +75,7 @@ public interface WazzleController {
 	 * 
 	 * @return MiniGameImpl the last MiniGame saved.
 	 */
-	Optional<MiniGameImpl> getLastMinigame() throws IOException;
+	Optional<SavedMiniGame> getLastMinigame() throws IOException;
 	
 	/**
 	 * Gives the Facade.
@@ -150,7 +151,7 @@ public interface WazzleController {
 	 * @param minigame the minigame which have to been saved.
 	 * @throws IOException
 	 */
-	void saveMiniGame(MiniGame minigame) throws IOException;
+	void saveMiniGame(SavedMiniGame minigame) throws IOException;
 	
 	/**
 	 * Delete the last saved minigame.

@@ -20,6 +20,7 @@ import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
 import wazzle.model.minigame.MiniGame;
 import wazzle.model.minigame.MiniGameImpl;
+import wazzle.model.minigame.SavedMiniGame;
 
 public final class FileControllerImpl implements FileController, Serializer, Deserializer {
 	
@@ -48,12 +49,12 @@ public final class FileControllerImpl implements FileController, Serializer, Des
 	}
 	
 	@Override
-	public void saveMiniGame(final String fileName, final MiniGame game) throws IOException {
+	public void saveMiniGame(final String fileName, final SavedMiniGame game) throws IOException {
 		if(!this.exists(WazzleFiles.getFullPathByName(fileName))) {
 			this.create(WazzleFiles.getFullPathByName(fileName));
 		}
 		
-		this.<MiniGame>serialize(WazzleFiles.getFullPathByName(fileName), List.of(game).toArray(new MiniGameImpl[0]));
+		this.<SavedMiniGame>serialize(WazzleFiles.getFullPathByName(fileName), List.of(game).toArray(new SavedMiniGame[0]));
 	}
 
 	@Override
@@ -94,12 +95,12 @@ public final class FileControllerImpl implements FileController, Serializer, Des
 	}
 	
 	@Override
-	public Optional<MiniGameImpl> getMiniGame(final String fileName) throws IOException {
+	public Optional<SavedMiniGame> getMiniGame(final String fileName) throws IOException {
 		if(!this.exists(WazzleFiles.getFullPathByName(fileName))) {
 			return Optional.empty();
 		}
 		
-		return Optional.of(this.<MiniGameImpl>deserialize(MiniGameImpl.class, WazzleFiles.getFullPathByName(fileName)).get(0));
+		return Optional.of(this.<SavedMiniGame>deserialize(SavedMiniGame.class, WazzleFiles.getFullPathByName(fileName)).get(0));
 	}
 	
 	@Override

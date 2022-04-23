@@ -1,7 +1,8 @@
 package wazzle.controller.minigame;
 
 import java.io.IOException;
-
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,17 +11,17 @@ import wazzle.model.minigame.MiniGame;
 import wazzle.model.minigame.MiniGame.State;
 import wazzle.model.minigame.MiniGameImpl;
 import wazzle.model.minigame.MiniGameWord;
-import wazzle.model.minigame.WordCheckerImpl;
+import wazzle.model.minigame.Result;
+import wazzle.model.minigame.SavedMiniGame;
 import wazzle.model.minigame.WordsDispenserImpl;
 
 public class MiniGameControllerImpl implements MiniGameController {
 
-	private Optional<MiniGame> currentMinigame;
+	private MiniGame currentMinigame;
 	private WazzleController wazzleController;
 	MiniGameWord currentMiniGameWord;
 
 	public MiniGameControllerImpl(final WazzleController wazzleController) {
-		this.currentMinigame = Optional.empty();
 		this.wazzleController = wazzleController;
 	}
 
@@ -29,12 +30,11 @@ public class MiniGameControllerImpl implements MiniGameController {
 	 */
 	@Override
 	public void startGame() throws IOException {
-		this.loadMiniGame().ifPresentOrElse((loadedMiniGame -> {
-			loadedMiniGame.setWordChecker(new WordCheckerImpl(loadedMiniGame.getTargetWord()));
-			loadedMiniGame.setGameState(State.IN_PROGRESS);
-			this.currentMinigame = Optional.of(loadedMiniGame);
-		}),() -> this.currentMinigame = Optional.of(this.newMiniGame()));
-		
+		this.loadMiniGame().ifPresentOrElse((savedMiniGame -> {
+			this.currentMinigame = new MiniGameImpl(savedMiniGame.getSavedTargetWord());
+			this.currentMinigame.loadMiniGame(savedMiniGame);
+		}), () -> this.currentMinigame = this.newMiniGame());
+
 		if (loadMiniGame().isPresent()) {
 			this.wazzleController.deleteEndedMiniGame();
 		}
@@ -45,13 +45,13 @@ public class MiniGameControllerImpl implements MiniGameController {
 	 */
 	@Override
 	public void saveMiniGame() throws IOException {
-		this.wazzleController.saveMiniGame(currentMinigame.get());
+		this.wazzleController.saveMiniGame(currentMinigame.takeMiniGameSnapshot());
 	}
 
 	/**
 	 * Loads a minigame.
 	 */
-	private Optional<MiniGameImpl> loadMiniGame() throws IOException {
+	private Optional<SavedMiniGame> loadMiniGame() throws IOException {
 		return this.wazzleController.getLastMinigame();
 	}
 
@@ -60,7 +60,7 @@ public class MiniGameControllerImpl implements MiniGameController {
 	 */
 	@Override
 	public MiniGameWord guessWord(String guessedWord) {
-		this.currentMiniGameWord = currentMinigame.get().computeResult(guessedWord);
+		this.currentMiniGameWord = currentMinigame.computeResult(guessedWord);
 		return this.currentMiniGameWord;
 	}
 
@@ -69,7 +69,7 @@ public class MiniGameControllerImpl implements MiniGameController {
 	 */
 	@Override
 	public Optional<String> obtainedBonus() throws IOException {
-		if (this.currentMinigame.get().getGameState() == State.WON) {
+		if (this.currentMinigame.getGameState() == State.WON) {
 			var currentBonusName = this.wazzleController.gainBonus();
 			this.wazzleController.saveBonuses();
 			return Optional.of(currentBonusName);
@@ -82,7 +82,7 @@ public class MiniGameControllerImpl implements MiniGameController {
 	 */
 	@Override
 	public int getCurrentAttemptsNumber() {
-		return currentMinigame.get().getCurrentAttemptsNumber();
+		return currentMinigame.getCurrentAttemptsNumber();
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class MiniGameControllerImpl implements MiniGameController {
 	 */
 	@Override
 	public List<MiniGameWord> getGuessedMinigameWordsSoFar() {
-		return List.copyOf(currentMinigame.get().getAllGuessedWords());
+		return List.copyOf(currentMinigame.getAllGuessedWords());
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class MiniGameControllerImpl implements MiniGameController {
 	 */
 	@Override
 	public int getWordLength() {
-		return currentMinigame.get().getWordLength();
+		return currentMinigame.getWordLength();
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class MiniGameControllerImpl implements MiniGameController {
 	 */
 	@Override
 	public int getMaxAttemptsNumber() {
-		return currentMinigame.get().getMaxAttemptsNumber();
+		return currentMinigame.getMaxAttemptsNumber();
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class MiniGameControllerImpl implements MiniGameController {
 	 */
 	@Override
 	public int getStateOfCurrentMinigame() {
-		return currentMinigame.get().getGameState().getState();
+		return currentMinigame.getGameState().getState();
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class MiniGameControllerImpl implements MiniGameController {
 	 */
 	@Override
 	public String getTargetWord() {
-		return this.currentMinigame.get().getTargetWord();
+		return this.currentMinigame.getTargetWord();
 	}
 
 	/**
@@ -156,6 +156,17 @@ public class MiniGameControllerImpl implements MiniGameController {
 	public char getLetterCharAtIndex(int index) {
 		return this.currentMiniGameWord.getCompositeWord().get(index).getCharacter();
 
+	}
+
+	@Override
+	public List<Character> getAllWrongLetters(){
+		List<Character> temp = new ArrayList<>();
+		this.currentMinigame.getAllGuessedWords().forEach(
+				word -> word.getCompositeWord().forEach(
+						letter -> { if (letter.getResult() == Result.WRONG.getState())
+						{temp.add(letter.getCharacter());}}));
+		System.out.println("temp = " + temp);
+		return temp;
 	}
 
 }

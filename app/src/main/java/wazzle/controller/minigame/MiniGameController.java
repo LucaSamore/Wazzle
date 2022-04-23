@@ -110,4 +110,6 @@ public interface MiniGameController {
 	int getLetterResultAtIndex(int index);
 	
 	char getLetterCharAtIndex(int index);
+
+	List<Character> getAllWrongLetters();
 }

@@ -15,6 +15,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
@@ -97,15 +98,6 @@ public final class MiniGameView extends View<MiniGameController> {
 		this.bannedChars = new HashSet<>();
 		this.controller = (MiniGameController) stage.getUserData();
 
-		try {
-			this.controller.startGame();
-		} catch (IOException e) {
-			e.printStackTrace();
-			ErrorAlert.show();
-		}
-
-		this.numRows = this.controller.getMaxAttemptsNumber();
-		this.numCols = this.controller.getWordLength();
 		this.currentTypeIndex = 0;
 		this.currentRowIndex = 0;
 
@@ -116,7 +108,18 @@ public final class MiniGameView extends View<MiniGameController> {
 		this.visualUnit = new SimpleDoubleProperty();
 		this.visualUnit.bind(Bindings.min(stage.widthProperty().multiply(0.05), stage.heightProperty().multiply(0.05)));
 		this.setKeyPressedEventHandlers();
+		
+		try {
+			this.controller.startGame();
+		} catch (IOException e) {
+			e.printStackTrace();
+			ErrorAlert.show();
+		}		
+		this.bannedChars.addAll(this.controller.getAllWrongLetters());
+		this.numRows = this.controller.getMaxAttemptsNumber();
+		this.numCols = this.controller.getWordLength();
 	}
+
 
 	private void setKeyPressedEventHandlers() {
 		this.keyPressedHandler = (KeyEvent event) -> {
@@ -170,17 +173,24 @@ public final class MiniGameView extends View<MiniGameController> {
 	}
 
 	private void disableKeyboardKey(GridPane gridToRemoveFrom) {
-		for (Node sp : gridToRemoveFrom.getChildren()) {
-			Character elementToBanFromKeyboard = ((Label) ((StackPane) sp).getChildren().get(0)).getText().charAt(0);
+		System.out.println("test3");
+		System.out.println("DIMENSIONE DELLA GRID" + gridToRemoveFrom.getChildren().size());
+		for (Node elementToDisable : gridToRemoveFrom.getChildren()) {
+			System.out.println("test4");
+			Character elementToBanFromKeyboard = ((Label) ((StackPane) elementToDisable).getChildren().get(0)).getText().charAt(0);
+			System.out.println(this.bannedChars.contains(elementToBanFromKeyboard));
 			if (this.bannedChars.contains(elementToBanFromKeyboard)) {
-				sp.getStyleClass().add("darkIncave");
-				sp.setDisable(true);
-				sp.removeEventFilter(MouseEvent.MOUSE_CLICKED, this.clickedOnKeyHandler);
+				System.out.println("disabled element at: " + gridToRemoveFrom.getId() + " position: " + ((StackPane) elementToDisable).getChildren().toString());
+				elementToDisable.setStyle("");
+				elementToDisable.getStyleClass().add("darkIncave");
+				elementToDisable.setDisable(true);
+				elementToDisable.removeEventFilter(MouseEvent.MOUSE_CLICKED, this.clickedOnKeyHandler);
 			}
 		}
 	}
 
 	private void disableKeyboardKeys() {
+		System.out.println("test2");
 		this.disableKeyboardKey(this.firstRowGrid);
 		this.disableKeyboardKey(this.secondRowGrid);
 		this.disableKeyboardKey(this.thirdRowGrid);
@@ -323,6 +333,7 @@ public final class MiniGameView extends View<MiniGameController> {
 		this.populateKeyboardRow(this.thirdRowGrid, LOWER_ROW_CHARACTERS);
 		this.setGraphics();
 		this.addKeyPressedListener();
+		this.disableKeyboardKeys();
 	}
 
 	@FXML
