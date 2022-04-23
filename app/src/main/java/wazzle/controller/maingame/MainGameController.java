@@ -17,6 +17,7 @@ public interface MainGameController {
 	/**
 	 * Returns an {@code Optional} describing the current game.
 	 * @return an {@code Optional} object.
+	 * @see java.util.Optional
 	 */
 	Optional<MainGame> getGame();
 	
@@ -69,6 +70,7 @@ public interface MainGameController {
 	/**
 	 * Consumes a word bonus.
 	 * @return a {@code Set<String>} containing some suggested words inside {@link MainGame#wordsToBeFound()}.
+	 * @see java.util.Set
 	 */
 	Set<String> useWordBonus();
 	
