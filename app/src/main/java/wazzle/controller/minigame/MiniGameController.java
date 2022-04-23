@@ -89,7 +89,7 @@ public interface MiniGameController {
 	 *
 	 * @return he current state of the game.
 	 */
-	State getState();
+	public int getStateOfCurrentMinigame();
 
 	/**
 	 * Gets the list of guessed Minigame words so far.
@@ -106,4 +106,8 @@ public interface MiniGameController {
 	 * @return the main controller
 	 */
 	WazzleController getMainController();
+
+	int getLetterResultAtIndex(int index);
+	
+	char getLetterCharAtIndex(int index);
 }

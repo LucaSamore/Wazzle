@@ -17,24 +17,25 @@ public class MiniGameControllerImpl implements MiniGameController {
 
 	private Optional<MiniGame> currentMinigame;
 	private WazzleController wazzleController;
+	MiniGameWord currentMiniGameWord;
 
 	public MiniGameControllerImpl(final WazzleController wazzleController) {
 		this.currentMinigame = Optional.empty();
 		this.wazzleController = wazzleController;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void startGame() throws IOException {
-		if (this.loadMiniGame().isEmpty()) {
-			this.currentMinigame = Optional.of(this.newMiniGame());
-		} else {
-			final var loadedMinigame = this.loadMiniGame();
-			loadedMinigame.get().setWordChecker(new WordCheckerImpl(loadedMinigame.get().getTargetWord()));
-			loadedMinigame.get().setGameState(State.IN_PROGRESS);
-			this.currentMinigame = Optional.of(loadedMinigame.get());
+		this.loadMiniGame().ifPresentOrElse((loadedMiniGame -> {
+			loadedMiniGame.setWordChecker(new WordCheckerImpl(loadedMiniGame.getTargetWord()));
+			loadedMiniGame.setGameState(State.IN_PROGRESS);
+			this.currentMinigame = Optional.of(loadedMiniGame);
+		}),() -> this.currentMinigame = Optional.of(this.newMiniGame()));
+		
+		if (loadMiniGame().isPresent()) {
 			this.wazzleController.deleteEndedMiniGame();
 		}
 	}
@@ -46,15 +47,23 @@ public class MiniGameControllerImpl implements MiniGameController {
 	public void saveMiniGame() throws IOException {
 		this.wazzleController.saveMiniGame(currentMinigame.get());
 	}
-	
+
+	/**
+	 * Loads a minigame.
+	 */
+	private Optional<MiniGameImpl> loadMiniGame() throws IOException {
+		return this.wazzleController.getLastMinigame();
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public MiniGameWord guessWord(String guessedWord) {
-		return this.currentMinigame.get().computeResult(guessedWord);
+		this.currentMiniGameWord = currentMinigame.get().computeResult(guessedWord);
+		return this.currentMiniGameWord;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -67,7 +76,7 @@ public class MiniGameControllerImpl implements MiniGameController {
 		}
 		return Optional.empty();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -75,7 +84,7 @@ public class MiniGameControllerImpl implements MiniGameController {
 	public int getCurrentAttemptsNumber() {
 		return currentMinigame.get().getCurrentAttemptsNumber();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -83,7 +92,7 @@ public class MiniGameControllerImpl implements MiniGameController {
 	public List<MiniGameWord> getGuessedMinigameWordsSoFar() {
 		return List.copyOf(currentMinigame.get().getAllGuessedWords());
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -91,7 +100,7 @@ public class MiniGameControllerImpl implements MiniGameController {
 	public int getWordLength() {
 		return currentMinigame.get().getWordLength();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -99,15 +108,15 @@ public class MiniGameControllerImpl implements MiniGameController {
 	public int getMaxAttemptsNumber() {
 		return currentMinigame.get().getMaxAttemptsNumber();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public State getState() {
-		return currentMinigame.get().getGameState();
+	public int getStateOfCurrentMinigame() {
+		return currentMinigame.get().getGameState().getState();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -115,7 +124,7 @@ public class MiniGameControllerImpl implements MiniGameController {
 	public String getTargetWord() {
 		return this.currentMinigame.get().getTargetWord();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -123,20 +132,30 @@ public class MiniGameControllerImpl implements MiniGameController {
 	public WazzleController getMainController() {
 		return this.wazzleController;
 	}
-	
+
 	/**
 	 * Starts a new minigame.
 	 */
 	private MiniGame newMiniGame() {
-		return this.wazzleController.getFacade().startNewMiniGame(new WordsDispenserImpl(this.wazzleController.getExtractedWordManager()));
+		return this.wazzleController.getFacade()
+				.startNewMiniGame(new WordsDispenserImpl(this.wazzleController.getExtractedWordManager()));
 	}
-	
-	
+
 	/**
-	 * Loads a minigame.
+	 * {@inheritDoc}
 	 */
-	private Optional<MiniGameImpl> loadMiniGame() throws IOException {
-		return this.wazzleController.getLastMinigame();
+	@Override
+	public int getLetterResultAtIndex(int index) {
+		return this.currentMiniGameWord.getCompositeWord().get(index).getResult();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public char getLetterCharAtIndex(int index) {
+		return this.currentMiniGameWord.getCompositeWord().get(index).getCharacter();
+
 	}
 
 }
