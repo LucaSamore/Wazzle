@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringExpression;
@@ -282,15 +283,14 @@ public final class MainGameView extends View<MainGameController> {
 	}
 	
 	private boolean isNeighbour(final Pair<Integer,Integer> position) {
-		//hard coded for now, don't sue me please :)
-		return ((position.getKey() == this.lastVisitedPosition.getKey() - 1 && position.getValue() == this.lastVisitedPosition.getValue() - 1)
-				|| (position.getKey() == this.lastVisitedPosition.getKey() - 1 && position.getValue() == this.lastVisitedPosition.getValue())
-				|| (position.getKey() == this.lastVisitedPosition.getKey() - 1 && position.getValue() == this.lastVisitedPosition.getValue() + 1)
-				|| (position.getKey() == this.lastVisitedPosition.getKey() && position.getValue() == this.lastVisitedPosition.getValue() - 1)
-				|| (position.getKey() == this.lastVisitedPosition.getKey() && position.getValue() == this.lastVisitedPosition.getValue() + 1)
-				|| (position.getKey() == this.lastVisitedPosition.getKey() + 1 && position.getValue() == this.lastVisitedPosition.getValue() - 1)
-				|| (position.getKey() == this.lastVisitedPosition.getKey() + 1 && position.getValue() == this.lastVisitedPosition.getValue())
-				|| (position.getKey() == this.lastVisitedPosition.getKey() + 1 && position.getValue() == this.lastVisitedPosition.getValue() + 1));
+		return IntStream.rangeClosed(position.getKey() - 1, position.getKey() + 1)
+				.boxed()
+				.flatMap(kk -> IntStream.rangeClosed(position.getValue() - 1, position.getValue() + 1)
+						.boxed()
+						.map(vv -> new Pair<>(kk,vv)))
+				.filter(p -> this.lastVisitedPosition.equals(p))
+				.findAny()
+				.isPresent();
 	}
 
 	private boolean visitCell(final Pair<Integer,Integer> position) {
