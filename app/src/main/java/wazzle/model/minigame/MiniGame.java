@@ -23,17 +23,11 @@ public interface MiniGame {
 	}
 
 	/**
-	 * Load a previous mini game.
-	 *
-	 */
-//	void loadMiniGame();
-	void loadMiniGame(SavedMiniGame savedMinigame);
-
-	/**
-	 * Compute result.
+	 * Given a string containing the word inserted by the user, returns the corresponding
+	 * computed word.
 	 *
 	 * @param guessedWord the guessed word
-	 * @see wazzle.model.minigame.WordChecker
+	 * @see {@link WordChecker}, {@link MiniGameWord}
 	 * @return the mini game word
 	 */
 	MiniGameWord computeResult(String guessedWord);
@@ -74,13 +68,11 @@ public interface MiniGame {
 	String getTargetWord();
 
 	/**
-	 * Gets the all guessed words of the current minigame..
+	 * Gets the all guessed words of the current minigame.
 	 *
 	 * @return all the guessed words
 	 */
 	List<MiniGameWordImpl> getAllGuessedWords();
-
-//	void setWordChecker(WordChecker wordChecker);
 
 	/**
 	 * Sets the current game state.
@@ -89,9 +81,19 @@ public interface MiniGame {
 	 */
 	void setGameState(State state);
 
-
+    /**
+     * Returns the current state of the relevant fields of the Minigame.
+     * @see {@link SavedMiniGame}, {@link MiniGame}
+     * @return a new Snapshot representing the current state of Minigame.
+     */
 	SavedMiniGame takeMiniGameSnapshot();
 
-
+    /**
+     * Restore a previous state of a Minigame;
+     * 
+     * @param savedMinigame - the previous saved state of a Minigame.
+     * @see {@link SavedMiniGame}, {@link MiniGame},
+     */
+    void loadMiniGame(SavedMiniGame savedMinigame);
 
 }

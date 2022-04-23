@@ -171,7 +171,7 @@ public class MiniGameControllerImpl implements MiniGameController {
 						        wrongLetters.add(letter.getCharacter());
 						        }
 						    }));
-		return wrongLetters;
+		return List.copyOf(wrongLetters);
 	}
 	
 	/**

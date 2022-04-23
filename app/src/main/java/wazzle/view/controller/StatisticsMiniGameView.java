@@ -14,10 +14,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import wazzle.controller.common.WazzleControllerImpl;
 import wazzle.controller.minigame.MiniGameController;
 import wazzle.controller.minigame.MiniGameControllerImpl;
-import wazzle.model.minigame.MiniGame.State;
 import wazzle.view.ErrorAlert;
 import wazzle.view.FXMLFiles;
 import wazzle.view.SceneSwitcher;
@@ -63,8 +61,6 @@ public class StatisticsMiniGameView extends View<MiniGameController>{
 	private Label bonusValueLabel;
 
 	
-	private Stage stage;
-	private DoubleProperty visualUnit;
 	private MiniGameController miniGameController;
 
 	public StatisticsMiniGameView(Stage stage) {
@@ -102,7 +98,6 @@ public class StatisticsMiniGameView extends View<MiniGameController>{
 				this.bonusValueLabel.setText(b);
 			});
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			ErrorAlert.show();
 		}
