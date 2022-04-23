@@ -1,13 +1,15 @@
 package wazzle.view;
 
 import java.util.Optional;
-
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+/**
+ * This interface provides a default behavior when the user closes the window.
+ */
 public interface WindowCloser {
 	
 	private void defaultClose(final WindowEvent e) {
@@ -27,6 +29,13 @@ public interface WindowCloser {
 		e.consume();
 	}
 	
+	/**
+	 * Calls a default close operation that shows a simple {@link Alert} that asks the user
+	 * if he wants to quit the application.
+	 * @param stage the current {@code Stage}
+	 * @return void
+	 * @see Stage
+	 */
 	default void closeWindow(final Stage stage) {
 		stage.getScene()
 			.getWindow()

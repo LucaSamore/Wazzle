@@ -30,6 +30,7 @@ public final class FileControllerImpl implements FileController, Serializer, Des
 	private final FileStrategies<String> textFileHandler;
 	
 	/**
+	 * Construct a new FileControllerImpl
 	 * @throws IOException
 	 */
 	public FileControllerImpl() throws IOException {
