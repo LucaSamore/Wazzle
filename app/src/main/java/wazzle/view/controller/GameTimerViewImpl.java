@@ -44,7 +44,7 @@ public final class GameTimerViewImpl implements GameTimerView {
 					public void run() {
 						final var timeRemaining = mainGameView.getMainGameController().getTimer().getRemainingTime();
 						timerValueLabel.setText("" + timeRemaining);
-						if(timeRemaining <= 0) {
+						if (timeRemaining <= 0) {
 							try {
 								notifyToMainGame();
 								stopAll();

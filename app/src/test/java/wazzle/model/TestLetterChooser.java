@@ -13,6 +13,7 @@ import wazzle.model.maingame.WeightedAlphabet;
 import wazzle.model.maingame.WeightedAlphabetImpl;
 import wazzle.model.maingame.LetterChooser;
 import wazzle.model.maingame.LetterChooserImpl;
+import wazzle.model.maingame.Mediator;
 import wazzle.model.maingame.Range;
 
 public class TestLetterChooser {
@@ -24,6 +25,8 @@ public class TestLetterChooser {
 				Range.MEDIUM_FREQUENCY, new WeightedAlphabetImpl (Map.of('C', 15.0, 'T', 11.0, 'R', 10.0)), 
 				Range.LOW_FREQUENCY, new WeightedAlphabetImpl (Map.of('L', 9.0, 'M', 8.0, 'P', 6.0))));
 		LetterChooser letterChooser = new LetterChooserImpl(classifiedLetters, new Pair<>(4, 4), null);
+		//EnumMap<Range, List<Pair<Character, Double>>> choosenLetters = letterChooser.chooseForTests();
+		//Mediator mediator = new Mediator(dataset, new Pair<>(4,4));
 		EnumMap<Range, List<Pair<Character, Double>>> choosenLetters = letterChooser.chooseForTests();
 		assertEquals((choosenLetters.get(Range.HIGH_FREQUENCY)).size(), 8);
 		assertEquals((choosenLetters.get(Range.MEDIUM_FREQUENCY)).size(), 5);

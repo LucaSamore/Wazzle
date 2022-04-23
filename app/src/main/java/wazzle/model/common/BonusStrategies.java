@@ -16,27 +16,30 @@ import java.util.stream.Collectors;
 public interface BonusStrategies {
 	
 	/**
-	 * Implements the application strategy for ScoreBonus. 
+	 * Implements the application strategy for {@link ScoreBonus}. 
 	 * 
-	 * @return BinaryOperator<Double> which represent the operation that must be done when the ScoreBonus is used.
+	 * @return BinaryOperator<Double> which represent the operation that must be done when the 
+	 * 	{@link ScoreBonus} is used.
 	 */
 	static BinaryOperator<Integer> scoreBonus() {
 		return (current, bonus) -> current + bonus;
 	}
 	
 	/**
-	 * Implements the application strategy for TimeBonus. 
+	 * Implements the application strategy for {@link TimeBonus}. 
 	 * 
-	 * @return BinaryOperator<Double> which represent the operation that must be done when the TimeBonus is used.
+	 * @return BinaryOperator<Double> which represent the operation that must be done when the 
+	 * 	{@link TimeBonus} is used.
 	 */
 	static UnaryOperator<Long> timeBonus() {
 		return i -> i + 30;
 	}
 	
 	/**
-	 * Implements the application strategy for WordBonus. 
+	 * Implements the application strategy for {@link WordBonus}. 
 	 * 
-	 * @return BinaryOperator<Double> which represent the operation that must be done when the WordBonus is used.
+	 * @return BinaryOperator<Double> which represent the operation that must be done when the 
+	 * 	{@link WordBonus} is used.
 	 */
 	static UnaryOperator<Set<String>> wordBonus() {
 		return s -> extractWords(s);							
@@ -45,7 +48,7 @@ public interface BonusStrategies {
 	/**
 	 * Extract the words that have to been suggested to the user.
 	 * 
-	 * @param words the words that the user hasn't already found.
+	 * @param words 	The words that the user hasn't already found.
 	 * @return Set<String> which contains the extracted words that will be suggested to the user.
 	 */
 	private static Set<String> extractWords(final Set<String> words) {

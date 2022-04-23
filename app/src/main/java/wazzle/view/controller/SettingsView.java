@@ -67,7 +67,7 @@ public final class SettingsView extends View<WazzleController>{
 					.getDifficultyByNameAndShape(name, gridShape)
 					.get());
 			
-			this.controller.saveSettings();
+			this.controller.saveCurrentDifficulty();
 		}
 		
 		this.stage.setUserData(this.controller);

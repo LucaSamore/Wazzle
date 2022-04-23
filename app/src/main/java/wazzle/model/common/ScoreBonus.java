@@ -7,9 +7,9 @@ public class ScoreBonus extends AbstractBonus {
 	private final BinaryOperator<Integer> applier;
 	
 	/**
-	 * Construct a new ScoreBonus.
+	 * Construct a new {@link ScoreBonus}.
 	 * 
-	 * @param applier the operation that must be done when the ScoreBonus is used by the user.
+	 * @param applier the operation that must be done when the {@link ScoreBonus} is used by the user.
 	 */
 	public ScoreBonus(final BinaryOperator<Integer> applier, String name) {
 		this.applier = applier;
@@ -17,16 +17,19 @@ public class ScoreBonus extends AbstractBonus {
 	}
 	
 	/**
-	 * Apply the implications of the ScoreBonus.
+	 * Apply the implications of the {@link ScoreBonus}.
 	 * 
-	 * @param currentScore the current score obtained by the user.
-	 * @param gridTotalScore the sum of all letter scores in the grid.
+	 * @param currentScore		The current score obtained by the user.
+	 * @param gridTotalScore 		The sum of all letter scores in the grid.
 	 * @return long which represent the updated score.
 	 */
 	public int apply(final int currentScore, final int gridTotalScore) {
 		return this.applier.apply(currentScore, gridTotalScore);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -35,6 +38,9 @@ public class ScoreBonus extends AbstractBonus {
 		return result;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -52,6 +58,9 @@ public class ScoreBonus extends AbstractBonus {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		return "ScoreBonus [applier=" + applier + "]";

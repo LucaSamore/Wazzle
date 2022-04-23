@@ -14,9 +14,8 @@ public class GameHistoryControllerImpl implements GameHistoryController {
 	private final List<MainGameImpl> gameHistory;
 	
 	/**
-	 * Construct a new game history.
-	 * 
-	 * @param gameHistory the starting game history.
+	 * Construct a new {@link GameHistoryController}.
+	 * @param gameHistory 	The starting game history.
 	 */
 	public GameHistoryControllerImpl(List<MainGameImpl> gameHistory) {
 		this.gameHistory = gameHistory;

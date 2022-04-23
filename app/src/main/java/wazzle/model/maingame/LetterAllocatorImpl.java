@@ -16,7 +16,10 @@ import javafx.util.Pair;
 
 public final class LetterAllocatorImpl implements LetterAllocator {
 	
-	private static double CONSTANCE_ROUND = 0.5;
+	/**
+	 * The round constant.
+	 */
+	private static final double CONSTANT_ROUND = 0.5;
 	/**
 	 * The randomizer.
 	 */
@@ -27,10 +30,10 @@ public final class LetterAllocatorImpl implements LetterAllocator {
 	private final Mediator mediator;
 	
 	/**
-	 * Construct a new LetterAllocator.
+	 * Construct a new {@link LetterAllocator}.
 	 * 
-	 * @param chosenLetters The List of Character with their score ad Double which have to be allocated.
-	 * @param mediator The mediator which handles the grid creation.
+	 * @param chosenLetters 	The List of Character with their score ad Double which have to be allocated.
+	 * @param mediator 		The {@link Mediator} which handles the grid creation.
 	 */
 	public LetterAllocatorImpl(final EnumMap<Range, List<Pair<Character, Double>>> chosenLetters, final Mediator mediator) {
 		Objects.requireNonNull(chosenLetters);
@@ -131,11 +134,12 @@ public final class LetterAllocatorImpl implements LetterAllocator {
 	}
 	
 	/**
-	 * Compute how many letter of every Range have to stay in a row/column. The number of letter 
-	 * for range is defined by a range Pair<Integer, Integer> - minimum and maximum number of letter for range.
+	 * Compute how many letter of every {@link Range} have to stay in a row/column. The number of letter 
+	 * for {@link Range} is defined by a range Pair<Integer, Integer> - minimum and maximum number of letter 
+	 * for range.
 	 * 
-	 * @return EnumMap<> which contains the maximum number and the minimum number of letter, as a Pair<Inetger, Integer>
-	 * that have to be in every range
+	 * @return EnumMap<> which contains the maximum number and the minimum number of letter, as a 
+	 * Pair<Inetger, Integer> that have to be in every range
 	 */
 	private EnumMap<Range, Pair<Integer, Integer>> getNumberOfLetterForShape() {
 		final EnumMap<Range, Pair<Integer, Integer>> rangeForRange = new EnumMap<>(Range.class);
@@ -153,18 +157,19 @@ public final class LetterAllocatorImpl implements LetterAllocator {
 	/**
 	 * Gives the size of the List which is the value of a EnumMap<Range, List<Pair<Character, Double>>
 	 * 
-	 * @param r The range which the list belongs to.
-	 * @return int which represents the size of the list associated to the given range in choosenLetters EnumMap<>
+	 * @param r 	The {@link Range} which the list belongs to.
+	 * @return int which represents the size of the list associated to the given {@link Range} 
+	 * 				in choosenLetters EnumMap<>
 	 */
 	private int getChoosenLetterListSize(final Range r) {
 		return this.choosenLetters.get(r).size();
 	}
 	
 	/**
-	 * Extract random letter for every position of the grid.
+	 * Extract random {@link Letter} for every position of the grid.
 	 * 
-	 * @param toAllocLetters Letters which have to be allocated.
-	 * @param grid The grid where the letters have to be inserted in.
+	 * @param toAllocLetters 	The set of {@link Letter} which has to be allocated.
+	 * @param grid 		The grid where all the {@link Letter} have to be inserted in.
 	 * @return Set<Letter> which contained the result of the extraction.
 	 */
 	//
@@ -175,11 +180,11 @@ public final class LetterAllocatorImpl implements LetterAllocator {
 			//The last 2 letter aren't taken casually, to avoid bugs
 			if (toAllocLetters.size() > 1) {
 				extraction = RANDOM.nextInt(toAllocLetters.size()-1);
-				allocatedLetters.add(new LetterImpl(p, toAllocLetters.get(extraction).getKey(), (int) (toAllocLetters.get(extraction).getValue() + CONSTANCE_ROUND)));
+				allocatedLetters.add(new LetterImpl(p, toAllocLetters.get(extraction).getKey(), (int) (toAllocLetters.get(extraction).getValue() + CONSTANT_ROUND)));
 				toAllocLetters.remove(extraction);
 			}
 			else {
-				allocatedLetters.add(new LetterImpl(p, toAllocLetters.get(0).getKey(), (int) (toAllocLetters.get(0).getValue() + CONSTANCE_ROUND)));
+				allocatedLetters.add(new LetterImpl(p, toAllocLetters.get(0).getKey(), (int) (toAllocLetters.get(0).getValue() + CONSTANT_ROUND)));
 				toAllocLetters.remove(0);
 			}	
 		}
@@ -187,9 +192,9 @@ public final class LetterAllocatorImpl implements LetterAllocator {
 	}
 	
 	/**
-	 * Gives the letter located in a given row.
+	 * Gives the {@link Letter} located in a given row.
 	 * 
-	 * @param alreadyAllocated The Letters which have been already allocated.
+	 * @param alreadyAllocated The set of {@link Letter} which have been already allocated.
 	 * @param row The index of the row.
 	 * @return Set<Letter> which contains all the letter already allocated which are located in the given row.
 	 */
@@ -200,10 +205,10 @@ public final class LetterAllocatorImpl implements LetterAllocator {
 	}
 	
 	/**
-	 * Gives the letter located in a given column.
+	 * Gives the {@link Letter} located in a given column.
 	 * 
-	 * @param alreadyAllocated The Letters which have been already allocated.
-	 * @param row The index of the column. 
+	 * @param alreadyAllocated 		The set of {@link Letter} which have been already allocated.
+	 * @param row 		The index of the column. 
 	 * @return Set<Letter> which contains all the letter already allocated which are located in the given column.
 	 */
 	private Set<Letter> getColumn(final Set<Letter> alreadyAllocated, final int column) {
@@ -213,10 +218,10 @@ public final class LetterAllocatorImpl implements LetterAllocator {
 	}
 
 	/**
-	 * Gives the range which the given character belongs to.
+	 * Gives the {@link Range} which the given character belongs to.
 	 * 
-	 * @param c The character which have to be examined.
-	 * @return Optional<Range> which represent, if it exists, the Range which the Character belongs to.
+	 * @param c 	The character which have to be examined.
+	 * @return Optional<Range> which represent, if it exists, the {@link Range} which the Character belongs to.
 	 */
 	private Optional<Range> getLetterRange(Character c) {
 		Optional<Range> r = Optional.empty();
@@ -231,11 +236,12 @@ public final class LetterAllocatorImpl implements LetterAllocator {
 	}
 		
 	/**
-	 * Gives the number of letters which belongs to every Range based on the Letters contained in the given Set.
+	 * Gives the number of letters which belongs to every {@link Range} based on the Letters contained in the 
+	 * given Set.
 	 * 
-	 * @param letters The Set<Letter> which have to be examined.
-	 * @return EnumMap<Range, Integer> which contains the number of Letters which belongs to every Range 
-	 * based on the letter contained in the given Set
+	 * @param letters 	The set of {@link Letter} which have to be examined.
+	 * @return EnumMap<Range, Integer> which contains the number of {@link Letter} which belongs to every 
+	 * {@link Range} based on the {@link Letter} contained in the given Set
 	 */
 	private EnumMap<Range, Integer> getAttendency(final Set<Letter> letters) {
 		final EnumMap<Range, Integer> attendency = new EnumMap<>(Range.class);
@@ -247,9 +253,9 @@ public final class LetterAllocatorImpl implements LetterAllocator {
 	}
 	 
 	/**
-	 * Check if the format of the given Set<Letter> corresponds to the format expected.
+	 * Check if the format of the given set of {@link Letter} corresponds to the format expected.
 	 * 
-	 * @param letters The Set<Letter> which have to be examined.
+	 * @param letters 		The Set of {@link Letter} which have to be examined.
 	 * @return boolean which represents the result of the check.
 	 */
 	private boolean isTheLetterSetCorrect(final Set<Letter> letters) {
@@ -268,7 +274,7 @@ public final class LetterAllocatorImpl implements LetterAllocator {
 	/**
 	 * Check the correctness of a given grid.
 	 * 
-	 * @param alreadyAllocated The Letter which have been already allocated.
+	 * @param alreadyAllocated 		The set of {@link Letter} which have been already allocated.
 	 * @return boolean which represents the result of the check.
 	 */
 	private boolean checkGrid(final Set<Letter> alreadyAllocated) {

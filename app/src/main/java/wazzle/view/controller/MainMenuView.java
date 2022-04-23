@@ -70,9 +70,9 @@ public final class MainMenuView extends View<WazzleController>{
 	private StringExpression smallFontSize;
 
 	/**
-	 * Construct a new MainMenuView given a stage.
+	 * Construct a new {@link MainMenuView} given a stage.
 	 * 
-	 * @param stage the stage passed from the views.
+	 * @param stage		The stage passed from the views.
 	 * @throws IOException
 	 */
 	public MainMenuView(final Stage stage) throws IOException {
@@ -83,10 +83,10 @@ public final class MainMenuView extends View<WazzleController>{
 	}
 	
 	/**
-	 * Construct a new MainMenuView given the primary stage and the starting view properties
+	 * Construct a new {@link MainMenuView} given the primary stage and the starting view properties
 	 * .
-	 * @param stage the primary stage.
-	 * @param visualUnit the starting view properties.
+	 * @param stage		The primary stage.
+	 * @param visualUnit		The starting view properties.
 	 * @throws IOException
 	 */
 	public MainMenuView(final Stage stage, DoubleProperty visualUnit) throws IOException {
@@ -98,7 +98,7 @@ public final class MainMenuView extends View<WazzleController>{
 	/**
 	 * Exit from application after clicking the exit button.
 	 * 
-	 * @param event the exit button click event.
+	 * @param event		The exit button click event.
 	 */
 	public void exitApplication(ActionEvent event) {
 		System.exit(0);

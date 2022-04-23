@@ -23,7 +23,7 @@ public class BonusManagerImpl implements BonusManager {
 	private AbstractBonusFactory bonusFactory;
 	
 	/**
-	 * Constructs a new BonusManager.
+	 * Constructs a new {@link BonusManager}.
 	 */
 	public BonusManagerImpl() {
 		this.bonusFactory = new BonusFactoryImpl();

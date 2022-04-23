@@ -6,71 +6,71 @@ import java.util.function.UnaryOperator;
 public interface BonusManager {
 	
 	/**
-	 * Updates the ScoreBonus quantity.
+	 * Updates the {@link ScoreBonus} quantity.
 	 * 
-	 * @param the operation that must be done when the ScoreBonus is used by the user.
+	 * @param operation 	The operation that must be done when the {@link ScoreBonus} is used by the user.
 	 */
 	void updateScoreBonusQuantity(UnaryOperator<Integer> operation);
 	
 	/**
-	 * Updates the WordBonus quantity.
+	 * Updates the {@link WordBonus} quantity.
 	 * 
-	 * @param the operation that must be done when the WordBonus is used by the user.
+	 * @param operation 	The operation that must be done when the {@link WordBonus} is used by the user.
 	 */
 	void updateWordBonusQuantity(UnaryOperator<Integer> operation);
 	
 	/**
-	 * Updates the TimeBonus quantity.
+	 * Updates the {@link TimeBonus} quantity.
 	 * 
-	 * @param the operation that must be done when the TimeBonus is used by the user.
+	 * @param operation 	The operation that must be done when the {@link TimeBonus} is used by the user.
 	 */
 	void updateTimeBonusQuantity(UnaryOperator<Integer> operation);
 	
 	/**
-	 * Gives the quantity of ScoreBonus.
+	 * Gives the quantity of {@link ScoreBonus}.
 	 * 
-	 * @return int which represent the quantity of ScoreBonus.
+	 * @return int which represent the quantity of {@link ScoreBonus}.
 	 */
 	int getScoreBonusQuantity();
 	
 	/**
-	 * Gives the quantity of WordBonus.
+	 * Gives the quantity of {@link WordBonus}.
 	 * 
-	 * @return int which represent the quantity of WordBonus.
+	 * @return int which represent the quantity of {@link WordBonus}.
 	 */
 	int getWordBonusQuantity();
 	
 	/**
-	 * Gives the quantity of TimeBonus.
+	 * Gives the quantity of {@link TimeBonus}.
 	 * 
 	 * @return int which represent the quantity of TimeBonus.
 	 */
 	int getTimeBonusQuantity();
 
 	/**
-	 * Apply the implications of the ScoreBonus.
+	 * Apply the implications of the {@link ScoreBonus}.
 	 * 
-	 * @param currentScore the current score obtained by the user.
-	 * @param gridTotalScore the sum of all letter scores in the grid.
+	 * @param currentScore 		The current score obtained by the user.
+	 * @param gridTotalScore  	The sum of all letter scores in the grid.
 	 * @return int which represents the updated score.
 	 */
-	int applyScoreBonus(final int currentScore, final int gridTotalScore);
+	int applyScoreBonus(int currentScore, int gridTotalScore);
 	
 	/**
-	 * Apply the implications of the WordBonus.
+	 * Apply the implications of the {@link WordBonus}.
 	 * 
-	 * @param toFoundWords the words that the user haven't already found.
+	 * @param toFoundWords  	The words that the user haven't already found.
 	 * @return Set<String> the extracted words that will be suggested to the user.
 	 */
-	Set<String> applyWordBonus(final Set<String> toFoundWords);
+	Set<String> applyWordBonus(Set<String> toFoundWords);
 	
 	/**
-	 * Apply the implications of the TimeBonus.
+	 * Apply the implications of the {@link TimeBonus}.
 	 * 
-	 * @param currentTime the current time remaining to the user to found other words.
+	 * @param currentTime  		The current time remaining to the user to found other words.
 	 * @return long which represent the incremented time.
 	 */
-	long applyTimeBonus(final long currentTime);
+	long applyTimeBonus(long currentTime);
 	
 	/**
 	 * Extract randomly a bonus and updates its quantity.

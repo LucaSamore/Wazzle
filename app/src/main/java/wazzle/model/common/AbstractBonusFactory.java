@@ -8,23 +8,23 @@ package wazzle.model.common;
 public interface AbstractBonusFactory {
 	
 	/**
-	 * Gives a new scoreBonus object.
+	 * Gives a new {@link ScoreBonus} object.
 	 * 
-	 * @return ScoreBonus a new ScoreBonus object.
+	 * @return ScoreBonus a new {@link ScoreBonus} object.
 	 */
 	ScoreBonus createScoreBonus();
 	
 	/**
-	 * Gives a new TimeBonus object.
+	 * Gives a new {@link TimeBonus} object.
 	 * 
-	 * @return TimeBonus a new TimeBonus object.
+	 * @return TimeBonus a new {@link TimeBonus} object.
 	 */
 	TimeBonus createTimeBonus();
 	
 	/**
-	 * Gives a new WordBonus object.
+	 * Gives a new {@link WordBonus} object.
 	 * 
-	 * @return WordBonus a new WordBonus object.
+	 * @return WordBonus a new {@link WordBonus} object.
 	 */
 	WordBonus createWordBonus();
 
