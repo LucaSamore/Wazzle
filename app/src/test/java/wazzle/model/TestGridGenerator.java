@@ -10,7 +10,7 @@ import wazzle.model.maingame.DifficultyNames;
 import wazzle.model.maingame.GridGenerator;
 import wazzle.model.maingame.GridGeneratorImpl;
 
-public class TestGridGenerator {
+public final class TestGridGenerator {
 
 	// These tests are used to see how much time it takes to generate a grid of a certain difficulty
 	
@@ -18,14 +18,14 @@ public class TestGridGenerator {
 	private static final Pair<Integer,Integer> SHAPE_5x5 = new Pair<>(5,5);
 	private static final Pair<Integer,Integer> SHAPE_6x6 = new Pair<>(6,6);
 	
-	private final Difficulty easy4x4 = new Difficulty(DifficultyNames.EASY.getName(), 4, 76, 200, 240000L);
-	private final Difficulty hard4x4 = new Difficulty(DifficultyNames.HARD.getName(), 4, 25, 75, 180000L);
+	private final Difficulty easy4x4 = new Difficulty(DifficultyNames.EASY.getName(), 4, 76, 200, 240_000L);
+	private final Difficulty hard4x4 = new Difficulty(DifficultyNames.HARD.getName(), 4, 25, 75, 180_000L);
 	
-	private final Difficulty easy5x5 = new Difficulty(DifficultyNames.EASY.getName(), 5, 151, 250, 240000L);
-	private final Difficulty hard5x5 = new Difficulty(DifficultyNames.HARD.getName(), 5, 100, 150, 180000L);
+	private final Difficulty easy5x5 = new Difficulty(DifficultyNames.EASY.getName(), 5, 151, 250, 240_000L);
+	private final Difficulty hard5x5 = new Difficulty(DifficultyNames.HARD.getName(), 5, 100, 150, 180_000L);
 	
-	private final Difficulty easy6x6 = new Difficulty(DifficultyNames.EASY.getName(), 6, 226, 350, 240000L);
-	private final Difficulty hard6x6 = new Difficulty(DifficultyNames.HARD.getName(), 6, 150, 225, 180000L);
+	private final Difficulty easy6x6 = new Difficulty(DifficultyNames.EASY.getName(), 6, 226, 350, 240_000L);
+	private final Difficulty hard6x6 = new Difficulty(DifficultyNames.HARD.getName(), 6, 150, 225, 180_000L);
 	
 	@Test
 	public void testGeneratorEasy4x4() {

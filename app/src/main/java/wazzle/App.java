@@ -25,8 +25,15 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.geometry.Rectangle2D;
 
+/**
+ * This class starts the Wazzle application.
+ *
+ */
 public final class App extends Application implements WindowCloser {
 
+	/**
+	 * Set the primary scene and the icon.
+	 */
 	public void start(Stage stage) {
 		Rectangle2D screenViewport = Screen.getPrimary().getBounds();
 		MainMenuView mainMenuController;
@@ -55,6 +62,11 @@ public final class App extends Application implements WindowCloser {
 		}
 	}
 	
+	/**
+	 * Launch the application. 
+	 * 
+	 * @param args
+	 */
     public static void main(final String... args) {
         launch();
     }

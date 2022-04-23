@@ -8,9 +8,9 @@ public class WordBonus extends AbstractBonus {
 	private final UnaryOperator<Set<String>> applier;
 	
 	/**
-	 * Construct a new WordBonus.
+	 * Construct a new {@link WordBonus}.
 	 * 
-	 * @param applier the operation that must be done when the WordBonus is used by the user.
+	 * @param applier		The operation that must be done when the {@link WordBonus} is used by the user.
 	 */
 	public WordBonus(final UnaryOperator<Set<String>> applier, String name) {
 		this.applier = applier;
@@ -18,9 +18,9 @@ public class WordBonus extends AbstractBonus {
 	}
 	
 	/**
-	 * Apply the implications of the WordBonus.
+	 * Apply the implications of the {@link WordBonus}.
 	 * 
-	 * @param toFoundWords the words that the user hasn't already found.
+	 * @param toFoundWords		The words that the user hasn't already found.
 	 * @return Set<String> the extracted words that will be suggested to the user.
 	 */
 	public Set<String> apply(final Set<String> toFoundWords) {

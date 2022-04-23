@@ -59,7 +59,6 @@ public final class HistoryView extends View<WazzleController>{
 	 */
 	@Override
 	public void nextScene(ActionEvent event) throws IOException {
-		this.stage.setUserData(this.controller);
 		SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), FXMLFiles.MAIN_MENU.getPath());
 	}
 

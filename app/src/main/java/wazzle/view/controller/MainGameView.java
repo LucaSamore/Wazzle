@@ -90,9 +90,10 @@ public final class MainGameView extends View<MainGameController> {
 
 	@FXML
 	public void gainScoreBonus(final ActionEvent event) {
+		this.titleLabel.styleProperty().bind(this.titleFontSize.concat("-fx-text-fill: black; "));
 		final var previousScore = Integer.parseInt(this.pointsValueLabel.getText());
 		this.controller.useScoreBonus();
-		this.pointsValueLabel.setText("" + (int) this.controller.getGame().get().getCurrentScore());
+		this.pointsValueLabel.setText("" + this.controller.getGame().get().getCurrentScore());
 		((Button) event.getSource()).setDisable(true);
 		this.titleLabel.setText("Hai guadagnato " + (this.controller.getGame().get().getCurrentScore() - previousScore) + " punti!");
 	}

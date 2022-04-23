@@ -7,9 +7,9 @@ public class TimeBonus extends AbstractBonus {
 	private final UnaryOperator<Long> applier;
 
 	/**
-	 * Construct a new TimeBonus.
+	 * Construct a new {@link TimeBonus}.
 	 * 
-	 * @param applier the operation that must be done when the TimeBonus is used by the user.
+	 * @param applier		The operation that must be done when the {@link TimeBonus} is used by the user.
 	 */
 	public TimeBonus(final UnaryOperator<Long> applier, String name) {
 		this.applier = applier;
@@ -17,9 +17,9 @@ public class TimeBonus extends AbstractBonus {
 	}
 	
 	/**
-	 * Apply the implications of the TimeBonus.
+	 * Apply the implications of the {@link TimeBonus}.
 	 * 
-	 * @param currentTime the current time remaining to the user to found other words.
+	 * @param currentTime		The current time remaining to the user to found other words.
 	 * @return long which represent the incremented time.
 	 */
 	public long apply(final long currentTime) {

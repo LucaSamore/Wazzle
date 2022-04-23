@@ -10,14 +10,14 @@ public interface GameHistoryController {
 	/**
 	 * Gives the game history.
 	 * 
-	 * @return List<MainGameImpl> the list of the last game history.
+	 * @return List<MainGameImpl> 	The list of the last game history.
 	 */
 	List<MainGameImpl> getGameHistory();
 	
 	/**
 	 * Gives the best game.
 	 * 
-	 * @return MainGame the best main game.
+	 * @return MainGame 	The best main game.
 	 */
 	MainGame getBestGame();
 	
@@ -29,14 +29,14 @@ public interface GameHistoryController {
 	/**
 	 * Gives the game history sorted by score.
 	 * 
-	 * @return List<MainGameImpl> the game history sorted by score.
+	 * @return List<MainGameImpl> 	The game history sorted by score.
 	 */
 	List<MainGameImpl> getSortedByScoreGameHistory();
 
 	/**
 	 * Add a game to game history.
 	 * 
-	 * @param MainGameImpl the main game which have to be inserted to history.
+	 * @param MainGameImpl	 The main game which have to be inserted to history.
 	 */
 	void addNewGame(MainGameImpl maingame);
 }

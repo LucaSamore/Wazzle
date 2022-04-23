@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -23,8 +22,6 @@ import wazzle.model.maingame.MainGameImpl;
 import wazzle.model.minigame.ExtractedWordManager;
 import wazzle.model.minigame.ExtractedWordManagerImpl;
 import wazzle.model.minigame.FiveLetterDictionary;
-import wazzle.model.minigame.MiniGame;
-import wazzle.model.minigame.MiniGameImpl;
 import wazzle.model.minigame.SavedMiniGame;
 
 public class WazzleControllerImpl implements WazzleController {
@@ -38,14 +35,14 @@ public class WazzleControllerImpl implements WazzleController {
 	private final ExtractedWordManager extractedWordManager;
 		
 	/**
-	 * Construct a new WazzleController.
+	 * Construct a new {@link WazzleController}.
 	 * 
 	 * @throws IOException
 	 */
 	public WazzleControllerImpl() throws IOException {
 		this.fileController = new FileControllerImpl();
 		this.bonusManager = this.bonusesFromFile();
-		this.settingsController = new SettingsControllerImpl(this.settingsFromFile(), this.currentSettingsFromFile());
+		this.settingsController = new SettingsControllerImpl(this.difficultiesFromFIle(), this.currentDifficultyFromFile());
 		this.gameHistoryController = new GameHistoryControllerImpl(this.gameHistoryFromFile());
 		this.facade = new Facade();
 		this.extractedWordManager = new ExtractedWordManagerImpl(new FiveLetterDictionary(this.getShortDataset()));
@@ -126,14 +123,6 @@ public class WazzleControllerImpl implements WazzleController {
 	/**
 	 * {@inheritDoc}
 	 */
-	public Set<String> getAvailableWords() {
-		System.out.println("Uso get avaiable in wazc avaw: " + this.extractedWordManager.getAvailableWords().size());
-		return this.extractedWordManager.getAvailableWords();
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
 	public ExtractedWordManager getExtractedWordManager() {
 		return this.extractedWordManager;
 	}
@@ -158,22 +147,15 @@ public class WazzleControllerImpl implements WazzleController {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void updateSettings(final Difficulty difficulty) {
+	public void updateCurrentDifficulty(final Difficulty difficulty) {
 		this.settingsController.setCurrentDifficulty(difficulty);
 	}
-	
-//	/**
-//	 * {@inheritDoc}
-//	 */
-//	public void updateAvailableWords(final String word) {
-//		this.extractedWordManager.notAvailableAnymore(word);
-//	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void saveSettings() throws IOException {
+	public void saveCurrentDifficulty() throws IOException {
 		this.fileController.saveCurrentSettings(WazzleFiles.SETTINGS.getFileName(), this.getCurrentDifficulty());
 	}
 
@@ -220,9 +202,9 @@ public class WazzleControllerImpl implements WazzleController {
 	}
 	
 	/**
-	 * Takes bonuses from file using file controller.
+	 * Takes bonuses from file using {@link FileController}.
 	 * 
-	 * @return BonusManager the bonus manager filled with bonuses quantities saved.
+	 * @return BonusManager the {@link BonusManager} filled with bonuses quantities saved.
 	 */
 	private BonusManager bonusesFromFile() throws IOException {
 		final var bonusQuantity = this.fileController.getBonuses(WazzleFiles.BONUSES.getFileName());
@@ -234,28 +216,28 @@ public class WazzleControllerImpl implements WazzleController {
 	}
 	
 	/**
-	 * Takes all the existing settings from file using file controller.
+	 * Takes all the existing {@link Difficulty} from file using {@link FileController}.
 	 * 
-	 * @return List<Difficulty> which contains all the existing settings.
+	 * @return List<Difficulty> which contains all the existing {@link Difficulty}.
 	 */
-	private List<Difficulty> settingsFromFile() throws IOException {
+	private List<Difficulty> difficultiesFromFIle() throws IOException {
 		return this.fileController.getAllSettings(WazzleFiles.ALL_SETTINGS.getFileName());
 	}
 	
 	/**
-	 * Gives the current settings saved.
+	 * Gives the current {@link Difficulty} saved.
 	 * 
-	 * @return Difficulty the current difficulty setted in settings.
+	 * @return Difficulty the current {@link Difficulty} setted.
 	 * @throws IOException
 	 */
-	private @NonNull Difficulty currentSettingsFromFile() throws IOException {
+	private @NonNull Difficulty currentDifficultyFromFile() throws IOException {
 		return this.fileController.getCurrentSettings(WazzleFiles.SETTINGS.getFileName());
 	}
 	
 	/**
-	 * Takes game history from file using file controller.
+	 * Takes game history from file using {@link FileController}.
 	 * 
-	 * @return List<MainGameImpl> the saved main game games.
+	 * @return List<MainGameImpl> the saved {@link MainGame} games.
 	 */
 	private List<MainGameImpl> gameHistoryFromFile() throws IOException {
 		final var content = this.fileController.getMainGameHistory(WazzleFiles.HISTORY.getFileName());

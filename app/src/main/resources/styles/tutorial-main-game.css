@@ -1,22 +1,21 @@
 
 @font-face {
-    src: url("Waffle_Crisp.ttf");
+    src: url("../fonts/Waffle_Crisp.ttf");
     
 }
 
 .gridBackground{
-	-fx-background-image: url('../../img/Sfondo.png');
+	-fx-background-image: url('../img/waffle-background.png');
 	-fx-background-size: stretch;
 	
 }
-
 
 .letters{
 		-fx-font-family: "Waffle Crisp";
 }
 
 .longIncave{
-	-fx-background-image: url("../../img/bg-long-Incave.png");
+	-fx-background-image: url("../img/bg-long-Incave.png");
 	-fx-background-size: stretch;
 }
 
@@ -34,7 +33,6 @@
 
 }
 
-
 .redButton{
 	
 	-fx-border-width:2.0px;
@@ -44,4 +42,24 @@
 	-fx-font-family: "Waffle Crisp";
 	-fx-background-color: red;
 	-fx-text-fill: white;
+}
+
+.text-area {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+}
+
+.text-area *.text {
+    -fx-text-alignment: justify;
 }

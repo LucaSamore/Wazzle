@@ -16,7 +16,7 @@ public final class GameTimerImpl implements GameTimer {
 	private TimerTask timer;
 
 	/**
-	 * Construct a new GameTimer.
+	 * Construct a new {@link GameTimer}.
 	 * 
 	 * @param timeRemaining the remaining time.
 	 */
@@ -34,7 +34,7 @@ public final class GameTimerImpl implements GameTimer {
 	        public void run() {
 				timeRemaining--;
 	
-				if(timeRemaining <= 0) {
+				if (timeRemaining <= 0) {
 					stop();
 					return;
 				}

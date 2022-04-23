@@ -3,28 +3,28 @@ package wazzle.controller.maingame;
 public interface GameTimer {
 	
 	/**
-	 * Starts the timer.
+	 * Starts the {@link GameTimer}.
 	 */
 	 void start();
 
 	 /**
-	  * Stops the timer.
+	  * Stops the {@link GameTimer}.
 	  */
 	 void stop();
 
 	 /**
-	  * Gives the the remaining time.
+	  * Gives the the remaining time of the {@link GameTimer}.
 	  * 
 	  * @return long the remaining time.
 	  */
 	 long getRemainingTime();
 	 
 	 /**
-	  * Increments the time remaining.
+	  * Increments the time remaining of the {@link GameTimer}.
 	  * 
 	  * @return long the updated remaining time.
 	  */
-	 void updateTime(final long updatedTime);
+	 void updateTime(long updatedTime);
 	
 }
 

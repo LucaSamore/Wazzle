@@ -31,34 +31,34 @@ public interface GameTimerView {
 	 /**
 	  * Stops the animation timer without saving the game.
 	  * 
-	  * @param event the event.
+	  * @param event	The exit button click event.
 	  * @throws IOException 
 	  */
 	 void stopWithoutSave(ActionEvent event) throws IOException;
 	 
 	 /**
-	  * Set the MainGameView.
+	  * Set the {@link MainGameView} controller.
 	  * 
-	  * @param mainGameView the main game controller that has to be attached.
+	  * @param mainGameView		The {@link MainGameView} controller that has to be attached.
 	  */
 	 void attach(MainGameView mainGameView);
 
 	 /**
-	  * Notifies to MainGame that the time is over.
+	  * Notifies to {@link MainGame} that the time is over.
 	  */
 	 void notifyToMainGame();
 		
 	 /**
-	  * Sets the updated controller.
+	  * Sets the updated {@link MainGameView} controller.
 	  * 
-	  * @param mainGameView the main game controller updated.
+	  * @param mainGameView the updated {@link MainGameView} controller.
 	  */
 	 void setUpdatedController(MainGameView mainGameView);
 	 
 	 /**
-	  * Gains the time bonus.
+	  * Gains the {@link TimeBonus}.
 	  * 
-	  * @param event the request of obtaining a time bonus.
+	  * @param event		The request of obtaining a {@link TimeBonus}.
 	  */
 	 void gainBonus(final ActionEvent event);
 }

@@ -20,9 +20,9 @@ public final class AlphabetClassifierImpl implements AlphabetClassifier {
 	   .collect(Collectors.toMap(Map.Entry::getKey, e -> new WeightedAlphabetImpl(e.getValue())));
 	
 	/**
-	 * Construct a new AlphabetClassifier.
+	 * Construct a new {@link AlphabetClassifier}.
 	 * 
-	 * @param weightedAlphabet The WeightedAlphabet which have to be classified.
+	 * @param weightedAlphabet The {@link WeightedAlphabet} which have to be classified.
 	 */
 	public AlphabetClassifierImpl (final WeightedAlphabet weightedAlphabet) {
 		this.weightedAlphabet = new WeightedAlphabetImpl(weightedAlphabet.getWeightedAlphabet());
@@ -50,10 +50,10 @@ public final class AlphabetClassifierImpl implements AlphabetClassifier {
 	}
 	
 	/**
-	 * Check if the given range is fill.
+	 * Check if the given {@link Range} is fill.
 	 * 
-	 * @param classifiedLetters The Character, with their frequency which have already been classified.
-	 * @param range The Range which have to be examined.
+	 * @param classifiedLetters 	The Character, with their frequency which have already been classified.
+	 * @param range 	The {@link Range} which have to be examined.
 	 * @return boolean which contains the result of the check.
 	 */
 	private boolean isFill (final EnumMap <Range, Map<Character, Double>> classifiedLetters, final Range range) {
@@ -70,11 +70,11 @@ public final class AlphabetClassifierImpl implements AlphabetClassifier {
 	}
 
 	/**
-	 * Sort the WeightedAlphabet based on the frequency in order to insert the Character with the highest
-	 * frequency in the highest range and so on.
+	 * Sort the {@link WeightedAlphabet} based on the frequency in order to insert the Character with 
+	 * the highest frequency in the highest range and so on.
 	 * 
-	 * @param weightedAlphabetList The WeightedAlphabet as List which have to be ordered.
-	 * @return List<Entry>> which represent the WeightedAlphabet as List ordered descending 
+	 * @param weightedAlphabetList	 The {@link WeightedAlphabet} as List which have to be ordered.
+	 * @return List<Entry>> which represent the {@link WeightedAlphabet} as List ordered descending 
 	 */
 	private List<Entry<Character, Double>> sortWeightedAlphabethByValue (final List<Map.Entry<Character, Double>> weightedAlphabetList) {
 		Collections.sort(weightedAlphabetList, ((v1, v2) -> v2.getValue().compareTo(v1.getValue())));
