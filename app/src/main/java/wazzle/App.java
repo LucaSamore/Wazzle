@@ -4,11 +4,17 @@
 package wazzle;
 
 import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
+import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import wazzle.controller.common.WazzleControllerImpl;
@@ -17,13 +23,7 @@ import wazzle.view.Images;
 import wazzle.view.Loader;
 import wazzle.view.WindowCloser;
 import wazzle.view.controller.MainMenuView;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
-import javafx.scene.image.Image;
-import javafx.geometry.Rectangle2D;
+
 
 /**
  * This class starts the Wazzle application.
