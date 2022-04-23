@@ -115,12 +115,12 @@ public final class TestFileHandling implements Serializer, Deserializer {
 		try {
 			// Serialize all settings combinations (used to produce the actual all-settings.json in resources folder)
 			final var allSettings = new ArrayList<Difficulty>();
-			allSettings.add(new Difficulty(DifficultyNames.EASY.getName(), 4, 76, 200, 240000L));
-			allSettings.add(new Difficulty(DifficultyNames.HARD.getName(), 4, 25, 75, 180000L));
-			allSettings.add(new Difficulty(DifficultyNames.EASY.getName(), 5, 151, 250, 240000L));
-			allSettings.add(new Difficulty(DifficultyNames.HARD.getName(), 5, 100, 150, 180000L));
-			allSettings.add(new Difficulty(DifficultyNames.EASY.getName(), 6, 226, 350, 240000L));
-			allSettings.add(new Difficulty(DifficultyNames.HARD.getName(), 6, 150, 225, 180000L));
+			allSettings.add(new Difficulty(DifficultyNames.EASY.getName(), 4, 76, 200, 240_000L));
+			allSettings.add(new Difficulty(DifficultyNames.HARD.getName(), 4, 25, 75, 180_000L));
+			allSettings.add(new Difficulty(DifficultyNames.EASY.getName(), 5, 151, 250, 240_000L));
+			allSettings.add(new Difficulty(DifficultyNames.HARD.getName(), 5, 100, 150, 180_000L));
+			allSettings.add(new Difficulty(DifficultyNames.EASY.getName(), 6, 226, 350, 240_000L));
+			allSettings.add(new Difficulty(DifficultyNames.HARD.getName(), 6, 150, 225, 180_000L));
 			this.<Difficulty>serialize(TestFileUtils.getPath() + JSON_ALL_DIFFICULTIES, allSettings.toArray(new Difficulty[allSettings.size()]));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -131,12 +131,12 @@ public final class TestFileHandling implements Serializer, Deserializer {
 	public void testAllSettingsDeserialization() {
 		try {
 			final var allSettings = new ArrayList<Difficulty>();
-			allSettings.add(new Difficulty(DifficultyNames.EASY.getName(), 4, 76, 200, 240000L));
-			allSettings.add(new Difficulty(DifficultyNames.HARD.getName(), 4, 25, 75, 180000L));
-			allSettings.add(new Difficulty(DifficultyNames.EASY.getName(), 5, 151, 250, 240000L));
-			allSettings.add(new Difficulty(DifficultyNames.HARD.getName(), 5, 100, 150, 180000L));
-			allSettings.add(new Difficulty(DifficultyNames.EASY.getName(), 6, 226, 350, 240000L));
-			allSettings.add(new Difficulty(DifficultyNames.HARD.getName(), 6, 150, 225, 180000L));
+			allSettings.add(new Difficulty(DifficultyNames.EASY.getName(), 4, 76, 200, 240_000L));
+			allSettings.add(new Difficulty(DifficultyNames.HARD.getName(), 4, 25, 75, 180_000L));
+			allSettings.add(new Difficulty(DifficultyNames.EASY.getName(), 5, 151, 250, 240_000L));
+			allSettings.add(new Difficulty(DifficultyNames.HARD.getName(), 5, 100, 150, 180_000L));
+			allSettings.add(new Difficulty(DifficultyNames.EASY.getName(), 6, 226, 350, 240_000L));
+			allSettings.add(new Difficulty(DifficultyNames.HARD.getName(), 6, 150, 225, 180_000L));
 			final var deserializedSettings = this.<Difficulty>deserialize(Difficulty.class, TestFileUtils.getPath() + JSON_ALL_DIFFICULTIES);
 			assertTrue(allSettings.equals(deserializedSettings));
 		} catch (IOException e) {

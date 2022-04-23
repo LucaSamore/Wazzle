@@ -141,7 +141,7 @@ public final class MainGameControllerImpl implements MainGameController {
 	 */
 	@Override
 	public String highestScoreWord() {		
-        double max = this.game.get()
+        int max = this.game.get()
                 .wordsFound()
                 .stream()
                 .map(w -> this.game.get().getScoreFromWord(w))

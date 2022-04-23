@@ -59,9 +59,9 @@ public final class TutorialMainGameView extends View<WazzleController> {
 	}
 	
 	private void writeTutorialToLabel() {
-		this.textArea.setText("Lo scopo del gioco è quello di cercare il maggior numero di "
-				+ "parole all'interno del waffle. La parola si colorerà di verde "
-				+ "se è corretta e di rosso se sbagliata. Durante il gioco è possibile "
+		this.textArea.setText("Lo scopo del gioco e' quello di cercare il maggior numero di "
+				+ "parole all'interno del waffle. La parola si colorera' di verde "
+				+ "se e' corretta e di rosso se sbagliata. Durante il gioco e' possibile "
 				+ "usufruire di tre diversi bonus quali aumento del tempo, "
 				+ "aumento del punteggio e suggerimento di parole.");
 	}
