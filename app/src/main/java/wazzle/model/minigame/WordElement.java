@@ -4,47 +4,51 @@ import java.util.Objects;
 
 import com.google.gson.annotations.Expose;
 
+import wazzle.model.minigame.MiniGame.State;
 
 public final class WordElement {
-	@Expose
-	private char character;
-	
-	@Expose
-	private int result;
+    @Expose
+    private char character;
 
-	public WordElement(final char character, final int result) {
-		this.character = character;
-		this.result = result;
-	}
+    @Expose
+    private int result;
 
-	public char getCharacter() {
-		return this.character;
-	}
+    public WordElement(final char character, Result result) {
+        this.character = character;
+        this.result = result.getState();
+    }
 
-	@Override
-	public String toString() {
-		return "WordElement [character=" + character + ", result=" + result + "]";
-	}
+    public char getCharacter() {
+        return this.character;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(character, result);
-	}
+    public int getResult() {
+        return this.result;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		WordElement other = (WordElement) obj;
-		return character == other.character && result == other.result;
-	}
+    public void setResult(int result) {
+        this.result = result;
+    }
 
-	public int getResult() {
-		return this.result;
-	}
+    @Override
+    public String toString() {
+        return "WordElement [character=" + character + ", result=" + result + "]";
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(character, result);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        WordElement other = (WordElement) obj;
+        return character == other.character && result == other.result;
+    }
 }

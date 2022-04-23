@@ -14,12 +14,4 @@ public interface MiniGameWord {
 	 * @return The stored composite word
 	 */
 	public List<WordElement> getCompositeWord();
-
-	/**
-	 * Sets the composite word.
-	 * 
-	 * @param wordToSet - The new composite word that must be set.
-	 */
-	public void setCompositeWord(List<WordElement> wordToSet);
-
 }

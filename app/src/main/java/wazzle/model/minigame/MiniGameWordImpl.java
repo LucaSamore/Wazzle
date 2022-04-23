@@ -10,20 +10,17 @@ public class MiniGameWordImpl implements MiniGameWord {
 	@Expose
 	private List<WordElement> compositeWord;
 
+	
+	public MiniGameWordImpl(final List<WordElement> compositeWord){
+	    this.compositeWord = compositeWord;
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public List<WordElement> getCompositeWord() {
 		return List.copyOf(this.compositeWord);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setCompositeWord(List<WordElement> compositeWord) {
-		this.compositeWord = compositeWord;
 	}
 
 	@Override

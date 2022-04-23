@@ -5,13 +5,11 @@ import java.util.List;
 import java.util.Optional;
 
 import wazzle.controller.common.WazzleController;
-import wazzle.model.common.Dictionary;
-import wazzle.model.minigame.MiniGame;
 import wazzle.model.minigame.MiniGame.State;
 import wazzle.model.minigame.MiniGameWord;
+import wazzle.model.minigame.Result;
 import wazzle.model.minigame.WordChecker;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Interface MiniGameController.
  */
@@ -36,20 +34,21 @@ public interface MiniGameController {
 
     /**
      * Guess if the word is correct.
+     * 
      * @see WordChecker
-     * 
-     *
-     * @param guessedWord the guessed word
-     * 
-     * @return the state of the word after it's computed.
+     * @param guessedWord - the guessed word
+     * @return state - the state of the word after it's computed.
      */
     MiniGameWord guessWord(String guessedWord);
 
     /**
-     * Obtain bonus if the game is won and returns its identifier.
+     *  
+     * Check if game is won an return an Optional, if the optional is empty, it means that the game is lost
+     * and therefore no bonus has been obtained.
      *
-     * @return the name of the obtained bonus or and empty optional if the game is lost.
-     * 
+     * @return name -   the name of the obtained bonus if present, and empty optional if the game is lost.
+     *                  if the optional is empty, it means that the game is lost and therefore
+     *                  no bonus has been obtained.
      * @throws IOException Signals that an I/O exception has occurred.
      */
     Optional<String> obtainedBonus() throws IOException;
@@ -85,8 +84,7 @@ public interface MiniGameController {
     /**
      * Gets the current state of the game.
      *
-     * @see wazzle.model.minigame.MiniGame.State
-     *
+     * @see State
      * @return he current state of the game.
      */
     public int getStateOfCurrentMinigame();
@@ -95,23 +93,48 @@ public interface MiniGameController {
      * Gets the list of guessed Minigame words so far.
      *
      * @see wazzle.model.minigame.MiniGameWord
-     * 
      * @return the guessed Minigame words so far.
      */
     List<MiniGameWord> getGuessedMinigameWordsSoFar();
     
     /**
      * Gets the main controller.
-     *
-     * @return the main controller
+     * @see WazzleController
+     * @return controller - the main controller
      */
     WazzleController getMainController();
 
+    /**
+     * Given an index, this method returns the corresponding result code
+     * of the letter contained in the last inserted word.
+     * 
+     * @see {@link Result}, {@link MiniGameWord}, {@link WordElement}
+     * @param index - index of the letter you want to know the result of
+     * @return code - the code corresponding to the result of the requested letter
+     */
     int getLetterResultAtIndex(int index);
     
+    /**
+     * Given an index, this method returns the corresponding letter contained
+     * in the last inserted word.
+     * 
+     * @see Result
+     * @param index - index of the letter you want to know the result of
+     * @return code - the code corresponding to the result of the requested letter
+     */
     char getLetterCharAtIndex(int index);
 
+    /**
+     * This method returns all the wrong letters in the last inserted word.
+     * 
+     * @return A list containing all the letters that are not present 
+     */
     List<Character> getAllWrongLetters();
     
+    /**
+     * Return true if the given word is correct but not in the correct place.
+     * 
+     * @return true - if the given word is correct but not in the correct place
+     */
     boolean isTheLetterCorrectInAnotherPlace(char letter);
 }
