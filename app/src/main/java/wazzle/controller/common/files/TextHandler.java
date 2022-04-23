@@ -11,15 +11,26 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is an implementation for {@link FileStrategies}.
+ * All the methods provided work with {@code String} as they operate
+ * with .txt files only.
+ */
 public final class TextHandler implements FileStrategies<String>{
 	
 	private static final String ENCODING = "UTF-8";
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<String> read(final String path) throws IOException {
 		return Files.readAllLines(Path.of(path));
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<String> read(InputStream stream) throws IOException {
 		final var fullContent = new ArrayList<String>();
@@ -34,6 +45,9 @@ public final class TextHandler implements FileStrategies<String>{
 		return fullContent;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void append(final String path, final List<String> toBeAdded) throws IOException {
 		try (final var bufferedWriter = Files.newBufferedWriter(Path.of(path), 
@@ -45,6 +59,9 @@ public final class TextHandler implements FileStrategies<String>{
 		}
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void write(final String path, final List<String> toBeWritten) throws IOException {
 		this.clear(path);

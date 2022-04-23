@@ -1,5 +1,9 @@
 package wazzle.view;
 
+/**
+ * This enum groups all the FXML files used in Wazzle
+ * and provides a method for obtaining them.
+ */
 public enum FXMLFiles {
 	MAIN_MENU("layouts/mainMenu.fxml"),
 	
@@ -23,12 +27,19 @@ public enum FXMLFiles {
 	
 	private final String path;
 	
+	/**
+	 * Construct a new FXMLFiles object.
+	 * @param path a {@code String} representing the path of the FXML file.
+	 */
 	FXMLFiles(final String path) {
 		this.path = path;
 	}
 	
+	/**
+	 * Returns the path of the file.
+	 * @return a {@code String} representing the path of the FXML file.
+	 */
 	public String getPath() {
 		return this.path;
 	}
-	
 }

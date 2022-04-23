@@ -6,15 +6,35 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-
 import javafx.util.Pair;
 import wazzle.model.common.Dictionary;
 
+/**
+ * This class is an implementation for {@link wazzle.model.maingame.GridGenerator}.
+ * It uses a {@link wazzle.model.maingame.Mediator} object and a {@link wazzle.model.maingame.GridValidator} object
+ * internally for creating a new {@code Grid}. The mediator is used for retrieving a {@code Set<Letter>} that will be passed
+ * to the validator. The validator checks if the set can form a grid of a certain quality. If not, the set of letters will be 
+ * generated again, until we get a good quality one.
+ * 
+ * @see wazzle.model.maingame.Mediator
+ * @see wazzle.model.maingame.GridValidator
+ * @see wazzle.model.maingame.Letter
+ */
 public final class GridGeneratorImpl implements GridGenerator {
 	
 	private final Mediator mediator;
 	private final GridValidator validator;
 	
+	/**
+	 * Construct a new GridGeneratorImpl object
+	 * @param dataset a {@code Dictionary} object used for this grid.
+	 * @param gridShape a {@code Pair<Integer,Integer>} representing the shape of this grid.
+	 * @param difficulty a {@code Difficulty} object chosen for this grid.
+	 * 
+	 * @see wazzle.model.common.Dictionary
+	 * @see javafx.util.Pair
+	 * @see wazzle.model.maingame.Difficulty
+	 */
 	public GridGeneratorImpl(final Dictionary dataset, final Pair<Integer,Integer> gridShape, final Difficulty difficulty) {
 		Objects.requireNonNull(dataset);
 		Objects.requireNonNull(gridShape);
@@ -23,6 +43,9 @@ public final class GridGeneratorImpl implements GridGenerator {
 		this.mediator = new Mediator(dataset, gridShape);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Grid generate() {
 		Optional<Pair<Set<Letter>,Set<String>>> newGrid = Optional.empty();
@@ -44,5 +67,4 @@ public final class GridGeneratorImpl implements GridGenerator {
 		
 		return Optional.empty();
 	}
-
 }

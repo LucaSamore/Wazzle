@@ -2,24 +2,31 @@ package wazzle.model.common;
 
 import javafx.util.Pair;
 import wazzle.model.maingame.Difficulty;
-import wazzle.model.maingame.Grid;
 import wazzle.model.maingame.GridGeneratorImpl;
 import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
-import wazzle.model.minigame.ExtractedWordManagerImpl;
 import wazzle.model.minigame.MiniGame;
 import wazzle.model.minigame.MiniGameImpl;
 import wazzle.model.minigame.WordsDispenser;
-import wazzle.model.minigame.WordsDispenserImpl;
 
-public class GameFactoryImpl implements AbstractGameFactory {
 
+/**
+ * This class is a concrete implementation of {@link AbstractGameFactory}
+ */
+public final class GameFactoryImpl implements AbstractGameFactory {
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public MainGame createMainGame(final Dictionary dataset, final Pair<Integer, Integer> gridShape, final Difficulty difficulty) {
-		var gridGenerator = new GridGeneratorImpl(dataset, gridShape, difficulty);
+		final var gridGenerator = new GridGeneratorImpl(dataset, gridShape, difficulty);
 		return new MainGameImpl(gridGenerator.generate(), difficulty.getTimeInMilliseconds());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public MiniGame createMiniGame(final WordsDispenser wordsDispenser) {
 		return new MiniGameImpl(wordsDispenser.extractWord());

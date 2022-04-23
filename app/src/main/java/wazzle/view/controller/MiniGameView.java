@@ -108,18 +108,17 @@ public final class MiniGameView extends View<MiniGameController> {
 		this.visualUnit = new SimpleDoubleProperty();
 		this.visualUnit.bind(Bindings.min(stage.widthProperty().multiply(0.05), stage.heightProperty().multiply(0.05)));
 		this.setKeyPressedEventHandlers();
-		
+
 		try {
 			this.controller.startGame();
 		} catch (IOException e) {
 			e.printStackTrace();
 			ErrorAlert.show();
-		}		
+		}
 		this.bannedChars.addAll(this.controller.getAllWrongLetters());
 		this.numRows = this.controller.getMaxAttemptsNumber();
 		this.numCols = this.controller.getWordLength();
 	}
-
 
 	private void setKeyPressedEventHandlers() {
 		this.keyPressedHandler = (KeyEvent event) -> {
@@ -177,10 +176,12 @@ public final class MiniGameView extends View<MiniGameController> {
 		System.out.println("DIMENSIONE DELLA GRID" + gridToRemoveFrom.getChildren().size());
 		for (Node elementToDisable : gridToRemoveFrom.getChildren()) {
 			System.out.println("test4");
-			Character elementToBanFromKeyboard = ((Label) ((StackPane) elementToDisable).getChildren().get(0)).getText().charAt(0);
+			Character elementToBanFromKeyboard = ((Label) ((StackPane) elementToDisable).getChildren().get(0)).getText()
+					.charAt(0);
 			System.out.println(this.bannedChars.contains(elementToBanFromKeyboard));
 			if (this.bannedChars.contains(elementToBanFromKeyboard)) {
-				System.out.println("disabled element at: " + gridToRemoveFrom.getId() + " position: " + ((StackPane) elementToDisable).getChildren().toString());
+				System.out.println("disabled element at: " + gridToRemoveFrom.getId() + " position: "
+						+ ((StackPane) elementToDisable).getChildren().toString());
 				elementToDisable.setStyle("");
 				elementToDisable.getStyleClass().add("darkIncave");
 				elementToDisable.setDisable(true);
