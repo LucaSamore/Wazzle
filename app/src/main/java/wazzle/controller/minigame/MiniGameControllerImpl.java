@@ -2,7 +2,6 @@ package wazzle.controller.minigame;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -14,7 +13,6 @@ import wazzle.model.minigame.MiniGameImpl;
 import wazzle.model.minigame.MiniGameWord;
 import wazzle.model.minigame.Result;
 import wazzle.model.minigame.SavedMiniGame;
-import wazzle.model.minigame.WordElement;
 import wazzle.model.minigame.WordsDispenserImpl;
 
 public class MiniGameControllerImpl implements MiniGameController {
@@ -157,15 +155,36 @@ public class MiniGameControllerImpl implements MiniGameController {
 	@Override
 	public char getLetterCharAtIndex(int index) {
 		return this.currentMiniGameWord.getCompositeWord().get(index).getCharacter();
-	}
 
+	}
+	
+    /**
+     * {@inheritDoc}
+     */
 	@Override
 	public List<Character> getAllWrongLetters(){
-		return this.currentMinigame.getAllGuessedWords()
-			.stream()
-			.flatMap(x -> x.getCompositeWord().stream())
-			.filter(l -> l.getResult() == Result.WRONG.getState())
-			.map(WordElement::getCharacter)
-			.collect(Collectors.toList());
+		List<Character> wrongLetters = new ArrayList<>();
+		this.currentMinigame.getAllGuessedWords().forEach(
+				word -> word.getCompositeWord().forEach(
+						letter -> {
+						    if (letter.getResult() == Result.WRONG.getState()) {
+						        wrongLetters.add(letter.getCharacter());
+						        }
+						    }));
+		return wrongLetters;
 	}
+	
+	/**
+     * {@inheritDoc}
+     */
+	@Override
+	public boolean isTheLetterCorrectInAnotherPlace(char letter) {
+		return !this.currentMiniGameWord.getCompositeWord().stream()
+		.filter(wordElement -> wordElement.getCharacter() == letter)
+		.filter(wordElement2 -> wordElement2.getResult() == Result.CORRECT.getState() || wordElement2.getResult() == Result.CORRECT_WRONG_PLACE.getState())
+		.collect(Collectors.toList())
+		.isEmpty();
+	}
+	
+
 }

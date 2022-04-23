@@ -8,7 +8,7 @@ import wazzle.model.common.Dictionary;
 /**
  * this class is used to compare differents datasets and pick a random word.
  * 
- * @param the dictionary that contains all the word of five letters. 
+ * @param dictionary - that contains all the word of five letters. 
  * 
  * @see FiveLetterDictionary
  * 

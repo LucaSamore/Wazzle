@@ -15,7 +15,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
@@ -301,7 +300,7 @@ public final class MiniGameView extends View<MiniGameController> {
 					removeGridElement(i, this.currentRowIndex);
 					var letterResult = this.controller.getLetterResultAtIndex(i);
 					var letterChar = this.controller.getLetterCharAtIndex(i);
-					if (letterResult == WRONG) {
+					if (letterResult == WRONG && !this.controller.isTheLetterCorrectInAnotherPlace(letterChar)) {
 						bannedChars.add(letterChar);
 					}
 					addMiniGamePane(String.valueOf(letterChar), i, this.currentRowIndex, letterResult);
