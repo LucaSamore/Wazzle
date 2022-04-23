@@ -1,5 +1,9 @@
 package wazzle.model.common;
 
+/**
+ * This class is a concrete implementation for {@link AbstractBonusFactory}
+ * It provides methods for create {@link ScoreBonus}, {@link TimeBonus} and {@link WordBonus}.
+ */
 public class BonusFactoryImpl implements AbstractBonusFactory {
 
 	/**

@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.function.UnaryOperator;
-
 import com.google.gson.annotations.Expose;
-
-public class BonusManagerImpl implements BonusManager {
+/**
+ * This class is a concrete implementation for {@link BonusManager}.
+ * It provides methods for {@link ScoreBonus}, {@link TimeBonus} and {@link WordBonus} handling.
+ */
+public final class BonusManagerImpl implements BonusManager {
 	
 	private static final Random random = new Random();
 	

@@ -1,9 +1,9 @@
 package wazzle.controller.common;
 
 import java.io.IOException;
+
 import java.util.List;
 import java.util.Optional;
-
 import wazzle.controller.maingame.GameHistoryController;
 import wazzle.controller.maingame.SettingsController;
 import wazzle.model.common.BonusManager;
@@ -14,6 +14,11 @@ import wazzle.model.maingame.MainGameImpl;
 import wazzle.model.minigame.ExtractedWordManager;
 import wazzle.model.minigame.SavedMiniGame;
 
+/**
+ * This interface provides methods for {@link MiniGameController}, {@link MainGameController},
+ * {@link GameHistoryController} and {@link SettingsController}, for managing dataset, savings,
+ * difficulty, bonuses and continuing a started minigame game.
+ */
 public interface WazzleController {
 
 	/**

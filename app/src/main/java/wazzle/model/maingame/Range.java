@@ -4,7 +4,6 @@ package wazzle.model.maingame;
  * belongs to. 
  *
  */
-
 public enum Range {
 	
 	/**
