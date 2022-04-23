@@ -6,7 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="mainWrapper" alignment="CENTER" fillWidth="false" styleClass="rootBackground" stylesheets="@../styles/tutorial-main-game.css" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="mainWrapper" alignment="CENTER" fillWidth="false" styleClass="rootBackground" stylesheets="@../styles/tutorial.css" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox fx:id="elementWrapper" alignment="CENTER" styleClass="letters" VBox.vgrow="ALWAYS">
          <children>
