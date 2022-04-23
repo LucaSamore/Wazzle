@@ -8,6 +8,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -49,6 +50,9 @@ public final class MainMenuView extends View<WazzleController>{
 
 	@FXML
 	private Button gameHistoryButton;
+	
+	@FXML
+	private Button exitButton;
 
 	@FXML
 	private Label titleLabel;
@@ -59,9 +63,9 @@ public final class MainMenuView extends View<WazzleController>{
 	@FXML
 	private ImageView settingsIcon;
 
-	private static final double ZERO_ZERO_ONE = 0.01;
 	private static final double ZERO_ZERO_THREE = 0.03;
 	private static final double ZERO_ZERO_FIVE = 0.05;
+	private static final double ZERO_ZERO_SIX = 0.06;
 	private static final double ZERO_ONE = 0.1;
 	private static final double ZERO_FOUR = 0.4;
 	private static final double ZERO_FIVE = 0.5;
@@ -162,8 +166,8 @@ public final class MainMenuView extends View<WazzleController>{
 		this.mainWrapperButtons.maxWidthProperty().bind(this.visualUnit.multiply(ZERO_FIVE));
 		this.mainWrapperButtons.spacingProperty().bind(this.stage.heightProperty().multiply(ZERO_ZERO_FIVE));
 		this.mainWrapperButtons.styleProperty().bind(this.fontSize);
-		this.container.vgapProperty().bind(this.visualUnit.multiply(ZERO_ZERO_FIVE));
-		this.container.hgapProperty().bind(this.visualUnit.multiply(ZERO_ZERO_ONE));
+		this.container.vgapProperty().bind(this.visualUnit.multiply(ZERO_ZERO_SIX));
+		this.container.hgapProperty().bind(this.visualUnit.multiply(ZERO_ZERO_SIX));
 		this.tutorialMainGameButton.styleProperty().bind(this.smallFontSize);
 		this.tutorialMiniGameButton.styleProperty().bind(this.smallFontSize);
 		this.mainWrapperButtons.getStyleClass().add("letters");
@@ -172,6 +176,5 @@ public final class MainMenuView extends View<WazzleController>{
 		this.settingsIcon.fitWidthProperty().bind(this.visualUnit.multiply(ZERO_ONE));
 		this.settingsIcon.fitHeightProperty().bind(this.visualUnit.multiply(ZERO_ONE));
 		this.titleLabel.styleProperty().bind(this.titleFontSize);
-		
 	}
 }

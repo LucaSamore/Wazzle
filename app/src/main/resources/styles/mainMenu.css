@@ -1,10 +1,9 @@
 @font-face {
-    src: url("../fonts/Waffle_Crisp.ttf");
-    
+    src: url("../fonts/Waffle_Crisp.ttf"); 
 }
 
 .letters{
-		-fx-font-family: "Waffle Crisp";
+	-fx-font-family: "Waffle Crisp";
 }
 
 #mainMenuRightPane{
@@ -15,7 +14,7 @@
 
 .settingsButton{
 	-fx-background-image: url("../img/settingsIco.png");
-		-fx-background-size: contain ;
+	-fx-background-size: contain ;
 }
 
 .orangeButton:hover{
