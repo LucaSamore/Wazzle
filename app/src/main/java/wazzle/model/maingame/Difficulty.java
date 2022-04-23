@@ -13,7 +13,7 @@ public final class Difficulty {
 	private static final int DEFAULT_SHAPE = 4;
 	private static final int DEFAULT_LOWER_BOUND = 76;
 	private static final int DEFAULT_UPPER_BOUND = 200;
-	private static final long DEFAULT_TIME = 240000L;
+	private static final long DEFAULT_TIME = 240_000L;
 	
 	@Expose
 	private final String difficultyName;
