@@ -172,16 +172,10 @@ public final class MiniGameView extends View<MiniGameController> {
 	}
 
 	private void disableKeyboardKey(GridPane gridToRemoveFrom) {
-		System.out.println("test3");
-		System.out.println("DIMENSIONE DELLA GRID" + gridToRemoveFrom.getChildren().size());
 		for (Node elementToDisable : gridToRemoveFrom.getChildren()) {
-			System.out.println("test4");
 			Character elementToBanFromKeyboard = ((Label) ((StackPane) elementToDisable).getChildren().get(0)).getText()
 					.charAt(0);
-			System.out.println(this.bannedChars.contains(elementToBanFromKeyboard));
 			if (this.bannedChars.contains(elementToBanFromKeyboard)) {
-				System.out.println("disabled element at: " + gridToRemoveFrom.getId() + " position: "
-						+ ((StackPane) elementToDisable).getChildren().toString());
 				elementToDisable.setStyle("");
 				elementToDisable.getStyleClass().add("darkIncave");
 				elementToDisable.setDisable(true);
@@ -191,7 +185,6 @@ public final class MiniGameView extends View<MiniGameController> {
 	}
 
 	private void disableKeyboardKeys() {
-		System.out.println("test2");
 		this.disableKeyboardKey(this.firstRowGrid);
 		this.disableKeyboardKey(this.secondRowGrid);
 		this.disableKeyboardKey(this.thirdRowGrid);

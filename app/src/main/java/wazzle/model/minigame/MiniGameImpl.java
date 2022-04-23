@@ -70,14 +70,6 @@ public class MiniGameImpl implements MiniGame {
 		return MiniGameImpl.WORDS_LENGHT;
 	}
 
-//	/**
-//	 * {@inheritDoc}
-//	 */
-//	@Override
-//	public void setWordChecker(final WordChecker wordChecker) {
-//		this.wordChecker = wordChecker;
-//	}
-
 	/**
 	 * {@inheritDoc}
 	 */

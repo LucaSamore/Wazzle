@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import wazzle.controller.common.WazzleController;
 import wazzle.model.minigame.MiniGame;
@@ -13,6 +14,7 @@ import wazzle.model.minigame.MiniGameImpl;
 import wazzle.model.minigame.MiniGameWord;
 import wazzle.model.minigame.Result;
 import wazzle.model.minigame.SavedMiniGame;
+import wazzle.model.minigame.WordElement;
 import wazzle.model.minigame.WordsDispenserImpl;
 
 public class MiniGameControllerImpl implements MiniGameController {
@@ -155,18 +157,15 @@ public class MiniGameControllerImpl implements MiniGameController {
 	@Override
 	public char getLetterCharAtIndex(int index) {
 		return this.currentMiniGameWord.getCompositeWord().get(index).getCharacter();
-
 	}
 
 	@Override
 	public List<Character> getAllWrongLetters(){
-		List<Character> temp = new ArrayList<>();
-		this.currentMinigame.getAllGuessedWords().forEach(
-				word -> word.getCompositeWord().forEach(
-						letter -> { if (letter.getResult() == Result.WRONG.getState())
-						{temp.add(letter.getCharacter());}}));
-		System.out.println("temp = " + temp);
-		return temp;
+		return this.currentMinigame.getAllGuessedWords()
+			.stream()
+			.flatMap(x -> x.getCompositeWord().stream())
+			.filter(l -> l.getResult() == Result.WRONG.getState())
+			.map(WordElement::getCharacter)
+			.collect(Collectors.toList());
 	}
-
 }
