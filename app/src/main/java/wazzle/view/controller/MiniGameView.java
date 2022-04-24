@@ -111,7 +111,6 @@ public final class MiniGameView extends View<MiniGameController> {
 		try {
 			this.controller.startGame();
 		} catch (IOException e) {
-			e.printStackTrace();
 			ErrorAlert.show();
 		}
 		this.bannedChars.addAll(this.controller.getAllWrongLetters());
@@ -335,7 +334,6 @@ public final class MiniGameView extends View<MiniGameController> {
 			try {
 				this.controller.saveMiniGame();
 			} catch (IOException e) {
-				e.printStackTrace();
 				ErrorAlert.show();
 			}
 		}

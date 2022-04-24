@@ -52,7 +52,6 @@ public final class GameTimerViewImpl implements GameTimerView {
 								notifyToMainGame();
 								stopAll();
 							} catch (IOException e) {
-								e.printStackTrace();
 								ErrorAlert.show();
 							}
 						}

@@ -271,7 +271,6 @@ public final class MainGameView extends View<MainGameController> {
 			this.stage.setUserData(this.controller);
 			SceneSwitcher.<StatisticsMainGameView>switchScene(this.stage, new StatisticsMainGameView(this.stage), FXMLFiles.MAIN_GAME_STATS.getPath());
 		} catch (IOException e) {
-			e.printStackTrace();
 			ErrorAlert.show();
 		}
 	}

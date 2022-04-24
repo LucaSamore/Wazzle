@@ -1,6 +1,7 @@
 package wazzle.view.controller;
 
 import java.io.IOException;
+
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringExpression;
 import javafx.beans.property.DoubleProperty;
@@ -112,6 +113,7 @@ public final class MainMenuView extends View<WazzleController>{
 
 	/**
 	 * Switch scene from main menu to all the possible options.
+	 * @throws IOException 
 	 */
 	@Override
 	public void nextScene(ActionEvent event) throws IOException {

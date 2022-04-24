@@ -7,7 +7,7 @@ package wazzle.view;
 public enum FXMLFiles {
 	MAIN_MENU("layouts/mainMenu.fxml"),
 	
-	SETTINGS("layouts/settingPage.fxml"),
+	SETTINGS("layouts/settingsPage.fxml"),
 	
 	MAIN_GAME("layouts/mainGame.fxml"),
 	
