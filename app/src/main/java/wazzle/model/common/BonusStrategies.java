@@ -9,9 +9,7 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 /**
- * 
- * BonusStrategies implements all the strategies that the bonuses have to apply when their are used.
- *
+ * This interface implements all the strategies that the bonuses have to apply when their are used.
  */
 public interface BonusStrategies {
 	

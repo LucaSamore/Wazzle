@@ -5,6 +5,9 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 
+/**
+ * This interface provides methods for managing the animation timer.
+ */
 public interface GameTimerView {
 	
 	/**

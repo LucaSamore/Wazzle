@@ -1,15 +1,17 @@
 package wazzle.controller.maingame;
 
 import java.util.Collections;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
 
-public class GameHistoryControllerImpl implements GameHistoryController {
+/**
+ * This class is a concrete implementation for {@link GameHistoryController}
+ * It provides methods for manage the {@link MainGame} history.
+ */
+public final class GameHistoryControllerImpl implements GameHistoryController {
 	
 	private final List<MainGameImpl> gameHistory;
 	

@@ -1,7 +1,6 @@
 package wazzle.view.controller;
 
 import java.io.IOException;
-
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -17,6 +16,10 @@ import wazzle.view.FXMLFiles;
 import wazzle.view.Loader;
 import wazzle.view.SceneSwitcher;
 
+/**
+ * This class is a concrete implementation for {@link GameTimer}.
+ * It provides methods for managing the animation timer.
+ */
 public final class GameTimerViewImpl implements GameTimerView {
 	
 	private MainGameView mainGameView;

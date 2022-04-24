@@ -1,7 +1,6 @@
 package wazzle.model.maingame;
 
 import java.util.Arrays;
-
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -11,7 +10,10 @@ import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-
+/**
+ * This class is a concrete implementation for {@link AlphabetClassifier}.
+ * It provides methods classify a {@link WeightedAlphabet} in {@link Ranges}.
+ */
 public final class AlphabetClassifierImpl implements AlphabetClassifier {
 	
 	private WeightedAlphabet weightedAlphabet;

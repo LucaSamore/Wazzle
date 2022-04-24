@@ -3,7 +3,11 @@ package wazzle.model.common;
 import java.util.Set;
 import java.util.function.UnaryOperator;
 
-public class WordBonus extends AbstractBonus {
+/**
+ * This class is a concrete implementation for {@link BonusManager}.
+ * It provides methods for apply a {@link WordBonus}.
+ */
+public final class WordBonus extends AbstractBonus {
 	
 	private final UnaryOperator<Set<String>> applier;
 	

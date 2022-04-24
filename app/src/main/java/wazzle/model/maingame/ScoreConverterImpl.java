@@ -2,6 +2,12 @@ package wazzle.model.maingame;
 
 import java.util.function.BinaryOperator;
 
+/**
+ * This class is a concrete implementation for {@link ScoreConverter}.
+ * It provides a method for converting the {@link WeightedAlphabet} into 
+ * another {@link WeightedAlphabet} which contains the score.
+ *
+ */
 public final class ScoreConverterImpl implements ScoreConverter {
 	
 	/**

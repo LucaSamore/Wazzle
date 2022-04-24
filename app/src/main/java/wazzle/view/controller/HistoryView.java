@@ -21,6 +21,11 @@ import wazzle.model.maingame.MainGame;
 import wazzle.view.FXMLFiles;
 import wazzle.view.SceneSwitcher;
 
+/**
+ * This class is a concrete implementation for {@link View}.
+ * It provides method for manage the game history view.
+ *
+ */
 public final class HistoryView extends View<WazzleController>{
 
 	@FXML

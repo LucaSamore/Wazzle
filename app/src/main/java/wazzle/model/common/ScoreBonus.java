@@ -2,7 +2,11 @@ package wazzle.model.common;
 
 import java.util.function.BinaryOperator;
 
-public class ScoreBonus extends AbstractBonus {
+/**
+ * This class is a concrete implementation for {@link BonusManager}.
+ * It provides methods for apply a {@link ScoreBonus}.
+ */
+public final class ScoreBonus extends AbstractBonus {
 
 	private final BinaryOperator<Integer> applier;
 	

@@ -7,8 +7,8 @@ import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
 
 /**
- * ScoreAdapter use the Design Pattern Adapter compute the conversion of the frequency, contained 
- * in a WeightedAlphabet), to a score.
+ * This class use the Design Pattern Adapter compute the conversion of the frequency, contained 
+ * in a {@link WeightedAlphabet}, to a score.
  *
  */
 public final class ScoreAdapter implements WeightedAlphabet {

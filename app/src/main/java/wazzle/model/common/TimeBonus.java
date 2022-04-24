@@ -2,7 +2,11 @@ package wazzle.model.common;
 
 import java.util.function.UnaryOperator;
 
-public class TimeBonus extends AbstractBonus {
+/**
+ * This class is a concrete implementation for {@link BonusManager}.
+ * It provides methods for apply a {@link TimeBonus}.
+ */
+public final class TimeBonus extends AbstractBonus {
 
 	private final UnaryOperator<Long> applier;
 

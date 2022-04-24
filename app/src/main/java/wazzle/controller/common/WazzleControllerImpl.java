@@ -1,14 +1,11 @@
 package wazzle.controller.common;
 
 import java.io.IOException;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.checkerframework.checker.nullness.qual.NonNull;
-
 import wazzle.controller.maingame.GameHistoryController;
 import wazzle.controller.maingame.GameHistoryControllerImpl;
 import wazzle.controller.maingame.SettingsController;
@@ -24,7 +21,11 @@ import wazzle.model.minigame.ExtractedWordManagerImpl;
 import wazzle.model.minigame.FiveLetterDictionary;
 import wazzle.model.minigame.SavedMiniGame;
 
-public class WazzleControllerImpl implements WazzleController {
+/**
+ * This class is a concrete implementation for {@link WazzleController}
+ * It provides methods for manage every Wazzle component.
+ */
+public final class WazzleControllerImpl implements WazzleController {
 
 	private static final int MAX_GAME_HISTORY_VISIBLE = 10;
 	private final FileController fileController;

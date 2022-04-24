@@ -5,7 +5,7 @@ package wazzle.view;
  * and provides a method for obtaining them.
  */
 public enum Images {
-	WAZZLE_ICON("img/wazzle-icon.jpeg"),
+	WAZZLE_ICON("img/wally.png"),
 	
 	WALLY("img/wally.gif"),
 	

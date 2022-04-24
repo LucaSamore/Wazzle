@@ -1,10 +1,10 @@
 package wazzle.model.common;
 
 /**
- * AbstractBonusFactory implements the creation of all the Bonuses.
+ * This interface provides methods for implementing the {@link ScoreBonus}, {@link TimeBonus} 
+ * and {@link WordBonus}.
  *
  */
-
 public interface AbstractBonusFactory {
 	
 	/**
