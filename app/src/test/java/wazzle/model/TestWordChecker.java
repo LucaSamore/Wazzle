@@ -7,9 +7,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import javafx.util.Pair;
-import wazzle.model.minigame.Attempt;
-import wazzle.model.minigame.AttemptImpl;
 import wazzle.model.minigame.MiniGameWord;
 import wazzle.model.minigame.MiniGameWordImpl;
 import wazzle.model.minigame.Result;
@@ -18,57 +15,85 @@ import wazzle.model.minigame.WordCheckerImpl;
 import wazzle.model.minigame.WordElement;
 
 public class TestWordChecker {
-//
-//	@Test
-//	public void testAttempt() {
-//		WordChecker wordChecker = new WordCheckerImpl();
-//		MiniGameWord expectedWord;
-//		Attempt attempt = new AttemptImpl("gatto", "fatta");
-//		
-//		List<WordElement> result = new ArrayList<>(List.of(new WordElement('f', Result.WRONG.getState()),
-//				new  WordElement('a', Result.CORRECT.getState()),
-//				new  WordElement('t', Result.CORRECT.getState()),
-//				new  WordElement('t', Result.CORRECT.getState()),
-//				new  WordElement('a', Result.CORRECT_WRONG_PLACE.getState())));
-//		
-//		expectedWord = new MiniGameWordImpl();
-//		expectedWord.setCompositeWord(result);
-//		assertFalse(wordChecker.isCorrectWord(attempt));
-//		assertEquals(expectedWord, wordChecker.computeAttemptResult(attempt));
-//		
-//		attempt = new AttemptImpl("crema", "grana");
-//		result = new ArrayList<>(List.of(new WordElement('g', Result.WRONG.getState()),
-//				new	 WordElement('r', Result.CORRECT.getState()),
-//				new	 WordElement('a', Result.CORRECT_WRONG_PLACE.getState()),
-//				new	 WordElement('n', Result.WRONG.getState()),
-//				new	 WordElement('a', Result.CORRECT.getState())));
-//		
-//		expectedWord = new MiniGameWordImpl();
-//		expectedWord.setCompositeWord(result);
-//		assertFalse(wordChecker.isCorrectWord(attempt));
-//		assertEquals(expectedWord, wordChecker.computeAttemptResult(attempt));
-//		
-//		attempt = new AttemptImpl("cappa", "frodi");
-//		result = new ArrayList<>(List.of(new WordElement('f', Result.WRONG.getState()),
-//				new WordElement('r', Result.WRONG.getState()),
-//				new WordElement('o', Result.WRONG.getState()),
-//				new WordElement('d', Result.WRONG.getState()),
-//				new WordElement('i', Result.WRONG.getState())));
-//		
-//		expectedWord = new MiniGameWordImpl();
-//		expectedWord.setCompositeWord(result);
-//		assertFalse(wordChecker.isCorrectWord(attempt));
-//		assertEquals(expectedWord, wordChecker.computeAttemptResult(attempt));
-//		
-//		attempt = new AttemptImpl("gatto", "gatto");
-//		result = new ArrayList<>(List.of(new WordElement('g', Result.CORRECT.getState()),
-//				new WordElement('a', Result.CORRECT.getState()),
-//				new WordElement('t', Result.CORRECT.getState()),
-//				new WordElement('t', Result.CORRECT.getState()),
-//				new WordElement('o', Result.CORRECT.getState())));
-//		expectedWord = new MiniGameWordImpl();
-//		expectedWord.setCompositeWord(result);
-//		assertTrue(wordChecker.isCorrectWord(attempt));
-//		assertEquals(expectedWord, wordChecker.computeAttemptResult(attempt));
-//	}
+
+	@Test
+	public void testAttempt() {
+		WordChecker wordChecker = new WordCheckerImpl("breve");
+		MiniGameWord expectedWord;
+		String guessedWord;
+		
+		
+		guessedWord = "pasta";
+		List<WordElement> result = new ArrayList<>(List.of(
+		        new WordElement('p', Result.WRONG),
+				new WordElement('a', Result.WRONG),
+				new WordElement('s', Result.WRONG),
+				new WordElement('t', Result.WRONG),
+				new WordElement('a', Result.WRONG)));
+		
+		expectedWord = new MiniGameWordImpl(result);
+		assertFalse(wordChecker.isCorrectWord(guessedWord));
+		assertEquals(expectedWord, wordChecker.computeAttemptResult(guessedWord));
+		
+	    guessedWord = "creme";
+		result = new ArrayList<>(List.of(
+		        new WordElement('c', Result.WRONG),
+                new WordElement('r', Result.CORRECT),
+                new WordElement('e', Result.CORRECT),
+                new WordElement('m', Result.WRONG),
+                new WordElement('e', Result.CORRECT)));
+		
+		expectedWord = new MiniGameWordImpl(result);
+        assertFalse(wordChecker.isCorrectWord(guessedWord));
+        assertEquals(expectedWord, wordChecker.computeAttemptResult(guessedWord));
+        
+        
+        guessedWord = "breee";
+        result = new ArrayList<>(List.of(
+                new WordElement('b', Result.CORRECT),
+                new WordElement('r', Result.CORRECT),
+                new WordElement('e', Result.CORRECT),
+                new WordElement('e', Result.WRONG),
+                new WordElement('e', Result.CORRECT)));
+        
+        expectedWord = new MiniGameWordImpl(result);
+        assertFalse(wordChecker.isCorrectWord(guessedWord));
+        assertEquals(expectedWord, wordChecker.computeAttemptResult(guessedWord));
+        		
+        guessedWord = "everb";
+        result = new ArrayList<>(List.of(
+                new WordElement('e', Result.CORRECT_WRONG_PLACE),
+                new WordElement('v', Result.CORRECT_WRONG_PLACE),
+                new WordElement('e', Result.CORRECT),
+                new WordElement('r', Result.CORRECT_WRONG_PLACE),
+                new WordElement('b', Result.CORRECT_WRONG_PLACE)));
+        
+        expectedWord = new MiniGameWordImpl(result);
+        assertFalse(wordChecker.isCorrectWord(guessedWord));
+        assertEquals(expectedWord, wordChecker.computeAttemptResult(guessedWord));
+        
+        guessedWord = "qwryu";
+        result = new ArrayList<>(List.of(
+                new WordElement('q', Result.WRONG),
+                new WordElement('w', Result.WRONG),
+                new WordElement('r', Result.CORRECT_WRONG_PLACE),
+                new WordElement('y', Result.WRONG),
+                new WordElement('u', Result.WRONG)));
+        
+        expectedWord = new MiniGameWordImpl(result);
+        assertFalse(wordChecker.isCorrectWord(guessedWord));
+        assertEquals(expectedWord, wordChecker.computeAttemptResult(guessedWord));
+        
+        guessedWord = "breve";
+        result = new ArrayList<>(List.of(
+                new WordElement('b', Result.CORRECT),
+                new WordElement('r', Result.CORRECT),
+                new WordElement('e', Result.CORRECT),
+                new WordElement('v', Result.CORRECT),
+                new WordElement('e', Result.CORRECT)));
+        
+        expectedWord = new MiniGameWordImpl(result);
+        assertTrue(wordChecker.isCorrectWord(guessedWord));
+        assertEquals(expectedWord, wordChecker.computeAttemptResult(guessedWord));
+	}
 }
