@@ -10,6 +10,7 @@ import wazzle.controller.maingame.GameHistoryController;
 import wazzle.controller.maingame.GameHistoryControllerImpl;
 import wazzle.controller.maingame.SettingsController;
 import wazzle.controller.maingame.SettingsControllerImpl;
+import wazzle.controller.minigame.FiveLetterDictionary;
 import wazzle.model.common.BonusManager;
 import wazzle.model.common.BonusManagerImpl;
 import wazzle.model.common.Dictionary;
@@ -18,7 +19,6 @@ import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
 import wazzle.model.minigame.ExtractedWordManager;
 import wazzle.model.minigame.ExtractedWordManagerImpl;
-import wazzle.model.minigame.FiveLetterDictionary;
 import wazzle.model.minigame.SavedMiniGame;
 
 /**
