@@ -12,49 +12,42 @@ import java.util.Objects;
 
 public class WeightedAlphabetImpl implements WeightedAlphabet {
 
-	private Map<Character, Double> weightedLetterMap;
-	
-	public WeightedAlphabetImpl(Map<Character, Double> weightedLetterMap) {
-		Objects.requireNonNull(weightedLetterMap);
-		
-		this.weightedLetterMap = new HashMap<>(weightedLetterMap);
-	}
+    private Map<Character, Double> weightedLetterMap;
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(weightedLetterMap);
-	}	
-	
+    public WeightedAlphabetImpl(Map<Character, Double> weightedLetterMap) {
+        Objects.requireNonNull(weightedLetterMap);
+        this.weightedLetterMap = new HashMap<>(weightedLetterMap);
+    }
 
-	@Override
-	public String toString() {
-		return "WeightedAlphabetImpl [weightedLetterMap=" + weightedLetterMap + "]";
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(weightedLetterMap);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		WeightedAlphabetImpl other = (WeightedAlphabetImpl) obj;
-		return Objects.equals(weightedLetterMap, other.weightedLetterMap);
-	}
+    @Override
+    public String toString() {
+        return "WeightedAlphabetImpl [weightedLetterMap=" + weightedLetterMap + "]";
+    }
 
-	/**
-	 * This method returns the field weightedLetterMap.
-	 * 
-	 * @return 	weightedLetterMap 	A Map holding all the letter present in the input
-	 * 								Map as keys and the relative value of all letters present in the given map
-	 * 								compared to the total number of letters present as values.
-	 * 
-	 */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        WeightedAlphabetImpl other = (WeightedAlphabetImpl) obj;
+        return Objects.equals(weightedLetterMap, other.weightedLetterMap);
+    }
 
-	@Override
-	public Map<Character, Double> getWeightedAlphabet() {
-		return Collections.unmodifiableMap(weightedLetterMap);
-	}
+    /**
+     * {@inheritDoc}
+     */
+
+    @Override
+    public Map<Character, Double> getWeightedAlphabet() {
+        return Collections.unmodifiableMap(weightedLetterMap);
+    }
 
 }

@@ -24,7 +24,6 @@ public final class FrequencyImpl implements Frequency {
 	private Dictionary dataset;
 
 	public FrequencyImpl(final Dictionary dataset) {
-
 		this.dataset = dataset;
 	}
 

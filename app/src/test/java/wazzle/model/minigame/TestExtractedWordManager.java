@@ -23,12 +23,11 @@ public class TestExtractedWordManager {
 	public void test() throws IOException {
 		Set<String> dataset = new HashSet<>(TestFileUtils.readDataset("testDictionary.txt"));
 		Dictionary filteredDictionary = new FiveLetterDictionary (new DictionaryImpl(dataset));
-		ExtractedWordManager ewm = new ExtractedWordManagerImpl(filteredDictionary);
-		WordsDispenser wordsDispenser = new WordsDispenserImpl(ewm);
+		WordsDispenser wordsDispenser = new WordsDispenserImpl(filteredDictionary);
 		var targetWord = wordsDispenser.extractWord();
 
 		assertEquals(5, targetWord.length()); //the target word must be long 5 character
-		assertFalse(ewm.getAvailableWords().contains(targetWord)); //target word must not be present in the dictionary saved on file
+		
 		
 	}
 

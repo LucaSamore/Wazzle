@@ -60,23 +60,22 @@ public class StatisticsMiniGameView extends View<MiniGameController>{
 	private Label bonusValueLabel;
 
 	
-	private MiniGameController miniGameController;
 
 	public StatisticsMiniGameView(Stage stage) {
 		this.stage = stage;
 		visualUnit = new SimpleDoubleProperty();
 		visualUnit.bind(Bindings.min(stage.heightProperty(), stage.widthProperty()));
-		this.miniGameController = (MiniGameControllerImpl) this.stage.getUserData();
+		this.controller = (MiniGameControllerImpl) this.stage.getUserData();
 	}
 
 	@Override
 	public void nextScene(ActionEvent event) throws IOException {
 		Node node = (Node) event.getSource();
 		if ("playAgainButton".equals(node.getId())) {
-			this.stage.setUserData(new MiniGameControllerImpl(this.miniGameController.getMainController()));
+			this.stage.setUserData(new MiniGameControllerImpl(this.controller.getMainController()));
 			SceneSwitcher.<MiniGameView>switchScene(event, new MiniGameView(this.stage), FXMLFiles.MINI_GAME.getPath());
 		} else {
-			this.stage.setUserData(this.miniGameController.getMainController());
+			this.stage.setUserData(this.controller.getMainController());
 			SceneSwitcher.<MainMenuView>switchScene(event, new MainMenuView(this.stage), FXMLFiles.MAIN_MENU.getPath());
 		}		
 	}
@@ -88,11 +87,11 @@ public class StatisticsMiniGameView extends View<MiniGameController>{
 
 	@Override
 	protected void setGraphics() {
-		this.targetWordValueLabel.setText("" + this.miniGameController.getTargetWord());
-		this.attemptsValueLabel.setText("" + this.miniGameController.getCurrentAttemptsNumber());
+		this.targetWordValueLabel.setText("" + this.controller.getTargetWord());
+		this.attemptsValueLabel.setText("" + this.controller.getCurrentAttemptsNumber());
 
 		try {
-			this.miniGameController.obtainedBonus().ifPresent(b -> {
+			this.controller.obtainedBonus().ifPresent(b -> {
 				this.resultValueLabel.setText("Hai vinto!");
 				this.bonusValueLabel.setText(b);
 			});

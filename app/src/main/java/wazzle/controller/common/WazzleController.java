@@ -12,7 +12,7 @@ import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
 import wazzle.model.maingame.grid.Difficulty;
 import wazzle.model.minigame.SavedMiniGame;
-import wazzle.model.minigame.word.ExtractedWordManager;
+import wazzle.model.minigame.word.WordsDispenser;
 
 /**
  * This interface provides methods for {@link MiniGameController}, {@link MainGameController},
@@ -87,11 +87,11 @@ public interface WazzleController {
 	Facade getFacade();
 	
 	/**
-	 * Gives the {@link ExtractedWordManager}.
+	 * Gives the {@link WordsDispenser}.
 	 * 
-	 * @return ExtractedWordManager the {@link ExtractedWordManager}.
+	 * @return WordsDispenser the {@link WordsDispenser}.
 	 */
-	ExtractedWordManager getExtractedWordManager();
+	WordsDispenser getWordsDispenser();
 	
 	/**
 	 * Extract and add a bonus gained in a {@link MiniGame} game, using a {@link BonusManager} method.

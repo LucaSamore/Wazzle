@@ -10,7 +10,6 @@ import wazzle.controller.maingame.GameHistoryController;
 import wazzle.controller.maingame.GameHistoryControllerImpl;
 import wazzle.controller.maingame.SettingsController;
 import wazzle.controller.maingame.SettingsControllerImpl;
-import wazzle.controller.minigame.dictionary.FiveLetterDictionary;
 import wazzle.model.common.BonusManager;
 import wazzle.model.common.BonusManagerImpl;
 import wazzle.model.common.Dictionary;
@@ -18,8 +17,8 @@ import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
 import wazzle.model.maingame.grid.Difficulty;
 import wazzle.model.minigame.SavedMiniGame;
-import wazzle.model.minigame.word.ExtractedWordManager;
-import wazzle.model.minigame.word.ExtractedWordManagerImpl;
+import wazzle.model.minigame.word.WordsDispenser;
+import wazzle.model.minigame.word.WordsDispenserImpl;
 
 /**
  * This class is a concrete implementation for {@link WazzleController}
@@ -33,8 +32,8 @@ public final class WazzleControllerImpl implements WazzleController {
 	private final GameHistoryController gameHistoryController;
 	private final BonusManager bonusManager;
 	private final Facade facade;
-	private final ExtractedWordManager extractedWordManager;
-		
+	private final WordsDispenser wordsDispencer;
+	
 	/**
 	 * Construct a new {@link WazzleController}.
 	 * 
@@ -46,7 +45,7 @@ public final class WazzleControllerImpl implements WazzleController {
 		this.settingsController = new SettingsControllerImpl(this.difficultiesFromFIle(), this.currentDifficultyFromFile());
 		this.gameHistoryController = new GameHistoryControllerImpl(this.gameHistoryFromFile());
 		this.facade = new Facade();
-		this.extractedWordManager = new ExtractedWordManagerImpl(new FiveLetterDictionary(this.getShortDataset()));
+		this.wordsDispencer = new WordsDispenserImpl(this.getShortDataset());
 	}
 
 	/**
@@ -124,8 +123,8 @@ public final class WazzleControllerImpl implements WazzleController {
 	/**
 	 * {@inheritDoc}
 	 */
-	public ExtractedWordManager getExtractedWordManager() {
-		return this.extractedWordManager;
+	public WordsDispenser getWordsDispenser() {
+		return this.wordsDispencer;
 	}
 
 	/**

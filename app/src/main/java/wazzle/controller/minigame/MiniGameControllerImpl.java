@@ -11,7 +11,6 @@ import wazzle.model.minigame.MiniGame;
 import wazzle.model.minigame.MiniGame.State;
 import wazzle.model.minigame.attempt.MiniGameWord;
 import wazzle.model.minigame.attempt.Result;
-import wazzle.model.minigame.word.WordsDispenserImpl;
 import wazzle.model.minigame.MiniGameImpl;
 import wazzle.model.minigame.SavedMiniGame;
 
@@ -19,7 +18,7 @@ public class MiniGameControllerImpl implements MiniGameController {
 
 	private MiniGame currentMinigame;
 	private WazzleController wazzleController;
-	MiniGameWord currentMiniGameWord;
+	private MiniGameWord currentMiniGameWord;
 
 	public MiniGameControllerImpl(final WazzleController wazzleController) {
 		this.wazzleController = wazzleController;
@@ -134,14 +133,6 @@ public class MiniGameControllerImpl implements MiniGameController {
 	}
 
 	/**
-	 * Starts a new minigame.
-	 */
-	private MiniGame newMiniGame() {
-		return this.wazzleController.getFacade()
-				.startNewMiniGame(new WordsDispenserImpl(this.wazzleController.getExtractedWordManager()));
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -186,5 +177,11 @@ public class MiniGameControllerImpl implements MiniGameController {
 		.isEmpty();
 	}
 	
-
+    /**
+     * Starts a new minigame.
+     */
+    private MiniGame newMiniGame() {
+        return this.wazzleController.getFacade()
+                .startNewMiniGame(this.wazzleController.getWordsDispenser());
+    }
 }

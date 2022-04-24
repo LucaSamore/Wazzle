@@ -42,7 +42,7 @@ public final class TutorialMiniGameView extends View<WazzleController> {
 
 	@Override
 	protected void setGraphics() {
-		final var fontSize = Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.03).asString(), ";");
+		final var fontSize = Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.05).asString(), ";");
 		final var textFontSize = Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.025).asString(), ";");
 		final var paddingValue = Bindings.concat("-fx-padding: ", visualUnit.multiply(0.05).asString(), ";");
 		final var spacingValue = Bindings.concat("-fx-spacing: ", visualUnit.multiply(0.02).asString(), ";");
@@ -51,8 +51,8 @@ public final class TutorialMiniGameView extends View<WazzleController> {
 		this.contentWrapper.maxHeightProperty().bind(contentWrapper.widthProperty());
 		this.contentWrapper.styleProperty().bind(Bindings.concat(paddingValue, spacingValue));
 		this.gifTutorial.setImage(explanationGif);
-		this.gifTutorial.fitWidthProperty().bind(visualUnit.multiply(0.4));
-		this.gifTutorial.fitHeightProperty().bind(visualUnit.multiply(0.4));
+		this.gifTutorial.fitWidthProperty().bind(visualUnit.multiply(0.7));
+		this.gifTutorial.fitHeightProperty().bind(visualUnit.multiply(0.7));
 		this.writeTutorialToLabel();
 		this.textArea.styleProperty().bind(Bindings.concat(textFontSize, paddingValue));
 		this.exitButton.styleProperty().bind(fontSize);
@@ -63,7 +63,7 @@ public final class TutorialMiniGameView extends View<WazzleController> {
                 + "digitando una parola qualsiasi di cinque lettere nella prima riga usando la tua tastiera"
                 + " o quella a schermo, se la lettera e' indovinata correttamente e si trova nel posto giusto,"
                 + " sara' contrassegnata di verde, se la lettera e' nella parola ma nel posto sbagliato sara'"
-                + " contrassegnata di giallo, se la lettera non e' nella parola non verrà colorata di nessun"
+                + " contrassegnata di giallo, se la lettera non e' nella parola non verra' colorata di nessun"
                 + " colore. Riuscirai a trovare la parola corretta? Buona fortuna!");
 	}
 }
