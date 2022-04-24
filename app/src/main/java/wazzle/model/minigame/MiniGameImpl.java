@@ -3,6 +3,11 @@ package wazzle.model.minigame;
 import java.util.LinkedList;
 import java.util.List;
 
+import wazzle.model.minigame.attempt.MiniGameWord;
+import wazzle.model.minigame.attempt.MiniGameWordImpl;
+import wazzle.model.minigame.attempt.WordChecker;
+import wazzle.model.minigame.attempt.WordCheckerImpl;
+
 public class MiniGameImpl implements MiniGame {
 
 	private static final int MAX_ATTEMPTS_NUMBER = 6;

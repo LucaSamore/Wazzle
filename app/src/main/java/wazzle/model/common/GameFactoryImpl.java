@@ -1,13 +1,13 @@
 package wazzle.model.common;
 
 import javafx.util.Pair;
-import wazzle.model.maingame.Difficulty;
-import wazzle.model.maingame.GridGeneratorImpl;
 import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
+import wazzle.model.maingame.grid.Difficulty;
+import wazzle.model.maingame.grid.GridGeneratorImpl;
 import wazzle.model.minigame.MiniGame;
 import wazzle.model.minigame.MiniGameImpl;
-import wazzle.model.minigame.WordsDispenser;
+import wazzle.model.minigame.word.WordsDispenser;
 
 
 /**

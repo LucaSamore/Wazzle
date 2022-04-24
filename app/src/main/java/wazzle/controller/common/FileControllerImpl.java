@@ -14,11 +14,9 @@ import wazzle.model.common.BonusManager;
 import wazzle.model.common.BonusManagerImpl;
 import wazzle.model.common.Dictionary;
 import wazzle.model.common.DictionaryImpl;
-import wazzle.model.maingame.Difficulty;
 import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
-import wazzle.model.minigame.MiniGame;
-import wazzle.model.minigame.MiniGameImpl;
+import wazzle.model.maingame.grid.Difficulty;
 import wazzle.model.minigame.SavedMiniGame;
 
 /**

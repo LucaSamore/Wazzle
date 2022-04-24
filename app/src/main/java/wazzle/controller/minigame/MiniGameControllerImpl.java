@@ -9,11 +9,11 @@ import java.util.stream.Collectors;
 import wazzle.controller.common.WazzleController;
 import wazzle.model.minigame.MiniGame;
 import wazzle.model.minigame.MiniGame.State;
+import wazzle.model.minigame.attempt.MiniGameWord;
+import wazzle.model.minigame.attempt.Result;
+import wazzle.model.minigame.word.WordsDispenserImpl;
 import wazzle.model.minigame.MiniGameImpl;
-import wazzle.model.minigame.MiniGameWord;
-import wazzle.model.minigame.Result;
 import wazzle.model.minigame.SavedMiniGame;
-import wazzle.model.minigame.WordsDispenserImpl;
 
 public class MiniGameControllerImpl implements MiniGameController {
 

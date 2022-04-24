@@ -10,16 +10,16 @@ import wazzle.controller.maingame.GameHistoryController;
 import wazzle.controller.maingame.GameHistoryControllerImpl;
 import wazzle.controller.maingame.SettingsController;
 import wazzle.controller.maingame.SettingsControllerImpl;
-import wazzle.controller.minigame.FiveLetterDictionary;
+import wazzle.controller.minigame.dictionary.FiveLetterDictionary;
 import wazzle.model.common.BonusManager;
 import wazzle.model.common.BonusManagerImpl;
 import wazzle.model.common.Dictionary;
-import wazzle.model.maingame.Difficulty;
 import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
-import wazzle.model.minigame.ExtractedWordManager;
-import wazzle.model.minigame.ExtractedWordManagerImpl;
+import wazzle.model.maingame.grid.Difficulty;
 import wazzle.model.minigame.SavedMiniGame;
+import wazzle.model.minigame.word.ExtractedWordManager;
+import wazzle.model.minigame.word.ExtractedWordManagerImpl;
 
 /**
  * This class is a concrete implementation for {@link WazzleController}

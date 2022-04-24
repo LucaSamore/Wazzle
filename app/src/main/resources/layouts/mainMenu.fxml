@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="bp" stylesheets="@../styles/mainMenu.css" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1"> <!--  fx:controller="application.MainMenuController"> -->
+<BorderPane fx:id="bp" stylesheets="@../styles/main-menu.css" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1"> <!--  fx:controller="application.MainMenuController"> -->
    <right>
       <Pane id="mainMenuRightPane" fx:id="mainMenuRightPane" BorderPane.alignment="CENTER" />
    </right>

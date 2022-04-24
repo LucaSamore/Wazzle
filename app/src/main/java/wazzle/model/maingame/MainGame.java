@@ -4,6 +4,9 @@ package wazzle.model.maingame;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import wazzle.model.maingame.grid.Grid;
+import wazzle.model.maingame.letter.Letter;
+
 /**
  * This interface is an API for managing the Wazzle main game flow.
  * It provides methods for gaining information about the state of the game and

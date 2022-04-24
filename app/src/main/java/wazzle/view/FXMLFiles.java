@@ -7,21 +7,21 @@ package wazzle.view;
 public enum FXMLFiles {
 	MAIN_MENU("layouts/mainMenu.fxml"),
 	
-	SETTINGS("layouts/SettingPage.fxml"),
+	SETTINGS("layouts/settingPage.fxml"),
 	
-	MAIN_GAME("layouts/MainGame.fxml"),
+	MAIN_GAME("layouts/mainGame.fxml"),
 	
-	MINI_GAME("layouts/MiniGame.fxml"),
+	MINI_GAME("layouts/miniGame.fxml"),
 	
-	LOADING_SCREEN("layouts/LoadingScreen.fxml"),
+	LOADING_SCREEN("layouts/loadingScreen.fxml"),
 	
 	MAIN_GAME_STATS("layouts/statisticsMainGame.fxml"),
 	
 	MINI_GAME_STATS("layouts/statisticsMiniGame.fxml"),
 	
-	TUTORIAL_MAIN_GAME("layouts/TutorialMainGame.fxml"),
+	TUTORIAL_MAIN_GAME("layouts/tutorialMainGame.fxml"),
 	
-	TUTORIAL_MINI_GAME("layouts/TutorialMiniGame.fxml"),
+	TUTORIAL_MINI_GAME("layouts/tutorialMiniGame.fxml"),
 	
 	HISTORY("layouts/history.fxml");
 	

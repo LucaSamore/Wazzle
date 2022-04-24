@@ -5,9 +5,11 @@ import java.util.Optional;
 import java.util.Set;
 import javafx.util.Pair;
 import wazzle.controller.common.WazzleController;
+import wazzle.controller.maingame.timer.GameTimer;
+import wazzle.controller.maingame.timer.GameTimerImpl;
 import wazzle.model.common.Dictionary;
-import wazzle.model.maingame.Difficulty;
 import wazzle.model.maingame.MainGame;
+import wazzle.model.maingame.grid.Difficulty;
 
 /**
  * This class is a concrete implementation for {@link MainGameController}

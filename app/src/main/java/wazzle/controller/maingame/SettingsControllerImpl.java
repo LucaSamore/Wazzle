@@ -4,14 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-
-import javax.annotation.Nullable;
-
 import org.checkerframework.checker.nullness.qual.NonNull;
-
 import com.google.gson.annotations.Expose;
-
-import wazzle.model.maingame.Difficulty;
+import wazzle.model.maingame.grid.Difficulty;
 
 public class SettingsControllerImpl implements SettingsController {
 	@Expose

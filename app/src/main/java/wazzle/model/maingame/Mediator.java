@@ -9,6 +9,22 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javafx.util.Pair;
 import wazzle.model.common.Dictionary;
+import wazzle.model.maingame.alphabet.Frequency;
+import wazzle.model.maingame.alphabet.FrequencyImpl;
+import wazzle.model.maingame.alphabet.WeightedAlphabet;
+import wazzle.model.maingame.grid.Difficulty;
+import wazzle.model.maingame.grid.Grid;
+import wazzle.model.maingame.grid.GridGenerator;
+import wazzle.model.maingame.letter.AlphabetClassifier;
+import wazzle.model.maingame.letter.AlphabetClassifierImpl;
+import wazzle.model.maingame.letter.Letter;
+import wazzle.model.maingame.letter.LetterAllocator;
+import wazzle.model.maingame.letter.LetterAllocatorImpl;
+import wazzle.model.maingame.letter.LetterChooser;
+import wazzle.model.maingame.letter.LetterChooserImpl;
+import wazzle.model.maingame.letter.Range;
+import wazzle.model.maingame.letter.score.ScoreConverter;
+import wazzle.model.maingame.letter.score.ScoreConverterImpl;
 
 /**
  * The purpose of this class is to provide an interface (sort of a Facade) for {@link GridGenerator}.
@@ -56,7 +72,7 @@ public final class Mediator {
 	 * @param chosenLetters an {@code EnumMap<Range,List<Pair<Character,Double>>>} describing the letters produced by {@link LetterChooser}
 	 * @return void
 	 * @see java.util.EnumMap
-	 * @see wazzle.model.maingame.Range
+	 * @see wazzle.model.maingame.letter.Range
 	 * @see java.util.List
 	 * @see javafx.util.Pair
 	 */

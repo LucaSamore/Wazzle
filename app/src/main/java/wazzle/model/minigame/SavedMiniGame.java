@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.google.gson.annotations.Expose;
 
+import wazzle.model.minigame.attempt.MiniGameWordImpl;
+
 public class SavedMiniGame {
 	
 	@Expose

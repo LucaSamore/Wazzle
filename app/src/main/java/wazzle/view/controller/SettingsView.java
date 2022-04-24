@@ -17,7 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import wazzle.controller.common.WazzleController;
 import wazzle.controller.common.WazzleControllerImpl;
-import wazzle.model.maingame.Difficulty;
+import wazzle.model.maingame.grid.Difficulty;
 import wazzle.view.FXMLFiles;
 import wazzle.view.SceneSwitcher;
 

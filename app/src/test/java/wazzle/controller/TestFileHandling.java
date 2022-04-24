@@ -12,11 +12,11 @@ import wazzle.model.TestFileUtils;
 import wazzle.model.common.BonusManager;
 import wazzle.model.common.BonusManagerImpl;
 import wazzle.model.common.DictionaryImpl;
-import wazzle.model.maingame.Difficulty;
-import wazzle.model.maingame.DifficultyNames;
-import wazzle.model.maingame.GridGeneratorImpl;
 import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
+import wazzle.model.maingame.grid.Difficulty;
+import wazzle.model.maingame.grid.DifficultyNames;
+import wazzle.model.maingame.grid.GridGeneratorImpl;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -65,7 +65,7 @@ public final class TestFileHandling implements Serializer, Deserializer {
 	@Test
 	public void testJsonGamesFile() {
 		try {
-			final var dataset = new DictionaryImpl(TestFileUtils.readDataset("datasetNuovo.txt"));
+			final var dataset = new DictionaryImpl(TestFileUtils.readDataset("dataset.txt"));
 			final var shape = new Pair<Integer,Integer>(4,4);
 			final var difficulty = Difficulty.getDefault();
 			final var generator = new GridGeneratorImpl(dataset, shape, difficulty);

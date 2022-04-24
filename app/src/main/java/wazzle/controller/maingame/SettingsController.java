@@ -3,14 +3,14 @@ package wazzle.controller.maingame;
 import java.util.List;
 import java.util.Optional;
 
-import wazzle.model.maingame.Difficulty;
+import wazzle.model.maingame.grid.Difficulty;
 
 public interface SettingsController {
 
 	/**
 	 * Set the current difficulty.
 	 * 
-	 * @see wazzle.model.maingame.Difficulty
+	 * @see wazzle.model.maingame.grid.Difficulty
 	 * @param difficulty the difficulty to set.
 	 */
 	void setCurrentDifficulty(final Difficulty difficulty);
@@ -18,7 +18,7 @@ public interface SettingsController {
 	/**
 	 * Returns a list containing all difficulties.
 	 * 
-	 * @see wazzle.model.maingame.Difficulty
+	 * @see wazzle.model.maingame.grid.Difficulty
 	 * @return List<Difficulty> the List containing all the difficulties
 	 */
 	List<Difficulty> getAllDifficulties();
@@ -26,7 +26,7 @@ public interface SettingsController {
 	/**
 	 * Returns the current set difficulty.
 	 * 
-	 * @see wazzle.model.maingame.Difficulty
+	 * @see wazzle.model.maingame.grid.Difficulty
 	 * @return Difficulty the current set difficulty
 	 */
 	Difficulty getCurrentDifficulty();	

@@ -9,6 +9,10 @@ import java.util.Set;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import com.google.gson.annotations.Expose;
+
+import wazzle.model.maingame.grid.Grid;
+import wazzle.model.maingame.letter.Letter;
+
 import java.util.Optional;
 
 /**

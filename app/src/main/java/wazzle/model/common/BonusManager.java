@@ -3,6 +3,10 @@ package wazzle.model.common;
 import java.util.Set;
 import java.util.function.UnaryOperator;
 
+import wazzle.model.common.bonus.ScoreBonus;
+import wazzle.model.common.bonus.TimeBonus;
+import wazzle.model.common.bonus.WordBonus;
+
 /**
  * This interface provides the methods for {@link ScoreBonus}, {@link TimeBonus} 
  * and {@link WordBonus} handling.

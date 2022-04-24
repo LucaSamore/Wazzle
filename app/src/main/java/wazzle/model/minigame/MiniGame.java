@@ -2,6 +2,10 @@ package wazzle.model.minigame;
 
 import java.util.List;
 
+import wazzle.model.minigame.attempt.MiniGameWord;
+import wazzle.model.minigame.attempt.MiniGameWordImpl;
+import wazzle.model.minigame.attempt.WordChecker;
+
 public interface MiniGame {
 
 	/**

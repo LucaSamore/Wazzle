@@ -6,9 +6,9 @@ import java.util.Optional;
 
 import wazzle.controller.common.WazzleController;
 import wazzle.model.minigame.MiniGame.State;
-import wazzle.model.minigame.MiniGameWord;
-import wazzle.model.minigame.Result;
-import wazzle.model.minigame.WordChecker;
+import wazzle.model.minigame.attempt.MiniGameWord;
+import wazzle.model.minigame.attempt.Result;
+import wazzle.model.minigame.attempt.WordChecker;
 
 /**
  * The Interface MiniGameController.
@@ -92,7 +92,7 @@ public interface MiniGameController {
     /**
      * Gets the list of guessed Minigame words so far.
      *
-     * @see wazzle.model.minigame.MiniGameWord
+     * @see wazzle.model.minigame.attempt.MiniGameWord
      * @return the guessed Minigame words so far.
      */
     List<MiniGameWord> getGuessedMinigameWordsSoFar();

@@ -4,10 +4,10 @@ import javafx.util.Pair;
 import wazzle.model.common.AbstractGameFactory;
 import wazzle.model.common.Dictionary;
 import wazzle.model.common.GameFactoryImpl;
-import wazzle.model.maingame.Difficulty;
 import wazzle.model.maingame.MainGame;
+import wazzle.model.maingame.grid.Difficulty;
 import wazzle.model.minigame.MiniGame;
-import wazzle.model.minigame.WordsDispenser;
+import wazzle.model.minigame.word.WordsDispenser;
 
 /**
  * The purpose of this class is to group all games this application supports.
@@ -27,7 +27,7 @@ public final class Facade {
 	 * @return a {@code MainGame} describing the game newly created
 	 * @see wazzle.model.common.Dictionary
 	 * @see javafx.util.Pair
-	 * @see wazzle.model.maingame.Difficulty
+	 * @see wazzle.model.maingame.grid.Difficulty
 	 */
 	public MainGame startNewMainGame(final Dictionary dataset, final Pair<Integer,Integer> gridShape, final Difficulty difficulty) {
 		return this.gameFactory.createMainGame(dataset, gridShape, difficulty);
@@ -37,7 +37,7 @@ public final class Facade {
 	 * This method allows the user to retrieve a {@code MiniGame} object.
 	 * @param wordsDispenser a {@code WordsDispenser} object.
 	 * @return a {@code MiniGame} describing the game newly created
-	 * @see wazzle.model.minigame.WordsDispenser
+	 * @see wazzle.model.minigame.word.WordsDispenser
 	 */
 	public MiniGame startNewMiniGame(final WordsDispenser wordsDispenser) {
 		return this.gameFactory.createMiniGame(wordsDispenser);

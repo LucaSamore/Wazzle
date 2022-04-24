@@ -9,8 +9,8 @@ import java.util.Optional;
 import wazzle.model.common.BonusManager;
 import wazzle.model.common.BonusManagerImpl;
 import wazzle.model.common.Dictionary;
-import wazzle.model.maingame.Difficulty;
 import wazzle.model.maingame.MainGameImpl;
+import wazzle.model.maingame.grid.Difficulty;
 import wazzle.model.minigame.MiniGame;
 import wazzle.model.minigame.SavedMiniGame;
 

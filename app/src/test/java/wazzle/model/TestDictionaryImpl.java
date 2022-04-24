@@ -4,14 +4,8 @@
 package wazzle.model;
 
 import static org.junit.Assert.*;
-
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.io.IOException;
 
 import org.junit.Test;
