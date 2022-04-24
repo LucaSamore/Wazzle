@@ -1,4 +1,4 @@
-package wazzle.controller.minigame.dictionary;
+package wazzle.model.minigame.dictionary;
 
 import java.util.Set;
 
@@ -7,7 +7,7 @@ import wazzle.model.common.Dictionary;
 /**
  * Base abstract decorator, all others decorator must extend this class.
  * 
- * @see wazzle.controller.minigame.dictionary.FiveLetterDictionary
+ * @see wazzle.model.minigame.dictionary.FiveLetterDictionary
  */
 public abstract class FilteredDictionary implements Dictionary {
 	private Dictionary dictionary;

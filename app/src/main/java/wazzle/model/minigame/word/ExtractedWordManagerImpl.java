@@ -3,8 +3,8 @@ package wazzle.model.minigame.word;
 import java.util.HashSet;
 import java.util.Set;
 
-import wazzle.controller.minigame.dictionary.FiveLetterDictionary;
 import wazzle.model.common.Dictionary;
+import wazzle.model.minigame.dictionary.FiveLetterDictionary;
 
 /**
  * this class is used to compare differents datasets and pick a random word.

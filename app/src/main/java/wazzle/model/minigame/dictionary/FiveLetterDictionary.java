@@ -1,4 +1,4 @@
-package wazzle.controller.minigame.dictionary;
+package wazzle.model.minigame.dictionary;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -7,7 +7,7 @@ import wazzle.model.common.Dictionary;
 /**
  * An extension of the Base abstract decorator, filters all the word of length five.
  * 
- * @see wazzle.controller.minigame.dictionary.FilteredDictionary
+ * @see wazzle.model.minigame.dictionary.FilteredDictionary
  */
 public final class FiveLetterDictionary extends FilteredDictionary{
 

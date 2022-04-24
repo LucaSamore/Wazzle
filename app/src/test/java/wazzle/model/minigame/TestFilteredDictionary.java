@@ -8,10 +8,10 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import wazzle.controller.minigame.dictionary.FiveLetterDictionary;
 import wazzle.model.TestFileUtils;
 import wazzle.model.common.Dictionary;
 import wazzle.model.common.DictionaryImpl;
+import wazzle.model.minigame.dictionary.FiveLetterDictionary;
 
 public class TestFilteredDictionary {
 	

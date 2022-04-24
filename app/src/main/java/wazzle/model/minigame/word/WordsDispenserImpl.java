@@ -2,8 +2,8 @@ package wazzle.model.minigame.word;
 
 import java.util.Random;
 
-import wazzle.controller.minigame.dictionary.FiveLetterDictionary;
 import wazzle.model.common.Dictionary;
+import wazzle.model.minigame.dictionary.FiveLetterDictionary;
 
 public final class WordsDispenserImpl implements WordsDispenser {
 
