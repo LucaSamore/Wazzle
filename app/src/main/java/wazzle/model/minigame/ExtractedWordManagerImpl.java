@@ -3,6 +3,7 @@ package wazzle.model.minigame;
 import java.util.HashSet;
 import java.util.Set;
 
+import wazzle.controller.minigame.FiveLetterDictionary;
 import wazzle.model.common.Dictionary;
 
 /**

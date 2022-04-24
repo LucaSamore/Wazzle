@@ -74,13 +74,6 @@ public interface MiniGame {
 	 */
 	List<MiniGameWordImpl> getAllGuessedWords();
 
-	/**
-	 * Sets the current game state.
-	 *
-	 * @param state the new game state
-	 */
-	void setGameState(State state);
-
     /**
      * Returns the current state of the relevant fields of the Minigame.
      * @see {@link SavedMiniGame}, {@link MiniGame}

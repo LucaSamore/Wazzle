@@ -26,7 +26,7 @@ public final class WordsDispenserImpl implements WordsDispenser {
 		if (!this.availableWordManager.areThereAnyAvailableWords()) {
 			this.availableWordManager.restoreAllAvailableWords();
 		}
-		var extraction = this.availableWordManager.getAvailableWords().toArray()[RANDOM.nextInt(this.availableWordManager.getAvailableWords().size()-1)].toString();
+		var extraction = this.availableWordManager.getAvailableWords().toArray()[RANDOM.nextInt(this.availableWordManager.getAvailableWords().size())].toString();
 		this.availableWordManager.removeFromAvailableWords(extraction);
 		return extraction;
 	}

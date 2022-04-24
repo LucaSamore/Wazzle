@@ -73,8 +73,7 @@ public class MiniGameImpl implements MiniGame {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
-	public void setGameState(final State state) {
+	private void setGameState(final State state) {
 		this.gameState = state;
 	}
 
