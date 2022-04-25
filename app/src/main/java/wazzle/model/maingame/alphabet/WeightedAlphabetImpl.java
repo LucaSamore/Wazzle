@@ -10,11 +10,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ *  This class is a concrete implementation of {@link WeightedAlphabet}
+ */
 public final class WeightedAlphabetImpl implements WeightedAlphabet {
 
     private Map<Character, Double> weightedLetterMap;
 
-    public WeightedAlphabetImpl(Map<Character, Double> weightedLetterMap) {
+    /**
+     * Constructs a new WeightedAlphabetImpl object
+     * @param weightedLetterMap a {@code final Map<Character, Double>} object
+     */
+    public WeightedAlphabetImpl(final Map<Character, Double> weightedLetterMap) {
         Objects.requireNonNull(weightedLetterMap);
         this.weightedLetterMap = new HashMap<>(weightedLetterMap);
     }

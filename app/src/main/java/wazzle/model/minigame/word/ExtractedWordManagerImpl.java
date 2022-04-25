@@ -14,7 +14,7 @@ import wazzle.model.minigame.dictionary.FiveLetterDictionary;
  * @see FiveLetterDictionary
  * 
  */
-public class ExtractedWordManagerImpl implements ExtractedWordManager {
+public final class ExtractedWordManagerImpl implements ExtractedWordManager {
 
 
 	private Set<String> availableWords;

@@ -1,5 +1,8 @@
 package wazzle.model.maingame.alphabet;
 
+/**
+ * An interface for compute the frequency of letters inside a given dataset
+ */
 public interface Frequency {
     /**
      * 
@@ -9,10 +12,10 @@ public interface Frequency {
      * then it returns a new Object that stores it.
      *
      *
-     * @return WeightedAlphabetImpl An Object storing a Map with the letters present in the
+     * @return WeightedAlphabet		An Object storing a Map with the letters present in the
      *                              given set as keys and the relative number of occurrences
      *                              as values.
-     * @see WeightedAlphabetImpl
+     * @see WeightedAlphabet
      * 
      */
 	WeightedAlphabet computeFrequency();

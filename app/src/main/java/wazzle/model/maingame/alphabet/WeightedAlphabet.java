@@ -2,6 +2,9 @@ package wazzle.model.maingame.alphabet;
 
 import java.util.Map;
 
+/**
+ * An interface for modeling a map of characters an their respective frequencies
+ */
 public interface WeightedAlphabet {
     /**
      * This method returns the field weightedLetterMap.

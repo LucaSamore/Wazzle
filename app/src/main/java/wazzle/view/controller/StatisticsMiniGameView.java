@@ -19,7 +19,7 @@ import wazzle.view.ErrorAlert;
 import wazzle.view.FXMLFiles;
 import wazzle.view.SceneSwitcher;
 
-public class StatisticsMiniGameView extends View<MiniGameController>{
+public final class StatisticsMiniGameView extends View<MiniGameController>{
 	@FXML
 	private VBox mainStatisticWindow;
 

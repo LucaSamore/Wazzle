@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import com.google.gson.annotations.Expose;
 
-public class MiniGameWordImpl implements MiniGameWord {
+public final class MiniGameWordImpl implements MiniGameWord {
 
 	@Expose
 	private List<WordElement> compositeWord;

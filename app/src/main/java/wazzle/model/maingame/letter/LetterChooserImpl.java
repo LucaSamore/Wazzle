@@ -14,6 +14,10 @@ import javafx.util.Pair;
 import wazzle.model.maingame.Mediator;
 import wazzle.model.maingame.alphabet.WeightedAlphabet;
 
+
+/**
+ * This class is a concrete implementation for {@link LetterChooser}
+ */
 public final class LetterChooserImpl implements LetterChooser {
 	
 	/**

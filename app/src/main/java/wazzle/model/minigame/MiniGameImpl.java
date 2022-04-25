@@ -8,7 +8,11 @@ import wazzle.model.minigame.attempt.MiniGameWordImpl;
 import wazzle.model.minigame.attempt.WordChecker;
 import wazzle.model.minigame.attempt.WordCheckerImpl;
 
-public class MiniGameImpl implements MiniGame {
+
+/**
+ * This class is a concrete implementation for {@link MiniGame}
+ */
+public final class MiniGameImpl implements MiniGame {
 
 	private static final int MAX_ATTEMPTS_NUMBER = 6;
 	private static final int WORDS_LENGHT = 5;

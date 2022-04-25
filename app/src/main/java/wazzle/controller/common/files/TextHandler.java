@@ -16,7 +16,7 @@ import java.util.List;
  * All the methods provided work with {@code String} as they operate
  * with .txt files only.
  */
-public final class TextHandler implements FileStrategies<String>{
+public final class TextHandler implements FileStrategies<String> {
 	
 	private static final String ENCODING = "UTF-8";
 	

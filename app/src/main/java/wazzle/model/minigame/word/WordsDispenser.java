@@ -1,7 +1,5 @@
 package wazzle.model.minigame.word;
 
-
-
 public interface WordsDispenser {
 
 	/**

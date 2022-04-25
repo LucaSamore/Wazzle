@@ -23,8 +23,9 @@ import wazzle.model.minigame.SavedMiniGame;
  * This class is a concrete implementation for {@link FileController}
  * It uses {@link Serializer} and {@link Deserializer} for managing .json files
  * and {@link TextHandler} for .txt files.
+ * This class is package protected.
  */
-public final class FileControllerImpl implements FileController, Serializer, Deserializer {
+final class FileControllerImpl implements FileController, Serializer, Deserializer {
 	
 	private final FileStrategies<String> textFileHandler;
 	

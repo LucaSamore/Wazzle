@@ -10,7 +10,7 @@ import wazzle.model.minigame.attempt.MiniGameWordImpl;
  * This class works as a memento of the current minigame, it stores all the
  * relevant information about the current minigame.
  */
-public class SavedMiniGame {
+public final class SavedMiniGame {
 
     @Expose
     private List<MiniGameWordImpl> guessedWords;

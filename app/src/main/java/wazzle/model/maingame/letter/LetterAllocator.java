@@ -9,7 +9,6 @@ import wazzle.model.maingame.Mediator;
  * in order to fill the game grid.
  *
  */
-
 public interface LetterAllocator {
 	
 	/**

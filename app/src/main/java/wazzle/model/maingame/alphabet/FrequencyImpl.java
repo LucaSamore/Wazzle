@@ -27,29 +27,21 @@ public final class FrequencyImpl implements Frequency {
 		this.dataset = dataset;
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 * 
 	 */
-
 	public WeightedAlphabet computeFrequency() {
-
-		double numberOfLetters;
-		Map<Character, Double> frequencyMap;
-
-		frequencyMap = this.dataset.getWords().stream()
+		final Map<Character, Double> frequencyMap = this.dataset.getWords()
+				.stream()
 				.flatMap(k -> k.chars().mapToObj(v -> (char) v))
 				.collect(Collectors.groupingBy(Function.identity(), Collectors.reducing(0D, e -> 1D, Double::sum)));
-
-		numberOfLetters = frequencyMap.values().stream()
+		
+		final double numberOfLetters = frequencyMap.values()
+				.stream()
 				.mapToDouble(Double::doubleValue)
 				.sum();
-
 		frequencyMap.entrySet().forEach(e -> e.setValue(e.getValue() / numberOfLetters));
-		
-		frequencyMap = Collections.unmodifiableMap(frequencyMap);
-		
 		return new WeightedAlphabetImpl(Collections.unmodifiableMap(frequencyMap));
 	}
 }

@@ -30,7 +30,7 @@ import wazzle.view.FXMLFiles;
 import wazzle.view.Images;
 import wazzle.view.Loader;
 
-public class LoadingView extends View<MainGameController> {
+public final class LoadingView extends View<MainGameController> {
 
 	@FXML
 	private ImageView imageContainer;
