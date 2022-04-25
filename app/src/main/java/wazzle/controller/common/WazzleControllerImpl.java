@@ -6,16 +6,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.checkerframework.checker.nullness.qual.NonNull;
+
+import javafx.util.Pair;
 import wazzle.controller.maingame.GameHistoryController;
 import wazzle.controller.maingame.GameHistoryControllerImpl;
 import wazzle.controller.maingame.SettingsController;
 import wazzle.controller.maingame.SettingsControllerImpl;
+import wazzle.model.common.AbstractGameFactory;
 import wazzle.model.common.BonusManager;
 import wazzle.model.common.BonusManagerImpl;
 import wazzle.model.common.Dictionary;
+import wazzle.model.common.GameFactoryImpl;
 import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
 import wazzle.model.maingame.grid.Difficulty;
+import wazzle.model.minigame.MiniGame;
 import wazzle.model.minigame.SavedMiniGame;
 import wazzle.model.minigame.word.WordsDispenser;
 import wazzle.model.minigame.word.WordsDispenserImpl;
@@ -30,8 +35,8 @@ public final class WazzleControllerImpl implements WazzleController {
 	private final FileController fileController;
 	private final SettingsController settingsController;
 	private final GameHistoryController gameHistoryController;
+	private final AbstractGameFactory gameFactory;
 	private final BonusManager bonusManager;
-	private final Facade facade;
 	private final WordsDispenser wordsDispencer;
 	
 	/**
@@ -41,11 +46,27 @@ public final class WazzleControllerImpl implements WazzleController {
 	 */
 	public WazzleControllerImpl() throws IOException {
 		this.fileController = new FileControllerImpl();
+		this.gameFactory = new GameFactoryImpl();
 		this.bonusManager = this.bonusesFromFile();
 		this.settingsController = new SettingsControllerImpl(this.difficultiesFromFIle(), this.currentDifficultyFromFile());
 		this.gameHistoryController = new GameHistoryControllerImpl(this.gameHistoryFromFile());
-		this.facade = new Facade();
 		this.wordsDispencer = new WordsDispenserImpl(this.getShortDataset());
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public MainGame startNewMainGame(Dictionary dataset, Pair<Integer, Integer> gridShape, Difficulty difficulty) {
+		return this.gameFactory.createMainGame(dataset, gridShape, difficulty);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public MiniGame startNewMiniGame(WordsDispenser wordsDispenser) {
+		return this.gameFactory.createMiniGame(wordsDispenser);
 	}
 
 	/**
@@ -111,13 +132,6 @@ public final class WazzleControllerImpl implements WazzleController {
 	@Override
 	public Optional<SavedMiniGame> getLastMinigame() throws IOException {
 		return this.fileController.getMiniGame(WazzleFiles.MINI_GAME.getFileName());
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Facade getFacade() {
-		return this.facade;
 	}
 	
 	/**

@@ -48,7 +48,7 @@ public final class MainGameControllerImpl implements MainGameController {
 	@Override
 	public void startNewGame(final Dictionary dataset, final Pair<Integer,Integer> gridShape, final Difficulty difficulty) {
 		if(this.game.isEmpty()) {
-			this.game = Optional.of(this.mainController.getFacade().startNewMainGame(dataset, gridShape, difficulty));
+			this.game = Optional.of(this.mainController.startNewMainGame(dataset, gridShape, difficulty));
 		}
 	}
 

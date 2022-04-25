@@ -181,7 +181,6 @@ public class MiniGameControllerImpl implements MiniGameController {
      * Starts a new minigame.
      */
     private MiniGame newMiniGame() {
-        return this.wazzleController.getFacade()
-                .startNewMiniGame(this.wazzleController.getWordsDispenser());
+        return this.wazzleController.startNewMiniGame(this.wazzleController.getWordsDispenser());
     }
 }

@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.Optional;
+
+import javafx.util.Pair;
 import wazzle.controller.maingame.GameHistoryController;
 import wazzle.controller.maingame.SettingsController;
 import wazzle.model.common.BonusManager;
@@ -11,6 +13,7 @@ import wazzle.model.common.Dictionary;
 import wazzle.model.maingame.MainGame;
 import wazzle.model.maingame.MainGameImpl;
 import wazzle.model.maingame.grid.Difficulty;
+import wazzle.model.minigame.MiniGame;
 import wazzle.model.minigame.SavedMiniGame;
 import wazzle.model.minigame.word.WordsDispenser;
 
@@ -20,6 +23,26 @@ import wazzle.model.minigame.word.WordsDispenser;
  * difficulty, bonuses and continuing a started minigame game.
  */
 public interface WazzleController {
+	
+	/**
+	 * This method allows the user to retrieve a {@code MainGame} object.
+	 * @param dataset a {@code Dictionary} object that represents what dataset the game is going to use.
+	 * @param gridShape a {@code Pair<Integer,Integer>} object that represents the shape of the grid.
+	 * @param difficulty the {@code Difficulty} selected for this game.
+	 * @return a {@code MainGame} describing the game newly created
+	 * @see wazzle.model.common.Dictionary
+	 * @see javafx.util.Pair
+	 * @see wazzle.model.maingame.grid.Difficulty
+	 */
+	MainGame startNewMainGame(Dictionary dataset, Pair<Integer,Integer> gridShape, Difficulty difficulty);
+	
+	/**
+	 * This method allows the user to retrieve a {@code MiniGame} object.
+	 * @param wordsDispenser a {@code WordsDispenser} object.
+	 * @return a {@code MiniGame} describing the game newly created
+	 * @see wazzle.model.minigame.word.WordsDispenser
+	 */
+	MiniGame startNewMiniGame(WordsDispenser wordsDispenser);
 
 	/**
 	 * Gives the dataset.
@@ -78,13 +101,6 @@ public interface WazzleController {
 	 * @return MiniGameImpl the last {@link SavedMiniGame}.
 	 */
 	Optional<SavedMiniGame> getLastMinigame() throws IOException;
-	
-	/**
-	 * Gives the {@link Facade}.
-	 * 
-	 * @return Facade the {@link Facade}.
-	 */
-	Facade getFacade();
 	
 	/**
 	 * Gives the {@link WordsDispenser}.
