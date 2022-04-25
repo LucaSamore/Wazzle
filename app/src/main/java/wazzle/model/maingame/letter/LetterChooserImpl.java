@@ -19,7 +19,7 @@ public final class LetterChooserImpl implements LetterChooser {
 	/**
 	 * Is a value which allows to round the operation between Integer numbers
 	 */
-	private static final double CONSTANCE_ROUND = 0.5;
+	private static final double CONSTANT_ROUND = 0.5;
 	private EnumMap<Range, WeightedAlphabet> classifiedLetters;
 	private Pair<Integer, Integer> gridShape;
 	private final Mediator mediator;
@@ -74,7 +74,7 @@ public final class LetterChooserImpl implements LetterChooser {
 				Stream.of(Range.values())
 					  .map(Range::getWeight)
 					  .reduce(0, (x, y) -> x + y);
-		return (int) ((double) allotmentIndex*range.getWeight() + CONSTANCE_ROUND);
+		return (int) ((double) allotmentIndex*range.getWeight() + CONSTANT_ROUND);
 	}
 	
 	/**

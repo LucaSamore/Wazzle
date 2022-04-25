@@ -20,7 +20,7 @@ public final class ScoreConverterImpl implements ScoreConverter {
 	private static final double MIN_SCORE = 1.0;
 	private static final double ERROR = 0.1;
 	private final WeightedAlphabet weightedAlphabet;
-	private final ScoreAdapter adapter;
+	private final ScoreDecorator adapter;
 	private final BinaryOperator<Double> mapper = (value, max) -> MAX_SCORE - MAX_SCORE * value / max + MIN_SCORE 
 																									  + ERROR;
 	
@@ -32,7 +32,7 @@ public final class ScoreConverterImpl implements ScoreConverter {
 	 */
 	public ScoreConverterImpl(final WeightedAlphabet weightedAlphabet) {
 		this.weightedAlphabet = weightedAlphabet;
-		this.adapter = new ScoreAdapter(this.weightedAlphabet, this.mapper);
+		this.adapter = new ScoreDecorator(this.weightedAlphabet, this.mapper);
 	}
 		
 	/**
