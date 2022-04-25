@@ -148,6 +148,4 @@ public interface FileController {
 	default boolean exists(final String fullPath) throws IOException {
 		return Files.exists(Path.of(fullPath), LinkOption.NOFOLLOW_LINKS);
 	}
-	
-	FileController getThis();
 }

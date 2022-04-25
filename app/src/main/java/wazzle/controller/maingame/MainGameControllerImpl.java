@@ -25,7 +25,7 @@ public final class MainGameControllerImpl implements MainGameController {
 	 * @param mainController a {@link WazzleController} object.
 	 */
 	public MainGameControllerImpl(final WazzleController mainController) {
-		this.mainController = mainController.getThis();
+		this.mainController = mainController;
 		this.game = Optional.empty();
 		this.timer = new GameTimerImpl(
 			      (long) this.mainController

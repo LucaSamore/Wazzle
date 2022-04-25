@@ -208,14 +208,6 @@ public final class WazzleControllerImpl implements WazzleController {
 	}
 	
 	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public WazzleController getThis() {
-		return this;
-	}
-	
-	/**
 	 * Takes bonuses from file using {@link FileController}.
 	 * 
 	 * @return BonusManager the {@link BonusManager} filled with bonuses quantities saved.

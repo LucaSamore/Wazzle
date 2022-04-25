@@ -172,11 +172,6 @@ public final class FileControllerImpl implements FileController, Serializer, Des
 		return this.<Difficulty>deserialize(Difficulty.class, ClassLoader.getSystemResourceAsStream(path));
 	}
 	
-	@Override
-	public FileController getThis() {
-		return this;
-	}
-	
 	private void buildFoldersStructure() throws IOException {
 		if(!this.exists(WazzleFiles.getFoldersStructure())) {
 			Files.createDirectories(Path.of(WazzleFiles.getFoldersStructure()));

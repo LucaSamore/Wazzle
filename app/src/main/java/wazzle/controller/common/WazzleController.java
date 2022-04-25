@@ -163,11 +163,4 @@ public interface WazzleController {
 	 * @throws IOException
 	 */
 	void deleteEndedMiniGame() throws IOException;
-	
-	/**
-	 * Gives this {@link WazzleController}.
-	 * 
-	 * @return WazzleController this {@link WazzleController}.
-	 */
-	WazzleController getThis();
 }
