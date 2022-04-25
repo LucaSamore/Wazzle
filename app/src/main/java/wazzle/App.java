@@ -8,10 +8,10 @@ import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import wazzle.controller.common.WazzleControllerImpl;
@@ -22,46 +22,42 @@ import wazzle.view.Loader;
 import wazzle.view.WindowCloser;
 import wazzle.view.controller.MainMenuView;
 
-
-/**
- * This class starts the Wazzle application.
- *
- */
+/** This class starts the Wazzle application. */
 public final class App extends Application implements WindowCloser {
 
-	/**
-	 * Set the primary scene and the icon.
-	 */
-	public void start(Stage stage) {
-		Rectangle2D screenViewport = Screen.getPrimary().getBounds();
-		MainMenuView mainMenuController;
-		try {
-			stage.setUserData(new WazzleControllerImpl());
-			DoubleProperty visualUnit = new SimpleDoubleProperty();
-			visualUnit.set(Math.min(screenViewport.getWidth()*0.75, screenViewport.getHeight()*0.75));
-			mainMenuController = new MainMenuView(stage, visualUnit);
-			Scene scene = new Scene(Loader.<MainMenuView, Parent>loadFXMLElement(mainMenuController, FXMLFiles.MAIN_MENU.getPath()), 
-							screenViewport.getWidth()*0.75, screenViewport.getHeight()*0.75);
-			stage.setScene(scene);
-			stage.getIcons().add(new Image(Images.WAZZLE_ICON.getPath()));
-			
-			this.closeWindow(stage);
-			
-			
-			stage.show();
-			visualUnit.bind(Bindings.min(stage.widthProperty(),stage.heightProperty()));
-		} catch (IOException e) {
-			ErrorAlert.show();
-		}
-	}
-	
-	/**
-	 * Launch the application. 
-	 * 
-	 * @param args
-	 */
-    public static void main(final String... args) {
-        launch();
-    }
+  /** Set the primary scene and the icon. */
+  public void start(Stage stage) {
+    Rectangle2D screenViewport = Screen.getPrimary().getBounds();
+    MainMenuView mainMenuController;
+    try {
+      stage.setUserData(new WazzleControllerImpl());
+      DoubleProperty visualUnit = new SimpleDoubleProperty();
+      visualUnit.set(Math.min(screenViewport.getWidth() * 0.75, screenViewport.getHeight() * 0.75));
+      mainMenuController = new MainMenuView(stage, visualUnit);
+      Scene scene =
+          new Scene(
+              Loader.<MainMenuView, Parent>loadFXMLElement(
+                  mainMenuController, FXMLFiles.MAIN_MENU.getPath()),
+              screenViewport.getWidth() * 0.75,
+              screenViewport.getHeight() * 0.75);
+      stage.setScene(scene);
+      stage.getIcons().add(new Image(Images.WAZZLE_ICON.getPath()));
 
+      this.closeWindow(stage);
+
+      stage.show();
+      visualUnit.bind(Bindings.min(stage.widthProperty(), stage.heightProperty()));
+    } catch (IOException e) {
+      ErrorAlert.show();
+    }
+  }
+
+  /**
+   * Launch the application.
+   *
+   * @param args
+   */
+  public static void main(final String... args) {
+    launch();
+  }
 }

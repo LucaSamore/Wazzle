@@ -13,6 +13,7 @@ plugins {
     pmd
     id("com.github.spotbugs") version "5.0.6"
     id("com.github.johnrengelman.shadow") version "7.0.0"
+    id("com.github.sherter.google-java-format") version "0.9"
 }
 
 repositories {

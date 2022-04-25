@@ -1,7 +1,4 @@
-/**
- * add RunLater 
- */
-
+/** add RunLater */
 package wazzle.view.controller;
 
 import java.io.IOException;
@@ -32,135 +29,139 @@ import wazzle.view.Loader;
 
 public final class LoadingView extends View<MainGameController> {
 
-	@FXML
-	private ImageView imageContainer;
+  @FXML private ImageView imageContainer;
 
-	@FXML
-	private Label firstDot;
+  @FXML private Label firstDot;
 
-	@FXML
-	private Label secondDot;
+  @FXML private Label secondDot;
 
-	@FXML
-	private Label thirdDot;
+  @FXML private Label thirdDot;
 
-	@FXML
-	private Label loadingLabel;
-	
-	private AnimationTimer animationTimer;		
-	private boolean flag = false;
-	
-	public LoadingView(final Stage stage) {
-		this.stage = stage;
-		this.controller = (MainGameController) stage.getUserData();
-		this.animationTimer = new AnimationTimer() {
-			
-			@Override
-			public void handle(long arg0) {
-				if (flag) {
-						animationTimer.stop();
-						try {
-							goToMainGame(stage);
-						} catch (IOException e) {
-							e.printStackTrace();
-							ErrorAlert.show();
-						}
+  @FXML private Label loadingLabel;
 
-				}				
-			}
-		};
-		
-		this.visualUnit = new SimpleDoubleProperty();
-		this.visualUnit.bind(Bindings.min(stage.heightProperty(), stage.widthProperty()));
-	}
+  private AnimationTimer animationTimer;
+  private boolean flag = false;
 
-	private void setGrid() {
-		Task<Void> task = new Task<Void>() {
-			@Override
-			public Void call() throws IOException {
-				final var shape = controller.getMainController().getSettingsController().getCurrentDifficulty().getGridShape();
-				controller.startNewGame(controller
-						.getMainController()
-						.getDataset(), new Pair<Integer,Integer>(shape,shape), controller.getMainController().getCurrentDifficulty());
-				
-				
-				flag = true;
-				return null;
-			}
-		};
-		new Thread(task).start();
-	}
+  public LoadingView(final Stage stage) {
+    this.stage = stage;
+    this.controller = (MainGameController) stage.getUserData();
+    this.animationTimer =
+        new AnimationTimer() {
 
-	private void setAnimation() {
-		
-		Image loadingWaffle = new Image(ClassLoader.getSystemResourceAsStream(Images.WALLY.getPath()));
-		imageContainer.setImage(loadingWaffle);
+          @Override
+          public void handle(long arg0) {
+            if (flag) {
+              animationTimer.stop();
+              try {
+                goToMainGame(stage);
+              } catch (IOException e) {
+                e.printStackTrace();
+                ErrorAlert.show();
+              }
+            }
+          }
+        };
 
-		DoubleProperty dotJumpHeight = new SimpleDoubleProperty();
-		dotJumpHeight.bind(loadingLabel.heightProperty().multiply(0.5 * -1));
-		
-		imageContainer.fitHeightProperty().bind(visualUnit);
-		imageContainer.fitWidthProperty().bind(visualUnit);
+    this.visualUnit = new SimpleDoubleProperty();
+    this.visualUnit.bind(Bindings.min(stage.heightProperty(), stage.widthProperty()));
+  }
 
-		TranslateTransition translateFirst = new TranslateTransition();
-		translateFirst.setNode(firstDot);
-		translateFirst.setDuration(Duration.millis(200));
-		translateFirst.setCycleCount(2);
-		translateFirst.byYProperty().bind(dotJumpHeight);
-		translateFirst.setAutoReverse(true);
+  private void setGrid() {
+    Task<Void> task =
+        new Task<Void>() {
+          @Override
+          public Void call() throws IOException {
+            final var shape =
+                controller
+                    .getMainController()
+                    .getSettingsController()
+                    .getCurrentDifficulty()
+                    .getGridShape();
+            controller.startNewGame(
+                controller.getMainController().getDataset(),
+                new Pair<Integer, Integer>(shape, shape),
+                controller.getMainController().getCurrentDifficulty());
 
-		TranslateTransition translateSecond = new TranslateTransition();
-		translateSecond.setNode(secondDot);
-		translateSecond.setDuration(Duration.millis(200));
-		translateSecond.setCycleCount(2);
-		translateSecond.byYProperty().bind(dotJumpHeight);
-		translateSecond.setAutoReverse(true);
+            flag = true;
+            return null;
+          }
+        };
+    new Thread(task).start();
+  }
 
-		TranslateTransition translateThird = new TranslateTransition();
-		translateThird.setNode(thirdDot);
-		translateThird.setDuration(Duration.millis(200));
-		translateThird.setCycleCount(2);
-		translateThird.byYProperty().bind(dotJumpHeight);
-		translateThird.setAutoReverse(true);
+  private void setAnimation() {
 
-		SequentialTransition seqT = new SequentialTransition();
+    Image loadingWaffle = new Image(ClassLoader.getSystemResourceAsStream(Images.WALLY.getPath()));
+    imageContainer.setImage(loadingWaffle);
 
-		seqT.getChildren().addAll(translateFirst, translateSecond, translateThird);
-		seqT.setCycleCount(Animation.INDEFINITE);
-		seqT.play();
-	}
+    DoubleProperty dotJumpHeight = new SimpleDoubleProperty();
+    dotJumpHeight.bind(loadingLabel.heightProperty().multiply(0.5 * -1));
 
-	public void goToMainGame(Stage stage) throws IOException {
-		Parent element = Loader.<MainGameView,Parent>loadFXMLElement(new MainGameView(stage), FXMLFiles.MAIN_GAME.getPath());
-		Scene scene = new Scene(element, stage.getScene().getWidth(), stage.getScene().getHeight());
-		stage.setUserData(this.controller);
-		stage.setScene(scene);
-		stage.show();
-	}
+    imageContainer.fitHeightProperty().bind(visualUnit);
+    imageContainer.fitWidthProperty().bind(visualUnit);
 
-	@Override
-	public void nextScene(ActionEvent event) throws IOException {
-		// TODO Auto-generated method stub
-	}
+    TranslateTransition translateFirst = new TranslateTransition();
+    translateFirst.setNode(firstDot);
+    translateFirst.setDuration(Duration.millis(200));
+    translateFirst.setCycleCount(2);
+    translateFirst.byYProperty().bind(dotJumpHeight);
+    translateFirst.setAutoReverse(true);
 
-	@Override
-	protected void buildView() {
-		this.animationTimer.start();
-		setGraphics();
-		setAnimation();
-		setGrid();
-	}
+    TranslateTransition translateSecond = new TranslateTransition();
+    translateSecond.setNode(secondDot);
+    translateSecond.setDuration(Duration.millis(200));
+    translateSecond.setCycleCount(2);
+    translateSecond.byYProperty().bind(dotJumpHeight);
+    translateSecond.setAutoReverse(true);
 
-	@Override
-	protected void setGraphics() {
-		ObservableValue<String> fontSize = Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.1).asString(), ";");
-		
-		imageContainer.fitHeightProperty().bind(imageContainer.fitWidthProperty());
-		imageContainer.fitWidthProperty().bind(visualUnit.multiply(0.3));
-		
-		loadingLabel.styleProperty().bind(fontSize);
-		firstDot.styleProperty().bind(fontSize);
-		secondDot.styleProperty().bind(fontSize);
-		thirdDot.styleProperty().bind(fontSize);
-	}
+    TranslateTransition translateThird = new TranslateTransition();
+    translateThird.setNode(thirdDot);
+    translateThird.setDuration(Duration.millis(200));
+    translateThird.setCycleCount(2);
+    translateThird.byYProperty().bind(dotJumpHeight);
+    translateThird.setAutoReverse(true);
+
+    SequentialTransition seqT = new SequentialTransition();
+
+    seqT.getChildren().addAll(translateFirst, translateSecond, translateThird);
+    seqT.setCycleCount(Animation.INDEFINITE);
+    seqT.play();
+  }
+
+  public void goToMainGame(Stage stage) throws IOException {
+    Parent element =
+        Loader.<MainGameView, Parent>loadFXMLElement(
+            new MainGameView(stage), FXMLFiles.MAIN_GAME.getPath());
+    Scene scene = new Scene(element, stage.getScene().getWidth(), stage.getScene().getHeight());
+    stage.setUserData(this.controller);
+    stage.setScene(scene);
+    stage.show();
+  }
+
+  @Override
+  public void nextScene(ActionEvent event) throws IOException {
+    // TODO Auto-generated method stub
+  }
+
+  @Override
+  protected void buildView() {
+    this.animationTimer.start();
+    setGraphics();
+    setAnimation();
+    setGrid();
+  }
+
+  @Override
+  protected void setGraphics() {
+    ObservableValue<String> fontSize =
+        Bindings.concat("-fx-font-size: ", visualUnit.multiply(0.1).asString(), ";");
+
+    imageContainer.fitHeightProperty().bind(imageContainer.fitWidthProperty());
+    imageContainer.fitWidthProperty().bind(visualUnit.multiply(0.3));
+
+    loadingLabel.styleProperty().bind(fontSize);
+    firstDot.styleProperty().bind(fontSize);
+    secondDot.styleProperty().bind(fontSize);
+    thirdDot.styleProperty().bind(fontSize);
+  }
 }
