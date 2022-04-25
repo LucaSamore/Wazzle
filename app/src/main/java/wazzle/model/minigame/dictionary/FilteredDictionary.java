@@ -7,17 +7,17 @@ import wazzle.model.common.Dictionary;
 /**
  * Base abstract decorator, all others decorator must extend this class.
  * 
- * @see wazzle.model.minigame.dictionary.FiveLetterDictionary
+ * @see FiveLetterDictionary
  */
 public abstract class FilteredDictionary implements Dictionary {
-	private Dictionary dictionary;
+    private Dictionary dictionary;
 
-	protected FilteredDictionary(final Dictionary words) {
-		this.dictionary = words;
-	}
+    protected FilteredDictionary(final Dictionary words) {
+        this.dictionary = words;
+    }
 
-	@Override
-	public Set<String> getWords() {
-		return dictionary.getWords();
-	}
+    @Override
+    public Set<String> getWords() {
+        return dictionary.getWords();
+    }
 }
