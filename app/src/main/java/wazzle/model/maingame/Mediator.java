@@ -103,21 +103,7 @@ public final class Mediator {
 	private EnumMap<Range, List<Pair<Character, Double>>> unify(final EnumMap<Range,List<Pair<Character,Double>>> chosenLetters) {
 		final var chosenLettersList = new LinkedList<Pair<Character, Double>>();
 		chosenLetters.entrySet().forEach(e -> chosenLettersList.addAll(e.getValue()));
-		
-		//Filter scored letters for chosen letters
-		List<Pair<Character, Double>> chosenScoredLetters = chosenLettersList
-				.stream()
-				.map(p -> new Pair<>(p.getKey(),
-						this.scoreConverter.convert()
-							.getWeightedAlphabet()
-							.entrySet()
-							.stream()
-							.filter(e -> e.getKey() == p.getKey())
-							.findAny()
-							.get()
-							.getValue()))
-				.collect(Collectors.toList());
-		
+		final var chosenScoredLetters = this.getChosenScoredLetters(chosenLettersList); //Filter scored letters for chosen letters
 		final var chosenScoredLettersMap = new EnumMap<Range, List<Pair<Character, Double>>>(Range.class);
 		
 		chosenLetters.entrySet().forEach(e -> chosenScoredLettersMap.put(e.getKey(), chosenScoredLetters
@@ -130,5 +116,20 @@ public final class Mediator {
 				.collect(Collectors.toList())));
 		
 		return chosenScoredLettersMap;
+	}
+	
+	private List<Pair<Character, Double>> getChosenScoredLetters(final List<Pair<Character,Double>> chosenLettersList) {
+		return chosenLettersList
+				.stream()
+				.map(p -> new Pair<>(p.getKey(),
+						this.scoreConverter.convert()
+							.getWeightedAlphabet()
+							.entrySet()
+							.stream()
+							.filter(e -> e.getKey() == p.getKey())
+							.findAny()
+							.get()
+							.getValue()))
+				.collect(Collectors.toList());
 	}
 }
