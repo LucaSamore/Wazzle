@@ -25,7 +25,7 @@ public interface Filters {
 	 * @return {@code true} if the word passes all the filters called in this method, {@code false} otherwise.
 	 * @see wazzle.model.maingame.letter.Letter
 	 */
-	boolean applyFilters(final String word, final Set<Letter> letters);
+	boolean applyFilters(String word, Set<Letter> letters);
 	
 	
 	/**

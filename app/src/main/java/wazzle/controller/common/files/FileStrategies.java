@@ -21,7 +21,7 @@ public interface FileStrategies<X> {
 	 * @throws IOException
 	 * @see java.util.List
 	 */
-	List<X> read(final String path) throws IOException;
+	List<X> read(String path) throws IOException;
 	
 	/**
 	 * Reads a file given an {@link InputStream}.
@@ -31,7 +31,7 @@ public interface FileStrategies<X> {
 	 * @throws IOException
 	 * @see java.util.List
 	 */
-	List<X> read(final InputStream stream) throws IOException;
+	List<X> read(InputStream stream) throws IOException;
 	
 	/**
 	 * Writes the provided content to a file in write mode, given the path. Content will be overwritten.
@@ -42,7 +42,7 @@ public interface FileStrategies<X> {
 	 * @throws IOException
 	 * @see java.util.List
 	 */
-	void write(final String path, final List<X> toBeWritten) throws IOException;
+	void write(String path, List<X> toBeWritten) throws IOException;
 	
 	/**
 	 * Writes the provided content to a file in append mode, given the path.
@@ -53,7 +53,7 @@ public interface FileStrategies<X> {
 	 * @throws IOException
 	 * @see java.util.List
 	 */
-	void append(final String path, final List<X> toBeAdded) throws IOException;
+	void append(String path, List<X> toBeAdded) throws IOException;
 	
 	/**
 	 * Clears the content of a file given his path.

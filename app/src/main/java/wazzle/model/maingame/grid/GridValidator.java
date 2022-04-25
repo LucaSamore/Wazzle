@@ -22,7 +22,7 @@ public interface GridValidator {
 	 * @return an {@code Optional.empty()} if the given set is not valid, otherwise an {@code Optional<Set<String>>} 
 	 * containing all the words that can be formed using the given set.
 	 */
-	Optional<Set<String>> validate(final Set<Letter> letters);
+	Optional<Set<String>> validate(Set<Letter> letters);
 	
 	/**
 	 * <pre>This method must be used for tests only!</pre>
@@ -30,5 +30,5 @@ public interface GridValidator {
 	 * @param letters a {@code Set<Letter>} representing the letters to be validated
 	 * @return a {@code Set<String>} that contains all the the words that can be formed using the given set.
 	 */
-	Set<String> validateForTest(final Set<Letter> letters);
+	Set<String> validateForTest(Set<Letter> letters);
 }

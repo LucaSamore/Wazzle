@@ -25,7 +25,7 @@ public interface FileController {
 	 * @return a {@link Dictionary} object.
 	 * @throws IOException
 	 */
-	Dictionary getDataset(final String path) throws IOException;
+	Dictionary getDataset(String path) throws IOException;
 	
 	/**
 	 * Writes a {@code List<MainGameImpl>} objects from given file.
@@ -35,7 +35,7 @@ public interface FileController {
 	 * @throws IOException
 	 * @see MainGameImpl
 	 */
-	void saveGames(final String fileName, final List<MainGameImpl> games) throws IOException;
+	void saveGames(String fileName, List<MainGameImpl> games) throws IOException;
 	
 
 	/**
@@ -45,7 +45,7 @@ public interface FileController {
 	 * @return void
 	 * @throws IOException
 	 */
-	void saveMiniGame(final String fileName, final SavedMiniGame minigame) throws IOException;
+	void saveMiniGame(String fileName, SavedMiniGame minigame) throws IOException;
 	
 	/**
 	 * Writes a {@link BonusManager} objects from given file.
@@ -54,7 +54,7 @@ public interface FileController {
 	 * @return void
 	 * @throws IOException
 	 */
-	void saveBonuses(final String fileName, final BonusManager bonuses) throws IOException;
+	void saveBonuses(String fileName, BonusManager bonuses) throws IOException;
 	
 	/**
 	 * Writes a {@link Difficulty} objects from given file.
@@ -63,7 +63,7 @@ public interface FileController {
 	 * @return void
 	 * @throws IOException
 	 */
-	void saveCurrentSettings(final String fileName, Difficulty settings) throws IOException;
+	void saveCurrentSettings(String fileName, Difficulty settings) throws IOException;
 	
 	/**
 	 * Writes a {@code List<Difficulty>} objects from given file.
@@ -73,7 +73,7 @@ public interface FileController {
 	 * @throws IOException
 	 * @see Difficulty
 	 */
-	void saveAllSettings(final String fileName, final List<Difficulty> allSettings) throws IOException;
+	void saveAllSettings(String fileName, List<Difficulty> allSettings) throws IOException;
 	
 	/**
 	 * Reads a {@code List<MainGameImpl>} objects from given file.
@@ -82,7 +82,7 @@ public interface FileController {
 	 * @throws IOException
 	 * @see MainGameImpl
 	 */
-	List<MainGameImpl> getMainGameHistory(final String fileName) throws IOException;
+	List<MainGameImpl> getMainGameHistory(String fileName) throws IOException;
 	
 	/**
 	 * Reads a {@code Optional<SavedMiniGame>} object from given file.
@@ -91,7 +91,7 @@ public interface FileController {
 	 * @throws IOException
 	 * @see SavedMiniGame
 	 */
-	Optional<SavedMiniGame> getMiniGame(final String fileName) throws IOException;
+	Optional<SavedMiniGame> getMiniGame(String fileName) throws IOException;
 
 	
 	/**
@@ -100,7 +100,7 @@ public interface FileController {
 	 * @return a {@code BonusManagerImpl} 
 	 * @throws IOException
 	 */
-	BonusManagerImpl getBonuses(final String fileName) throws IOException;
+	BonusManagerImpl getBonuses(String fileName) throws IOException;
 	
 	/**
 	 * Reads a {@link Difficulty} object from given file.
@@ -108,7 +108,7 @@ public interface FileController {
 	 * @return a {@code Difficulty} 
 	 * @throws IOException
 	 */
-	Difficulty getCurrentSettings(final String fileName) throws IOException;
+	Difficulty getCurrentSettings(String fileName) throws IOException;
 	
 	/**
 	 * Reads a {@code List<Difficulty>} objects from given file.
@@ -117,7 +117,7 @@ public interface FileController {
 	 * @throws IOException
 	 * @see Difficulty
 	 */
-	List<Difficulty> getAllSettings(final String path) throws IOException;
+	List<Difficulty> getAllSettings(String path) throws IOException;
 	
 	/**
 	 * Creates a file given the full path.

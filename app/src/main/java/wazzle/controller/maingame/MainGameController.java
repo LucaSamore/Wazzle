@@ -29,7 +29,7 @@ public interface MainGameController {
 	 * @param difficulty a {@link Difficulty} object chosen by the user
 	 * @return void.
 	 */
-	void startNewGame(final Dictionary dataset, final Pair<Integer,Integer> gridShape, final Difficulty difficulty);
+	void startNewGame(Dictionary dataset, Pair<Integer,Integer> gridShape, Difficulty difficulty);
 	
 	/**
 	 * This method handles the end game situation.
@@ -42,7 +42,7 @@ public interface MainGameController {
 	 * @param word {@code String} the word to try
 	 * @return {@code true} if {@link MainGame#tryWord(String)} returns {@code true}, {@code false} otherwise.
 	 */
-	boolean attempt(final String word);
+	boolean attempt(String word);
 	
 	/**
 	 * This method tells if the user needs help by checking how many failed attemps he got in row.

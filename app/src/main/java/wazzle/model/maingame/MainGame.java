@@ -19,7 +19,7 @@ public interface MainGame {
 	 * @return {@code true} if the given word was added to {@link MainGame#wordsFound()}, {@code false} otherwise.
 	 * @see java.util.Set
 	 */
-	boolean tryWord(final String word);
+	boolean tryWord(String word);
 	
 	/**
 	 * Returns a {@code Set} containing the words you have already found inside the {@code Grid}.
@@ -73,7 +73,7 @@ public interface MainGame {
 	 * @param newScore an {@code int} representing the new score.
 	 * @return void.
 	 */
-	void setCurrentScore(final int newScore);
+	void setCurrentScore(int newScore);
 	
 	/**
 	 * Returns the current score.
@@ -86,5 +86,5 @@ public interface MainGame {
 	 * @param word a {@code String} representing the given word.
 	 * @return an {@code int} describing the score of the given word.
 	 */
-	int getScoreFromWord(final String word);
+	int getScoreFromWord(String word);
 }

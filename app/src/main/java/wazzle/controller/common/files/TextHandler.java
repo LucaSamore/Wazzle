@@ -32,7 +32,7 @@ public final class TextHandler implements FileStrategies<String>{
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<String> read(InputStream stream) throws IOException {
+	public List<String> read(final InputStream stream) throws IOException {
 		final var fullContent = new ArrayList<String>();
 		var line = "";
 		

@@ -18,7 +18,7 @@ import java.util.Optional;
 /**
  * This class represents an implementation for {@link wazzle.model.maingame.MainGame}
  */
-public class MainGameImpl implements MainGame {
+public final class MainGameImpl implements MainGame {
 	
 	@Expose
 	private final Set<String> wordsFound;

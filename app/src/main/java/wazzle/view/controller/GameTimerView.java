@@ -63,5 +63,5 @@ public interface GameTimerView {
 	  * 
 	  * @param event		The request of obtaining a {@link TimeBonus}.
 	  */
-	 void gainBonus(final ActionEvent event);
+	 void gainBonus(ActionEvent event);
 }

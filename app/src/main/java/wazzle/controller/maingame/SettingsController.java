@@ -13,7 +13,7 @@ public interface SettingsController {
 	 * @see wazzle.model.maingame.grid.Difficulty
 	 * @param difficulty the difficulty to set.
 	 */
-	void setCurrentDifficulty(final Difficulty difficulty);
+	void setCurrentDifficulty(Difficulty difficulty);
 	
 	/**
 	 * Returns a list containing all difficulties.
@@ -38,5 +38,5 @@ public interface SettingsController {
 	 * @param shape
 	 * @return the selected difficulty
 	 */
-	Optional<Difficulty> getDifficultyByNameAndShape(final String name, final int shape);
+	Optional<Difficulty> getDifficultyByNameAndShape(String name, int shape);
 }

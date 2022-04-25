@@ -25,7 +25,7 @@ public interface AbstractGameFactory {
 	 * @see javafx.util.Pair
 	 * @see wazzle.model.maingame.grid.Difficulty
 	 */
-	MainGame createMainGame(final Dictionary dataset, final Pair<Integer,Integer> gridShape, final Difficulty difficulty);
+	MainGame createMainGame(Dictionary dataset, Pair<Integer,Integer> gridShape, Difficulty difficulty);
 	
 	/**
 	 * This method allows the user to create a concrete implementation of {@code MiniGame}
@@ -33,5 +33,5 @@ public interface AbstractGameFactory {
 	 * @return a {@code MiniGame} describing the game newly created
 	 * @see wazzle.model.minigame.word.WordsDispenser
 	 */
-	MiniGame createMiniGame(final WordsDispenser wordsDispenser);
+	MiniGame createMiniGame(WordsDispenser wordsDispenser);
 }

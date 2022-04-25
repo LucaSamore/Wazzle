@@ -20,7 +20,7 @@ public final class FiveLetterDictionary extends FilteredDictionary{
 		return this.filterWords(super.getWords());
 	}
 	
-	private Set<String> filterWords(Set<String> words) {
+	private Set<String> filterWords(final Set<String> words) {
 		return words.stream().filter(suitableWords -> suitableWords.length() == 5).collect(Collectors.toSet());
 	}
 }

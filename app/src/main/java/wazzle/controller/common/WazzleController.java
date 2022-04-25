@@ -119,7 +119,7 @@ public interface WazzleController {
 	 * 
 	 * @param mainGame 		The {@link MainGame} to be inserted.
 	 */
-	void addMainGametoHistory(final MainGame mainGame);
+	void addMainGametoHistory(MainGame mainGame);
 	
 	/**
 	 * Update the current {@link Difficulty}.

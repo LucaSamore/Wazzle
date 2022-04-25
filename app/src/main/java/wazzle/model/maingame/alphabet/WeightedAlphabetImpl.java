@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class WeightedAlphabetImpl implements WeightedAlphabet {
+public final class WeightedAlphabetImpl implements WeightedAlphabet {
 
     private Map<Character, Double> weightedLetterMap;
 
